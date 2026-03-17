@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作日计算器 - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" >English</option>
+            <option value="zh" selected>中文</option>
+            <option value="es" >Español</option>
+            <option value="fr" >Français</option>
+            <option value="de" >Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">工作日计算器</h2>
+            <p class="tool-description">计算日期之间的工作日</p>
+            
+<div class="card">
+    <div class="grid">
+        <div class="input-group">
+            <label>Start Date</label>
+            <input type="date" id="startDate">
+        </div>
+        <div class="input-group">
+            <label>End Date</label>
+            <input type="date" id="endDate">
+        </div>
+    </div>
+    <button class="btn" onclick="calcWorkingDays()" data-t="calculate">Calculate</button>
+    <div class="result-box" id="result" style="display:none;">
+        <div class="result-value" id="wdResult"></div>
+        <div id="wdDetails" style="margin-top: 15px; color: var(--text-secondary);"></div>
+    </div>
+</div>
+<script>
+function calcWorkingDays() {
+    const start = new Date(document.getElementById('startDate').value);
+    const end = new Date(document.getElementById('endDate').value);
+    if (!start.getTime() || !end.getTime()) { alert('Please select both dates'); return; }
+    const totalDays = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+    const working = getWorkingDays(start, end);
+    const weekends = totalDays - working;
+    document.getElementById('wdResult').textContent = working + ' working days';
+    document.getElementById('wdDetails').innerHTML = `Total days: ${totalDays}<br>Weekends: ${weekends}`;
+    document.getElementById('result').style.display = 'block';
+}
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>205工具集的一部分 - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>
