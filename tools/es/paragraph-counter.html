@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador de Párrafos | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="paragraph-counter.html" selected>Español</option>
+      <option value="../en/paragraph-counter.html">English</option>
+      <option value="../ar/paragraph-counter.html">العربية</option>
+      <option value="../fr/paragraph-counter.html">Français</option>
+      <option value="../de/paragraph-counter.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Contador de Párrafos</h1>
+      <p>Cuenta párrafos y analiza la estructura de tu texto</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">Introduce tu texto:</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Escribe o pega tu texto aquí..."></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="countParagraphs()">Contar</button>
+        <button class="btn btn-secondary" onclick="clearText()">Limpiar</button>
+      </div>
+
+      <div class="stats-display">
+        <div class="stat-box">
+          <span class="number" id="para-count">0</span>
+          <span class="label">Párrafos</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="avg-words">0</span>
+          <span class="label">Media Pal/Párr</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="avg-chars">0</span>
+          <span class="label">Media Car/Párr</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="longest-para">0</span>
+          <span class="label">Más Largo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('text-input').addEventListener('input', countParagraphs);
+
+    function countParagraphs() {
+      const text = document.getElementById('text-input').value;
+      
+      if (text.trim() === '') {
+        document.getElementById('para-count').textContent = '0';
+        document.getElementById('avg-words').textContent = '0';
+        document.getElementById('avg-chars').textContent = '0';
+        document.getElementById('longest-para').textContent = '0';
+        return;
+      }
+      
+      const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+      const paraCount = paragraphs.length;
+      
+      let totalWords = 0, totalChars = 0, longestPara = 0;
+      
+      paragraphs.forEach(p => {
+        const words = p.trim().split(/\s+/).length;
+        const chars = p.length;
+        totalWords += words;
+        totalChars += chars;
+        longestPara = Math.max(longestPara, words);
+      });
+      
+      document.getElementById('para-count').textContent = paraCount;
+      document.getElementById('avg-words').textContent = Math.round(totalWords / paraCount);
+      document.getElementById('avg-chars').textContent = Math.round(totalChars / paraCount);
+      document.getElementById('longest-para').textContent = longestPara;
+    }
+
+    function clearText() {
+      document.getElementById('text-input').value = '';
+      countParagraphs();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR-Code-Generator - 205 Tools</title>
+  <meta name="description" content="Generieren Sie QR-Codes für URLs und Text.">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <script src="../../assets/js/utils.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Startseite</a>
+    
+    <header>
+      <h1>🔲 QR-Code-Generator</h1>
+      <p>Generieren Sie QR-Codes für URLs und Text.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Generieren</h2>
+        <div class="lang-selector">
+          <a href="../en/qr-code-generator.html" class="lang-btn ">EN</a><a href="../es/qr-code-generator.html" class="lang-btn ">ES</a><a href="../fr/qr-code-generator.html" class="lang-btn ">FR</a><a href="../de/qr-code-generator.html" class="lang-btn active">DE</a><a href="../ar/qr-code-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      
+      <div class="form-group">
+        <label>Content (URL, Text, etc.)</label>
+        <textarea id="qrContent" placeholder="https://example.com or any text" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Size</label>
+        <select id="qrSize">
+          <option value="200">Small (200x200)</option>
+          <option value="300" selected>Medium (300x300)</option>
+          <option value="400">Large (400x400)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Color</label>
+        <input type="color" id="qrColor" value="#000000">
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateQRCode()">Generieren</button>
+        <button class="btn btn-secondary" onclick="downloadQR()">Herunterladen</button>
+      </div>
+      
+      <div class="result-box" style="margin-top: 20px;">
+        <div id="qrcode"></div>
+      </div>
+      
+      <script>
+        let currentQR = null;
+        
+        function generateQRCode() {
+          const content = document.getElementById('qrContent').value;
+          if (!content) {
+            alert('Please enter content');
+            return;
+          }
+          
+          const size = parseInt(document.getElementById('qrSize').value);
+          const color = document.getElementById('qrColor').value;
+          
+          document.getElementById('qrcode').innerHTML = '';
+          
+          currentQR = new QRCode(document.getElementById('qrcode'), {
+            text: content,
+            width: size,
+            height: size,
+            colorDark: color,
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+          });
+        }
+        
+        function downloadQR() {
+          const img = document.querySelector('#qrcode img');
+          if (img) {
+            const a = document.createElement('a');
+            a.href = img.src;
+            a.download = 'qrcode.png';
+            a.click();
+          }
+        }
+      </script>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Tools</p>
+    </footer>
+  </div>
+</body>
+</html>

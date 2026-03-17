@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Favicon - 205 Tools</title>
+  <meta name="description" content="Genera enlaces y etiquetas de favicon.">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <script src="../../assets/js/utils.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Inicio</a>
+    
+    <header>
+      <h1>⭐ Generador de Favicon</h1>
+      <p>Genera enlaces y etiquetas de favicon.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Generar</h2>
+        <div class="lang-selector">
+          <a href="../en/favicon-generator.html" class="lang-btn ">EN</a><a href="../es/favicon-generator.html" class="lang-btn active">ES</a><a href="../fr/favicon-generator.html" class="lang-btn ">FR</a><a href="../de/favicon-generator.html" class="lang-btn ">DE</a><a href="../ar/favicon-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      
+      <div class="form-group">
+        <label>Favicon Path</label>
+        <input type="text" id="faviconPath" value="/favicon.ico" placeholder="/favicon.ico">
+      </div>
+      <div class="form-group">
+        <label>Apple Touch Icon</label>
+        <input type="text" id="appleIcon" value="/apple-touch-icon.png" placeholder="/apple-touch-icon.png">
+      </div>
+      <div class="form-group">
+        <label>Manifest (PWA)</label>
+        <input type="text" id="manifest" value="/site.webmanifest" placeholder="/site.webmanifest">
+      </div>
+      <div class="form-group">
+        <label>Theme Color</label>
+        <input type="color" id="themeColor" value="#ffffff">
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateFavicon()">Generar</button>
+      </div>
+      
+      <div class="code-output" id="output" style="display:none;">
+        <pre id="codeContent"></pre>
+        <button class="btn btn-success" data-success="¡Copiado!" onclick="copyToClipboard(document.getElementById('codeContent').textContent, this)">Copiar</button>
+      </div>
+      
+      <script>
+        function generateFavicon() {
+          const favicon = document.getElementById('faviconPath').value;
+          const apple = document.getElementById('appleIcon').value;
+          const manifest = document.getElementById('manifest').value;
+          const color = document.getElementById('themeColor').value;
+          
+          let html = '<!-- Favicon -->\n';
+          html += '<link rel="icon" type="image/x-icon" href="' + favicon + '">\n';
+          html += '<link rel="apple-touch-icon" href="' + apple + '">\n';
+          html += '<link rel="manifest" href="' + manifest + '">\n';
+          html += '<meta name="theme-color" content="' + color + '">';
+          
+          document.getElementById('codeContent').textContent = html;
+          document.getElementById('output').style.display = 'block';
+        }
+      </script>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Herramientas</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Twitter Cards - 205 Tools</title>
+  <meta name="description" content="Genera meta etiquetas de Twitter Card.">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <script src="../../assets/js/utils.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Inicio</a>
+    
+    <header>
+      <h1>🐦 Generador de Twitter Cards</h1>
+      <p>Genera meta etiquetas de Twitter Card.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Generar</h2>
+        <div class="lang-selector">
+          <a href="../en/twitter-card-generator.html" class="lang-btn ">EN</a><a href="../es/twitter-card-generator.html" class="lang-btn active">ES</a><a href="../fr/twitter-card-generator.html" class="lang-btn ">FR</a><a href="../de/twitter-card-generator.html" class="lang-btn ">DE</a><a href="../ar/twitter-card-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      
+      <div class="form-group">
+        <label>Card Title</label>
+        <input type="text" id="twTitle" placeholder="Title">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="twDesc" placeholder="Description..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="url" id="twImage" placeholder="https://example.com/image.jpg">
+      </div>
+      <div class="form-group">
+        <label>Card Type</label>
+        <select id="twCard">
+          <option value="summary_large_image">Large Image</option>
+          <option value="summary">Summary</option>
+          <option value="app">App</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Site @username</label>
+        <input type="text" id="twSite" placeholder="@username">
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateTwitter()">Generar</button>
+      </div>
+      
+      <div class="code-output" id="output" style="display:none;">
+        <pre id="codeContent"></pre>
+        <button class="btn btn-success" data-success="¡Copiado!" onclick="copyToClipboard(document.getElementById('codeContent').textContent, this)">Copiar</button>
+      </div>
+      
+      <script>
+        function generateTwitter() {
+          const title = document.getElementById('twTitle').value;
+          const desc = document.getElementById('twDesc').value;
+          const image = document.getElementById('twImage').value;
+          const card = document.getElementById('twCard').value;
+          const site = document.getElementById('twSite').value;
+          
+          let meta = '<!-- Twitter Card -->\n';
+          meta += '<meta name="twitter:card" content="' + card + '">\n';
+          if (site) meta += '<meta name="twitter:site" content="' + site + '">\n';
+          if (title) meta += '<meta name="twitter:title" content="' + title + '">\n';
+          if (desc) meta += '<meta name="twitter:description" content="' + desc + '">\n';
+          if (image) meta += '<meta name="twitter:image" content="' + image + '">';
+          
+          document.getElementById('codeContent').textContent = meta;
+          document.getElementById('output').style.display = 'block';
+        }
+      </script>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Herramientas</p>
+    </footer>
+  </div>
+</body>
+</html>

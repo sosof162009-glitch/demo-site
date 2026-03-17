@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Générateur de Schema Markup - 205 Tools</title>
+  <meta name="description" content="Générez des données structurées Schema.org.">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+  <script src="../../assets/js/utils.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Accueil</a>
+    
+    <header>
+      <h1>📋 Générateur de Schema Markup</h1>
+      <p>Générez des données structurées Schema.org.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Générer</h2>
+        <div class="lang-selector">
+          <a href="../en/schema-markup-generator.html" class="lang-btn ">EN</a><a href="../es/schema-markup-generator.html" class="lang-btn ">ES</a><a href="../fr/schema-markup-generator.html" class="lang-btn active">FR</a><a href="../de/schema-markup-generator.html" class="lang-btn ">DE</a><a href="../ar/schema-markup-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      
+      <div class="form-group">
+        <label>Schema Type</label>
+        <select id="schemaType">
+          <option value="Organization">Organization</option>
+          <option value="LocalBusiness">Local Business</option>
+          <option value="Product">Product</option>
+          <option value="Article">Article</option>
+          <option value="Person">Person</option>
+          <option value="Event">Event</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="schemaName" placeholder="Name">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="schemaDesc" placeholder="Description..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>URL</label>
+        <input type="url" id="schemaUrl" placeholder="https://example.com">
+      </div>
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="url" id="schemaImage" placeholder="https://example.com/image.jpg">
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateSchema()">Générer</button>
+      </div>
+      
+      <div class="code-output" id="output" style="display:none;">
+        <pre id="codeContent"></pre>
+        <button class="btn btn-success" data-success="Copié!" onclick="copyToClipboard(document.getElementById('codeContent').textContent, this)">Copier</button>
+      </div>
+      
+      <script>
+        function generateSchema() {
+          const type = document.getElementById('schemaType').value;
+          const name = document.getElementById('schemaName').value;
+          const desc = document.getElementById('schemaDesc').value;
+          const url = document.getElementById('schemaUrl').value;
+          const image = document.getElementById('schemaImage').value;
+          
+          const schema = {
+            "@context": "https://schema.org",
+            "@type": type
+          };
+          
+          if (name) schema.name = name;
+          if (desc) schema.description = desc;
+          if (url) schema.url = url;
+          if (image) schema.image = image;
+          
+          document.getElementById('codeContent').textContent = '<script type="application/ld+json">\n' + JSON.stringify(schema, null, 2) + '\n<\/script>';
+          document.getElementById('output').style.display = 'block';
+        }
+      </script>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Outils</p>
+    </footer>
+  </div>
+</body>
+</html>
