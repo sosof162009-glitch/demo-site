@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Converter - 205 Tools</title>
+  <meta name="description" content="Convert between different units of measurement - length, weight, temperature, volume, area, speed, and time.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>📐 Unit Converter</h1>
+      <p>Convert between different units of measurement</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Converter</h2>
+        <div class="lang-selector">
+          <a href="./unit-converter.html" class="lang-btn active">EN</a>
+          <a href="../es/unit-converter.html" class="lang-btn">ES</a>
+          <a href="../fr/unit-converter.html" class="lang-btn">FR</a>
+          <a href="../de/unit-converter.html" class="lang-btn">DE</a>
+          <a href="../ar/unit-converter.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Category</label>
+        <select id="category" onchange="updateUnits()">
+          <option value="length">Length</option>
+          <option value="weight">Weight</option>
+          <option value="temperature">Temperature</option>
+          <option value="volume">Volume</option>
+          <option value="area">Area</option>
+          <option value="speed">Speed</option>
+          <option value="time">Time</option>
+        </select>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>From</label>
+          <input type="number" id="inputValue" placeholder="Enter value" oninput="convert()">
+          <select id="fromUnit" onchange="convert()">
+            <option value="m">Meters (m)</option>
+            <option value="km">Kilometers (km)</option>
+            <option value="cm">Centimeters (cm)</option>
+            <option value="mm">Millimeters (mm)</option>
+            <option value="ft">Feet (ft)</option>
+            <option value="in">Inches (in)</option>
+            <option value="yd">Yards (yd)</option>
+            <option value="mi">Miles (mi)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>To</label>
+          <input type="number" id="outputValue" placeholder="Result" readonly>
+          <select id="toUnit" onchange="convert()">
+            <option value="m">Meters (m)</option>
+            <option value="km" selected>Kilometers (km)</option>
+            <option value="cm">Centimeters (cm)</option>
+            <option value="mm">Millimeters (mm)</option>
+            <option value="ft">Feet (ft)</option>
+            <option value="in">Inches (in)</option>
+            <option value="yd">Yards (yd)</option>
+            <option value="mi">Miles (mi)</option>
+          </select>
+        </div>
+      </div>
+      
+      <button class="btn btn-primary" onclick="swapUnits()">⇄ Swap Units</button>
+      <button class="btn btn-secondary" onclick="reset()">Reset</button>
+      
+      <div id="formula" class="formula-display"></div>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Free Online Tools</p>
+    </footer>
+  </div>
+  
+  <script>
+    const units = {
+      length: {
+        m: { name: 'Meters', factor: 1 },
+        km: { name: 'Kilometers', factor: 1000 },
+        cm: { name: 'Centimeters', factor: 0.01 },
+        mm: { name: 'Millimeters', factor: 0.001 },
+        ft: { name: 'Feet', factor: 0.3048 },
+        in: { name: 'Inches', factor: 0.0254 },
+        yd: { name: 'Yards', factor: 0.9144 },
+        mi: { name: 'Miles', factor: 1609.34 }
+      },
+      weight: {
+        kg: { name: 'Kilograms', factor: 1 },
+        g: { name: 'Grams', factor: 0.001 },
+        mg: { name: 'Milligrams', factor: 0.000001 },
+        lb: { name: 'Pounds', factor: 0.453592 },
+        oz: { name: 'Ounces', factor: 0.0283495 },
+        t: { name: 'Metric Tons', factor: 1000 }
+      },
+      temperature: {
+        c: { name: 'Celsius' },
+        f: { name: 'Fahrenheit' },
+        k: { name: 'Kelvin' }
+      },
+      volume: {
+        l: { name: 'Liters', factor: 1 },
+        ml: { name: 'Milliliters', factor: 0.001 },
+        gal: { name: 'Gallons (US)', factor: 3.78541 },
+        qt: { name: 'Quarts (US)', factor: 0.946353 },
+        pt: { name: 'Pints (US)', factor: 0.473176 },
+        cup: { name: 'Cups (US)', factor: 0.236588 },
+        floz: { name: 'Fluid Ounces (US)', factor: 0.0295735 }
+      },
+      area: {
+        m2: { name: 'Square Meters', factor: 1 },
+        km2: { name: 'Square Kilometers', factor: 1000000 },
+        ft2: { name: 'Square Feet', factor: 0.092903 },
+        ac: { name: 'Acres', factor: 4046.86 },
+        ha: { name: 'Hectares', factor: 10000 }
+      },
+      speed: {
+        ms: { name: 'Meters/Second', factor: 1 },
+        kmh: { name: 'Km/Hour', factor: 0.277778 },
+        mph: { name: 'Miles/Hour', factor: 0.44704 },
+        kn: { name: 'Knots', factor: 0.514444 }
+      },
+      time: {
+        s: { name: 'Seconds', factor: 1 },
+        min: { name: 'Minutes', factor: 60 },
+        h: { name: 'Hours', factor: 3600 },
+        d: { name: 'Days', factor: 86400 },
+        wk: { name: 'Weeks', factor: 604800 },
+        mo: { name: 'Months (avg)', factor: 2628000 },
+        y: { name: 'Years', factor: 31536000 }
+      }
+    };
+
+    function updateUnits() {
+      const category = document.getElementById('category').value;
+      const fromSelect = document.getElementById('fromUnit');
+      const toSelect = document.getElementById('toUnit');
+      const categoryUnits = units[category];
+      
+      const options = Object.keys(categoryUnits).map(key => 
+        `<option value="${key}">${categoryUnits[key].name} (${key})</option>`
+      ).join('');
+      
+      fromSelect.innerHTML = options;
+      toSelect.innerHTML = options;
+      
+      // Select second option for "to" if available
+      if (toSelect.options.length > 1) {
+        toSelect.selectedIndex = 1;
+      }
+      
+      convert();
+    }
+
+    function convert() {
+      const category = document.getElementById('category').value;
+      const input = parseFloat(document.getElementById('inputValue').value);
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      
+      if (isNaN(input)) {
+        document.getElementById('outputValue').value = '';
+        return;
+      }
+      
+      let result;
+      
+      if (category === 'temperature') {
+        result = convertTemperature(input, from, to);
+      } else {
+        const fromFactor = units[category][from].factor;
+        const toFactor = units[category][to].factor;
+        result = input * fromFactor / toFactor;
+      }
+      
+      document.getElementById('outputValue').value = Math.round(result * 100000) / 100000;
+      
+      // Display formula
+      const fromName = units[category][from].name;
+      const toName = units[category][to].name;
+      document.getElementById('formula').textContent = 
+        `${input} ${fromName} = ${result.toFixed(6)} ${toName}`;
+    }
+
+    function convertTemperature(value, from, to) {
+      if (from === to) return value;
+      
+      let celsius;
+      if (from === 'c') celsius = value;
+      else if (from === 'f') celsius = (value - 32) * 5/9;
+      else if (from === 'k') celsius = value - 273.15;
+      
+      if (to === 'c') return celsius;
+      else if (to === 'f') return celsius * 9/5 + 32;
+      else if (to === 'k') return celsius + 273.15;
+    }
+
+    function swapUnits() {
+      const from = document.getElementById('fromUnit');
+      const to = document.getElementById('toUnit');
+      const temp = from.value;
+      from.value = to.value;
+      to.value = temp;
+      convert();
+    }
+
+    function reset() {
+      document.getElementById('inputValue').value = '';
+      document.getElementById('outputValue').value = '';
+      document.getElementById('formula').textContent = '';
+    }
+  </script>
+</body>
+</html>
