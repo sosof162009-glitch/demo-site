@@ -3,389 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>205 Tools - Developer Utilities</title>
+    <title>205 Tools - Color, Math & Date Utilities</title>
+    <link rel="stylesheet" href="shared.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
-            color: #e0e0e0;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container { max-width: 1400px; margin: 0 auto; }
-        header {
-            text-align: center;
-            padding: 60px 20px;
-            border-bottom: 1px solid rgba(79, 142, 247, 0.3);
-            margin-bottom: 40px;
-        }
-        h1 {
-            font-size: 3.5rem;
-            background: linear-gradient(90deg, #4f8ef7, #6b5ce7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-        }
-        .subtitle {
-            color: #888;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        .stat {
-            text-align: center;
-        }
-        .stat-value {
-            font-size: 2.5rem;
-            color: #4f8ef7;
-            font-weight: bold;
-        }
-        .stat-label {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        .lang-selector {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        .lang-btn {
-            padding: 10px 20px;
-            border: 1px solid rgba(79, 142, 247, 0.5);
-            background: rgba(79, 142, 247, 0.1);
-            color: #4f8ef7;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .lang-btn:hover, .lang-btn.active {
-            background: #4f8ef7;
-            color: #fff;
-        }
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px 0;
-        }
-        .tool-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(79, 142, 247, 0.2);
-            border-radius: 12px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-        .tool-card:hover {
-            transform: translateY(-5px);
-            border-color: #4f8ef7;
-            box-shadow: 0 10px 40px rgba(79, 142, 247, 0.2);
-        }
-        .tool-icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-        .tool-title {
-            font-size: 1.1rem;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        .tool-desc {
-            font-size: 0.9rem;
-            color: #888;
-        }
-        .category {
-            margin-top: 50px;
-        }
-        .category-title {
-            font-size: 1.5rem;
-            color: #4f8ef7;
-            margin-bottom: 20px;
-            padding-left: 10px;
-            border-left: 3px solid #4f8ef7;
-        }
-        footer {
-            text-align: center;
-            padding: 50px 20px;
-            color: #666;
-            border-top: 1px solid rgba(79, 142, 247, 0.2);
-            margin-top: 50px;
-        }
-        .hidden { display: none; }
+        .category { margin-bottom: 40px; }
+        .category-title { font-size: 1.5rem; color: var(--accent); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .tool-card { background: var(--bg-tertiary); padding: 20px; border-radius: 12px; border: 1px solid var(--border); text-decoration: none; color: inherit; transition: all 0.2s; display: block; }
+        .tool-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 4px 20px rgba(79, 142, 247, 0.2); }
+        .tool-card h3 { color: var(--text-primary); margin-bottom: 8px; font-size: 1.1rem; }
+        .tool-card p { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }
+        .lang-badge { display: inline-block; padding: 2px 8px; background: var(--bg-primary); border-radius: 4px; font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; margin-right: 5px; }
+        .hero { text-align: center; padding: 60px 20px; }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; }
+        .hero h1 span { color: var(--accent); }
+        .hero p { color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin: 0 auto 30px; }
+        .stats { display: flex; justify-content: center; gap: 40px; margin-top: 30px; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--accent); }
+        .stat-label { color: var(--text-muted); font-size: 0.9rem; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🔧 205 Tools</h1>
-            <p class="subtitle">28 essential developer utilities in 5 languages. Built with vanilla HTML, CSS & JavaScript.</p>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-value">28</div>
-                    <div class="stat-label">Tools</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">5</div>
-                    <div class="stat-label">Languages</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">140</div>
-                    <div class="stat-label">Pages</div>
-                </div>
-            </div>
-            <div class="lang-selector">
-                <button class="lang-btn active" onclick="setLang('en')">🇺🇸 English</button>
-                <button class="lang-btn" onclick="setLang('zh')">🇨🇳 中文</button>
-                <button class="lang-btn" onclick="setLang('es')">🇪🇸 Español</button>
-                <button class="lang-btn" onclick="setLang('fr')">🇫🇷 Français</button>
-                <button class="lang-btn" onclick="setLang('de')">🇩🇪 Deutsch</button>
-            </div>
-        </header>
-
-        <div class="category">
-            <h2 class="category-title">JSON Tools</h2>
-            <div class="tools-grid">
-                <a href="json-formatter-en.html" class="tool-card" data-lang="en"><div class="tool-icon">📋</div><div class="tool-title">JSON Formatter</div><div class="tool-desc">Format and beautify JSON code</div></a>
-                <a href="json-formatter-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">📋</div><div class="tool-title">JSON 格式化工具</div><div class="tool-desc">格式化和美化 JSON 代码</div></a>
-                <a href="json-formatter-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">📋</div><div class="tool-title">Formateador JSON</div><div class="tool-desc">Formatea y embellece código JSON</div></a>
-                <a href="json-formatter-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">📋</div><div class="tool-title">Formateur JSON</div><div class="tool-desc">Formatez et embellissez le code JSON</div></a>
-                <a href="json-formatter-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">📋</div><div class="tool-title">JSON-Formatierer</div><div class="tool-desc">Formatieren und verschönern Sie JSON-Code</div></a>
-                
-                <a href="json-validator-en.html" class="tool-card" data-lang="en"><div class="tool-icon">✅</div><div class="tool-title">JSON Validator</div><div class="tool-desc">Validate JSON syntax</div></a>
-                <a href="json-validator-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">✅</div><div class="tool-title">JSON 验证器</div><div class="tool-desc">验证 JSON 语法</div></a>
-                <a href="json-validator-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">✅</div><div class="tool-title">Validador JSON</div><div class="tool-desc">Valida la sintaxis JSON</div></a>
-                <a href="json-validator-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">✅</div><div class="tool-title">Validateur JSON</div><div class="tool-desc">Validez la syntaxe JSON</div></a>
-                <a href="json-validator-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">✅</div><div class="tool-title">JSON-Validator</div><div class="tool-desc">Validieren Sie JSON-Syntax</div></a>
-                
-                <a href="json-to-xml-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🔄</div><div class="tool-title">JSON to XML</div><div class="tool-desc">Convert JSON to XML format</div></a>
-                <a href="json-to-xml-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🔄</div><div class="tool-title">JSON 转 XML</div><div class="tool-desc">将 JSON 转换为 XML 格式</div></a>
-                <a href="json-to-xml-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🔄</div><div class="tool-title">JSON a XML</div><div class="tool-desc">Convierte JSON a formato XML</div></a>
-                <a href="json-to-xml-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🔄</div><div class="tool-title">JSON vers XML</div><div class="tool-desc">Convertissez JSON en format XML</div></a>
-                <a href="json-to-xml-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🔄</div><div class="tool-title">JSON zu XML</div><div class="tool-desc">Konvertieren Sie JSON in XML-Format</div></a>
-                
-                <a href="xml-to-json-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🔄</div><div class="tool-title">XML to JSON</div><div class="tool-desc">Convert XML to JSON format</div></a>
-                <a href="xml-to-json-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🔄</div><div class="tool-title">XML 转 JSON</div><div class="tool-desc">将 XML 转换为 JSON 格式</div></a>
-                <a href="xml-to-json-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🔄</div><div class="tool-title">XML a JSON</div><div class="tool-desc">Convierte XML a formato JSON</div></a>
-                <a href="xml-to-json-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🔄</div><div class="tool-title">XML vers JSON</div><div class="tool-desc">Convertissez XML en format JSON</div></a>
-                <a href="xml-to-json-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🔄</div><div class="tool-title">XML zu JSON</div><div class="tool-desc">Konvertieren Sie XML in JSON-Format</div></a>
-            </div>
+    <div class="hero">
+        <h1><span>205</span> Tools</h1>
+        <p>A comprehensive collection of free online utilities for colors, mathematics, and date calculations. Available in 5 languages.</p>
+        <div class="stats">
+            <div class="stat"><div class="stat-number">37</div><div class="stat-label">Tools</div></div>
+            <div class="stat"><div class="stat-number">5</div><div class="stat-label">Languages</div></div>
+            <div class="stat"><div class="stat-number">185</div><div class="stat-label">Pages</div></div>
         </div>
-
-        <div class="category">
-            <h2 class="category-title">Code Formatters</h2>
-            <div class="tools-grid">
-                <a href="xml-formatter-en.html" class="tool-card" data-lang="en"><div class="tool-icon">📄</div><div class="tool-title">XML Formatter</div><div class="tool-desc">Format and beautify XML code</div></a>
-                <a href="xml-formatter-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">📄</div><div class="tool-title">XML 格式化工具</div><div class="tool-desc">格式化和美化 XML 代码</div></a>
-                <a href="xml-formatter-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">📄</div><div class="tool-title">Formateador XML</div><div class="tool-desc">Formatea y embellece código XML</div></a>
-                <a href="xml-formatter-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">📄</div><div class="tool-title">Formateur XML</div><div class="tool-desc">Formatez et embellissez le code XML</div></a>
-                <a href="xml-formatter-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">📄</div><div class="tool-title">XML-Formatierer</div><div class="tool-desc">Formatieren und verschönern Sie XML-Code</div></a>
-                
-                <a href="html-formatter-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🌐</div><div class="tool-title">HTML Formatter</div><div class="tool-desc">Format and beautify HTML code</div></a>
-                <a href="html-formatter-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🌐</div><div class="tool-title">HTML 格式化工具</div><div class="tool-desc">格式化和美化 HTML 代码</div></a>
-                <a href="html-formatter-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🌐</div><div class="tool-title">Formateador HTML</div><div class="tool-desc">Formatea y embellece código HTML</div></a>
-                <a href="html-formatter-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🌐</div><div class="tool-title">Formateur HTML</div><div class="tool-desc">Formatez et embellissez le code HTML</div></a>
-                <a href="html-formatter-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🌐</div><div class="tool-title">HTML-Formatierer</div><div class="tool-desc">Formatieren und verschönern Sie HTML-Code</div></a>
-                
-                <a href="css-formatter-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🎨</div><div class="tool-title">CSS Formatter</div><div class="tool-desc">Format and beautify CSS code</div></a>
-                <a href="css-formatter-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🎨</div><div class="tool-title">CSS 格式化工具</div><div class="tool-desc">格式化和美化 CSS 代码</div></a>
-                <a href="css-formatter-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🎨</div><div class="tool-title">Formateador CSS</div><div class="tool-desc">Formatea y embellece código CSS</div></a>
-                <a href="css-formatter-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🎨</div><div class="tool-title">Formateur CSS</div><div class="tool-desc">Formatez et embellissez le code CSS</div></a>
-                <a href="css-formatter-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🎨</div><div class="tool-title">CSS-Formatierer</div><div class="tool-desc">Formatieren und verschönern Sie CSS-Code</div></a>
-                
-                <a href="js-formatter-en.html" class="tool-card" data-lang="en"><div class="tool-icon">⚡</div><div class="tool-title">JavaScript Formatter</div><div class="tool-desc">Format and beautify JavaScript code</div></a>
-                <a href="js-formatter-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">⚡</div><div class="tool-title">JavaScript 格式化工具</div><div class="tool-desc">格式化和美化 JavaScript 代码</div></a>
-                <a href="js-formatter-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">⚡</div><div class="tool-title">Formateador JavaScript</div><div class="tool-desc">Formatea y embellece código JavaScript</div></a>
-                <a href="js-formatter-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">⚡</div><div class="tool-title">Formateur JavaScript</div><div class="tool-desc">Formatez et embellissez le code JavaScript</div></a>
-                <a href="js-formatter-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">⚡</div><div class="tool-title">JavaScript-Formatierer</div><div class="tool-desc">Formatieren und verschönern Sie JavaScript-Code</div></a>
-                
-                <a href="sql-formatter-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🗄️</div><div class="tool-title">SQL Formatter</div><div class="tool-desc">Format and beautify SQL queries</div></a>
-                <a href="sql-formatter-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🗄️</div><div class="tool-title">SQL 格式化工具</div><div class="tool-desc">格式化和美化 SQL 查询</div></a>
-                <a href="sql-formatter-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🗄️</div><div class="tool-title">Formateador SQL</div><div class="tool-desc">Formatea y embellece consultas SQL</div></a>
-                <a href="sql-formatter-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🗄️</div><div class="tool-title">Formateur SQL</div><div class="tool-desc">Formatez et embellissez les requêtes SQL</div></a>
-                <a href="sql-formatter-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🗄️</div><div class="tool-title">SQL-Formatierer</div><div class="tool-desc">Formatieren und verschönern Sie SQL-Abfragen</div></a>
-                
-                <a href="code-minifier-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🗜️</div><div class="tool-title">Code Minifier</div><div class="tool-desc">Minify JS/CSS/HTML code</div></a>
-                <a href="code-minifier-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🗜️</div><div class="tool-title">代码压缩工具</div><div class="tool-desc">压缩 JS/CSS/HTML 代码</div></a>
-                <a href="code-minifier-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🗜️</div><div class="tool-title">Minificador de Código</div><div class="tool-desc">Minifica código JS/CSS/HTML</div></a>
-                <a href="code-minifier-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🗜️</div><div class="tool-title">Minificateur de Code</div><div class="tool-desc">Minifiez le code JS/CSS/HTML</div></a>
-                <a href="code-minifier-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🗜️</div><div class="tool-title">Code-Minifizierer</div><div class="tool-desc">Minifizieren Sie JS/CSS/HTML-Code</div></a>
-            </div>
-        </div>
-
-        <div class="category">
-            <h2 class="category-title">Encoding & Crypto</h2>
-            <div class="tools-grid">
-                <a href="base64-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🔐</div><div class="tool-title">Base64 Encode/Decode</div><div class="tool-desc">Encode and decode Base64 strings</div></a>
-                <a href="base64-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🔐</div><div class="tool-title">Base64 编码/解码</div><div class="tool-desc">编码和解码 Base64 字符串</div></a>
-                <a href="base64-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🔐</div><div class="tool-title">Codificar/Decodificar Base64</div><div class="tool-desc">Codifica y decodifica cadenas Base64</div></a>
-                <a href="base64-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🔐</div><div class="tool-title">Encoder/Décoder Base64</div><div class="tool-desc">Encodez et décodez les chaînes Base64</div></a>
-                <a href="base64-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🔐</div><div class="tool-title">Base64 Kodieren/Dekodieren</div><div class="tool-desc">Kodieren und dekodieren Sie Base64-Zeichenketten</div></a>
-                
-                <a href="url-encoder-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🔗</div><div class="tool-title">URL Encode/Decode</div><div class="tool-desc">Encode and decode URL strings</div></a>
-                <a href="url-encoder-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🔗</div><div class="tool-title">URL 编码/解码</div><div class="tool-desc">编码和解码 URL 字符串</div></a>
-                <a href="url-encoder-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🔗</div><div class="tool-title">Codificar/Decodificar URL</div><div class="tool-desc">Codifica y decodifica cadenas URL</div></a>
-                <a href="url-encoder-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🔗</div><div class="tool-title">Encoder/Décoder URL</div><div class="tool-desc">Encodez et décodez les chaînes URL</div></a>
-                <a href="url-encoder-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🔗</div><div class="tool-title">URL Kodieren/Dekodieren</div><div class="tool-desc">Kodieren und dekodieren Sie URL-Zeichenketten</div></a>
-                
-                <a href="jwt-decoder-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🎫</div><div class="tool-title">JWT Decoder</div><div class="tool-desc">Decode JSON Web Tokens</div></a>
-                <a href="jwt-decoder-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🎫</div><div class="tool-title">JWT 解码器</div><div class="tool-desc">解码 JSON Web 令牌</div></a>
-                <a href="jwt-decoder-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🎫</div><div class="tool-title">Decodificador JWT</div><div class="tool-desc">Decodifica tokens JSON Web</div></a>
-                <a href="jwt-decoder-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🎫</div><div class="tool-title">Décodeur JWT</div><div class="tool-desc">Décodez les tokens JSON Web</div></a>
-                <a href="jwt-decoder-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🎫</div><div class="tool-title">JWT-Dekodierer</div><div class="tool-desc">Dekodieren Sie JSON Web Tokens</div></a>
-                
-                <a href="hash-generator-en.html" class="tool-card" data-lang="en"><div class="tool-icon">#️⃣</div><div class="tool-title">Hash Generator</div><div class="tool-desc">Generate MD5, SHA1, SHA256 hashes</div></a>
-                <a href="hash-generator-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">#️⃣</div><div class="tool-title">哈希生成器</div><div class="tool-desc">生成 MD5、SHA1、SHA256 哈希</div></a>
-                <a href="hash-generator-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">#️⃣</div><div class="tool-title">Generador de Hash</div><div class="tool-desc">Genera hashes MD5, SHA1, SHA256</div></a>
-                <a href="hash-generator-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">#️⃣</div><div class="tool-title">Générateur de Hash</div><div class="tool-desc">Générez des hashes MD5, SHA1, SHA256</div></a>
-                <a href="hash-generator-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">#️⃣</div><div class="tool-title">Hash-Generator</div><div class="tool-desc">Generieren Sie MD5-, SHA1-, SHA256-Hashes</div></a>
-                
-                <a href="hmac-generator-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🔏</div><div class="tool-title">HMAC Generator</div><div class="tool-desc">Generate HMAC signatures</div></a>
-                <a href="hmac-generator-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🔏</div><div class="tool-title">HMAC 生成器</div><div class="tool-desc">生成 HMAC 签名</div></a>
-                <a href="hmac-generator-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🔏</div><div class="tool-title">Generador HMAC</div><div class="tool-desc">Genera firmas HMAC</div></a>
-                <a href="hmac-generator-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🔏</div><div class="tool-title">Générateur HMAC</div><div class="tool-desc">Générez des signatures HMAC</div></a>
-                <a href="hmac-generator-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🔏</div><div class="tool-title">HMAC-Generator</div><div class="tool-desc">Generieren Sie HMAC-Signaturen</div></a>
-                
-                <a href="html-entities-en.html" class="tool-card" data-lang="en"><div class="tool-icon">&amp;</div><div class="tool-title">HTML Entities</div><div class="tool-desc">Encode/decode HTML entities</div></a>
-                <a href="html-entities-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">&amp;</div><div class="tool-title">HTML 实体</div><div class="tool-desc">编码/解码 HTML 实体</div></a>
-                <a href="html-entities-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">&amp;</div><div class="tool-title">Entidades HTML</div><div class="tool-desc">Codifica/decodifica entidades HTML</div></a>
-                <a href="html-entities-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">&amp;</div><div class="tool-title">Entités HTML</div><div class="tool-desc">Encodez/décodez les entités HTML</div></a>
-                <a href="html-entities-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">&amp;</div><div class="tool-title">HTML-Entitäten</div><div class="tool-desc">Kodieren/Dekodieren Sie HTML-Entitäten</div></a>
-            </div>
-        </div>
-
-        <div class="category">
-            <h2 class="category-title">Generators & Utilities</h2>
-            <div class="tools-grid">
-                <a href="regex-tester-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🔍</div><div class="tool-title">Regex Tester</div><div class="tool-desc">Test regular expressions</div></a>
-                <a href="regex-tester-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🔍</div><div class="tool-title">正则表达式测试器</div><div class="tool-desc">测试正则表达式</div></a>
-                <a href="regex-tester-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🔍</div><div class="tool-title">Probador de Regex</div><div class="tool-desc">Prueba expresiones regulares</div></a>
-                <a href="regex-tester-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🔍</div><div class="tool-title">Testeur de Regex</div><div class="tool-desc">Testez les expressions régulières</div></a>
-                <a href="regex-tester-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🔍</div><div class="tool-title">Regex-Tester</div><div class="tool-desc">Testen Sie reguläre Ausdrücke</div></a>
-                
-                <a href="uuid-generator-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🆔</div><div class="tool-title">UUID Generator</div><div class="tool-desc">Generate UUID/GUID strings</div></a>
-                <a href="uuid-generator-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🆔</div><div class="tool-title">UUID 生成器</div><div class="tool-desc">生成 UUID/GUID 字符串</div></a>
-                <a href="uuid-generator-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🆔</div><div class="tool-title">Generador UUID</div><div class="tool-desc">Genera cadenas UUID/GUID</div></a>
-                <a href="uuid-generator-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🆔</div><div class="tool-title">Générateur UUID</div><div class="tool-desc">Générez des chaînes UUID/GUID</div></a>
-                <a href="uuid-generator-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🆔</div><div class="tool-title">UUID-Generator</div><div class="tool-desc">Generieren Sie UUID/GUID-Zeichenketten</div></a>
-                
-                <a href="password-generator-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🔑</div><div class="tool-title">Password Generator</div><div class="tool-desc">Generate secure passwords</div></a>
-                <a href="password-generator-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🔑</div><div class="tool-title">密码生成器</div><div class="tool-desc">生成安全密码</div></a>
-                <a href="password-generator-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🔑</div><div class="tool-title">Generador de Contraseñas</div><div class="tool-desc">Genera contraseñas seguras</div></a>
-                <a href="password-generator-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🔑</div><div class="tool-title">Générateur de Mot de Passe</div><div class="tool-desc">Générez des mots de passe sécurisés</div></a>
-                <a href="password-generator-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🔑</div><div class="tool-title">Passwort-Generator</div><div class="tool-desc">Generieren Sie sichere Passwörter</div></a>
-                
-                <a href="lorem-ipsum-en.html" class="tool-card" data-lang="en"><div class="tool-icon">📝</div><div class="tool-title">Lorem Ipsum Generator</div><div class="tool-desc">Generate placeholder text</div></a>
-                <a href="lorem-ipsum-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">📝</div><div class="tool-title">Lorem Ipsum 生成器</div><div class="tool-desc">生成占位文本</div></a>
-                <a href="lorem-ipsum-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">📝</div><div class="tool-title">Generador Lorem Ipsum</div><div class="tool-desc">Genera texto de relleno</div></a>
-                <a href="lorem-ipsum-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">📝</div><div class="tool-title">Générateur Lorem Ipsum</div><div class="tool-desc">Générez du texte factice</div></a>
-                <a href="lorem-ipsum-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">📝</div><div class="tool-title">Lorem Ipsum Generator</div><div class="tool-desc">Generieren Sie Platzhaltertext</div></a>
-            </div>
-        </div>
-
-        <div class="category">
-            <h2 class="category-title">CSS & Design</h2>
-            <div class="tools-grid">
-                <a href="color-picker-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🎨</div><div class="tool-title">Color Picker</div><div class="tool-desc">Convert and pick colors</div></a>
-                <a href="color-picker-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🎨</div><div class="tool-title">颜色选择器</div><div class="tool-desc">转换和选择颜色</div></a>
-                <a href="color-picker-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🎨</div><div class="tool-title">Selector de Color</div><div class="tool-desc">Convierte y selecciona colores</div></a>
-                <a href="color-picker-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🎨</div><div class="tool-title">Sélecteur de Couleur</div><div class="tool-desc">Convertissez et choisissez des couleurs</div></a>
-                <a href="color-picker-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🎨</div><div class="tool-title">Farbwähler</div><div class="tool-desc">Konvertieren und wählen Sie Farben</div></a>
-                
-                <a href="css-unit-converter-en.html" class="tool-card" data-lang="en"><div class="tool-icon">📏</div><div class="tool-title">CSS Unit Converter</div><div class="tool-desc">Convert between CSS units</div></a>
-                <a href="css-unit-converter-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">📏</div><div class="tool-title">CSS 单位转换器</div><div class="tool-desc">在 CSS 单位之间转换</div></a>
-                <a href="css-unit-converter-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">📏</div><div class="tool-title">Conversor de Unidades CSS</div><div class="tool-desc">Convierte entre unidades CSS</div></a>
-                <a href="css-unit-converter-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">📏</div><div class="tool-title">Convertisseur d'Unités CSS</div><div class="tool-desc">Convertissez entre unités CSS</div></a>
-                <a href="css-unit-converter-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">📏</div><div class="tool-title">CSS-Einheiten-Konverter</div><div class="tool-desc">Konvertieren Sie zwischen CSS-Einheiten</div></a>
-                
-                <a href="px-to-rem-en.html" class="tool-card" data-lang="en"><div class="tool-icon">↔️</div><div class="tool-title">PX to REM Converter</div><div class="tool-desc">Convert pixels to rem units</div></a>
-                <a href="px-to-rem-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">↔️</div><div class="tool-title">PX 转 REM 转换器</div><div class="tool-desc">将像素转换为 rem 单位</div></a>
-                <a href="px-to-rem-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">↔️</div><div class="tool-title">Conversor PX a REM</div><div class="tool-desc">Convierte píxeles a unidades rem</div></a>
-                <a href="px-to-rem-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">↔️</div><div class="tool-title">Convertisseur PX vers REM</div><div class="tool-desc">Convertissez les pixels en unités rem</div></a>
-                <a href="px-to-rem-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">↔️</div><div class="tool-title">PX zu REM Konverter</div><div class="tool-desc">Konvertieren Sie Pixel in rem-Einheiten</div></a>
-                
-                <a href="screen-resolution-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🖥️</div><div class="tool-title">Screen Resolution</div><div class="tool-desc">Detect your screen resolution</div></a>
-                <a href="screen-resolution-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🖥️</div><div class="tool-title">屏幕分辨率</div><div class="tool-desc">检测您的屏幕分辨率</div></a>
-                <a href="screen-resolution-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🖥️</div><div class="tool-title">Resolución de Pantalla</div><div class="tool-desc">Detecta la resolución de tu pantalla</div></a>
-                <a href="screen-resolution-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🖥️</div><div class="tool-title">Résolution d'Écran</div><div class="tool-desc">Détectez la résolution de votre écran</div></a>
-                <a href="screen-resolution-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🖥️</div><div class="tool-title">Bildschirmauflösung</div><div class="tool-desc">Erkennen Sie Ihre Bildschirmauflösung</div></a>
-                
-                <a href="user-agent-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🌐</div><div class="tool-title">User Agent Parser</div><div class="tool-desc">Parse browser user agent string</div></a>
-                <a href="user-agent-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🌐</div><div class="tool-title">User Agent 解析器</div><div class="tool-desc">解析浏览器 User Agent 字符串</div></a>
-                <a href="user-agent-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🌐</div><div class="tool-title">Analizador User Agent</div><div class="tool-desc">Analiza la cadena user agent del navegador</div></a>
-                <a href="user-agent-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🌐</div><div class="tool-title">Parseur User Agent</div><div class="tool-desc">Analysez la chaîne user agent du navigateur</div></a>
-                <a href="user-agent-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🌐</div><div class="tool-title">User-Agent-Parser</div><div class="tool-desc">Parsen Sie die Browser-User-Agent-Zeichenkette</div></a>
-            </div>
-        </div>
-
-        <div class="category">
-            <h2 class="category-title">Data Converters</h2>
-            <div class="tools-grid">
-                <a href="csv-to-json-en.html" class="tool-card" data-lang="en"><div class="tool-icon">📊</div><div class="tool-title">CSV to JSON</div><div class="tool-desc">Convert CSV to JSON format</div></a>
-                <a href="csv-to-json-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">📊</div><div class="tool-title">CSV 转 JSON</div><div class="tool-desc">将 CSV 转换为 JSON 格式</div></a>
-                <a href="csv-to-json-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">📊</div><div class="tool-title">CSV a JSON</div><div class="tool-desc">Convierte CSV a formato JSON</div></a>
-                <a href="csv-to-json-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">📊</div><div class="tool-title">CSV vers JSON</div><div class="tool-desc">Convertissez CSV en format JSON</div></a>
-                <a href="csv-to-json-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">📊</div><div class="tool-title">CSV zu JSON</div><div class="tool-desc">Konvertieren Sie CSV in JSON-Format</div></a>
-                
-                <a href="json-to-csv-en.html" class="tool-card" data-lang="en"><div class="tool-icon">📊</div><div class="tool-title">JSON to CSV</div><div class="tool-desc">Convert JSON to CSV format</div></a>
-                <a href="json-to-csv-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">📊</div><div class="tool-title">JSON 转 CSV</div><div class="tool-desc">将 JSON 转换为 CSV 格式</div></a>
-                <a href="json-to-csv-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">📊</div><div class="tool-title">JSON a CSV</div><div class="tool-desc">Convierte JSON a formato CSV</div></a>
-                <a href="json-to-csv-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">📊</div><div class="tool-title">JSON vers CSV</div><div class="tool-desc">Convertissez JSON en format CSV</div></a>
-                <a href="json-to-csv-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">📊</div><div class="tool-title">JSON zu CSV</div><div class="tool-desc">Konvertieren Sie JSON in CSV-Format</div></a>
-                
-                <a href="sql-to-csv-en.html" class="tool-card" data-lang="en"><div class="tool-icon">🗄️</div><div class="tool-title">SQL to CSV</div><div class="tool-desc">Convert SQL results to CSV</div></a>
-                <a href="sql-to-csv-zh.html" class="tool-card hidden" data-lang="zh"><div class="tool-icon">🗄️</div><div class="tool-title">SQL 转 CSV</div><div class="tool-desc">将 SQL 结果转换为 CSV</div></a>
-                <a href="sql-to-csv-es.html" class="tool-card hidden" data-lang="es"><div class="tool-icon">🗄️</div><div class="tool-title">SQL a CSV</div><div class="tool-desc">Convierte resultados SQL a CSV</div></a>
-                <a href="sql-to-csv-fr.html" class="tool-card hidden" data-lang="fr"><div class="tool-icon">🗄️</div><div class="tool-title">SQL vers CSV</div><div class="tool-desc">Convertissez les résultats SQL en CSV</div></a>
-                <a href="sql-to-csv-de.html" class="tool-card hidden" data-lang="de"><div class="tool-icon">🗄️</div><div class="tool-title">SQL zu CSV</div><div class="tool-desc">Konvertieren Sie SQL-Ergebnisse in CSV</div></a>
-            </div>
-        </div>
-
-        <footer>
-            <p>205 Tools - Developer Utilities | Built with ❤️ for developers</p>
-            <p style="margin-top: 10px; color: #444;">Available in English, 中文, Español, Français, Deutsch</p>
-        </footer>
     </div>
 
-    <script>
-        function setLang(lang) {
-            // Update buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang) || 
-                    (lang === 'en' && btn.textContent.includes('🇺🇸')) ||
-                    (lang === 'zh' && btn.textContent.includes('🇨🇳')) ||
-                    (lang === 'es' && btn.textContent.includes('🇪🇸')) ||
-                    (lang === 'fr' && btn.textContent.includes('🇫🇷')) ||
-                    (lang === 'de' && btn.textContent.includes('🇩🇪')));
-            });
-            
-            // Update tool cards visibility
-            document.querySelectorAll('.tool-card').forEach(card => {
-                if (card.dataset.lang === lang) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-            
-            // Update hrefs for English default
-            if (lang === 'en') {
-                document.querySelectorAll('.tool-card:not(.hidden)').forEach(card => {
-                    card.style.display = 'block';
-                });
-            }
-        }
-    </script>
+    <div class="container">
+        <div class="category">
+            <h2 class="category-title">🎨 Color Tools (15)</h2>
+            <div class="tools-grid">
+                <a href="color/en/color-picker.html" class="tool-card">
+                    <h3>Color Picker</h3>
+                    <p>Pick colors and convert between formats</p>
+                    <span class="lang-badge">EN</span><span class="lang-badge">中文</span><span class="lang-badge">ES</span><span class="lang-badge">FR</span><span class="lang-badge">DE</span>
+                </a>
+                <a href="color/en/hex-to-rgb.html" class="tool-card"><h3>HEX to RGB</h3><p>Convert HEX to RGB values</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/rgb-to-hex.html" class="tool-card"><h3>RGB to HEX</h3><p>Convert RGB to HEX codes</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/hex-to-hsl.html" class="tool-card"><h3>HEX to HSL</h3><p>Convert HEX to HSL values</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/hsl-to-hex.html" class="tool-card"><h3>HSL to HEX</h3><p>Convert HSL to HEX codes</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/rgb-to-hsl.html" class="tool-card"><h3>RGB to HSL</h3><p>Convert RGB to HSL format</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/hsl-to-rgb.html" class="tool-card"><h3>HSL to RGB</h3><p>Convert HSL to RGB format</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/color-contrast.html" class="tool-card"><h3>Color Contrast Checker</h3><p>Check WCAG contrast ratios</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/color-blindness.html" class="tool-card"><h3>Color Blindness Simulator</h3><p>Simulate color vision deficiencies</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/gradient-generator.html" class="tool-card"><h3>CSS Gradient Generator</h3><p>Generate CSS gradients</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/color-shades.html" class="tool-card"><h3>Color Shades Generator</h3><p>Generate color tints and shades</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/color-palette.html" class="tool-card"><h3>Color Palette Generator</h3><p>Generate harmonious palettes</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/image-colors.html" class="tool-card"><h3>Image Color Extractor</h3><p>Extract colors from images</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/cmyk-to-rgb.html" class="tool-card"><h3>CMYK to RGB</h3><p>Convert CMYK to RGB</p><span class="lang-badge">5 languages</span></a>
+                <a href="color/en/pantone-to-hex.html" class="tool-card"><h3>Pantone to HEX</h3><p>Convert Pantone to HEX</p><span class="lang-badge">5 languages</span></a>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2 class="category-title">🧮 Math Tools (12)</h2>
+            <div class="tools-grid">
+                <a href="math/en/calculator.html" class="tool-card"><h3>Calculator</h3><p>Basic arithmetic calculator</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/scientific-calculator.html" class="tool-card"><h3>Scientific Calculator</h3><p>Advanced calculator with functions</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/percentage.html" class="tool-card"><h3>Percentage Calculator</h3><p>Calculate percentages easily</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/ratio.html" class="tool-card"><h3>Ratio Calculator</h3><p>Calculate and simplify ratios</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/random-number.html" class="tool-card"><h3>Random Number Generator</h3><p>Generate random numbers</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/prime-checker.html" class="tool-card"><h3>Prime Number Checker</h3><p>Check if number is prime</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/factorial.html" class="tool-card"><h3>Factorial Calculator</h3><p>Calculate n!</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/fibonacci.html" class="tool-card"><h3>Fibonacci Generator</h3><p>Generate Fibonacci sequence</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/binary.html" class="tool-card"><h3>Binary Calculator</h3><p>Binary-decimal conversion</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/hex-calculator.html" class="tool-card"><h3>Hex Calculator</h3><p>Hexadecimal conversion</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/roman-numerals.html" class="tool-card"><h3>Roman Numeral Converter</h3><p>Convert Roman numerals</p><span class="lang-badge">5 languages</span></a>
+                <a href="math/en/currency.html" class="tool-card"><h3>Currency Converter</h3><p>Convert between currencies</p><span class="lang-badge">5 languages</span></a>
+            </div>
+        </div>
+
+        <div class="category">
+            <h2 class="category-title">📅 Date Tools (10)</h2>
+            <div class="tools-grid">
+                <a href="date/en/age-calculator.html" class="tool-card"><h3>Age Calculator</h3><p>Calculate exact age</p><span class="lang-badge">5 languages</span></a>
+                <a href="date/en/date-difference.html" class="tool-card"><h3>Date Difference</h3><p>Days between dates</p><span class="lang-badge">5 languages</span></a>
+                <a href="date/en/day-of-week.html" class="tool-card"><h3>Day of Week</h3><p>Find weekday for any date</p><span class="lang-badge">5 languages</span></a>
+                <a href="date/en/birthday-calculator.html" class="tool-card"><h3>Birthday Calculator</h3><p>Countdown to next birthday</p><span class="lang-badge">5 languages</span></a>
+                <a href="date/en/countdown.html" class="tool-card"><h3>Countdown Timer</h3><p>Create countdown timers</p><span class="lang-badge">5 languages</span></a>
+                <a href="date/en/stopwatch.html" class="tool-card"><h3>Stopwatch</h3><p>Simple stopwatch with laps</p><span class="lang-badge">5 languages</span></a>
+                <a href="date/en/timezone.html" class="tool-card"><h3>Time Zone Converter</h3><p>Convert between time zones</p><span class="lang-badge">5 languages</span></a>
+                <a href="date/en/unix-timestamp.html" class="tool-card"><h3>Unix Timestamp</h3><p>Timestamp conversion</p><span class="lang-badge">5 languages</span></a>
+                <a href="date/en/working-days.html" class="tool-card"><h3>Working Days</h3><p>Calculate business days</p><span class="lang-badge">5 languages</span></a>
+                <a href="date/en/calendar.html" class="tool-card"><h3>Calendar Generator</h3><p>Generate monthly calendars</p><span class="lang-badge">5 languages</span></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>205 Tools Collection - Free Online Utilities</p>
+    </div>
 </body>
 </html>
