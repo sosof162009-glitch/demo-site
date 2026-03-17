@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wissenschaftlicher Rechner - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" >English</option>
+            <option value="zh" >中文</option>
+            <option value="es" >Español</option>
+            <option value="fr" >Français</option>
+            <option value="de" selected>Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">Wissenschaftlicher Rechner</h2>
+            <p class="tool-description">Erweiterter Rechner mit wissenschaftlichen Funktionen</p>
+            
+<div class="card">
+    <style>
+        .sci-display { background: var(--bg-primary); padding: 15px; border-radius: 8px; text-align: right; font-size: 1.5rem; margin-bottom: 10px; min-height: 50px; }
+        .sci-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+        .sci-btn { padding: 12px 8px; font-size: 0.9rem; background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); cursor: pointer; }
+        .sci-btn:hover { background: var(--border); }
+        .sci-btn.fn { background: #2d3a4f; }
+        .sci-btn.op { background: var(--accent); }
+    </style>
+    <div class="sci-display" id="sciDisplay">0</div>
+    <div class="sci-buttons">
+        <button class="sci-btn fn" onclick="sciClear()">C</button>
+        <button class="sci-btn fn" onclick="sciFunc('sin')">sin</button>
+        <button class="sci-btn fn" onclick="sciFunc('cos')">cos</button>
+        <button class="sci-btn fn" onclick="sciFunc('tan')">tan</button>
+        <button class="sci-btn fn" onclick="sciFunc('log')">log</button>
+        <button class="sci-btn fn" onclick="sciFunc('ln')">ln</button>
+        <button class="sci-btn fn" onclick="sciFunc('sqrt')">√</button>
+        <button class="sci-btn fn" onclick="sciFunc('pow')">x²</button>
+        <button class="sci-btn fn" onclick="sciAppend('(')">(</button>
+        <button class="sci-btn fn" onclick="sciAppend(')')">)</button>
+        <button class="sci-btn" onclick="sciAppend('7')">7</button>
+        <button class="sci-btn" onclick="sciAppend('8')">8</button>
+        <button class="sci-btn" onclick="sciAppend('9')">9</button>
+        <button class="sci-btn op" onclick="sciAppend('/')">/</button>
+        <button class="sci-btn fn" onclick="sciFunc('pi')">π</button>
+        <button class="sci-btn" onclick="sciAppend('4')">4</button>
+        <button class="sci-btn" onclick="sciAppend('5')">5</button>
+        <button class="sci-btn" onclick="sciAppend('6')">6</button>
+        <button class="sci-btn op" onclick="sciAppend('*')">×</button>
+        <button class="sci-btn fn" onclick="sciFunc('e')">e</button>
+        <button class="sci-btn" onclick="sciAppend('1')">1</button>
+        <button class="sci-btn" onclick="sciAppend('2')">2</button>
+        <button class="sci-btn" onclick="sciAppend('3')">3</button>
+        <button class="sci-btn op" onclick="sciAppend('-')">-</button>
+        <button class="sci-btn op" onclick="sciCalc()">=</button>
+        <button class="sci-btn" onclick="sciAppend('0')" style="grid-column: span 2;">0</button>
+        <button class="sci-btn" onclick="sciAppend('.')">.</button>
+        <button class="sci-btn op" onclick="sciAppend('+')">+</button>
+    </div>
+</div>
+<script>
+let sciCurrent = '0';
+function sciUpdate() { document.getElementById('sciDisplay').textContent = sciCurrent; }
+function sciClear() { sciCurrent = '0'; sciUpdate(); }
+function sciAppend(val) { sciCurrent = sciCurrent === '0' ? val : sciCurrent + val; sciUpdate(); }
+function sciFunc(fn) {
+    switch(fn) {
+        case 'sin': sciCurrent = 'Math.sin(' + sciCurrent + ')'; break;
+        case 'cos': sciCurrent = 'Math.cos(' + sciCurrent + ')'; break;
+        case 'tan': sciCurrent = 'Math.tan(' + sciCurrent + ')'; break;
+        case 'log': sciCurrent = 'Math.log10(' + sciCurrent + ')'; break;
+        case 'ln': sciCurrent = 'Math.log(' + sciCurrent + ')'; break;
+        case 'sqrt': sciCurrent = 'Math.sqrt(' + sciCurrent + ')'; break;
+        case 'pow': sciCurrent = 'Math.pow(' + sciCurrent + ', 2)'; break;
+        case 'pi': sciCurrent = sciCurrent === '0' ? 'Math.PI' : sciCurrent + 'Math.PI'; break;
+        case 'e': sciCurrent = sciCurrent === '0' ? 'Math.E' : sciCurrent + 'Math.E'; break;
+    }
+    sciUpdate();
+}
+function sciCalc() { try { sciCurrent = String(eval(sciCurrent)); } catch { sciCurrent = 'Error'; } sciUpdate(); }
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Teil der 205-Tools-Sammlung - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

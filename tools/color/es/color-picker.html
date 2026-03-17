@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector de Color - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" >English</option>
+            <option value="zh" >中文</option>
+            <option value="es" selected>Español</option>
+            <option value="fr" >Français</option>
+            <option value="de" >Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">Selector de Color</h2>
+            <p class="tool-description">Selecciona colores y convierte entre formatos</p>
+            
+<div class="card">
+    <div class="input-group">
+        <label data-t="pickColor">Pick a Color</label>
+        <input type="color" id="colorInput" value="#4f8ef7">
+    </div>
+    <div class="color-preview" id="colorPreview" style="background: #4f8ef7; color: white;">#4f8ef7</div>
+    <div class="grid">
+        <div class="input-group">
+            <label>HEX</label>
+            <input type="text" id="hexInput" value="#4f8ef7" oninput="updateFromHex()">
+        </div>
+        <div class="input-group">
+            <label>RGB</label>
+            <input type="text" id="rgbInput" readonly onclick="copyToClipboard(this.value)">
+        </div>
+        <div class="input-group">
+            <label>HSL</label>
+            <input type="text" id="hslInput" readonly onclick="copyToClipboard(this.value)">
+        </div>
+        <div class="input-group">
+            <label>CMYK</label>
+            <input type="text" id="cmykInput" readonly onclick="copyToClipboard(this.value)">
+        </div>
+    </div>
+</div>
+<script>
+function updateFromPicker() {
+    const hex = document.getElementById('colorInput').value;
+    document.getElementById('hexInput').value = hex;
+    updateAll(hex);
+}
+function updateFromHex() {
+    let hex = document.getElementById('hexInput').value;
+    if (!hex.startsWith('#')) hex = '#' + hex;
+    if (/^#[0-9A-Fa-f]{6}$/.test(hex)) {
+        document.getElementById('colorInput').value = hex;
+        updateAll(hex);
+    }
+}
+function updateAll(hex) {
+    const rgb = hexToRgb(hex);
+    const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+    const cmyk = rgbToCmyk(rgb.r, rgb.g, rgb.b);
+    document.getElementById('colorPreview').style.background = hex;
+    document.getElementById('colorPreview').style.color = getTextColorForBackground(hex);
+    document.getElementById('colorPreview').textContent = hex.toUpperCase();
+    document.getElementById('rgbInput').value = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    document.getElementById('hslInput').value = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+    document.getElementById('cmykInput').value = `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`;
+}
+document.getElementById('colorInput').addEventListener('input', updateFromPicker);
+updateAll('#4f8ef7');
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Parte de la colección de 205 herramientas - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

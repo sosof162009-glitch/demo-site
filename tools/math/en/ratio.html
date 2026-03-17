@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ratio Calculator - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" selected>English</option>
+            <option value="zh" >中文</option>
+            <option value="es" >Español</option>
+            <option value="fr" >Français</option>
+            <option value="de" >Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">Ratio Calculator</h2>
+            <p class="tool-description">Calculate and simplify ratios</p>
+            
+<div class="card">
+    <h3 style="margin-bottom: 15px; color: var(--accent);">Simplify Ratio</h3>
+    <div class="grid" style="grid-template-columns: 1fr auto 1fr;">
+        <input type="number" id="r1a" placeholder="A">
+        <span style="align-self: center; padding: 0 15px; font-size: 1.5rem;">:</span>
+        <input type="number" id="r1b" placeholder="B">
+    </div>
+    <button class="btn" onclick="simplifyRatio()" style="margin: 15px 0;" data-t="simplify">Simplify</button>
+    <div class="result-box" id="result1" style="display:none;"><div class="result-value" id="rv1"></div></div>
+</div>
+<div class="card">
+    <h3 style="margin-bottom: 15px; color: var(--accent);">Solve Proportion (A:B = C:D)</h3>
+    <div class="grid" style="grid-template-columns: 1fr auto 1fr auto 1fr;">
+        <input type="number" id="pA" placeholder="A">
+        <span style="align-self: center; padding: 0 10px;">:</span>
+        <input type="number" id="pB" placeholder="B">
+        <span style="align-self: center; padding: 0 10px;">=</span>
+        <input type="number" id="pC" placeholder="C">
+    </div>
+    <button class="btn" onclick="solveProportion()" style="margin: 15px 0;" data-t="solve">Find D</button>
+    <div class="result-box" id="result2" style="display:none;"><div class="result-value" id="rv2"></div></div>
+</div>
+<script>
+function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+function simplifyRatio() { const a = parseInt(document.getElementById('r1a').value) || 0; const b = parseInt(document.getElementById('r1b').value) || 0; if (a && b) { const g = gcd(a, b); document.getElementById('rv1').textContent = (a/g) + ' : ' + (b/g); document.getElementById('result1').style.display = 'block'; } }
+function solveProportion() { const a = parseFloat(document.getElementById('pA').value) || 0; const b = parseFloat(document.getElementById('pB').value) || 0; const c = parseFloat(document.getElementById('pC').value) || 0; if (a) { const d = (b * c) / a; document.getElementById('rv2').textContent = 'D = ' + d.toFixed(4); document.getElementById('result2').style.display = 'block'; } }
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Part of 205 Tools Collection - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

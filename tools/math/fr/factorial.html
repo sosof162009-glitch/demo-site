@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Factorielle - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" >English</option>
+            <option value="zh" >中文</option>
+            <option value="es" >Español</option>
+            <option value="fr" selected>Français</option>
+            <option value="de" >Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">Calculateur de Factorielle</h2>
+            <p class="tool-description">Calculez la factorielle d'un nombre (n!)</p>
+            
+<div class="card">
+    <div class="input-group">
+        <label>Enter a Number (n)</label>
+        <input type="number" id="numInput" placeholder="Enter number..." min="0" max="170">
+    </div>
+    <button class="btn" onclick="calcFactorial()" data-t="calculate">Calculate</button>
+    <div class="result-box" id="result" style="display:none;">
+        <div class="result-label">n!</div>
+        <div class="result-value" id="factResult"></div>
+    </div>
+</div>
+<script>
+function factorial(n) { if (n <= 1) return 1; let result = 1; for (let i = 2; i <= n; i++) result *= i; return result; }
+function calcFactorial() {
+    const n = parseInt(document.getElementById('numInput').value);
+    if (n < 0 || n > 170) { alert('Please enter a number between 0 and 170'); return; }
+    document.getElementById('factResult').textContent = factorial(n).toLocaleString();
+    document.getElementById('result').style.display = 'block';
+}
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Fait partie de la collection de 205 outils - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

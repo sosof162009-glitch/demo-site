@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Cumpleaños - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" >English</option>
+            <option value="zh" >中文</option>
+            <option value="es" selected>Español</option>
+            <option value="fr" >Français</option>
+            <option value="de" >Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">Calculadora de Cumpleaños</h2>
+            <p class="tool-description">Calcula el próximo cumpleaños y cuenta regresiva</p>
+            
+<div class="card">
+    <div class="input-group">
+        <label>Your Birth Date</label>
+        <input type="date" id="birthDate">
+    </div>
+    <button class="btn" onclick="calcBirthday()" data-t="calculate">Calculate</button>
+    <div class="result-box" id="result" style="display:none;">
+        <div class="result-value" id="bdayResult"></div>
+        <div id="bdayDetails" style="margin-top: 15px; color: var(--text-secondary);"></div>
+    </div>
+</div>
+<script>
+function calcBirthday() {
+    const birth = new Date(document.getElementById('birthDate').value);
+    if (!birth.getTime()) { alert('Please select a date'); return; }
+    const now = new Date();
+    let nextBday = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
+    if (nextBday < now) nextBday.setFullYear(now.getFullYear() + 1);
+    const diffMs = nextBday - now;
+    const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    const age = nextBday.getFullYear() - birth.getFullYear();
+    document.getElementById('bdayResult').textContent = days + ' days left';
+    document.getElementById('bdayDetails').innerHTML = `Next birthday: ${nextBday.toDateString()}<br>You will be: ${age} years old`;
+    document.getElementById('result').style.display = 'block';
+}
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Parte de la colección de 205 herramientas - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

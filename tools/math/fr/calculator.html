@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculatrice - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" >English</option>
+            <option value="zh" >中文</option>
+            <option value="es" >Español</option>
+            <option value="fr" selected>Français</option>
+            <option value="de" >Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">Calculatrice</h2>
+            <p class="tool-description">Calculatrice arithmétique de base</p>
+            
+<div class="card">
+    <style>
+        .calc-display { background: var(--bg-primary); padding: 20px; border-radius: 8px; text-align: right; font-size: 2rem; margin-bottom: 15px; overflow: hidden; }
+        .calc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .calc-btn { padding: 20px; font-size: 1.2rem; background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); cursor: pointer; transition: all 0.2s; }
+        .calc-btn:hover { background: var(--border); }
+        .calc-btn.operator { background: var(--accent); }
+        .calc-btn.operator:hover { background: var(--accent-hover); }
+        .calc-btn.equals { background: var(--success); grid-column: span 2; }
+        .calc-btn.zero { grid-column: span 2; }
+    </style>
+    <div class="calc-display" id="display">0</div>
+    <div class="calc-buttons">
+        <button class="calc-btn" onclick="clearCalc()">C</button>
+        <button class="calc-btn" onclick="append('/')">/</button>
+        <button class="calc-btn" onclick="append('*')">×</button>
+        <button class="calc-btn" onclick="backspace()">←</button>
+        <button class="calc-btn" onclick="append('7')">7</button>
+        <button class="calc-btn" onclick="append('8')">8</button>
+        <button class="calc-btn" onclick="append('9')">9</button>
+        <button class="calc-btn operator" onclick="append('-')">-</button>
+        <button class="calc-btn" onclick="append('4')">4</button>
+        <button class="calc-btn" onclick="append('5')">5</button>
+        <button class="calc-btn" onclick="append('6')">6</button>
+        <button class="calc-btn operator" onclick="append('+')">+</button>
+        <button class="calc-btn" onclick="append('1')">1</button>
+        <button class="calc-btn" onclick="append('2')">2</button>
+        <button class="calc-btn" onclick="append('3')">3</button>
+        <button class="calc-btn" onclick="append('.')">.</button>
+        <button class="calc-btn zero" onclick="append('0')">0</button>
+        <button class="calc-btn equals" onclick="calculate()">=</button>
+    </div>
+</div>
+<script>
+let current = '0';
+function updateDisplay() { document.getElementById('display').textContent = current; }
+function clearCalc() { current = '0'; updateDisplay(); }
+function append(val) { if (current === '0') current = val; else current += val; updateDisplay(); }
+function backspace() { current = current.slice(0, -1) || '0'; updateDisplay(); }
+function calculate() { try { current = String(eval(current) || '0'); } catch { current = 'Error'; } updateDisplay(); }
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Fait partie de la collection de 205 outils - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEX a RGB - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" >English</option>
+            <option value="zh" >中文</option>
+            <option value="es" selected>Español</option>
+            <option value="fr" >Français</option>
+            <option value="de" >Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">HEX a RGB</h2>
+            <p class="tool-description">Convierte códigos HEX a valores RGB</p>
+            
+<div class="card">
+    <div class="input-group">
+        <label data-t="enterHex">Enter HEX Color</label>
+        <input type="text" id="hexInput" placeholder="#4f8ef7" value="#4f8ef7">
+    </div>
+    <button class="btn" onclick="convertHexToRgb()" data-t="convert">Convert</button>
+    <div class="result-box" id="result" style="display:none;">
+        <div class="result-label">RGB</div>
+        <div class="result-value" id="rgbResult"></div>
+    </div>
+    <div class="color-preview" id="preview"></div>
+</div>
+<script>
+function convertHexToRgb() {
+    let hex = document.getElementById('hexInput').value.trim();
+    if (!hex.startsWith('#')) hex = '#' + hex;
+    const rgb = hexToRgb(hex);
+    if (rgb) {
+        document.getElementById('rgbResult').textContent = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+        document.getElementById('preview').style.background = hex;
+        document.getElementById('result').style.display = 'block';
+    } else {
+        alert('Invalid HEX color');
+    }
+}
+convertHexToRgb();
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Parte de la colección de 205 herramientas - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" selected>English</option>
+            <option value="zh" >中文</option>
+            <option value="es" >Español</option>
+            <option value="fr" >Français</option>
+            <option value="de" >Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">Currency Converter</h2>
+            <p class="tool-description">Convert between currencies (static rates)</p>
+            
+<div class="card">
+    <div class="grid">
+        <div class="input-group">
+            <label>Amount</label>
+            <input type="number" id="amount" value="100" min="0">
+        </div>
+        <div class="input-group">
+            <label>From</label>
+            <select id="fromCurr"></select>
+        </div>
+        <div class="input-group">
+            <label>To</label>
+            <select id="toCurr"></select>
+        </div>
+    </div>
+    <button class="btn" onclick="convertCurrency()" data-t="convert">Convert</button>
+    <div class="result-box" id="result" style="display:none; margin-top: 20px;">
+        <div class="result-value" id="currResult" style="font-size: 1.8rem;"></div>
+    </div>
+</div>
+<script>
+const currencies = Object.keys(CurrencyRates);
+const fromSel = document.getElementById('fromCurr');
+const toSel = document.getElementById('toCurr');
+currencies.forEach(c => { fromSel.add(new Option(c, c)); toSel.add(new Option(c, c)); });
+fromSel.value = 'USD'; toSel.value = 'EUR';
+function convertCurrency() {
+    const amount = parseFloat(document.getElementById('amount').value) || 0;
+    const from = fromSel.value;
+    const to = toSel.value;
+    const rate = CurrencyRates[to] / CurrencyRates[from];
+    const result = amount * rate;
+    document.getElementById('currResult').textContent = result.toFixed(2) + ' ' + to;
+    document.getElementById('result').style.display = 'block';
+}
+convertCurrency();
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Part of 205 Tools Collection - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>
