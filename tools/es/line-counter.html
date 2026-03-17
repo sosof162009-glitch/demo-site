@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador de Líneas | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="line-counter.html" selected>Español</option>
+      <option value="../en/line-counter.html">English</option>
+      <option value="../ar/line-counter.html">العربية</option>
+      <option value="../fr/line-counter.html">Français</option>
+      <option value="../de/line-counter.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Contador de Líneas</h1>
+      <p>Cuenta líneas en tu texto con opciones para líneas vacías y contenido específico</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">Introduce tu texto:</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Escribe o pega tu texto aquí..."></textarea>
+      </div>
+
+      <div class="options-group">
+        <div class="option-item">
+          <input type="checkbox" id="ignore-empty" checked onchange="countLines()">
+          <label for="ignore-empty">Ignorar líneas vacías</label>
+        </div>
+        <div class="option-item">
+          <input type="checkbox" id="trim-spaces" onchange="countLines()">
+          <label for="trim-spaces">Recortar espacios</label>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="countLines()">Contar Líneas</button>
+        <button class="btn btn-secondary" onclick="clearText()">Limpiar</button>
+      </div>
+
+      <div class="stats-display">
+        <div class="stat-box">
+          <span class="number" id="total-lines">0</span>
+          <span class="label">Total Líneas</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="non-empty">0</span>
+          <span class="label">No Vacías</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="empty-lines">0</span>
+          <span class="label">Vacías</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="avg-length">0</span>
+          <span class="label">Longitud Media</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('text-input').addEventListener('input', countLines);
+
+    function countLines() {
+      const text = document.getElementById('text-input').value;
+      const trimSpaces = document.getElementById('trim-spaces').checked;
+      
+      if (text === '') {
+        document.getElementById('total-lines').textContent = '0';
+        document.getElementById('non-empty').textContent = '0';
+        document.getElementById('empty-lines').textContent = '0';
+        document.getElementById('avg-length').textContent = '0';
+        return;
+      }
+      
+      let lines = text.split('\n');
+      if (trimSpaces) lines = lines.map(l => l.trim());
+      
+      const totalLines = lines.length;
+      const emptyLines = lines.filter(l => l.trim() === '').length;
+      const nonEmpty = totalLines - emptyLines;
+      const avgLength = nonEmpty > 0 ? Math.round(lines.filter(l => l.trim() !== '').join('').length / nonEmpty) : 0;
+      
+      document.getElementById('total-lines').textContent = totalLines;
+      document.getElementById('non-empty').textContent = nonEmpty;
+      document.getElementById('empty-lines').textContent = emptyLines;
+      document.getElementById('avg-length').textContent = avgLength;
+    }
+
+    function clearText() {
+      document.getElementById('text-input').value = '';
+      countLines();
+    }
+  </script>
+</body>
+</html>

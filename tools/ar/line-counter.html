@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عداد الأسطر | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <style>body { font-family: 'Tajawal', sans-serif; }</style>
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="line-counter.html" selected>العربية</option>
+      <option value="../en/line-counter.html">English</option>
+      <option value="../fr/line-counter.html">Français</option>
+      <option value="../es/line-counter.html">Español</option>
+      <option value="../de/line-counter.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>عداد الأسطر</h1>
+      <p>احسب الأسطر في نصك مع خيارات للأسطر الفارغة والمحتوى المحدد</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">أدخل نصك:</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="اكتب أو الصق نصك هنا..."></textarea>
+      </div>
+
+      <div class="options-group">
+        <div class="option-item">
+          <input type="checkbox" id="ignore-empty" checked onchange="countLines()">
+          <label for="ignore-empty">تجاهل الأسطر الفارغة</label>
+        </div>
+        <div class="option-item">
+          <input type="checkbox" id="trim-spaces" onchange="countLines()">
+          <label for="trim-spaces">إزالة المسافات</label>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="countLines()">احسب الأسطر</button>
+        <button class="btn btn-secondary" onclick="clearText()">مسح</button>
+      </div>
+
+      <div class="stats-display">
+        <div class="stat-box">
+          <span class="number" id="total-lines">0</span>
+          <span class="label">إجمالي الأسطر</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="non-empty">0</span>
+          <span class="label">غير فارغة</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="empty-lines">0</span>
+          <span class="label">فارغة</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="avg-length">0</span>
+          <span class="label">متوسط الطول</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('text-input').addEventListener('input', countLines);
+
+    function countLines() {
+      const text = document.getElementById('text-input').value;
+      const trimSpaces = document.getElementById('trim-spaces').checked;
+      
+      if (text === '') {
+        document.getElementById('total-lines').textContent = '0';
+        document.getElementById('non-empty').textContent = '0';
+        document.getElementById('empty-lines').textContent = '0';
+        document.getElementById('avg-length').textContent = '0';
+        return;
+      }
+      
+      let lines = text.split('\n');
+      if (trimSpaces) lines = lines.map(l => l.trim());
+      
+      const totalLines = lines.length;
+      const emptyLines = lines.filter(l => l.trim() === '').length;
+      const nonEmpty = totalLines - emptyLines;
+      const avgLength = nonEmpty > 0 ? Math.round(lines.filter(l => l.trim() !== '').join('').length / nonEmpty) : 0;
+      
+      document.getElementById('total-lines').textContent = totalLines;
+      document.getElementById('non-empty').textContent = nonEmpty;
+      document.getElementById('empty-lines').textContent = emptyLines;
+      document.getElementById('avg-length').textContent = avgLength;
+    }
+
+    function clearText() {
+      document.getElementById('text-input').value = '';
+      countLines();
+    }
+  </script>
+</body>
+</html>

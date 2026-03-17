@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line Counter | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="line-counter.html" selected>English</option>
+      <option value="../ar/line-counter.html">العربية</option>
+      <option value="../fr/line-counter.html">Français</option>
+      <option value="../es/line-counter.html">Español</option>
+      <option value="../de/line-counter.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Line Counter</h1>
+      <p>Count lines in your text with options for empty lines and specific content</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">Enter your text:</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Type or paste your text here..."></textarea>
+      </div>
+
+      <div class="options-group">
+        <div class="option-item">
+          <input type="checkbox" id="ignore-empty" checked onchange="countLines()">
+          <label for="ignore-empty">Ignore empty lines</label>
+        </div>
+        <div class="option-item">
+          <input type="checkbox" id="trim-spaces" onchange="countLines()">
+          <label for="trim-spaces">Trim whitespace</label>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="countLines()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"/>
+          </svg>
+          Count Lines
+        </button>
+        <button class="btn btn-secondary" onclick="clearText()">Clear</button>
+      </div>
+
+      <div class="stats-display">
+        <div class="stat-box">
+          <span class="number" id="total-lines">0</span>
+          <span class="label">Total Lines</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="non-empty">0</span>
+          <span class="label">Non-Empty</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="empty-lines">0</span>
+          <span class="label">Empty Lines</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="avg-length">0</span>
+          <span class="label">Avg Length</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('text-input').addEventListener('input', countLines);
+
+    function countLines() {
+      const text = document.getElementById('text-input').value;
+      const ignoreEmpty = document.getElementById('ignore-empty').checked;
+      const trimSpaces = document.getElementById('trim-spaces').checked;
+      
+      if (text === '') {
+        document.getElementById('total-lines').textContent = '0';
+        document.getElementById('non-empty').textContent = '0';
+        document.getElementById('empty-lines').textContent = '0';
+        document.getElementById('avg-length').textContent = '0';
+        return;
+      }
+      
+      let lines = text.split('\n');
+      if (trimSpaces) {
+        lines = lines.map(l => l.trim());
+      }
+      
+      const totalLines = lines.length;
+      const emptyLines = lines.filter(l => l.trim() === '').length;
+      const nonEmpty = totalLines - emptyLines;
+      const avgLength = nonEmpty > 0 ? Math.round(lines.filter(l => l.trim() !== '').join('').length / nonEmpty) : 0;
+      
+      document.getElementById('total-lines').textContent = totalLines;
+      document.getElementById('non-empty').textContent = nonEmpty;
+      document.getElementById('empty-lines').textContent = emptyLines;
+      document.getElementById('avg-length').textContent = avgLength;
+    }
+
+    function clearText() {
+      document.getElementById('text-input').value = '';
+      countLines();
+    }
+  </script>
+</body>
+</html>
