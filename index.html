@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المشروع الجديد</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-50">
+  <div class="text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-4">المشروع الجديد</h1>
+    <p class="text-gray-600 mb-8">جاهز للبدء...</p>
+    <div id="status" class="text-sm text-blue-600">جاري الاتصال بـ Supabase...</div>
+    <div id="data" class="mt-4"></div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.0'
+    
+    const supabaseUrl = 'https://nrylirwsluaduvolkdsp.supabase.co'
+    const supabaseKey = 'sb_publishable_c8gWPJ-mr07GIAMqAyP5-w_Re5MBg_y'
+    
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    
+    async function testConnection() {
+      const { data, error } = await supabase.from('tasks').select('*').limit(1)
+      
+      const statusEl = document.getElementById('status')
+      if (error) {
+        statusEl.textContent = '⚠️ خطأ: ' + error.message
+        statusEl.className = 'text-sm text-red-600'
+      } else {
+        statusEl.textContent = '✅ متصل بـ Supabase!'
+        statusEl.className = 'text-sm text-green-600'
+      }
+    }
+    
+    testConnection()
+  </script>
+</body>
+</html>
