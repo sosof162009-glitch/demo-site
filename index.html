@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>205 Tools Hub - Free Online Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-card: #16161f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6b6b7b;
+            --border-color: #252532;
+            --primary: #4f8ef7;
+            --primary-hover: #3a7de6;
+            --success: #22c55e;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(90deg, var(--primary), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .lang-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .lang-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+        
+        .tool-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(79, 142, 247, 0.2);
+        }
+        
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .tool-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .tool-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .tool-link:hover {
+            color: var(--primary-hover);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .stats { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>205 Tools Hub</h1>
+        <p class="subtitle">Free online tools for developers, designers, and everyone. No ads, no registration required.</p>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">205+</div>
+                <div class="stat-label">Free Tools</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Languages</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Categories</div>
+            </div>
+        </div>
+        
+        <div class="lang-selector">
+            <a href="/tools/en/" class="lang-btn">🇺🇸 English</a>
+            <a href="/tools/ar/" class="lang-btn">🇸🇦 العربية</a>
+            <a href="/tools/fr/" class="lang-btn">🇫🇷 Français</a>
+            <a href="/tools/es/" class="lang-btn">🇪🇸 Español</a>
+            <a href="/tools/de/" class="lang-btn">🇩🇪 Deutsch</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2 class="section-title">Popular Tools</h2>
+        
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">🖼️</div>
+                <div class="tool-title">Image Converter</div>
+                <div class="tool-desc">Convert between JPG, PNG, WebP, AVIF formats</div>
+                <a href="/tools/en/image-converter.html" class="tool-link">Open Tool →</a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">📄</div>
+                <div class="tool-title">PDF Tools</div>
+                <div class="tool-desc">Merge, split, compress, convert PDF files</div>
+                <a href="/tools/en/pdf-merge.html" class="tool-link">Open Tool →</a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">🎨</div>
+                <div class="tool-title">Color Picker</div>
+                <div class="tool-desc">HEX, RGB, HSL converter and palette generator</div>
+                <a href="/tools/color/en/color-picker.html" class="tool-link">Open Tool →</a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">💻</div>
+                <div class="tool-title">JSON Formatter</div>
+                <div class="tool-desc">Format, validate, and convert JSON data</div>
+                <a href="/tools/en/json-formatter.html" class="tool-link">Open Tool →</a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">🔒</div>
+                <div class="tool-title">Password Generator</div>
+                <div class="tool-desc">Generate secure random passwords</div>
+                <a href="/tools/en/password-generator.html" class="tool-link">Open Tool →</a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">📊</div>
+                <div class="tool-title">Unit Converter</div>
+                <div class="tool-desc">Length, weight, temperature, and more</div>
+                <a href="/tools/en/age-calculator.html" class="tool-link">Open Tool →</a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">🔍</div>
+                <div class="tool-title">SEO Tools</div>
+                <div class="tool-desc">Meta tags, sitemap, robots.txt generators</div>
+                <a href="/tools/en/meta-tag-generator.html" class="tool-link">Open Tool →</a>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon">📝</div>
+                <div class="tool-title">Text Tools</div>
+                <div class="tool-desc">Word count, case converter, diff checker</div>
+                <a href="/tools/en/find-and-replace.html" class="tool-link">Open Tool →</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2026 Tools Hub - 205 Free Online Tools | Built with ❤️</p>
+    </footer>
+</body>
+</html>
