@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إدارة الفئات | لوحة التحكم</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+<style>body{font-family:'Tajawal',sans-serif;}
+.categories-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:24px;}
+.category-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:all .2s;cursor:move;}
+.category-card:hover{border-color:var(--primary);transform:translateY(-2px);}
+.category-icon{width:56px;height:56px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:28px;}
+.category-name{font-size:18px;font-weight:600;margin-bottom:8px;}
+.category-count{color:var(--text-secondary);font-size:14px;margin-bottom:16px;}
+.category-actions{display:flex;gap:8px;}
+.cat-image{background:rgba(79,142,247,.1);color:#4f8ef7;}
+.cat-pdf{background:rgba(239,68,68,.1);color:#ef4444;}
+.cat-text{background:rgba(34,197,94,.1);color:#22c55e;}
+.cat-dev{background:rgba(139,92,246,.1);color:#8b5cf6;}
+.cat-color{background:rgba(236,72,153,.1);color:#ec4899;}
+.cat-math{background:rgba(245,158,11,.1);color:#f59e0b;}
+.cat-date{background:rgba(6,182,212,.1);color:#06b6d4;}
+.cat-unit{background:rgba(132,204,22,.1);color:#84cc16;}
+.cat-seo{background:rgba(168,85,247,.1);color:#a855f7;}
+.cat-security{background:rgba(99,102,241,.1);color:#6366f1;}
+.cat-data{background:rgba(14,165,233,.1);color:#0ea5e9;}
+.cat-special{background:rgba(249,115,22,.1);color:#f97316;}
+.dragging{opacity:.5;}
+.add-category-card{border:2px dashed var(--border);background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;cursor:pointer;}
+.add-category-card:hover{border-color:var(--primary);background:rgba(79,142,247,.05);}
+.add-icon{width:64px;height:64px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:32px;color:var(--primary);}
+</style>
+</head>
+<body>
+<div class="admin-container">
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header"><div class="logo"><div class="logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div><span>Tools Admin</span></div></div>
+<nav class="sidebar-nav">
+<div class="nav-section"><div class="nav-label">الرئيسية</div><a href="dashboard.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span>لوحة التحكم</span></a></div>
+<div class="nav-section"><div class="nav-label">الإدارة</div><a href="tools.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>الأدوات</span></a><a href="categories.html" class="nav-item active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg><span>الفئات</span></a></div>
+<div class="nav-section"><div class="nav-label">الإعدادات</div><a href="seo.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><span>SEO</span></a><a href="languages.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg><span>اللغات</span></a><a href="ads.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>الإعلانات</span></a><a href="performance.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>الأداء</span></a></div>
+<div class="nav-section"><div class="nav-label">النظام</div><a href="notifications.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg><span>الإشعارات</span></a><a href="settings.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>الإعدادات</span></a></div>
+</nav>
+<div class="sidebar-footer"><a href="#" class="nav-item" onclick="localStorage.removeItem('adminToken');window.location.href='login.html'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/></svg><span>تسجيل الخروج</span></a></div>
+</aside>
+<main class="main-content">
+<header class="header">
+<div class="header-left"><button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/></svg></button><div><h1 class="page-title">إدارة الفئات</h1><div class="breadcrumb"><a href="dashboard.html">الرئيسية</a><span>/</span><span>الفئات</span></div></div></div>
+<div class="header-right"><button class="btn btn-primary" onclick="alert('إضافة فئة جديدة - قيد التطوير')">+ فئة جديدة</button></div>
+</header>
+<div class="page-content">
+<div class="categories-grid" id="categoriesGrid"></div>
+</div>
+</main>
+</div>
+<script>
+if(!localStorage.getItem('adminToken'))window.location.href='login.html';
+const categories=[
+{id:'image-conversion',name:'تحويل الصور',icon:'🖼️',count:32,class:'cat-image',desc:'تحويل بين صيغ الصور المختلفة'},
+{id:'image-tools',name:'أدوات الصور',icon:'🎨',count:10,class:'cat-image',desc:'ضغط، قص، وتعديل الصور'},
+{id:'pdf-tools',name:'أدوات PDF',icon:'📄',count:18,class:'cat-pdf',desc:'تحويل وتعديل ملفات PDF'},
+{id:'text-tools',name:'أدوات النصوص',icon:'📝',count:22,class:'cat-text',desc:'تنسيق وتحويل النصوص'},
+{id:'developer',name:'أدوات المطورين',icon:'💻',count:28,class:'cat-dev',desc:'JSON، XML، YAML وأدوات البرمجة'},
+{id:'color',name:'أدوات الألوان',icon:'🎨',count:15,class:'cat-color',desc:'تحويل وتوليد الألوان'},
+{id:'math',name:'رياضيات',icon:'🔢',count:12,class:'cat-math',desc:'حاسبات ومحولات رياضية'},
+{id:'date',name:'تاريخ ووقت',icon:'📅',count:10,class:'cat-date',desc:'حسابات الوقت والتاريخ'},
+{id:'unit',name:'تحويل الوحدات',icon:'📐',count:16,class:'cat-unit',desc:'تحويل الطول، الوزن، الحجم'},
+{id:'seo',name:'SEO',icon:'🔍',count:14,class:'cat-seo',desc:'أدوات تحسين محركات البحث'},
+{id:'security',name:'أمان',icon:'🔐',count:8,class:'cat-security',desc:'كلمات مرور وتشفير'},
+{id:'data',name:'بيانات',icon:'📊',count:10,class:'cat-data',desc:'CSV، JSON، QR Codes'}
+];
+function renderCategories(){
+const grid=document.getElementById('categoriesGrid');
+grid.innerHTML=categories.map(c=>`
+<div class="category-card" draggable="true" data-id="${c.id}">
+<div class="category-icon ${c.class}">${c.icon}</div>
+<div class="category-name">${c.name}</div>
+<div class="category-count">${c.count} أداة</div>
+<div class="category-actions">
+<button class="action-btn btn-edit" onclick="alert('تعديل الفئة: ${c.name}')">تعديل</button>
+<button class="action-btn" style="background:rgba(34,197,94,.1);color:#22c55e" onclick="toggleVisibility('${c.id}')">إخفاء</button>
+</div>
+</div>
+`).join('')+'
+<div class="category-card add-category-card" onclick="alert('إضافة فئة جديدة')">
+<div class="add-icon">+</div>
+<div class="category-name">إضافة فئة</div>
+</div>';
+setupDragAndDrop();
+}
+function toggleVisibility(id){const cat=categories.find(c=>c.id===id);if(cat){alert(cat.name+' - تم تغيير الحالة');}}
+function setupDragAndDrop(){let dragged=null;document.querySelectorAll('.category-card[draggable]').forEach(card=>{card.addEventListener('dragstart',e=>{dragged=card;card.classList.add('dragging');});card.addEventListener('dragend',e=>{card.classList.remove('dragging');});card.addEventListener('dragover',e=>{e.preventDefault();const after=getDragAfter(document.getElementById('categoriesGrid'),e.clientY);if(after==null)document.getElementById('categoriesGrid').appendChild(dragged);else document.getElementById('categoriesGrid').insertBefore(dragged,after);});});}
+function getDragAfter(container,y){const els=[...container.querySelectorAll('.category-card[draggable]:not(.dragging)')];return els.reduce((closest,child)=>{const box=child.getBoundingClientRect();const offset=y-box.top-box.height/2;if(offset<0&&offset>closest.offset)return{offset,element:child};return closest;},{offset:Number.NEGATIVE_INFINITY}).element;}
+renderCategories();
+</script>
+</body></html>

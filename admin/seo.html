@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SEO Manager | لوحة التحكم</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+<style>body{font-family:'Tajawal',sans-serif;}
+.seo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:20px;margin-bottom:24px;}
+.seo-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.seo-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.seo-card-title{font-size:16px;font-weight:600;}
+.seo-status{display:flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;}
+.seo-status.complete{background:rgba(34,197,94,.1);color:#22c55e;}
+.seo-status.missing{background:rgba(245,158,11,.1);color:#f59e0b;}
+.seo-status.empty{background:rgba(239,68,68,.1);color:#ef4444;}
+.seo-preview{background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0;}
+.seo-preview-title{color:#4f8ef7;font-size:16px;margin-bottom:4px;}
+.seo-preview-url{color:#22c55e;font-size:12px;margin-bottom:4px;}
+.seo-preview-desc{color:var(--text-secondary);font-size:13px;}
+.serp-preview{background:#fff;border-radius:8px;padding:16px;margin:12px 0;color:#333;}
+.serp-title{color:#1a0dab;font-size:18px;text-decoration:none;display:block;margin-bottom:4px;}
+.serp-url{color:#006621;font-size:14px;margin-bottom:4px;}
+.serp-desc{color:#545454;font-size:13px;line-height:1.4;}
+.progress-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.stat-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;}
+.stat-number{font-size:32px;font-weight:700;margin-bottom:4px;}
+.stat-label-small{color:var(--text-secondary);font-size:14px;}
+.tools-list{max-height:400px;overflow-y:auto;}
+.tool-seo-item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid var(--border);}
+.tool-seo-item:last-child{border-bottom:none;}
+.tool-seo-name{font-weight:500;}
+.tool-seo-meta{font-size:12px;color:var(--text-secondary);margin-top:2px;}
+.btn-sm{padding:6px 12px;font-size:12px;}
+</style>
+</head>
+<body>
+<div class="admin-container">
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header"><div class="logo"><div class="logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div><span>Tools Admin</span></div></div>
+<nav class="sidebar-nav">
+<div class="nav-section"><div class="nav-label">الرئيسية</div><a href="dashboard.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span>لوحة التحكم</span></a></div>
+<div class="nav-section"><div class="nav-label">الإدارة</div><a href="tools.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>الأدوات</span></a><a href="categories.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg><span>الفئات</span></a></div>
+<div class="nav-section"><div class="nav-label">الإعدادات</div><a href="seo.html" class="nav-item active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><span>SEO</span></a><a href="languages.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg><span>اللغات</span></a><a href="ads.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>الإعلانات</span></a><a href="performance.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>الأداء</span></a></div>
+<div class="nav-section"><div class="nav-label">النظام</div><a href="notifications.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg><span>الإشعارات</span></a><a href="settings.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>الإعدادات</span></a></div>
+</nav>
+<div class="sidebar-footer"><a href="#" class="nav-item" onclick="localStorage.removeItem('adminToken');window.location.href='login.html'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/></svg><span>تسجيل الخروج</span></a></div>
+</aside>
+<main class="main-content">
+<header class="header">
+<div class="header-left"><button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/></svg></button><div><h1 class="page-title">SEO Manager</h1><div class="breadcrumb"><a href="dashboard.html">الرئيسية</a><span>/</span><span>SEO</span></div></div></div>
+<div class="header-right"><button class="btn btn-primary" onclick="generateSitemap()">توليد Sitemap</button></div>
+</header>
+<div class="page-content">
+<div class="progress-stats">
+<div class="stat-box"><div class="stat-number" style="color:#22c55e">142</div><div class="stat-label-small">مكتمل SEO</div></div>
+<div class="stat-box"><div class="stat-number" style="color:#f59e0b">45</div><div class="stat-label-small">ناقص</div></div>
+<div class="stat-box"><div class="stat-number" style="color:#ef4444">18</div><div class="stat-label-small">فارغ</div></div>
+<div class="stat-box"><div class="stat-number">69%</div><div class="stat-label-small">نسبة الإنجاز</div></div>
+</div>
+<div class="card"><div class="card-header"><h3 class="card-title">حالة SEO للأدوات</h3><div style="display:flex;gap:12px"><input type="text" class="form-input" placeholder="البحث..." style="width:200px" id="searchSeo" onkeyup="filterSeo()"><select class="form-input" style="width:150px" id="filterStatus" onchange="filterSeo()"><option value="">كل الحالات</option><option value="complete">مكتمل</option><option value="missing">ناقص</option><option value="empty">فارغ</option></select></div></div>
+<div class="card-body" style="padding:0"><div class="tools-list" id="seoList"></div></div>
+</div>
+<div class="pagination" id="pagination"></div>
+</div>
+</main>
+</div>
+<div class="modal" id="seoModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;">
+<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);width:90%;max-width:600px;max-height:90vh;overflow-y:auto;">
+<div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;"><h3>تحرير SEO</h3><button onclick="document.getElementById('seoModal').style.display='none'" style="background:none;border:none;color:var(--text-secondary);font-size:24px;cursor:pointer;">&times;</button></div>
+<div style="padding:24px;">
+<div class="form-group"><label class="form-label">Meta Title (60 حرف)</label><input type="text" id="editTitle" class="form-input" maxlength="60" onkeyup="updatePreview()"></div>
+<div class="form-group"><label class="form-label">Meta Description (160 حرف)</label><textarea id="editDesc" class="form-input" rows="2" maxlength="160" onkeyup="updatePreview()"></textarea></div>
+<div class="form-group"><label class="form-label">معاينة Google</label><div class="serp-preview"><a href="#" class="serp-title" id="previewTitle">عنوان الصفحة</a><div class="serp-url">yoursite.com/en/tool-name</div><div class="serp-desc" id="previewDesc">وصف الصفحة هنا...</div></div></div>
+<div class="form-group"><label class="form-label">Schema Markup (JSON-LD)</label><textarea id="editSchema" class="form-input" rows="6" placeholder='{"@context":"https://schema.org","@type":"WebApplication","name":"Tool Name"}'></textarea></div>
+</div>
+<div style="padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:12px;"><button class="btn btn-secondary" onclick="document.getElementById('seoModal').style.display='none'">إلغاء</button><button class="btn btn-primary" onclick="saveSeo()">حفظ</button></div>
+</div>
+</div>
+<script>
+if(!localStorage.getItem('adminToken'))window.location.href='login.html';
+const seoData=[
+{id:1,name:'JPG to PNG Converter',slug:'jpg-to-png',title:'JPG to PNG Converter - Free Online Tool',desc:'Convert JPG images to PNG format online for free. No upload required, 100% browser-based.',status:'complete'},
+{id:2,name:'PDF to JPG Converter',slug:'pdf-to-jpg',title:'PDF to JPG Converter | Free Online',desc:'Convert PDF pages to high-quality JPG images. Fast, secure, and free to use.',status:'complete'},
+{id:3,name:'Word Counter',slug:'word-counter',title:'Word Counter - Count Words Online',desc:'Count words, characters, and sentences in your text. Free online word counter tool.',status:'complete'},
+{id:4,name:'Password Generator',slug:'password-generator',title:'Password Generator | Secure Random Passwords',desc:'Generate strong, secure random passwords. Customize length and characters.',status:'missing',desc:'Generate passwords'},
+{id:5,name:'Image Resizer',slug:'image-resizer',title:'Image Resizer',desc:'',status:'empty'}
+];
+let currentPage=1;const itemsPerPage=10;let filteredSeo=[...seoData];let editingId=null;
+function renderSeo(){
+const start=(currentPage-1)*itemsPerPage;const end=start+itemsPerPage;const pageItems=filteredSeo.slice(start,end);
+document.getElementById('seoList').innerHTML=pageItems.map(item=>{
+const statusClass=item.status==='complete'?'complete':item.status==='missing'?'missing':'empty';
+const statusText=item.status==='complete'?'✅ مكتمل':item.status==='missing'?'⚠️ ناقص':'❌ فارغ';
+return`<div class="tool-seo-item"><div><div class="tool-seo-name">${item.name}</div><div class="tool-seo-meta">/${item.slug} | ${item.title?.slice(0,40)||'---'}...</div></div><div style="display:flex;align-items:center;gap:12px"><span class="seo-status ${statusClass}">${statusText}</span><button class="btn btn-primary btn-sm" onclick="openSeoModal(${item.id})">تعديل</button></div></div>`;}).join('');
+renderPagination();
+}
+function renderPagination(){const totalPages=Math.ceil(filteredSeo.length/itemsPerPage);let html='';for(let i=1;i<=totalPages;i++)html+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goToPage(${i})" style="padding:8px 14px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-secondary);border-radius:8px;cursor:pointer;">${i}</button>`;document.getElementById('pagination').innerHTML=html;}
+function goToPage(p){currentPage=p;renderSeo();}
+function filterSeo(){const q=document.getElementById('searchSeo').value.toLowerCase();const s=document.getElementById('filterStatus').value;filteredSeo=seoData.filter(i=>{const m=(!s||i.status===s)&&i.name.toLowerCase().includes(q);return m;});currentPage=1;renderSeo();}
+function openSeoModal(id){editingId=id;const item=seoData.find(s=>s.id===id);if(item){document.getElementById('editTitle').value=item.title||'';document.getElementById('editDesc').value=item.desc||'';updatePreview();document.getElementById('seoModal').style.display='flex';}}
+function updatePreview(){document.getElementById('previewTitle').textContent=document.getElementById('editTitle').value||'عنوان الصفحة';document.getElementById('previewDesc').textContent=document.getElementById('editDesc').value||'وصف الصفحة هنا...';}
+function saveSeo(){const item=seoData.find(s=>s.id===editingId);if(item){item.title=document.getElementById('editTitle').value;item.desc=document.getElementById('editDesc').value;item.status=item.title?.length>10&&item.desc?.length>20?'complete':'missing';}document.getElementById('seoModal').style.display='none';renderSeo();}
+function generateSitemap(){const xml=`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${seoData.map(t=>`  <url>
+    <loc>https://yoursite.com/en/${t.slug}</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <priority>0.8</priority>
+  </url>`).join('\n')}
+</urlset>`;const blob=new Blob([xml],{type:'application/xml'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sitemap.xml';a.click();}
+renderSeo();
+</script>
+</body></html>
