@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Counter | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="word-counter.html" selected>English</option>
+      <option value="../ar/word-counter.html">العربية</option>
+      <option value="../fr/word-counter.html">Français</option>
+      <option value="../es/word-counter.html">Español</option>
+      <option value="../de/word-counter.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Word Counter</h1>
+      <p>Count words, characters, sentences, and paragraphs in your text instantly</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">Enter your text:</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Type or paste your text here..."></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="countWords()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+          Count
+        </button>
+        <button class="btn btn-secondary" onclick="clearText()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+          </svg>
+          Clear
+        </button>
+      </div>
+
+      <div class="stats-display">
+        <div class="stat-box">
+          <span class="number" id="word-count">0</span>
+          <span class="label">Words</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="char-count">0</span>
+          <span class="label">Characters</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="char-no-space">0</span>
+          <span class="label">No Spaces</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="sentence-count">0</span>
+          <span class="label">Sentences</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="paragraph-count">0</span>
+          <span class="label">Paragraphs</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="reading-time">0s</span>
+          <span class="label">Reading Time</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span id="toast-message">Copied!</span>
+  </div>
+
+  <script>
+    document.getElementById('text-input').addEventListener('input', countWords);
+
+    function countWords() {
+      const text = document.getElementById('text-input').value;
+      
+      // Word count
+      const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+      
+      // Character counts
+      const chars = text.length;
+      const charsNoSpace = text.replace(/\s/g, '').length;
+      
+      // Sentence count (basic approximation)
+      const sentences = text.trim() === '' ? 0 : text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+      
+      // Paragraph count
+      const paragraphs = text.trim() === '' ? 0 : text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
+      
+      // Reading time (average 200 words per minute)
+      const readingMinutes = Math.ceil(words / 200);
+      const readingTime = words === 0 ? '0s' : readingMinutes < 1 ? '< 1m' : readingMinutes + 'm';
+      
+      // Update display
+      document.getElementById('word-count').textContent = words;
+      document.getElementById('char-count').textContent = chars;
+      document.getElementById('char-no-space').textContent = charsNoSpace;
+      document.getElementById('sentence-count').textContent = sentences;
+      document.getElementById('paragraph-count').textContent = paragraphs;
+      document.getElementById('reading-time').textContent = readingTime;
+    }
+
+    function clearText() {
+      document.getElementById('text-input').value = '';
+      countWords();
+    }
+  </script>
+</body>
+</html>

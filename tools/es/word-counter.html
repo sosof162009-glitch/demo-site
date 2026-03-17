@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador de Palabras | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="word-counter.html" selected>Español</option>
+      <option value="../en/word-counter.html">English</option>
+      <option value="../ar/word-counter.html">العربية</option>
+      <option value="../fr/word-counter.html">Français</option>
+      <option value="../de/word-counter.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Contador de Palabras</h1>
+      <p>Cuenta palabras, caracteres, oraciones y párrafos en tu texto al instante</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">Introduce tu texto:</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Escribe o pega tu texto aquí..."></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="countWords()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+          Contar
+        </button>
+        <button class="btn btn-secondary" onclick="clearText()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+          </svg>
+          Limpiar
+        </button>
+      </div>
+
+      <div class="stats-display">
+        <div class="stat-box">
+          <span class="number" id="word-count">0</span>
+          <span class="label">Palabras</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="char-count">0</span>
+          <span class="label">Caracteres</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="char-no-space">0</span>
+          <span class="label">Sin Espacios</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="sentence-count">0</span>
+          <span class="label">Oraciones</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="paragraph-count">0</span>
+          <span class="label">Párrafos</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="reading-time">0s</span>
+          <span class="label">Tiempo de Lectura</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('text-input').addEventListener('input', countWords);
+
+    function countWords() {
+      const text = document.getElementById('text-input').value;
+      const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+      const chars = text.length;
+      const charsNoSpace = text.replace(/\s/g, '').length;
+      const sentences = text.trim() === '' ? 0 : text.split(/[.!?¡¿]+/).filter(s => s.trim().length > 0).length;
+      const paragraphs = text.trim() === '' ? 0 : text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
+      const readingMinutes = Math.ceil(words / 200);
+      const readingTime = words === 0 ? '0s' : readingMinutes < 1 ? '< 1m' : readingMinutes + 'm';
+      
+      document.getElementById('word-count').textContent = words;
+      document.getElementById('char-count').textContent = chars;
+      document.getElementById('char-no-space').textContent = charsNoSpace;
+      document.getElementById('sentence-count').textContent = sentences;
+      document.getElementById('paragraph-count').textContent = paragraphs;
+      document.getElementById('reading-time').textContent = readingTime;
+    }
+
+    function clearText() {
+      document.getElementById('text-input').value = '';
+      countWords();
+    }
+  </script>
+</body>
+</html>

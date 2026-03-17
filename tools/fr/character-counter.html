@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compteur de Caractères | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="character-counter.html" selected>Français</option>
+      <option value="../en/character-counter.html">English</option>
+      <option value="../ar/character-counter.html">العربية</option>
+      <option value="../es/character-counter.html">Español</option>
+      <option value="../de/character-counter.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Compteur de Caractères</h1>
+      <p>Comptez les caractères avec répartition détaillée incluant espaces, lettres, chiffres et symboles</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">Entrez votre texte :</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Tapez ou collez votre texte ici..."></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="countCharacters()">Compter</button>
+        <button class="btn btn-secondary" onclick="clearText()">Effacer</button>
+      </div>
+
+      <div class="stats-display">
+        <div class="stat-box">
+          <span class="number" id="total-chars">0</span>
+          <span class="label">Total</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="with-spaces">0</span>
+          <span class="label">Avec Espaces</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="no-spaces">0</span>
+          <span class="label">Sans Espaces</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="letters">0</span>
+          <span class="label">Lettres</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="numbers">0</span>
+          <span class="label">Chiffres</span>
+        </div>
+        <div class="stat-box">
+          <span class="number" id="symbols">0</span>
+          <span class="label">Symboles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('text-input').addEventListener('input', countCharacters);
+
+    function countCharacters() {
+      const text = document.getElementById('text-input').value;
+      const total = text.length;
+      const withSpaces = text.length;
+      const noSpaces = text.replace(/\s/g, '').length;
+      const letters = (text.match(/[a-zA-ZÀ-ÿ]/g) || []).length;
+      const numbers = (text.match(/[0-9]/g) || []).length;
+      const symbols = total - letters - numbers - (text.match(/\s/g) || []).length;
+      
+      document.getElementById('total-chars').textContent = total;
+      document.getElementById('with-spaces').textContent = withSpaces;
+      document.getElementById('no-spaces').textContent = noSpaces;
+      document.getElementById('letters').textContent = letters;
+      document.getElementById('numbers').textContent = numbers;
+      document.getElementById('symbols').textContent = symbols;
+    }
+
+    function clearText() {
+      document.getElementById('text-input').value = '';
+      countCharacters();
+    }
+  </script>
+</body>
+</html>
