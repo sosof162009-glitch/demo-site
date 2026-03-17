@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نص إلى ASCII - 205 أدوات</title>
+    <script src="https://cdn.jsdelivr.net/npm/figlet@1.6.0/lib/figlet.min.js"></script>
+    <style>
+        :root{--bg:#0a0a0f;--surface:#14141f;--primary:#4f8ef7;--text:#e0e0ff;--text2:#a0a0bf}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem}
+        .container{width:100%;max-width:800px}
+        h1{color:var(--primary);margin-bottom:1.5rem;text-align:center}
+        .card{background:var(--surface);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+        input[type="text"],select{width:100%;background:var(--bg);border:1px solid var(--primary);color:var(--text);padding:0.75rem 1rem;border-radius:8px;font-size:1rem;margin-bottom:1rem}
+        pre{background:var(--bg);border:1px solid var(--primary);padding:1rem;border-radius:8px;overflow-x:auto;font-size:0.75rem;line-height:1.2;color:#00ff88;margin-top:1rem;min-height:100px}
+        button{background:var(--primary);color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:8px;cursor:pointer;font-size:1rem;transition:opacity 0.2s;width:100%}
+        button:hover{opacity:0.9}
+        .lang-switch{position:fixed;top:1rem;right:1rem;display:flex;gap:0.5rem}
+        .lang-switch a{color:var(--text2);text-decoration:none;padding:0.25rem 0.5rem;font-size:0.875rem}
+        .lang-switch a.active{color:var(--primary)}
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <a href="ar/text-to-ascii.html" class="active">AR</a>
+        <a href="en/text-to-ascii.html">EN</a>
+        <a href="zh/text-to-ascii.html">中文</a>
+        <a href="es/text-to-ascii.html">ES</a>
+        <a href="fr/text-to-ascii.html">FR</a>
+        <a href="de/text-to-ascii.html">DE</a>
+    </div>
+    <div class="container">
+        <h1>🎨 Text to ASCII Art</h1>
+        <div class="card">
+            <input type="text" id="text" placeholder="Enter text..." value="HELLO">
+            <select id="font">
+                <option value="Standard">Standard</option>
+                <option value="Big">Big</option>
+                <option value="Small">Small</option>
+                <option value="Banner">Banner</option>
+                <option value="Block">Block</option>
+            </select>
+            <button onclick="generate()">إنشاء ASCII Art</button>
+            <pre id="output">ASCII Art will appear here...</pre>
+        </div>
+    </div>
+    <script>
+        function generate(){
+            const text=document.getElementById('text').value;
+            if(!text){alert('Please enter text');return}
+            const font=document.getElementById('font').value;
+            figlet(text,{font:font},function(err,data){if(err){document.getElementById('output').textContent='Error loading font';return}document.getElementById('output').textContent=data});
+        }
+        generate();
+    </script>
+</body>
+</html>

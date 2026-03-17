@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مولد Bcrypt</title>
+    <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+    <style>
+        :root{--bg:#0a0a0f;--surface:#14141f;--primary:#4f8ef7;--text:#e0e0ff;--text2:#a0a0bf}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem}
+        .container{width:100%;max-width:700px}
+        h1{color:var(--primary);margin-bottom:1.5rem;text-align:center}
+        .card{background:var(--surface);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+        input[type="text"],input[type="number"]{width:100%;background:var(--bg);border:1px solid var(--primary);color:var(--text);padding:0.75rem 1rem;border-radius:8px;font-size:1rem;margin-bottom:1rem}
+        .slider-container{margin-bottom:1rem}
+        .slider-container label{display:block;margin-bottom:0.5rem;color:var(--text2)}
+        input[type=range]{width:100%;accent-color:var(--primary)}
+        .output{display:flex;gap:0.5rem;margin-top:1rem}
+        #hashResult{flex:1;background:var(--bg);border:1px solid var(--primary);color:var(--text);padding:0.75rem 1rem;border-radius:8px;font-family:monospace;word-break:break-all;font-size:0.85rem}
+        button{background:var(--primary);color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:8px;cursor:pointer;font-size:1rem;transition:opacity 0.2s}
+        button:hover{opacity:0.9}
+        .btn-full{width:100%;margin-bottom:1rem}
+        .lang-switch{position:fixed;top:1rem;right:1rem;display:flex;gap:0.5rem}
+        .lang-switch a{color:var(--text2);text-decoration:none;padding:0.25rem 0.5rem;font-size:0.875rem}
+        .lang-switch a.active{color:var(--primary)}
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <a href="ar/bcrypt-generator.html" class="active">AR</a>
+        <a href="en/bcrypt-generator.html">EN</a>
+        <a href="zh/bcrypt-generator.html">中文</a>
+        <a href="es/bcrypt-generator.html">ES</a>
+        <a href="fr/bcrypt-generator.html">FR</a>
+        <a href="de/bcrypt-generator.html">DE</a>
+    </div>
+    <div class="container">
+        <h1>🔒 Bcrypt Hash Generator</h1>
+        <div class="card">
+            <input type="text" id="input" placeholder="Enter text to hash...">
+            <div class="slider-container">
+                <label>Rounds (Salt Complexity): <span id="roundsVal">10</span></label>
+                <input type="range" id="rounds" min="4" max="15" value="10">
+            </div>
+            <button onclick="generateBcrypt()" class="btn-full">إنشاء Bcrypt Hash</button>
+            <div class="output">
+                <input type="text" id="hashResult" readonly placeholder="Bcrypt hash will appear here...">
+                <button onclick="copyHash()">نسخ</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const roundsSlider=document.getElementById('rounds');
+        const roundsVal=document.getElementById('roundsVal');
+        roundsSlider.oninput=()=>roundsVal.textContent=roundsSlider.value;
+        function generateBcrypt(){
+            const input=document.getElementById('input').value;
+            if(!input){document.getElementById('hashResult').value='';return}
+            const rounds=parseInt(roundsSlider.value);
+            const salt=dcodeIO.bcrypt.genSaltSync(rounds);
+            const hash=dcodeIO.bcrypt.hashSync(input,salt);
+            document.getElementById('hashResult').value=hash;
+        }
+        function copyHash(){
+            const el=document.getElementById('hashResult');
+            if(el.value){el.select();document.execCommand('copy');alert('Copied!')}
+        }
+    </script>
+</body>
+</html>
