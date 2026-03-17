@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Diff Compare | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="text-diff.html" selected>English</option>
+      <option value="../ar/text-diff.html">العربية</option>
+      <option value="../fr/text-diff.html">Français</option>
+      <option value="../es/text-diff.html">Español</option>
+      <option value="../de/text-diff.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Text Diff Compare</h1>
+      <p>Compare two texts and see the differences highlighted</p>
+    </header>
+
+    <div class="tool-card">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="input-group">
+          <label for="text1">Original Text:</label>
+          <textarea id="text1" class="tool-textarea" placeholder="Enter original text..."></textarea>
+        </div>
+        <div class="input-group">
+          <label for="text2">Modified Text:</label>
+          <textarea id="text2" class="tool-textarea" placeholder="Enter modified text..."></textarea>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="compareDiff()">Compare</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+
+      <div class="input-group" style="margin-top: 20px;">
+        <label>Result:</label>
+        <div id="diff-result" class="result-area" data-placeholder="Differences will appear here..."></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function compareDiff() {
+      const text1 = document.getElementById('text1').value;
+      const text2 = document.getElementById('text2').value;
+      const result = document.getElementById('diff-result');
+      
+      if (!text1 && !text2) {
+        result.innerHTML = '';
+        return;
+      }
+      
+      const lines1 = text1.split('\n');
+      const lines2 = text2.split('\n');
+      let html = '';
+      
+      const maxLines = Math.max(lines1.length, lines2.length);
+      
+      for (let i = 0; i < maxLines; i++) {
+        const line1 = lines1[i] || '';
+        const line2 = lines2[i] || '';
+        
+        if (line1 === line2) {
+          html += '<div class="diff-unchanged">' + escapeHtml(line1) + '</div>';
+        } else {
+          if (line1) html += '<div class="diff-removed">- ' + escapeHtml(line1) + '</div>';
+          if (line2) html += '<div class="diff-added">+ ' + escapeHtml(line2) + '</div>';
+        }
+      }
+      
+      result.innerHTML = html || 'No differences found';
+    }
+    
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function clearAll() {
+      document.getElementById('text1').value = '';
+      document.getElementById('text2').value = '';
+      document.getElementById('diff-result').innerHTML = '';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斐波那契生成器 - 205 Tools</title>
+    <link rel="stylesheet" href="../../shared.css">
+</head>
+<body>
+    <div class="language-selector">
+        <select onchange="changeLang(this.value)">
+            <option value="en" >English</option>
+            <option value="zh" selected>中文</option>
+            <option value="es" >Español</option>
+            <option value="fr" >Français</option>
+            <option value="de" >Deutsch</option>
+        </select>
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1><span>205</span> Tools</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tool-container">
+            <h2 class="tool-title">斐波那契生成器</h2>
+            <p class="tool-description">生成斐波那契数列</p>
+            
+<div class="card">
+    <div class="input-group">
+        <label>Number of Terms</label>
+        <input type="number" id="termsInput" value="10" min="1" max="50">
+    </div>
+    <button class="btn" onclick="generateFib()" data-t="generate">Generate</button>
+    <div class="result-box" id="result" style="display:none; margin-top: 20px;">
+        <div class="result-value" id="fibResult" style="font-size: 0.9rem; word-break: break-all;"></div>
+    </div>
+</div>
+<script>
+function generateFib() {
+    const n = parseInt(document.getElementById('termsInput').value) || 10;
+    let seq = [0, 1];
+    for (let i = 2; i < n; i++) seq.push(seq[i-1] + seq[i-2]);
+    document.getElementById('fibResult').textContent = seq.slice(0, n).join(', ');
+    document.getElementById('result').style.display = 'block';
+}
+generateFib();
+</script>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>205工具集的一部分 - <a href="../../index.html">205 Tools</a></p>
+    </div>
+    
+    <script src="../../shared.js"></script>
+    <script>
+        function changeLang(lang) {
+            const path = window.location.pathname;
+            const newPath = path.replace(/\/(en|zh|es|fr|de)\//, '/' + lang + '/');
+            window.location.href = newPath;
+        }
+    </script>
+    <style>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    </style>
+</body>
+</html>
