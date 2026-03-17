@@ -5,55 +5,91 @@
     {
       "src": "**/*.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.png",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.jpg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.svg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.ico",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/tools/assets/(.*)",
+      "dest": "/tools/assets/$1"
+    },
+    {
+      "src": "/admin/css/(.*)",
+      "dest": "/admin/css/$1"
+    },
+    {
+      "src": "/admin/js/(.*)",
+      "dest": "/admin/js/$1"
+    },
     {
       "src": "/",
       "dest": "/index.html"
     },
     {
-      "src": "/admin",
+      "src": "/admin$",
       "dest": "/admin/login.html"
     },
     {
-      "src": "/admin/login",
+      "src": "/admin/login$",
       "dest": "/admin/login.html"
     },
     {
-      "src": "/admin/dashboard",
+      "src": "/admin/dashboard$",
       "dest": "/admin/dashboard.html"
     },
     {
-      "src": "/admin/tools",
+      "src": "/admin/tools$",
       "dest": "/admin/tools.html"
     },
     {
-      "src": "/admin/categories",
+      "src": "/admin/categories$",
       "dest": "/admin/categories.html"
     },
     {
-      "src": "/admin/seo",
+      "src": "/admin/seo$",
       "dest": "/admin/seo.html"
     },
     {
-      "src": "/admin/languages",
+      "src": "/admin/languages$",
       "dest": "/admin/languages.html"
     },
     {
-      "src": "/admin/ads",
+      "src": "/admin/ads$",
       "dest": "/admin/ads.html"
     },
     {
-      "src": "/admin/performance",
+      "src": "/admin/performance$",
       "dest": "/admin/performance.html"
     },
     {
-      "src": "/admin/notifications",
+      "src": "/admin/notifications$",
       "dest": "/admin/notifications.html"
     },
     {
-      "src": "/admin/settings",
+      "src": "/admin/settings$",
       "dest": "/admin/settings.html"
     },
     {
