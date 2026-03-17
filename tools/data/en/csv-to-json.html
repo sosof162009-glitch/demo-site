@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to JSON Converter</title>
+    <style>
+        :root{--bg:#0a0a0f;--surface:#14141f;--primary:#4f8ef7;--text:#e0e0ff;--text2:#a0a0bf}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem}
+        .container{width:100%;max-width:900px}
+        h1{color:var(--primary);margin-bottom:1.5rem;text-align:center}
+        .grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .card{background:var(--surface);border-radius:12px;padding:1rem}
+        .card h3{margin-bottom:0.5rem;color:var(--primary)}
+        textarea{width:100%;background:var(--bg);border:1px solid var(--primary);color:var(--text);padding:0.75rem;border-radius:8px;font-size:0.9rem;min-height:300px;resize:vertical;font-family:monospace}
+        button{background:var(--primary);color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:8px;cursor:pointer;font-size:1rem;transition:opacity 0.2s;width:100%;margin-top:0.5rem}
+        button:hover{opacity:0.9}
+        .options{margin-bottom:0.5rem}
+        .options label{display:flex;align-items:center;gap:0.5rem;color:var(--text2);font-size:0.9rem}
+        .lang-switch{position:fixed;top:1rem;right:1rem;display:flex;gap:0.5rem}
+        .lang-switch a{color:var(--text2);text-decoration:none;padding:0.25rem 0.5rem;font-size:0.875rem}
+        .lang-switch a.active{color:var(--primary)}
+        @media(max-width:768px){.grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <a href="en/csv-to-json.html" class="active">EN</a>
+        <a href="zh/csv-to-json.html">中文</a>
+        <a href="es/csv-to-json.html">ES</a>
+        <a href="fr/csv-to-json.html">FR</a>
+        <a href="de/csv-to-json.html">DE</a>
+    </div>
+    <div class="container">
+        <h1>📊 CSV to JSON Converter</h1>
+        <div class="grid">
+            <div class="card">
+                <h3>Input CSV</h3>
+                <div class="options">
+                    <label><input type="checkbox" id="header" checked> First row is header</label>
+                </div>
+                <textarea id="input" placeholder="name,age,city&#10;John,30,NYC&#10;Jane,25,LA"></textarea>
+                <button onclick="convert()">Convert to JSON →</button>
+            </div>
+            <div class="card">
+                <h3>Output JSON</h3>
+                <textarea id="output" readonly placeholder="JSON output..."></textarea>
+                <button onclick="copyOutput()">Copy JSON</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function convert(){
+            const csv=document.getElementById('input').value.trim();
+            if(!csv){document.getElementById('output').value='';return}
+            const lines=csv.split('\n').filter(l=>l.trim());
+            if(lines.length===0){document.getElementById('output').value='';return}
+            const hasHeader=document.getElementById('header').checked;
+            const delimiter=',';
+            let headers=hasHeader?parseLine(lines[0]):lines[0].split(delimiter).map((_,i)=>`col${i}`);
+            const dataRows=hasHeader?lines.slice(1):lines;
+            const result=dataRows.map(row=>{
+                const values=parseLine(row);
+                const obj={};
+                headers.forEach((h,i)=>obj[h]=values[i]||'');
+                return obj;
+            });
+            document.getElementById('output').value=JSON.stringify(result,null,2);
+        }
+        function parseLine(line){
+            const result=[];let current='';let inQuotes=false;
+            for(let i=0;i<line.length;i++){
+                const char=line[i];
+                if(char==='"'){if(inQuotes&&line[i+1]==='"'){current+='"';i++}else{inQuotes=!inQuotes}}
+                else if(char===','&&!inQuotes){result.push(current);current=''}
+                else{current+=char}
+            }
+            result.push(current);return result;
+        }
+        function copyOutput(){const el=document.getElementById('output');if(el.value){el.select();document.execCommand('copy');alert('Copied!')}}
+    </script>
+</body>
+</html>

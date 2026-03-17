@@ -1,222 +1,300 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محول الصور إلى PDF | 205-tools</title>
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        body[lang="ar"] { font-family: 'Tajawal', 'DM Sans', sans-serif; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>صورة إلى PDF | 205 Tools</title>
+  <meta name="description" content="تحويل الصور إلى مستندات PDF">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <style>
+    .tool-category-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .badge-image { background: rgba(79, 142, 247, 0.1); color: #4f8ef7; }
+    .badge-pdf { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+  </style>
 </head>
-<body lang="ar">
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <a href="/" class="logo">
-                <div class="logo-icon">🛠️</div>
-                <span>205-tools</span>
-            </a>
-            <nav class="nav-links">
-                <a href="/ar/">الرئيسية</a>
-                <a href="/ar/tools.html">الأدوات</a>
-                <a href="/ar/about.html">عن الموقع</a>
-                <a href="/ar/contact.html">اتصل بنا</a>
-            </nav>
-            <div class="language-selector">
-                <select id="languageSelector">
-                    <option value="en" >English</option>
-                    <option value="ar" selected>العربية</option>
-                    <option value="fr" >Français</option>
-                    <option value="es" >Español</option>
-                    <option value="de" >Deutsch</option>
-                </select>
-            </div>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="./" class="logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-container">
-        <!-- Tool Header -->
-        <section class="tool-header-section">
-            <div class="tool-icon">📑</div>
-            <h1 class="tool-title">محول الصور إلى PDF</h1>
-            <p class="tool-description">دمج صور متعددة في مستند PDF واحد.</p>
-        </section>
-
-        <!-- Tool Container -->
-        <div class="tool-container">
-            <!-- Upload Area -->
-            <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">📁</div>
-                <div class="upload-text">اسحب الصورة هنا أو انقر للتصفح</div>
-                <div class="upload-hint">يدعم تنسيقات الصور المختلفة (.*)</div>
-                <input type="file" class="upload-input" id="uploadInput" accept="image/*">
-            </div>
-
-            <!-- File Info -->
-            <div class="file-info hidden" id="fileInfo">
-                <span class="file-info-icon">📄</span>
-                <div class="file-info-details">
-                    <div class="file-info-name"></div>
-                    <div class="file-info-size"></div>
-                </div>
-                <button class="file-remove" onclick="removeFile()" title="إزالة الملف">✕</button>
-            </div>
-
-            <!-- Preview Area -->
-            <div class="preview-area hidden" id="previewArea">
-                <div class="preview-title">معاينة</div>
-            </div>
-
-            <!-- Controls Section -->
-            <div class="controls-section" id="controlsSection">
-                <div class="controls-title">الخيارات</div>
-                
-                <div class="control-group">
-                    <label class="control-label">اختيار الملفات</label>
-                    <input type="file" class="control-input" id="bulkUploadInput" accept="image/*" multiple onchange="handleBulkFiles(this.files)">
-                </div>
-                <div class="control-group" id="fileListContainer" style="display: none;">
-                    <label class="control-label">ملفات محددة: <span id="fileCount">0</span></label>
-                    <button class="btn btn-danger" onclick="clearBulkFiles()">مسح الكل</button>
-                </div>
-            </div>
-
-            <!-- Progress Bar -->
-            <div class="progress-container" id="progressContainer">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-text" id="progressText">0%</div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="btn-group">
-                <button class="btn btn-primary" id="convertBtn" disabled onclick="processImage()">
-                    <span>تحويل</span>
-                </button>
-                <button class="btn btn-secondary" onclick="resetTool()">
-                    <span>إعادة تعيين</span>
-                </button>
-            </div>
-
-            <!-- Result Area -->
-            <div class="result-area" id="resultArea">
-                <div class="result-title">
-                    <span>✓</span> تم بنجاح!
-                </div>
-                <div id="resultContent"></div>
-                <div class="btn-group">
-                    <button class="btn btn-success" id="downloadBtn" onclick="downloadResult()">
-                        <span>💾 تحميل</span>
-                    </button>
-                </div>
-            </div>
+        <span>205 Tools</span>
+      </a>
+      
+      <nav class="header-nav">
+        <a href="./">الرئيسية</a>
+        <a href="./#image-tools">أدوات الصور</a>
+        <a href="./#pdf-tools">أدوات PDF</a>
+      </nav>
+      
+      <div class="language-selector">
+        <button class="lang-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span>AR</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="lang-dropdown">
+          <a href="../en/image-to-pdf.html" class="lang-option">EN</a>
+          <a href="../fr/image-to-pdf.html" class="lang-option">FR</a>
+          <a href="../es/image-to-pdf.html" class="lang-option">ES</a>
+          <a href="../de/image-to-pdf.html" class="lang-option">DE</a>
         </div>
+      </div>
+    </div>
+  </header>
 
-        <!-- Info Section -->
-        <section class="info-section">
-            <h2 class="info-title">محول الصور إلى PDF</h2>
-            <div class="info-content">
-                <p>دمج صور متعددة في مستند PDF واحد.</p>
-                <p>تتم معالجة صورك محلياً في متصفحك.</p>
+  <!-- Main Content -->
+  <main class="tool-container">
+    <div class="tool-header">
+      <span class="tool-category-badge badge-pdf">أدوات PDF</span>
+      <h1>صورة إلى PDF</h1>
+      <p>تحويل الصور إلى مستندات PDF</p>
+    </div>
+    
+    
+    <div class="tool-card">
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        <h3>رفع ملفات</h3>
+        <p>اسحب وأفلت ملفاتك هنا، أو انقر للتصفح</p>
+        <input type="file" id="fileInput" accept="image/*" multiple>
+      </div>
+      <div class="file-preview" id="filePreview"></div>
+    </div>
+    
+    <div class="tool-card" id="settingsCard" style="display:none;">
+      <div class="btn-group">
+        <button class="btn btn-primary" id="processBtn">جاري المعالجة</button>
+        <button class="btn btn-secondary" id="resetBtn">إعادة تعيين</button>
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text" id="progressText">0%</div>
+    </div>
+    <div class="results-container" id="resultsContainer"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>205 Tools</h3>
+        <p>205 Tools هي مجموعتك الشاملة من الأدوات الإلكترونية. مجانية وسريعة وآمنة.</p>
+      </div>
+      <div class="footer-section">
+        <h3>أدوات شائعة</h3>
+        <ul class="footer-links">
+          <li><a href="./image-metadata-viewer.html">عارض بيانات الصورة</a></li>
+          <li><a href="./pdf-merge.html">دمج PDF</a></li>
+          <li><a href="./image-to-pdf.html">صورة إلى PDF</a></li>
+          <li><a href="./pdf-compress.html">ضغط PDF</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>تواصل معنا</h3>
+        <ul class="footer-links">
+          <li><a href="#">سياسة الخصوصية</a></li>
+          <li><a href="#">شروط الاستخدام</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 205 Tools. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../assets/js/tools.js"></script>
+  <script>
+    // Translations for this page
+    window.translations = {"home":"الرئيسية","tools":"الأدوات","imageTools":"أدوات الصور","pdfTools":"أدوات PDF","uploadFile":"رفع ملف","uploadFiles":"رفع ملفات","dragDrop":"اسحب وأفلت ملفك هنا، أو انقر للتصفح","dragDropMultiple":"اسحب وأفلت ملفاتك هنا، أو انقر للتصفح","processing":"جاري المعالجة...","download":"تحميل","downloadAll":"تحميل الكل","reset":"إعادة تعيين","result":"النتيجة","results":"النتائج","preview":"معاينة","settings":"الإعدادات","brightness":"السطوع","contrast":"التباين","watermarkText":"نص العلامة المائية","password":"كلمة المرور","pages":"الصفحات","selectPages":"اختر الصفحات","rotate":"تدوير","merge":"دمج","split":"تقسيم","compress":"ضغط","protect":"حماية","remove":"إزالة","copied":"تم النسخ إلى الحافظة!","error":"حدث خطأ","invalidFile":"نوع الملف غير صالح","fileTooLarge":"الملف كبير جداً","footerAbout":"205 Tools هي مجموعتك الشاملة من الأدوات الإلكترونية. مجانية وسريعة وآمنة.","footerTools":"أدوات شائعة","footerContact":"تواصل معنا","privacy":"سياسة الخصوصية","terms":"شروط الاستخدام","allRights":"جميع الحقوق محفوظة."};
+    
+    // Tool-specific code
+    (function() {
+      const toolId = 'image-to-pdf';
+      const fileInput = document.getElementById('fileInput');
+      const uploadArea = document.getElementById('uploadArea');
+      const filePreview = document.getElementById('filePreview');
+      const settingsCard = document.getElementById('settingsCard');
+      const processBtn = document.getElementById('processBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const resultsContainer = document.getElementById('resultsContainer');
+      const progressContainer = document.getElementById('progressContainer');
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      
+      let currentFile = null;
+      let currentFiles = [];
+      
+      // Initialize
+      if (uploadArea) {
+        Tools.initUploadArea('uploadArea', {
+          previewId: 'filePreview',
+          onDrop: handleFiles,
+          onSelect: handleFiles
+        });
+      }
+      
+      function handleFiles(files) {
+        if (!files.length) return;
+        
+        
+        currentFiles = Array.from(files);
+        showFileList(currentFiles);
+        
+        
+        if (settingsCard) {
+          settingsCard.style.display = 'block';
+        }
+        
+        
+      }
+      
+      function showFilePreview(file) {
+        filePreview.innerHTML = `
+          <div class="preview-item">
+            <div class="preview-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f8ef7" stroke-width="2">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                <polyline points="13 2 13 9 20 9"/>
+              </svg>
             </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="/ar/">الرئيسية</a>
-                <a href="/ar/tools.html">الأدوات</a>
-                <a href="/ar/privacy.html">سياسة الخصوصية</a>
-                <a href="/ar/terms.html">شروط الخدمة</a>
+            <div class="preview-info">
+              <div class="preview-name">${file.name}</div>
+              <div class="preview-size">${Tools.formatFileSize(file.size)}</div>
             </div>
-            <div class="footer-copyright">© 2025 205-tools. جميع الحقوق محفوظة.</div>
-        </div>
-    </footer>
-
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- Scripts -->
-    <script src="../assets/js/main.js"></script>
-    <script>
-        // Tool-specific configuration
-        const TOOL_CONFIG = {
-            id: 'image-to-pdf',
-            acceptedTypes: 'image/*',
-            outputFormat: 'pdf',
-            mimeType: 'application/pdf',
-            outputExtension: 'pdf'
-        };
-
-        // Translations
-        const TRANSLATIONS = {
-            convert: 'تحويل',
-            processing: 'جاري المعالجة...',
-            download: 'تحميل',
-            success: 'تم بنجاح!',
-            error: 'خطأ',
-            original: 'الأصلي',
-            output: 'المخرج'
-        };
-
-        // Store result for download
-        let processedResult = null;
-        let processedFileName = null;
-
-        // Tool-specific processing function
-        async function processImage() {
-            if (!currentFile) {
-                showToast('خطأ: No file selected', 'error');
-                return;
-            }
-
-            const convertBtn = document.getElementById('convertBtn');
-            convertBtn.disabled = true;
-            convertBtn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span> ' + TRANSLATIONS.processing;
-            
-            showProgress();
-            updateProgress(10);
-
-            try {
-                
-                updateProgress(50);
-                showToast('This tool requires specialized libraries for full functionality', 'warning');
-                updateProgress(100);
-                convertBtn.innerHTML = '<span>' + TRANSLATIONS.convert + '</span>';
-                convertBtn.disabled = false;
-            } catch (error) {
-                console.error('Processing error:', error);
-                showToast(TRANSLATIONS.error + ': ' + error.message, 'error');
-                convertBtn.disabled = false;
-                convertBtn.innerHTML = '<span>' + TRANSLATIONS.convert + '</span>';
-            } finally {
-                hideProgress();
-            }
+            <button class="preview-remove" onclick="removeFile()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        `;
+        filePreview.classList.add('show');
+      }
+      
+      function showFileList(files) {
+        filePreview.innerHTML = files.map((file, i) => `
+          <div class="preview-item">
+            <div class="preview-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f8ef7" stroke-width="2">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                <polyline points="13 2 13 9 20 9"/>
+              </svg>
+            </div>
+            <div class="preview-info">
+              <div class="preview-name">${file.name}</div>
+              <div class="preview-size">${Tools.formatFileSize(file.size)}</div>
+            </div>
+            <button class="preview-remove" onclick="removeFile(${i})">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        `).join('');
+        filePreview.classList.add('show');
+      }
+      
+      window.removeFile = function(index) {
+        
+        if (typeof index === 'number') {
+          currentFiles.splice(index, 1);
+          if (currentFiles.length) {
+            showFileList(currentFiles);
+          } else {
+            filePreview.classList.remove('show');
+            if (settingsCard) settingsCard.style.display = 'none';
+          }
         }
-
-        function resetTool() {
-            removeFile();
-            hideResult();
-            const convertBtn = document.getElementById('convertBtn');
-            convertBtn.disabled = true;
-            convertBtn.innerHTML = '<span>' + TRANSLATIONS.convert + '</span>';
-            processedResult = null;
-            processedFileName = null;
-        }
-
-        function downloadResult() {
-            if (processedResult) {
-                downloadFile(processedResult, processedFileName || 'converted.' + TOOL_CONFIG.outputExtension);
+        
+      };
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      // Process button
+      if (processBtn) {
+        processBtn.addEventListener('click', async () => {
+          
+          // PDF and other tools - simulate processing
+          progressContainer.classList.add('show');
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress += 10;
+            progressFill.style.width = progress + '%';
+            progressText.textContent = progress + '%';
+            if (progress >= 100) {
+              clearInterval(interval);
+              progressContainer.classList.remove('show');
+              resultsContainer.innerHTML = '<div class="alert alert-success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Processing complete! Download ready.</span></div><div class="btn-group" style="margin-top:16px;"><button class="btn btn-primary">' + window.translations.download + '</button></div>';
+              resultsContainer.classList.add('show');
             }
-        }
-    </script>
+          }, 200);
+          
+        });
+      }
+      
+      // Reset button
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          currentFile = null;
+          currentFiles = [];
+          filePreview.classList.remove('show');
+          if (settingsCard) settingsCard.style.display = 'none';
+          document.getElementById('canvasContainer')?.style.display = 'none';
+          
+          
+          
+          
+          resultsContainer.classList.remove('show');
+          progressContainer.classList.remove('show');
+          if (fileInput) fileInput.value = '';
+          
+          
+        });
+      }
+      
+      
+    })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Générateur Code</title>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<style>:root{--bg:#0a0a0f;--surface:#14141f;--primary:#4f8ef7;--text:#e0e0ff;--text2:#a0a0bf}*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem}.container{width:100%;max-width:600px}h1{color:var(--primary);margin-bottom:1.5rem;text-align:center}.card{background:var(--surface);border-radius:12px;padding:1.5rem;margin-bottom:1rem}input,select{width:100%;background:var(--bg);border:1px solid var(--primary);color:var(--text);padding:0.75rem;border-radius:8px;margin-bottom:1rem}.options{display:grid;grid-template-columns:1fr 1fr;gap:1rem}button{background:var(--primary);color:#fff;border:none;padding:0.75rem;border-radius:8px;cursor:pointer;width:100%}#barcode{display:flex;justify-content:center;padding:1rem;background:#fff;border-radius:8px;margin-top:1rem}.lang-switch{position:fixed;top:1rem;right:1rem;display:flex;gap:0.5rem}.lang-switch a{color:var(--text2);text-decoration:none;padding:0.25rem 0.5rem;font-size:0.875rem}.lang-switch a.active{color:var(--primary)}</style>
+</head><body>
+<div class="lang-switch"><a href="en/barcode-generator.html">EN</a><a href="zh/barcode-generator.html">中文</a><a href="es/barcode-generator.html">ES</a><a href="fr/barcode-generator.html">FR</a><a href="de/barcode-generator.html">DE</a></div>
+<div class="container"><h1>📊 Générateur Code</h1><div class="card">
+<input type="text" id="text" placeholder="Entrez texte..." value="123456789012">
+<div class="options">
+<div><label style="color:var(--text2);font-size:0.875rem">Format</label><select id="format"><option value="CODE128">CODE128</option><option value="EAN13">EAN-13</option><option value="UPC">UPC</option></select></div>
+<div><label style="color:var(--text2);font-size:0.875rem">Afficher texte</label><select id="displayValue"><option value="true">Yes</option><option value="false">No</option></select></div>
+</div>
+<button onclick="generateBarcode()">Générer</button>
+<svg id="barcode"></svg>
+</div></div>
+<script>function generateBarcode(){const text=document.getElementById('text').value;if(!text)return;try{JsBarcode("#barcode",text,{format:document.getElementById('format').value,displayValue:document.getElementById('displayValue').value==='true',width:2,height:100});}catch(e){alert('Error')}}generateBarcode();</script>
+</body></html>

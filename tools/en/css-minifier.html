@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css-minifier - 205 Tools</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🎨 css-minifier</h1>
+      <p></p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Options</h2>
+        <div class="lang-selector">
+          <a href="../en/css-minifier.html" class="lang-btn active">EN</a><a href="../es/css-minifier.html" class="lang-btn ">ES</a><a href="../fr/css-minifier.html" class="lang-btn ">FR</a><a href="../de/css-minifier.html" class="lang-btn ">DE</a><a href="../ar/css-minifier.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      
+      <div class="form-group">
+        <label>Text</label>
+        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="processText()">Convert</button>
+        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+      </div>
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Result</label>
+        <textarea id="outputText" rows="10" readonly></textarea>
+      </div>
+      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Tools</p>
+    </footer>
+  </div>
+  
+  <script>
+    
+      function processText() {
+        const text = document.getElementById('inputText').value;
+        document.getElementById('outputText').value = text;
+      }
+      function resetText() {
+        document.getElementById('inputText').value = '';
+        document.getElementById('outputText').value = '';
+      }
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Generator</title>
+    <style>
+        :root{--bg:#0a0a0f;--surface:#14141f;--primary:#4f8ef7;--text:#e0e0ff;--text2:#a0a0bf}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem}
+        .container{width:100%;max-width:600px}
+        h1{color:var(--primary);margin-bottom:1.5rem;text-align:center}
+        .card{background:var(--surface);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+        .options{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+        .option label{display:block;margin-bottom:0.25rem;color:var(--text2);font-size:0.875rem}
+        select,.option input{width:100%;background:var(--bg);border:1px solid var(--primary);color:var(--text);padding:0.5rem;border-radius:8px}
+        #namesList{list-style:none;margin:1rem 0}
+        #namesList li{padding:0.75rem;border-bottom:1px solid var(--bg);display:flex;justify-content:space-between;align-items:center}
+        #namesList li:last-child{border-bottom:none}
+        .copy-btn{background:none;border:none;color:var(--primary);cursor:pointer;font-size:0.875rem}
+        button{background:var(--primary);color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:8px;cursor:pointer;font-size:1rem;transition:opacity 0.2s;width:100%}
+        button:hover{opacity:0.9}
+        .lang-switch{position:fixed;top:1rem;right:1rem;display:flex;gap:0.5rem}
+        .lang-switch a{color:var(--text2);text-decoration:none;padding:0.25rem 0.5rem;font-size:0.875rem}
+        .lang-switch a.active{color:var(--primary)}
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <a href="en/name-generator.html" class="active">EN</a>
+        <a href="zh/name-generator.html">中文</a>
+        <a href="es/name-generator.html">ES</a>
+        <a href="fr/name-generator.html">FR</a>
+        <a href="de/name-generator.html">DE</a>
+    </div>
+    <div class="container">
+        <h1>👤 Name Generator</h1>
+        <div class="card">
+            <div class="options">
+                <div class="option">
+                    <label>Gender</label>
+                    <select id="gender">
+                        <option value="any">Any</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <label>Style</label>
+                    <select id="style">
+                        <option value="english">English</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="scifi">Sci-Fi</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <label>Count</label>
+                    <input type="number" id="count" value="5" min="1" max="20">
+                </div>
+            </div>
+            <button onclick="generateNames()">Generate Names</button>
+            <ul id="namesList"></ul>
+        </div>
+    </div>
+    <script>
+        const firstNames={male:['James','John','Robert','Michael','William','David','Joseph','Thomas','Daniel','Matthew'],female:['Mary','Patricia','Jennifer','Linda','Elizabeth','Susan','Jessica','Sarah','Karen','Nancy'],fantasy:['Aldric','Elowen','Thorne','Seraphina','Drakon','Lyra','Gareth','Isolde','Ragnar','Freya'],scifi:['Zara','Kael','Nova','Orion','Luna','Jax','Stella','Ryder','Aura','Zephyr']};
+        const lastNames={english:['Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis','Rodriguez','Martinez'],fantasy:['Shadowbane','Starwhisper','Ironheart','Moonshadow','Stormborn','Ravensong','Dragonbane','Silverwind'],scifi:['Starwalker','Nebula','Quantum','Stellar','Cosmos','Galaxy','Nova','Orion','Vortex','Cyber']};
+        function generateNames(){const gender=document.getElementById('gender').value;const style=document.getElementById('style').value;const count=parseInt(document.getElementById('count').value);const list=document.getElementById('namesList');list.innerHTML='';for(let i=0;i<count;i++){let firstPool=[];if(style==='english'){firstPool=gender==='male'?firstNames.male:gender==='female'?firstNames.female:[...firstNames.male,...firstNames.female]}else{firstPool=firstNames[style]||firstNames.male}const lastPool=lastNames[style]||lastNames.english;const first=firstPool[Math.floor(Math.random()*firstPool.length)];const last=lastPool[Math.floor(Math.random()*lastPool.length)];const li=document.createElement('li');li.innerHTML=`\u003cspan\u003e${first} ${last}\u003c/span\u003e\u003cbutton class="copy-btn" onclick="copyName('${first} ${last}')"\u003eCopy\u003c/button\u003e`;list.appendChild(li)}}function copyName(name){navigator.clipboard.writeText(name).then(()=>alert('Copied: '+name))}generateNames();
+    </script>
+</body>
+</html>

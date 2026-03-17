@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeilennummern Hinzufügen | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="./add-line-numbers.html" selected>Deutsch</option>
+      <option value="../en/add-line-numbers.html">English</option>
+      <option value="../ar/add-line-numbers.html">العربية</option>
+      <option value="../fr/add-line-numbers.html">Français</option>
+      <option value="../es/add-line-numbers.html">Español</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Zeilennummern Hinzufügen</h1>
+      <p>Fügen Sie Zeilennummern zu Ihrem Text mit anpassbarem Format hinzu</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">Eingabetext:</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Geben Sie Ihren Text hier ein..."></textarea>
+      </div>
+
+      <div class="options-group">
+        <div class="option-item">
+          <input type="checkbox" id="pad-numbers" checked>
+          <label for="pad-numbers">Mit Nullen auffüllen</label>
+        </div>
+        <div class="option-item">
+          <input type="checkbox" id="skip-empty" checked>
+          <label for="skip-empty">Leere Zeilen überspringen</label>
+        </div>
+        <div class="option-item">
+          <label for="separator">Trennzeichen:</label>
+          <input type="text" id="separator" value=". " style="width: 60px; margin-left: 8px;">
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="addLineNumbers()">Nummerieren</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Löschen</button>
+      </div>
+
+      <div class="input-group" style="margin-top: 20px;">
+        <label for="text-output">Ergebnis:</label>
+        <textarea id="text-output" class="tool-textarea" placeholder="Der nummerierte Text erscheint hier..." readonly></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="copyResult()">Kopieren</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span>Kopiert!</span>
+  </div>
+
+  <script>
+    function addLineNumbers() {
+      const text = document.getElementById('text-input').value;
+      const padNumbers = document.getElementById('pad-numbers').checked;
+      const skipEmpty = document.getElementById('skip-empty').checked;
+      const separator = document.getElementById('separator').value;
+      
+      if (text === '') {
+        document.getElementById('text-output').value = '';
+        return;
+      }
+      
+      const lines = text.split('\\n');
+      const totalLines = skipEmpty ? lines.filter(l => l.trim() !== '').length : lines.length;
+      const digits = String(totalLines).length;
+      
+      let lineNum = 1;
+      const result = lines.map(line => {
+        if (skipEmpty && line.trim() === '') return line;
+        const num = padNumbers ? String(lineNum).padStart(digits, '0') : lineNum;
+        lineNum++;
+        return num + separator + line;
+      }).join('\\n');
+      
+      document.getElementById('text-output').value = result;
+    }
+
+    function copyResult() {
+      const output = document.getElementById('text-output');
+      output.select();
+      document.execCommand('copy');
+      showToast();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function clearAll() {
+      document.getElementById('text-input').value = '';
+      document.getElementById('text-output').value = '';
+    }
+  </script>
+</body>
+</html>

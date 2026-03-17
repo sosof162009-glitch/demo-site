@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>color-shade-generator - 205 Tools</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Accueil</a>
+    
+    <header>
+      <h1>⬛ color-shade-generator</h1>
+      <p></p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Options</h2>
+        <div class="lang-selector">
+          <a href="../en/color-shade-generator.html" class="lang-btn ">EN</a><a href="../es/color-shade-generator.html" class="lang-btn ">ES</a><a href="../fr/color-shade-generator.html" class="lang-btn active">FR</a><a href="../de/color-shade-generator.html" class="lang-btn ">DE</a><a href="../ar/color-shade-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      
+      <div class="form-group">
+        <label>Texte</label>
+        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="processText()">Convertir</button>
+        <button class="btn btn-secondary" onclick="resetText()">Réinitialiser</button>
+      </div>
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Résultat</label>
+        <textarea id="outputText" rows="10" readonly></textarea>
+      </div>
+      <button class="btn btn-success" data-success="Copié!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copier</button>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Outils</p>
+    </footer>
+  </div>
+  
+  <script>
+    
+      function processText() {
+        const text = document.getElementById('inputText').value;
+        document.getElementById('outputText').value = text;
+      }
+      function resetText() {
+        document.getElementById('inputText').value = '';
+        document.getElementById('outputText').value = '';
+      }
+    
+  </script>
+</body>
+</html>

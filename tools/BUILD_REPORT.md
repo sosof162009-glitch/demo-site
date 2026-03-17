@@ -14,9 +14,9 @@
 | Language | Code | Files |
 |----------|------|-------|
 | English | en | 28 |
-| Chinese | zh | 28 |
-| Spanish | es | 28 |
+| Arabic | ar | 28 |
 | French | fr | 28 |
+| Spanish | es | 28 |
 | German | de | 28 |
 
 ### Tools Built (28)
@@ -99,12 +99,17 @@ All tools include working JavaScript:
 /root/.openclaw/workspace/demo-site/tools/
 ├── index.html                    # Main navigation page
 ├── json-formatter-en.html        # English versions
-├── json-formatter-zh.html        # Chinese versions
+├── json-formatter-ar.html        # Arabic versions
 ├── json-formatter-es.html        # Spanish versions
 ├── json-formatter-fr.html        # French versions
 ├── json-formatter-de.html        # German versions
 ├── ... (140 tool files total)
 ```
+
+## Language Update Notice
+**2026-03-18:** Changed language set from (en, zh, es, fr, de) to (en, ar, es, fr, de)
+- Removed: Chinese (zh)
+- Added: Arabic (ar) with RTL support
 
 ## Testing Results
 
@@ -148,7 +153,7 @@ All tools include working JavaScript:
 
 ## Usage
 Open `index.html` in a web browser to access all tools. Each tool has:
-- Language selector (5 languages)
+- Language selector (5 languages: EN, AR, ES, FR, DE)
 - Input area
 - Action button
 - Output area with copy button

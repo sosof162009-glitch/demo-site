@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordenador de Texto | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="./text-sorter.html" selected>Español</option>
+      <option value="../en/text-sorter.html">English</option>
+      <option value="../ar/text-sorter.html">العربية</option>
+      <option value="../fr/text-sorter.html">Français</option>
+      <option value="../de/text-sorter.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Ordenador de Texto</h1>
+      <p>Ordena líneas alfabéticamente, numéricamente o por longitud</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">Texto de entrada (un elemento por línea):</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Introduce líneas para ordenar..."></textarea>
+      </div>
+
+      <div class="options-group">
+        <div class="option-item">
+          <input type="radio" name="sort-type" id="alpha" value="alpha" checked>
+          <label for="alpha">Alfabético</label>
+        </div>
+        <div class="option-item">
+          <input type="radio" name="sort-type" id="numeric" value="numeric">
+          <label for="numeric">Numérico</label>
+        </div>
+        <div class="option-item">
+          <input type="radio" name="sort-type" id="length" value="length">
+          <label for="length">Por Longitud</label>
+        </div>
+        <div class="option-item">
+          <input type="checkbox" id="reverse" checked>
+          <label for="reverse">Orden inverso (Z-A)</label>
+        </div>
+        <div class="option-item">
+          <input type="checkbox" id="remove-dupes">
+          <label for="remove-dupes">Eliminar duplicados</label>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="sortText()">Ordenar</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Limpiar</button>
+      </div>
+
+      <div class="input-group" style="margin-top: 20px;">
+        <label for="text-output">Resultado:</label>
+        <textarea id="text-output" class="tool-textarea" placeholder="El texto ordenado aparecerá aquí..." readonly></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="copyResult()">Copiar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span>¡Copiado!</span>
+  </div>
+
+  <script>
+    function sortText() {
+      const text = document.getElementById('text-input').value;
+      const sortType = document.querySelector('input[name="sort-type"]:checked').value;
+      const reverse = document.getElementById('reverse').checked;
+      const removeDupes = document.getElementById('remove-dupes').checked;
+      
+      if (text === '') {
+        document.getElementById('text-output').value = '';
+        return;
+      }
+      
+      let lines = text.split('\\n').filter(l => l.trim() !== '');
+      
+      if (removeDupes) {
+        lines = [...new Set(lines)];
+      }
+      
+      if (sortType === 'alpha') {
+        lines.sort((a, b) => a.localeCompare(b));
+      } else if (sortType === 'numeric') {
+        lines.sort((a, b) => parseFloat(a) - parseFloat(b));
+      } else if (sortType === 'length') {
+        lines.sort((a, b) => a.length - b.length);
+      }
+      
+      if (reverse) lines.reverse();
+      
+      document.getElementById('text-output').value = lines.join('\\n');
+    }
+
+    function copyResult() {
+      const output = document.getElementById('text-output');
+      output.select();
+      document.execCommand('copy');
+      showToast();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function clearAll() {
+      document.getElementById('text-input').value = '';
+      document.getElementById('text-output').value = '';
+    }
+  </script>
+</body>
+</html>

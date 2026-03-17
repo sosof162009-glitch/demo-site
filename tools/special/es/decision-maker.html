@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Decisiones</title>
+<style>:root{--bg:#0a0a0f;--surface:#14141f;--primary:#4f8ef7;--text:#e0e0ff;--text2:#a0a0bf}*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem}.container{width:100%;max-width:600px}h1{color:var(--primary);margin-bottom:1.5rem;text-align:center}.card{background:var(--surface);border-radius:12px;padding:1.5rem;margin-bottom:1rem}textarea{width:100%;background:var(--bg);border:1px solid var(--primary);color:var(--text);padding:0.75rem;border-radius:8px;min-height:120px;resize:vertical;margin-bottom:1rem}#result{text-align:center;font-size:2rem;font-weight:bold;color:var(--primary);margin:1.5rem 0;min-height:3rem}.btn-group{display:flex;gap:0.5rem}button{flex:1;background:var(--primary);color:#fff;border:none;padding:0.75rem;border-radius:8px;cursor:pointer}button.secondary{background:transparent;border:1px solid var(--primary)}.lang-switch{position:fixed;top:1rem;right:1rem;display:flex;gap:0.5rem}.lang-switch a{color:var(--text2);text-decoration:none;padding:0.25rem 0.5rem;font-size:0.875rem}.lang-switch a.active{color:var(--primary)}</style>
+</head><body>
+<div class="lang-switch"><a href="en/decision-maker.html">EN</a><a href="zh/decision-maker.html">中文</a><a href="es/decision-maker.html">ES</a><a href="fr/decision-maker.html">FR</a><a href="de/decision-maker.html">DE</a></div>
+<div class="container"><h1>🎯 Decisiones</h1><div class="card">
+<textarea id="input" placeholder="Ingresa opciones (una por línea)...">Option 1
+Option 2
+Option 3</textarea>
+<div id="result">¿Listo para decidir?</div>
+<div class="btn-group"><button onclick="decide()">¡Decidir!</button><button class="secondary" onclick="clearOptions()">Limpiar</button></div>
+</div></div>
+<script>let options=[];document.getElementById('input').addEventListener('input',updateOptions);function updateOptions(){const text=document.getElementById('input').value;options=text.split('\n').map(o=>o.trim()).filter(o=>o);}function clearOptions(){document.getElementById('input').value='';options=[];document.getElementById('result').textContent='¿Listo para decidir?'}function decide(){if(options.length<2){alert('Ingresa al menos 2 opciones');return}const resultEl=document.getElementById('result');let iterations=0;const interval=setInterval(()=>{resultEl.textContent=options[Math.floor(Math.random()*options.length)];iterations++;if(iterations>20){clearInterval(interval);resultEl.textContent='✓ '+options[Math.floor(Math.random()*options.length)];}},100);}updateOptions();</script>
+</body></html>

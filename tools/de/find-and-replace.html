@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suchen und Ersetzen | 205 Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="../en/find-and-replace.html">English</option>
+      <option value="../ar/find-and-replace.html">العربية</option>
+      <option value="../fr/find-and-replace.html">Français</option>
+      <option value="../es/find-and-replace.html">Español</option>
+      <option value="./find-and-replace.html" selected>Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Suchen und Ersetzen</h1>
+      <p>Suchen und ersetzen Sie Text mit Optionen für Groß-/Kleinschreibung</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="text-input">Text:</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Geben Sie Ihren Text ein..."></textarea>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="input-group">
+          <label for="find-text">Suchen:</label>
+          <input type="text" id="find-text" class="tool-input" placeholder="Zu suchender Text...">
+        </div>
+        <div class="input-group">
+          <label for="replace-text">Ersetzen durch:</label>
+          <input type="text" id="replace-text" class="tool-input" placeholder="Ersatztext...">
+        </div>
+      </div>
+
+      <div class="options-group">
+        <div class="option-item">
+          <input type="checkbox" id="case-sensitive">
+          <label for="case-sensitive">Groß-/Kleinschreibung</label>
+        </div>
+        <div class="option-item">
+          <input type="checkbox" id="regex">
+          <label for="regex">Reguläre Ausdrücke verwenden</label>
+        </div>
+        <div class="option-item">
+          <input type="checkbox" id="replace-all" checked>
+          <label for="replace-all">Alle ersetzen</label>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="replaceText()">Ersetzen</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Alles löschen</button>
+      </div>
+
+      <div class="input-group" style="margin-top: 20px;">
+        <label for="text-output">Ergebnis:</label>
+        <textarea id="text-output" class="tool-textarea" placeholder="Das Ergebnis erscheint hier..." readonly></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="copyResult()">Kopieren</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span>Kopiert!</span>
+  </div>
+
+  <script>
+    function replaceText() {
+      let text = document.getElementById('text-input').value;
+      const find = document.getElementById('find-text').value;
+      const replace = document.getElementById('replace-text').value;
+      const caseSensitive = document.getElementById('case-sensitive').checked;
+      const useRegex = document.getElementById('regex').checked;
+      const replaceAll = document.getElementById('replace-all').checked;
+      
+      if (find === '') {
+        document.getElementById('text-output').value = text;
+        return;
+      }
+      
+      let result;
+      
+      if (useRegex) {
+        try {
+          const flags = caseSensitive ? 'g' : 'gi';
+          const regex = new RegExp(find, flags);
+          result = text.replace(regex, replace);
+        } catch (e) {
+          result = 'Ungültiger regulärer Ausdruck';
+        }
+      } else {
+        if (replaceAll) {
+          const flags = caseSensitive ? 'g' : 'gi';
+          const escaped = find.replace(/[.*+?^${}()|[\]\\]/g, '\\$\u0026');
+          const regex = new RegExp(escaped, flags);
+          result = text.replace(regex, replace);
+        } else {
+          if (caseSensitive) {
+            result = text.replace(find, replace);
+          } else {
+            const regex = new RegExp(find, 'i');
+            result = text.replace(regex, replace);
+          }
+        }
+      }
+      
+      document.getElementById('text-output').value = result;
+    }
+
+    function copyResult() {
+      const output = document.getElementById('text-output');
+      output.select();
+      document.execCommand('copy');
+      showToast();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function clearAll() {
+      document.getElementById('text-input').value = '';
+      document.getElementById('find-text').value = '';
+      document.getElementById('replace-text').value = '';
+      document.getElementById('text-output').value = '';
+    }
+  </script>
+</body>
+</html>
