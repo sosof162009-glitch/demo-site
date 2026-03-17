@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم | Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>body { font-family: 'Tajawal', sans-serif; }</style>
+</head>
+<body>
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+            </svg>
+          </div>
+          <span>Tools Admin</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-label">الرئيسية</div>
+          <a href="dashboard.html" class="nav-item active">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            <span>لوحة التحكم</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-label">الإدارة</div>
+          <a href="tools.html" class="nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+            <span>الأدوات</span>
+          </a>
+          <a href="categories.html" class="nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>الفئات</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-label">الإعدادات</div>
+          <a href="seo.html" class="nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+            <span>SEO Manager</span>
+          </a>
+          <a href="languages.html" class="nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            <span>اللغات</span>
+          </a>
+          <a href="ads.html" class="nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            <span>الإعلانات</span>
+          </a>
+          <a href="performance.html" class="nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            <span>الأداء</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-label">النظام</div>
+          <a href="notifications.html" class="nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+            </svg>
+            <span>الإشعارات</span>
+          </a>
+          <a href="settings.html" class="nav-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>الإعدادات</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="#" class="nav-item" onclick="logout()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>تسجيل الخروج</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+          <div>
+            <h1 class="page-title">لوحة التحكم</h1>
+            <div class="breadcrumb">
+              <a href="dashboard.html">الرئيسية</a>
+              <span>/</span>
+              <span>لوحة التحكم</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          <button class="header-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+            </svg>
+            <span class="badge"></span>
+          </button>
+          <div class="user-menu">
+            <div class="user-avatar">أ</div>
+            <span>المدير</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">إجمالي الزوار اليوم</span>
+              <div class="stat-icon blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value">12,847</div>
+            <div class="stat-change up">
+              <span>↑</span> +12.5% عن الأمس
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">أكثر أداة استخداماً</span>
+              <div class="stat-icon green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                  <polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value">PDF to JPG</div>
+            <div class="stat-change up">
+              <span>↑</span> 3,245 استخدام
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">الأدوات المفعلة</span>
+              <div class="stat-icon orange">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value">198 / 205</div>
+            <div class="stat-change">
+              <span>•</span> 7 معطلة
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">الإيرادات التقديرية</span>
+              <div class="stat-icon red">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="1" x2="12" y2="23"/>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value">$1,245</div>
+            <div class="stat-change up">
+              <span>↑</span> +8.3% عن الشهر الماضي
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="dashboard-grid">
+          <!-- Visits Chart -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">زيارات آخر 30 يوم</h3>
+              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">عرض الكل</button>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="visitsChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Chart -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">الزيارات حسب الفئة</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="categoryChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tables Row -->
+        <div class="dashboard-grid-2">
+          <!-- Top Tools -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">أكثر 10 أدوات هذا الأسبوع</h3>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>الأداة</th>
+                      <th>الفئة</th>
+                      <th>الاستخدامات</th>
+                      <th>التغيير</th>
+                    </tr>
+                  </thead>
+                  <tbody id="topToolsTable">
+                    <!-- Filled by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Errors -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">آخر الأخطاء</h3>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>الخطأ</th>
+                      <th>الوقت</th>
+                      <th>الحالة</th>
+                    </tr>
+                  </thead>
+                  <tbody id="errorsTable">
+                    <!-- Filled by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Countries Card -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">أكثر 5 دول زيارة</h3>
+          </div>
+          <div class="card-body">
+            <div id="countriesList" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Check auth
+    if (!localStorage.getItem('adminToken')) {
+      window.location.href = 'login.html';
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    function logout() {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('tokenExpiry');
+      window.location.href = 'login.html';
+    }
+
+    // Visits Chart
+    const visitsCtx = document.getElementById('visitsChart').getContext('2d');
+    new Chart(visitsCtx, {
+      type: 'line',
+      data: {
+        labels: Array.from({length: 30}, (_, i) => `${i + 1}`),
+        datasets: [{
+          label: 'الزيارات',
+          data: [8200, 8500, 8100, 9200, 9800, 10500, 11200, 10800, 11500, 12200, 11800, 12500, 13200, 12800, 13500, 14200, 13800, 14500, 15200, 14800, 15500, 16200, 15800, 16500, 17200, 16800, 17500, 18200, 17800, 18400],
+          borderColor: '#4f8ef7',
+          backgroundColor: 'rgba(79, 142, 247, 0.1)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            grid: { color: '#1e2030' },
+            ticks: { color: '#6b7280' }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { color: '#6b7280' }
+          }
+        }
+      }
+    });
+
+    // Category Chart
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    new Chart(categoryCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['تحويل الصور', 'أدوات الصور', 'أدوات PDF', 'أدوات النصوص', 'أدوات المطورين', 'أدوات الألوان', 'رياضيات', 'تاريخ ووقت', 'تحويل الوحدات', 'SEO', 'أمان', 'بيانات'],
+        datasets: [{
+          data: [25, 15, 20, 18, 22, 12, 8, 7, 10, 8, 5, 5],
+          backgroundColor: [
+            '#4f8ef7', '#22c55e', '#f59e0b', '#ef4444', '#8b5cf6',
+            '#ec4899', '#14b8a6', '#f97316', '#06b6d4', '#84cc16',
+            '#a855f7', '#6366f1'
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right',
+            labels: { color: '#e8eaf6', font: { size: 11 } }
+          }
+        }
+      }
+    });
+
+    // Top Tools Data
+    const topTools = [
+      { name: 'PDF to JPG', category: 'PDF Tools', usage: 3245, change: '+12%' },
+      { name: 'Image Resizer', category: 'Image Tools', usage: 2890, change: '+8%' },
+      { name: 'Word Counter', category: 'Text Tools', usage: 2456, change: '+15%' },
+      { name: 'JPG to PNG', category: 'Image Conversion', usage: 2234, change: '+5%' },
+      { name: 'Password Generator', category: 'Security', usage: 1987, change: '+22%' },
+      { name: 'JSON Formatter', category: 'Developer', usage: 1876, change: '+3%' },
+      { name: 'QR Code Generator', category: 'Data Tools', usage: 1654, change: '+18%' },
+      { name: 'Color Picker', category: 'Color Tools', usage: 1543, change: '+7%' },
+      { name: 'Unit Converter', category: 'Unit Converter', usage: 1432, change: '-2%' },
+      { name: 'Age Calculator', category: 'Date & Time', usage: 1321, change: '+10%' }
+    ];
+
+    document.getElementById('topToolsTable').innerHTML = topTools.map(tool => `
+      <tr>
+        <td><strong>${tool.name}</strong></td>
+        <td><span class="status active">${tool.category}</span></td>
+        <td>${tool.usage.toLocaleString()}</td>
+        <td style="color: ${tool.change.startsWith('+') ? '#22c55e' : '#ef4444'}">${tool.change}</td>
+      </tr>
+    `).join('');
+
+    // Errors Data
+    const errors = [
+      { error: 'PDF.js loading failed', time: 'منذ 5 دقائق', status: 'pending' },
+      { error: 'Image conversion timeout', time: 'منذ 12 دقيقة', status: 'resolved' },
+      { error: 'Canvas API error', time: 'منذ 25 دقيقة', status: 'resolved' },
+      { error: 'Network error - QR Generator', time: 'منذ 45 دقيقة', status: 'resolved' },
+      { error: 'Memory limit exceeded', time: 'منذ ساعة', status: 'pending' }
+    ];
+
+    document.getElementById('errorsTable').innerHTML = errors.map(err => `
+      <tr>
+        <td>${err.error}</td>
+        <td style="color: var(--text-secondary)">${err.time}</td>
+        <td><span class="status ${err.status}">${err.status === 'resolved' ? 'تم الحل' : 'قيد المعالجة'}</span></td>
+      </tr>
+    `).join('');
+
+    // Countries Data
+    const countries = [
+      { name: 'الولايات المتحدة', flag: '🇺🇸', percent: 35 },
+      { name: 'المملكة المتحدة', flag: '🇬🇧', percent: 18 },
+      { name: 'ألمانيا', flag: '🇩🇪', percent: 12 },
+      { name: 'فرنسا', flag: '🇫🇷', percent: 10 },
+      { name: 'السعودية', flag: '🇸🇦', percent: 8 }
+    ];
+
+    document.getElementById('countriesList').innerHTML = countries.map(c => `
+      <div style="text-align: center;">
+        <div style="font-size: 40px; margin-bottom: 8px;">${c.flag}</div>
+        <div style="font-weight: 600; margin-bottom: 4px;">${c.name}</div>
+        <div style="color: var(--text-secondary); font-size: 14px;">${c.percent}%</div>
+        <div class="progress-bar" style="margin-top: 8px;">
+          <div class="progress-fill" style="width: ${c.percent * 2}%"></div>
+        </div>
+      </div>
+    `).join('');
+  </script>
+</body>
+</html>
