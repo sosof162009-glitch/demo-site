@@ -1,104 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Character Counter | 205 Tools</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/tools.css">
+  <title>Character Counter - 205 Tools</title>
+  <meta name="description" content="Count characters, words, and analyze text statistics.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 20px; }
+    .stat-box { background: var(--bg-secondary); padding: 20px; border-radius: 12px; text-align: center; }
+    .stat-box .number { font-size: 36px; font-weight: 700; color: var(--primary); }
+    .stat-box .label { font-size: 13px; color: var(--text-secondary); margin-top: 5px; }
+    .char-density { margin-top: 20px; }
+    .char-bar { display: flex; align-items: center; margin: 5px 0; }
+    .char-bar .char { width: 30px; font-family: monospace; }
+    .char-bar .bar { flex: 1; height: 20px; background: var(--primary); border-radius: 4px; margin: 0 10px; }
+    .char-bar .count { width: 50px; text-align: right; }
+  </style>
 </head>
 <body>
-  <div class="lang-selector">
-    <select onchange="window.location.href=this.value">
-      <option value="character-counter.html" selected>English</option>
-      <option value="../ar/character-counter.html">العربية</option>
-      <option value="../fr/character-counter.html">Français</option>
-      <option value="../es/character-counter.html">Español</option>
-      <option value="../de/character-counter.html">Deutsch</option>
-    </select>
-  </div>
-
-  <div class="tool-container">
-    <header class="tool-header">
-      <h1>Character Counter</h1>
-      <p>Count characters with detailed breakdown including spaces, letters, numbers, and symbols</p>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>📊 Character Counter</h1>
+      <p>Count characters, words, and analyze text</p>
     </header>
-
-    <div class="tool-card">
-      <div class="input-group">
-        <label for="text-input">Enter your text:</label>
-        <textarea id="text-input" class="tool-textarea" placeholder="Type or paste your text here..."></textarea>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Text Input</h2>
+        <div class="lang-selector">
+          <a href="./character-counter.html" class="lang-btn active">EN</a>
+          <a href="../es/character-counter.html" class="lang-btn">ES</a>
+          <a href="../fr/character-counter.html" class="lang-btn">FR</a>
+          <a href="../de/character-counter.html" class="lang-btn">DE</a>
+          <a href="../ar/character-counter.html" class="lang-btn">AR</a>
+        </div>
       </div>
-
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="countCharacters()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 11l3 3L22 4"/>
-            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-          </svg>
-          Count
-        </button>
-        <button class="btn btn-secondary" onclick="clearText()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
-          </svg>
-          Clear
-        </button>
+      
+      <div class="form-group">
+        <textarea id="textInput" rows="8" placeholder="Type or paste your text here..." oninput="countAll()"></textarea>
       </div>
-
-      <div class="stats-display">
+      
+      <div class="stats-grid">
         <div class="stat-box">
-          <span class="number" id="total-chars">0</span>
-          <span class="label">Total</span>
+          <div class="number" id="chars">0</div>
+          <div class="label">Characters</div>
         </div>
+        
         <div class="stat-box">
-          <span class="number" id="with-spaces">0</span>
-          <span class="label">With Spaces</span>
+          <div class="number" id="charsNoSpace">0</div>
+          <div class="label">No Spaces</div>
         </div>
+        
         <div class="stat-box">
-          <span class="number" id="no-spaces">0</span>
-          <span class="label">No Spaces</span>
+          <div class="number" id="words">0</div>
+          <div class="label">Words</div>
         </div>
+        
         <div class="stat-box">
-          <span class="number" id="letters">0</span>
-          <span class="label">Letters</span>
+          <div class="number" id="lines">0</div>
+          <div class="label">Lines</div>
         </div>
+        
         <div class="stat-box">
-          <span class="number" id="numbers">0</span>
-          <span class="label">Numbers</span>
+          <div class="number" id="sentences">0</div>
+          <div class="label">Sentences</div>
         </div>
+        
         <div class="stat-box">
-          <span class="number" id="symbols">0</span>
-          <span class="label">Symbols</span>
+          <div class="number" id="paragraphs">0</div>
+          <div class="label">Paragraphs</div>
         </div>
+      </div>
+      
+      <div class="btn-group" style="margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="clearText()">Clear</button>
       </div>
     </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
-
+  
   <script>
-    document.getElementById('text-input').addEventListener('input', countCharacters);
-
-    function countCharacters() {
-      const text = document.getElementById('text-input').value;
+    function countAll() {
+      const text = document.getElementById('textInput').value;
       
-      const total = text.length;
-      const withSpaces = text.length;
-      const noSpaces = text.replace(/\s/g, '').length;
-      const letters = (text.match(/[a-zA-Z]/g) || []).length;
-      const numbers = (text.match(/[0-9]/g) || []).length;
-      const symbols = total - letters - numbers - (text.match(/\s/g) || []).length;
+      // Characters
+      document.getElementById('chars').textContent = text.length;
+      document.getElementById('charsNoSpace').textContent = text.replace(/\s/g, '').length;
       
-      document.getElementById('total-chars').textContent = total;
-      document.getElementById('with-spaces').textContent = withSpaces;
-      document.getElementById('no-spaces').textContent = noSpaces;
-      document.getElementById('letters').textContent = letters;
-      document.getElementById('numbers').textContent = numbers;
-      document.getElementById('symbols').textContent = symbols;
+      // Words
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      document.getElementById('words').textContent = words;
+      
+      // Lines
+      const lines = text ? text.split('\n').length : 0;
+      document.getElementById('lines').textContent = lines;
+      
+      // Sentences
+      const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim()).length : 0;
+      document.getElementById('sentences').textContent = sentences;
+      
+      // Paragraphs
+      const paragraphs = text.trim() ? text.split(/\n\s*\n/).filter(p => p.trim()).length : 0;
+      document.getElementById('paragraphs').textContent = paragraphs || (text.trim() ? 1 : 0);
     }
-
+    
     function clearText() {
-      document.getElementById('text-input').value = '';
-      countCharacters();
+      document.getElementById('textInput').value = '';
+      countAll();
     }
   </script>
 </body>
