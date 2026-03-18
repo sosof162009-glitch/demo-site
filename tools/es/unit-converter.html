@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertidor de Unidades - 205 Tools</title>
+  <meta name="description" content="Convierte entre diferentes unidades de medida: longitud, peso, temperatura, volumen, área, velocidad y tiempo.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Inicio</a>
+    <header>
+      <h1>📐 Convertidor de Unidades</h1>
+      <p>Convierte entre diferentes unidades de medida</p>
+    </header>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Conversor</h2>
+        <div class="lang-selector">
+          <a href="../en/unit-converter.html" class="lang-btn">EN</a>
+          <a href="./unit-converter.html" class="lang-btn active">ES</a>
+          <a href="../fr/unit-converter.html" class="lang-btn">FR</a>
+          <a href="../de/unit-converter.html" class="lang-btn">DE</a>
+          <a href="../ar/unit-converter.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Categoría</label>
+        <select id="category" onchange="updateUnits()">
+          <option value="length">Longitud</option>
+          <option value="weight">Peso</option>
+          <option value="temperature">Temperatura</option>
+          <option value="volume">Volumen</option>
+          <option value="area">Área</option>
+          <option value="speed">Velocidad</option>
+          <option value="time">Tiempo</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>De</label>
+          <input type="number" id="inputValue" placeholder="Introduce valor" oninput="convert()">
+          <select id="fromUnit" onchange="convert()">
+            <option value="m">Metros (m)</option>
+            <option value="km">Kilómetros (km)</option>
+            <option value="cm">Centímetros (cm)</option>
+            <option value="mm">Milímetros (mm)</option>
+            <option value="ft">Pies (ft)</option>
+            <option value="in">Pulgadas (in)</option>
+            <option value="yd">Yardas (yd)</option>
+            <option value="mi">Millas (mi)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>A</label>
+          <input type="number" id="outputValue" placeholder="Resultado" readonly>
+          <select id="toUnit" onchange="convert()">
+            <option value="m">Metros (m)</option>
+            <option value="km" selected>Kilómetros (km)</option>
+            <option value="cm">Centímetros (cm)</option>
+            <option value="mm">Milímetros (mm)</option>
+            <option value="ft">Pies (ft)</option>
+            <option value="in">Pulgadas (in)</option>
+            <option value="yd">Yardas (yd)</option>
+            <option value="mi">Millas (mi)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="swapUnits()">⇄ Intercambiar</button>
+      <button class="btn btn-secondary" onclick="reset()">Restablecer</button>
+      <div id="formula" class="formula-display"></div>
+    </div>
+    <footer><p>205 Tools © 2025 - Herramientas Gratuitas</p></footer>
+  </div>
+  <script>
+    const units = {
+      length: {
+        m: { name: 'Metros', factor: 1 },
+        km: { name: 'Kilómetros', factor: 1000 },
+        cm: { name: 'Centímetros', factor: 0.01 },
+        mm: { name: 'Milímetros', factor: 0.001 },
+        ft: { name: 'Pies', factor: 0.3048 },
+        in: { name: 'Pulgadas', factor: 0.0254 },
+        yd: { name: 'Yardas', factor: 0.9144 },
+        mi: { name: 'Millas', factor: 1609.34 }
+      },
+      weight: {
+        kg: { name: 'Kilogramos', factor: 1 },
+        g: { name: 'Gramos', factor: 0.001 },
+        mg: { name: 'Miligramos', factor: 0.000001 },
+        lb: { name: 'Libras', factor: 0.453592 },
+        oz: { name: 'Onzas', factor: 0.0283495 },
+        t: { name: 'Toneladas métricas', factor: 1000 }
+      },
+      temperature: { c: { name: 'Celsius' }, f: { name: 'Fahrenheit' }, k: { name: 'Kelvin' } },
+      volume: {
+        l: { name: 'Litros', factor: 1 },
+        ml: { name: 'Mililitros', factor: 0.001 },
+        gal: { name: 'Galones (US)', factor: 3.78541 },
+        qt: { name: 'Cuartos (US)', factor: 0.946353 },
+        pt: { name: 'Pintas (US)', factor: 0.473176 },
+        cup: { name: 'Tazas (US)', factor: 0.236588 },
+        floz: { name: 'Onzas líquidas (US)', factor: 0.0295735 }
+      },
+      area: {
+        m2: { name: 'Metros cuadrados', factor: 1 },
+        km2: { name: 'Kilómetros cuadrados', factor: 1000000 },
+        ft2: { name: 'Pies cuadrados', factor: 0.092903 },
+        ac: { name: 'Acres', factor: 4046.86 },
+        ha: { name: 'Hectáreas', factor: 10000 }
+      },
+      speed: {
+        ms: { name: 'Metros/Segundo', factor: 1 },
+        kmh: { name: 'Km/Hora', factor: 0.277778 },
+        mph: { name: 'Millas/Hora', factor: 0.44704 },
+        kn: { name: 'Nudos', factor: 0.514444 }
+      },
+      time: {
+        s: { name: 'Segundos', factor: 1 },
+        min: { name: 'Minutos', factor: 60 },
+        h: { name: 'Horas', factor: 3600 },
+        d: { name: 'Días', factor: 86400 },
+        wk: { name: 'Semanas', factor: 604800 },
+        mo: { name: 'Meses (prom)', factor: 2628000 },
+        y: { name: 'Años', factor: 31536000 }
+      }
+    };
+    function updateUnits() {
+      const category = document.getElementById('category').value;
+      const fromSelect = document.getElementById('fromUnit');
+      const toSelect = document.getElementById('toUnit');
+      const categoryUnits = units[category];
+      const options = Object.keys(categoryUnits).map(key => `<option value="${key}">${categoryUnits[key].name} (${key})</option>`).join('');
+      fromSelect.innerHTML = options;
+      toSelect.innerHTML = options;
+      if (toSelect.options.length > 1) { toSelect.selectedIndex = 1; }
+      convert();
+    }
+    function convert() {
+      const category = document.getElementById('category').value;
+      const input = parseFloat(document.getElementById('inputValue').value);
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      if (isNaN(input)) { document.getElementById('outputValue').value = ''; return; }
+      let result;
+      if (category === 'temperature') { result = convertTemperature(input, from, to); }
+      else { const fromFactor = units[category][from].factor; const toFactor = units[category][to].factor; result = input * fromFactor / toFactor; }
+      document.getElementById('outputValue').value = Math.round(result * 100000) / 100000;
+      const fromName = units[category][from].name;
+      const toName = units[category][to].name;
+      document.getElementById('formula').textContent = `${input} ${fromName} = ${result.toFixed(6)} ${toName}`;
+    }
+    function convertTemperature(value, from, to) {
+      if (from === to) return value;
+      let celsius;
+      if (from === 'c') celsius = value;
+      else if (from === 'f') celsius = (value - 32) * 5/9;
+      else if (from === 'k') celsius = value - 273.15;
+      if (to === 'c') return celsius;
+      else if (to === 'f') return celsius * 9/5 + 32;
+      else if (to === 'k') return celsius + 273.15;
+    }
+    function swapUnits() {
+      const from = document.getElementById('fromUnit');
+      const to = document.getElementById('toUnit');
+      const temp = from.value; from.value = to.value; to.value = temp;
+      convert();
+    }
+    function reset() {
+      document.getElementById('inputValue').value = '';
+      document.getElementById('outputValue').value = '';
+      document.getElementById('formula').textContent = '';
+    }
+  </script>
+</body>
+</html>
