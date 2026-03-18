@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sha512-generator - 205 Tools</title>
-  <meta name="description" content="">
+  <title>SHA512 Generator - 205 Tools</title>
+  <meta name="description" content="Generate SHA512 hashes from text.">
   <link rel="stylesheet" href="../assets/css/tools.css">
   <script src="../assets/js/utils.js" defer></script>
 </head>
@@ -13,8 +13,8 @@
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>#️⃣ sha512-generator</h1>
-      <p></p>
+      <h1>🔒 SHA512 Generator</h1>
+      <p>Generate SHA512 hashes from text.</p>
     </header>
     
     <div class="tool-container">
@@ -25,18 +25,20 @@
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Input Text</label>
+        <textarea id="inputText" rows="8" placeholder="Enter your text here..."></textarea>
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox" id="uppercase"> Output Uppercase</label>
       </div>
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
+        <button class="btn btn-primary" onclick="generateSHA512()">Generate SHA512</button>
         <button class="btn btn-secondary" onclick="resetText()">Reset</button>
       </div>
       <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+        <label>SHA512 Hash</label>
+        <textarea id="outputText" rows="6" readonly></textarea>
       </div>
       <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
@@ -47,16 +49,25 @@
   </div>
   
   <script>
+    // SHA512 Implementation using Web Crypto API
+    async function generateSHA512() {
+      const text = document.getElementById('inputText').value;
+      const uppercase = document.getElementById('uppercase').checked;
+      
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-512', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      let hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      
+      if (uppercase) hash = hash.toUpperCase();
+      document.getElementById('outputText').value = hash;
+    }
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
-    
+    function resetText() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('outputText').value = '';
+    }
   </script>
 </body>
 </html>

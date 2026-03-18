@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>loan-calculator - 205 Tools</title>
-  <meta name="description" content="">
+  <title>Loan Calculator - 205 Tools</title>
+  <meta name="description" content="Calculate loan payments, interest costs, and amortization schedules.">
   <link rel="stylesheet" href="../assets/css/tools.css">
   <script src="../assets/js/utils.js" defer></script>
 </head>
@@ -13,32 +13,108 @@
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🏦 loan-calculator</h1>
-      <p></p>
+      <h1>💳 Loan Calculator</h1>
+      <p>Calculate loan payments, total interest, and amortization schedules.</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Loan Details</h2>
         <div class="lang-selector">
-          <a href="../en/loan-calculator.html" class="lang-btn active">EN</a><a href="../es/loan-calculator.html" class="lang-btn ">ES</a><a href="../fr/loan-calculator.html" class="lang-btn ">FR</a><a href="../de/loan-calculator.html" class="lang-btn ">DE</a><a href="../ar/loan-calculator.html" class="lang-btn ">AR</a>
+          <a href="../en/loan-calculator.html" class="lang-btn active">EN</a>
+          <a href="../es/loan-calculator.html" class="lang-btn">ES</a>
+          <a href="../fr/loan-calculator.html" class="lang-btn">FR</a>
+          <a href="../de/loan-calculator.html" class="lang-btn">DE</a>
+          <a href="../ar/loan-calculator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="calc-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Loan Amount ($)</label>
+            <input type="number" id="loanAmount" class="tool-input" placeholder="10000" min="0" step="100">
+          </div>
+          <div class="form-group">
+            <label>Annual Interest Rate (%)</label>
+            <input type="number" id="interestRate" class="tool-input" placeholder="5.5" min="0" step="0.1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Loan Term</label>
+            <div class="term-input">
+              <input type="number" id="loanTerm" class="tool-input" placeholder="5" min="1">
+              <select id="termType" class="tool-select">
+                <option value="years">Years</option>
+                <option value="months">Months</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Payment Frequency</label>
+            <select id="paymentFreq" class="tool-select">
+              <option value="monthly">Monthly</option>
+              <option value="biweekly">Bi-weekly</option>
+              <option value="weekly">Weekly</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="extraPayments">
+            Include extra payments
+          </label>
+          <div id="extraPaymentSection" style="display: none; margin-top: 12px;">
+            <input type="number" id="extraPaymentAmount" class="tool-input" placeholder="Extra payment amount ($)" min="0">
+          </div>
+        </div>
+        
+        <button class="btn btn-primary calc-btn" onclick="calculateLoan()">Calculate Loan</button>
+      </div>
       
-      <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+      <div class="result-section" id="resultSection" style="display: none;">
+        <h3>📊 Loan Summary</h3>
+        
+        <div class="summary-cards">
+          <div class="summary-card primary">
+            <span class="label">Monthly Payment</span>
+            <span class="value" id="monthlyPayment">$0.00</span>
+          </div>
+          <div class="summary-card">
+            <span class="label">Total Principal</span>
+            <span class="value" id="totalPrincipal">$0.00</span>
+          </div>
+          <div class="summary-card">
+            <span class="label">Total Interest</span>
+            <span class="value" id="totalInterest">$0.00</span>
+          </div>
+          <div class="summary-card">
+            <span class="label">Total Cost</span>
+            <span class="value" id="totalCost">$0.00</span>
+          </div>
+        </div>
+        
+        <div class="amortization-section">
+          <h4>📈 Amortization Schedule</h4>
+          <div class="amortization-table-wrapper">
+            <table class="amortization-table">
+              <thead>
+                <tr>
+                  <th>Payment #</th>
+                  <th>Payment</th>
+                  <th>Principal</th>
+                  <th>Interest</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody id="amortizationBody"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
-      </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
-      </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
     <footer>
@@ -46,17 +122,142 @@
     </footer>
   </div>
   
+  <style>
+    .calc-form { background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-secondary); font-size: 14px; }
+    .tool-input, .tool-select { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; color: var(--text-primary); font-size: 15px; }
+    .term-input { display: flex; gap: 12px; }
+    .term-input .tool-input { flex: 1; }
+    .term-input .tool-select { width: 120px; }
+    .checkbox-label { display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-primary) !important; }
+    .checkbox-label input { width: 18px; height: 18px; accent-color: var(--primary); }
+    .calc-btn { width: 100%; padding: 16px; font-size: 16px; margin-top: 10px; }
+    .result-section { background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); }
+    .result-section h3 { margin-bottom: 20px; color: var(--primary); font-size: 1.1rem; }
+    .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 30px; }
+    .summary-card { background: var(--bg-input); padding: 20px; border-radius: var(--radius-sm); text-align: center; border: 1px solid var(--border); }
+    .summary-card.primary { background: var(--primary); border-color: var(--primary); }
+    .summary-card .label { display: block; font-size: 12px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px; }
+    .summary-card.primary .label { color: rgba(255,255,255,0.8); }
+    .summary-card .value { display: block; font-size: 24px; font-weight: 700; color: var(--text-primary); }
+    .summary-card.primary .value { color: white; }
+    .amortization-section h4 { margin-bottom: 16px; color: var(--text-secondary); font-size: 14px; text-transform: uppercase; }
+    .amortization-table-wrapper { overflow-x: auto; max-height: 400px; overflow-y: auto; }
+    .amortization-table { width: 100%; border-collapse: collapse; }
+    .amortization-table th, .amortization-table td { padding: 12px; text-align: right; border-bottom: 1px solid var(--border); }
+    .amortization-table th { background: var(--bg-input); color: var(--text-secondary); font-weight: 600; font-size: 12px; text-transform: uppercase; position: sticky; top: 0; }
+    .amortization-table td { color: var(--text-primary); }
+    .amortization-table tr:hover { background: var(--bg-input); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .summary-cards { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+  
   <script>
+    document.getElementById('extraPayments').addEventListener('change', function() {
+      document.getElementById('extraPaymentSection').style.display = this.checked ? 'block' : 'none';
+    });
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function calculateLoan() {
+      const principal = parseFloat(document.getElementById('loanAmount').value);
+      const annualRate = parseFloat(document.getElementById('interestRate').value);
+      const termValue = parseInt(document.getElementById('loanTerm').value);
+      const termType = document.getElementById('termType').value;
+      const paymentFreq = document.getElementById('paymentFreq').value;
+      const hasExtra = document.getElementById('extraPayments').checked;
+      const extraAmount = hasExtra ? parseFloat(document.getElementById('extraPaymentAmount').value) || 0 : 0;
+      
+      if (!principal || !annualRate || !termValue) {
+        alert('Please fill in all required fields');
+        return;
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
+      
+      // Calculate number of payments
+      let numPayments;
+      if (termType === 'years') {
+        numPayments = termValue * (paymentFreq === 'monthly' ? 12 : paymentFreq === 'biweekly' ? 26 : 52);
+      } else {
+        numPayments = termValue;
       }
-    
+      
+      // Calculate periodic interest rate
+      const periodsPerYear = paymentFreq === 'monthly' ? 12 : paymentFreq === 'biweekly' ? 26 : 52;
+      const periodicRate = (annualRate / 100) / periodsPerYear;
+      
+      // Calculate payment amount
+      let payment;
+      if (periodicRate === 0) {
+        payment = principal / numPayments;
+      } else {
+        payment = principal * (periodicRate * Math.pow(1 + periodicRate, numPayments)) / (Math.pow(1 + periodicRate, numPayments) - 1);
+      }
+      
+      payment += extraAmount;
+      
+      // Generate amortization schedule
+      let balance = principal;
+      let totalInterest = 0;
+      let totalPaid = 0;
+      const schedule = [];
+      
+      for (let i = 1; i <= numPayments && balance > 0.01; i++) {
+        const interestPayment = balance * periodicRate;
+        let principalPayment = payment - interestPayment;
+        
+        if (principalPayment > balance) {
+          principalPayment = balance;
+          payment = principalPayment + interestPayment;
+        }
+        
+        balance -= principalPayment;
+        totalInterest += interestPayment;
+        totalPaid += payment;
+        
+        schedule.push({
+          paymentNum: i,
+          payment: payment,
+          principal: principalPayment,
+          interest: interestPayment,
+          balance: Math.max(0, balance)
+        });
+        
+        if (balance <= 0.01) break;
+      }
+      
+      // Update summary
+      document.getElementById('monthlyPayment').textContent = '$' + schedule[0].payment.toFixed(2);
+      document.getElementById('totalPrincipal').textContent = '$' + principal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      document.getElementById('totalInterest').textContent = '$' + totalInterest.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      document.getElementById('totalCost').textContent = '$' + (principal + totalInterest).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      
+      // Update amortization table (show first 12 and last payment, or all if less than 24)
+      const tbody = document.getElementById('amortizationBody');
+      tbody.innerHTML = '';
+      
+      const displayRows = schedule.length <= 24 ? schedule : [
+        ...schedule.slice(0, 12),
+        { paymentNum: '...', payment: '', principal: '', interest: '', balance: '', isSeparator: true },
+        ...schedule.slice(-1)
+      ];
+      
+      displayRows.forEach(row => {
+        if (row.isSeparator) {
+          tbody.innerHTML += `<tr><td colspan="5" style="text-align: center; color: var(--text-secondary);">...</td></tr>`;
+        } else {
+          tbody.innerHTML += `
+            <tr>
+              <td>${row.paymentNum}</td>
+              <td>$${row.payment.toFixed(2)}</td>
+              <td>$${row.principal.toFixed(2)}</td>
+              <td>$${row.interest.toFixed(2)}</td>
+              <td>$${row.balance.toFixed(2)}</td>
+            </tr>
+          `;
+        }
+      });
+      
+      document.getElementById('resultSection').style.display = 'block';
+    }
   </script>
 </body>
 </html>

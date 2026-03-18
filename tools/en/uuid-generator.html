@@ -3,60 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>uuid-generator - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>UUID Generator - 205 Tools</title>
+  <meta name="description" content="Generate UUIDs/GUIDs in different versions and formats.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .uuid-display { background: var(--bg-secondary); padding: 25px; border-radius: 12px; text-align: center; margin: 20px 0; }
+    .uuid-text { font-family: 'Fira Code', monospace; font-size: 20px; word-break: break-all; color: var(--primary); }
+    .uuid-history { margin-top: 20px; }
+    .history-item { background: var(--bg-card); padding: 12px 15px; border-radius: 8px; margin: 8px 0; font-family: monospace; display: flex; justify-content: space-between; align-items: center; }
+    .format-options { display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0; }
+    .format-options button { flex: 1; min-width: 100px; }
+    .format-options button.active { background: var(--primary); color: white; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🆔 uuid-generator</h1>
-      <p></p>
+      <h1>🔢 UUID Generator</h1>
+      <p>Generate unique identifiers</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Generator</h2>
         <div class="lang-selector">
-          <a href="../en/uuid-generator.html" class="lang-btn active">EN</a><a href="../es/uuid-generator.html" class="lang-btn ">ES</a><a href="../fr/uuid-generator.html" class="lang-btn ">FR</a><a href="../de/uuid-generator.html" class="lang-btn ">DE</a><a href="../ar/uuid-generator.html" class="lang-btn ">AR</a>
+          <a href="./uuid-generator.html" class="lang-btn active">EN</a>
+          <a href="../es/uuid-generator.html" class="lang-btn">ES</a>
+          <a href="../fr/uuid-generator.html" class="lang-btn">FR</a>
+          <a href="../de/uuid-generator.html" class="lang-btn">DE</a>
+          <a href="../ar/uuid-generator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="format-options">
+        <button class="active" onclick="setFormat('v4')">UUID v4</button>
+        <button onclick="setFormat('v1')">UUID v1</button>
+        <button onclick="setFormat('simple')">Simple</button>
+        <button onclick="setFormat('upper')">UPPERCASE</button>
+      </div>
       
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Quantity</label>
+        <input type="number" id="quantity" value="1" min="1" max="50">
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="generate()">🔄 Generate</button>
+        <button class="btn btn-success" onclick="copyAll()">📋 Copy All</button>
+        <button class="btn btn-secondary" onclick="clearHistory()">Clear</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
-      </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
+      
+      <div class="uuid-history" id="history"></div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
+    let format = 'v4';
+    let history = [];
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    function setFormat(f) {
+      format = f;
+      document.querySelectorAll('.format-options button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
     
+    function generate() {
+      const qty = parseInt(document.getElementById('quantity').value) || 1;
+      
+      for (let i = 0; i < qty; i++) {
+        let uuid;
+        if (format === 'v4' || format === 'simple' || format === 'upper') {
+          uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+          });
+          if (format === 'simple') uuid = uuid.replace(/-/g, '');
+          if (format === 'upper') uuid = uuid.toUpperCase();
+        } else {
+          // v1-like timestamp-based
+          const now = Date.now();
+          uuid = `${now.toString(16).padStart(12, '0')}-1xxx-yxxx-xxxxxxxxxxxx`.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+          });
+        }
+        
+        addToHistory(uuid);
+      }
+    }
+    
+    function addToHistory(uuid) {
+      history.unshift(uuid);
+      if (history.length > 20) history.pop();
+      renderHistory();
+    }
+    
+    function renderHistory() {
+      document.getElementById('history').innerHTML = history.map((uuid, i) => `
+        <div class="history-item">
+          <span>${uuid}</span>
+          <button class="btn btn-sm btn-secondary" onclick="copyOne('${uuid}')">Copy</button>
+        </div>
+      `).join('');
+    }
+    
+    function copyOne(uuid) {
+      navigator.clipboard.writeText(uuid);
+      alert('Copied: ' + uuid.substring(0, 8) + '...');
+    }
+    
+    function copyAll() {
+      if (history.length === 0) return;
+      navigator.clipboard.writeText(history.join('\n'));
+      alert('All UUIDs copied!');
+    }
+    
+    function clearHistory() {
+      history = [];
+      document.getElementById('history').innerHTML = '';
+    }
+    
+    // Generate one on load
+    generate();
   </script>
 </body>
 </html>

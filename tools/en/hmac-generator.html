@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hmac-generator - 205 Tools</title>
-  <meta name="description" content="">
+  <title>HMAC Generator - 205 Tools</title>
+  <meta name="description" content="Generate HMAC (Hash-based Message Authentication Code) with various algorithms.">
   <link rel="stylesheet" href="../assets/css/tools.css">
   <script src="../assets/js/utils.js" defer></script>
 </head>
@@ -13,8 +13,8 @@
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🔏 hmac-generator</h1>
-      <p></p>
+      <h1>🔑 HMAC Generator</h1>
+      <p>Generate HMAC with SHA256, SHA512, SHA1, or MD5.</p>
     </header>
     
     <div class="tool-container">
@@ -25,18 +25,32 @@
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Algorithm</label>
+        <select id="algorithm">
+          <option value="SHA-256" selected>SHA-256</option>
+          <option value="SHA-512">SHA-512</option>
+          <option value="SHA-1">SHA-1</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Secret Key</label>
+        <input type="text" id="secretKey" placeholder="Enter secret key...">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="message" rows="6" placeholder="Enter your message here..."></textarea>
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox" id="uppercase"> Output Uppercase</label>
       </div>
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="generateHMAC()">Generate HMAC</button>
+        <button class="btn btn-secondary" onclick="resetForm()">Reset</button>
       </div>
       <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+        <label>HMAC Result</label>
+        <textarea id="outputText" rows="4" readonly></textarea>
       </div>
       <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
@@ -47,16 +61,47 @@
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    async function generateHMAC() {
+      const algorithm = document.getElementById('algorithm').value;
+      const key = document.getElementById('secretKey').value;
+      const message = document.getElementById('message').value;
+      const uppercase = document.getElementById('uppercase').checked;
+      
+      if (!key) {
+        alert('Please enter a secret key');
+        return;
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
+      if (!message) {
+        alert('Please enter a message');
+        return;
       }
+      
+      try {
+        const encoder = new TextEncoder();
+        const cryptoKey = await crypto.subtle.importKey(
+          'raw',
+          encoder.encode(key),
+          { name: 'HMAC', hash: algorithm },
+          false,
+          ['sign']
+        );
+        const signature = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(message));
+        const hashArray = Array.from(new Uint8Array(signature));
+        let hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        
+        if (uppercase) hash = hash.toUpperCase();
+        document.getElementById('outputText').value = hash;
+      } catch (error) {
+        alert('Error generating HMAC: ' + error.message);
+      }
+    }
     
+    function resetForm() {
+      document.getElementById('algorithm').value = 'SHA-256';
+      document.getElementById('secretKey').value = '';
+      document.getElementById('message').value = '';
+      document.getElementById('outputText').value = '';
+    }
   </script>
 </body>
 </html>

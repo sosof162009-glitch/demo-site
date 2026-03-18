@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>date-calculator - 205 Tools</title>
-  <meta name="description" content="">
+  <title>Date Calculator - 205 Tools</title>
+  <meta name="description" content="Calculate the difference between two dates or add/subtract days from a date.">
   <link rel="stylesheet" href="../assets/css/tools.css">
   <script src="../assets/js/utils.js" defer></script>
 </head>
@@ -13,32 +13,80 @@
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>📅 date-calculator</h1>
-      <p></p>
+      <h1>📅 Date Calculator</h1>
+      <p>Calculate date differences and add or subtract time from dates.</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Calculators</h2>
         <div class="lang-selector">
-          <a href="../en/date-calculator.html" class="lang-btn active">EN</a><a href="../es/date-calculator.html" class="lang-btn ">ES</a><a href="../fr/date-calculator.html" class="lang-btn ">FR</a><a href="../de/date-calculator.html" class="lang-btn ">DE</a><a href="../ar/date-calculator.html" class="lang-btn ">AR</a>
+          <a href="../en/date-calculator.html" class="lang-btn active">EN</a>
+          <a href="../es/date-calculator.html" class="lang-btn">ES</a>
+          <a href="../fr/date-calculator.html" class="lang-btn">FR</a>
+          <a href="../de/date-calculator.html" class="lang-btn">DE</a>
+          <a href="../ar/date-calculator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <!-- Tab: Days Between Dates -->
+      <div class="calc-section">
+        <h3>📊 Days Between Two Dates</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="date" id="startDate" class="tool-input">
+          </div>
+          <div class="form-group">
+            <label>End Date</label>
+            <input type="date" id="endDate" class="tool-input">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="calcDateDiff()">Calculate Difference</button>
+        <div class="result-highlight" id="diffResult" style="display: none;"></div>
+      </div>
       
-      <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+      <!-- Tab: Add/Subtract Days -->
+      <div class="calc-section">
+        <h3>➕ Add or Subtract Days</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="date" id="baseDate" class="tool-input">
+          </div>
+          <div class="form-group">
+            <label>Days to Add/Subtract</label>
+            <input type="number" id="daysToAdd" class="tool-input" placeholder="e.g., 30 or -30">
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="addDays()">Add Days</button>
+          <button class="btn btn-secondary" onclick="subtractDays()">Subtract Days</button>
+        </div>
+        <div class="result-highlight" id="addResult" style="display: none;"></div>
       </div>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+      
+      <!-- Tab: What Day Is It -->
+      <div class="calc-section">
+        <h3>📆 What Day is a Date?</h3>
+        <div class="form-group">
+          <label>Select Date</label>
+          <input type="date" id="checkDate" class="tool-input">
+        </div>
+        <button class="btn btn-primary" onclick="checkDayOfWeek()">Find Day of Week</button>
+        <div class="result-highlight" id="dayResult" style="display: none;"></div>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <!-- Tab: Week Number -->
+      <div class="calc-section">
+        <h3>🔢 Week Number Calculator</h3>
+        <div class="form-group">
+          <label>Select Date</label>
+          <input type="date" id="weekDate" class="tool-input">
+        </div>
+        <button class="btn btn-primary" onclick="calcWeekNumber()">Get Week Number</button>
+        <div class="result-highlight" id="weekResult" style="display: none;"></div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
     <footer>
@@ -46,17 +94,117 @@
     </footer>
   </div>
   
+  <style>
+    .calc-section { background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 24px; }
+    .calc-section h3 { margin-bottom: 20px; color: var(--primary); font-size: 1.1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-secondary); font-size: 14px; }
+    .tool-input { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; color: var(--text-primary); font-size: 14px; }
+    .result-highlight { font-size: 20px; font-weight: 600; color: var(--primary); text-align: center; padding: 20px; background: var(--bg-input); border-radius: var(--radius-sm); margin-top: 16px; border: 1px solid var(--border); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+  </style>
+  
   <script>
+    // Set today's date as default
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('startDate').value = today;
+    document.getElementById('endDate').value = today;
+    document.getElementById('baseDate').value = today;
+    document.getElementById('checkDate').value = today;
+    document.getElementById('weekDate').value = today;
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function calcDateDiff() {
+      const start = new Date(document.getElementById('startDate').value);
+      const end = new Date(document.getElementById('endDate').value);
+      
+      if (isNaN(start) || isNaN(end)) {
+        alert('Please select valid dates');
+        return;
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+      
+      const diffTime = Math.abs(end - start);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const diffWeeks = Math.floor(diffDays / 7);
+      const diffMonths = Math.floor(diffDays / 30.44);
+      const diffYears = Math.floor(diffDays / 365.25);
+      
+      document.getElementById('diffResult').innerHTML = `
+        <div style="font-size: 28px; margin-bottom: 10px;">${diffDays} days</div>
+        <div style="font-size: 14px; color: var(--text-secondary);">
+          ≈ ${diffWeeks} weeks | ≈ ${diffMonths} months | ≈ ${diffYears} years
+        </div>
+      `;
+      document.getElementById('diffResult').style.display = 'block';
+    }
     
+    function addDays() {
+      const baseDate = new Date(document.getElementById('baseDate').value);
+      const days = parseInt(document.getElementById('daysToAdd').value) || 0;
+      
+      if (isNaN(baseDate)) {
+        alert('Please select a valid date');
+        return;
+      }
+      
+      const result = new Date(baseDate);
+      result.setDate(result.getDate() + days);
+      
+      const dayName = result.toLocaleDateString('en-US', { weekday: 'long' });
+      document.getElementById('addResult').innerHTML = `
+        <div style="font-size: 24px;">${result.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
+        <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">${dayName}</div>
+      `;
+      document.getElementById('addResult').style.display = 'block';
+    }
+    
+    function subtractDays() {
+      const daysInput = document.getElementById('daysToAdd');
+      daysInput.value = -(parseInt(daysInput.value) || 0);
+      addDays();
+    }
+    
+    function checkDayOfWeek() {
+      const date = new Date(document.getElementById('checkDate').value);
+      
+      if (isNaN(date)) {
+        alert('Please select a valid date');
+        return;
+      }
+      
+      const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+      const shortDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      
+      document.getElementById('dayResult').innerHTML = `
+        <div style="font-size: 32px; text-transform: uppercase;">${dayName}</div>
+        <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">${shortDate}</div>
+      `;
+      document.getElementById('dayResult').style.display = 'block';
+    }
+    
+    function calcWeekNumber() {
+      const date = new Date(document.getElementById('weekDate').value);
+      
+      if (isNaN(date)) {
+        alert('Please select a valid date');
+        return;
+      }
+      
+      // Calculate ISO week number
+      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      const dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+      
+      document.getElementById('weekResult').innerHTML = `
+        <div style="font-size: 48px; font-weight: 700;">${weekNo}</div>
+        <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
+          Week ${weekNo} of ${date.getFullYear()}
+        </div>
+      `;
+      document.getElementById('weekResult').style.display = 'block';
+    }
   </script>
 </body>
 </html>

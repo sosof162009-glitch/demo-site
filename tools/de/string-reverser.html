@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>String Reverser - 205 Tools</title>
+  <meta name="description" content="Reverse any text string instantly.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .result-box { background: var(--bg-secondary); padding: 20px; border-radius: 12px; margin-top: 20px; font-family: monospace; word-break: break-all; }
+    .char-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 15px; }
+    .char-box { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--primary); color: white; border-radius: 8px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Startseite</a>
+    
+    <header>
+      <h1>🔄 String Reverser</h1>
+      <p>Reverse any text string instantly</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Reverser</h2>
+        <div class="lang-selector">
+          <a href="../de/string-reverser.html" class="lang-btn">EN</a>
+          <a href="../es/string-reverser.html" class="lang-btn">ES</a>
+          <a href="../fr/string-reverser.html" class="lang-btn">FR</a>
+          <a href="../de/string-reverser.html" class="lang-btn active">DE</a>
+          <a href="../ar/string-reverser.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Enter Text</label>
+        <textarea id="inputText" rows="4" placeholder="Type text to reverse...">Hello World</textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="reverseText()">🔄 Reverse</button>
+        <button class="btn btn-success" onclick="copyResult()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div id="resultContainer" style="display: none;">
+        <label>Reversed Text</label>
+        <div class="result-box" id="resultText"></div>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function reverseText() {
+      const text = document.getElementById('inputText').value;
+      const reversed = text.split('').reverse().join('');
+      document.getElementById('resultText').textContent = reversed;
+      document.getElementById('resultContainer').style.display = 'block';
+    }
+    
+    function copyResult() {
+      const text = document.getElementById('resultText').textContent;
+      navigator.clipboard.writeText(text);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('resultContainer').style.display = 'none';
+    }
+    
+    // Auto-reverse on load
+    reverseText();
+  </script>
+</body>
+</html>

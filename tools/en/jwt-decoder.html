@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>jwt-decoder - 205 Tools</title>
-  <meta name="description" content="">
+  <title>JWT Decoder - 205 Tools</title>
+  <meta name="description" content="Decode and verify JWT tokens.">
   <link rel="stylesheet" href="../assets/css/tools.css">
   <script src="../assets/js/utils.js" defer></script>
 </head>
@@ -13,8 +13,8 @@
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🔑 jwt-decoder</h1>
-      <p></p>
+      <h1>🔑 JWT Decoder</h1>
+      <p>Decode and inspect JWT (JSON Web Tokens).</p>
     </header>
     
     <div class="tool-container">
@@ -25,20 +25,38 @@
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>JWT Token</label>
+        <textarea id="jwtInput" rows="6" placeholder="Paste your JWT token here (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...)"></textarea>
       </div>
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="decodeJWT()">Decode</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="result" style="margin-top: 20px; display: none;">
+        <div class="form-group">
+          <label>Header (Algorithm & Type)</label>
+          <textarea id="headerOutput" rows="4" readonly></textarea>
+          <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('headerOutput').value, this)" style="margin-top: 5px;">Copy Header</button>
+        </div>
+        
+        <div class="form-group">
+          <label>Payload (Data)</label>
+          <textarea id="payloadOutput" rows="8" readonly></textarea>
+          <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('payloadOutput').value, this)" style="margin-top: 5px;">Copy Payload</button>
+        </div>
+        
+        <div class="form-group">
+          <label>Signature</label>
+          <div id="signatureOutput" style="font-family: monospace; word-break: break-all; padding: 10px; background: #f5f5f5; border-radius: 4px;">-</div>
+        </div>
+        
+        <div id="expiryInfo" class="form-group" style="display: none;">
+          <label>Expiry</label>
+          <div id="expiryOutput" style="padding: 10px; background: #f5f5f5; border-radius: 4px;">-</div>
+        </div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
     <footer>
@@ -47,16 +65,79 @@
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function base64UrlDecode(str) {
+      // Add padding if necessary
+      let padding = '';
+      if (str.length % 4 !== 0) {
+        padding = '='.repeat(4 - (str.length % 4));
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
+      str = str + padding;
+      
+      // Replace URL-safe characters
+      str = str.replace(/-/g, '+').replace(/_/g, '/');
+      
+      try {
+        return decodeURIComponent(atob(str).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+      } catch (e) {
+        return atob(str);
       }
+    }
     
+    function decodeJWT() {
+      const token = document.getElementById('jwtInput').value.trim();
+      
+      if (!token) {
+        alert('Please enter a JWT token');
+        return;
+      }
+      
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        alert('Invalid JWT format. JWT tokens should have 3 parts separated by dots.');
+        return;
+      }
+      
+      try {
+        // Decode header
+        const header = JSON.parse(base64UrlDecode(parts[0]));
+        document.getElementById('headerOutput').value = JSON.stringify(header, null, 2);
+        
+        // Decode payload
+        const payload = JSON.parse(base64UrlDecode(parts[1]));
+        document.getElementById('payloadOutput').value = JSON.stringify(payload, null, 2);
+        
+        // Show signature
+        document.getElementById('signatureOutput').textContent = parts[2];
+        
+        // Check expiry
+        if (payload.exp) {
+          const expiryDate = new Date(payload.exp * 1000);
+          const now = new Date();
+          const isExpired = expiryDate < now;
+          document.getElementById('expiryOutput').innerHTML = 
+            `<strong>${expiryDate.toLocaleString()}</strong> ` +
+            `(<span style="color: ${isExpired ? '#dc3545' : '#28a745'}">${isExpired ? 'Expired' : 'Valid'}</span>)`;
+          document.getElementById('expiryInfo').style.display = 'block';
+        } else {
+          document.getElementById('expiryInfo').style.display = 'none';
+        }
+        
+        document.getElementById('result').style.display = 'block';
+      } catch (error) {
+        alert('Error decoding JWT: ' + error.message);
+      }
+    }
+    
+    function clearAll() {
+      document.getElementById('jwtInput').value = '';
+      document.getElementById('headerOutput').value = '';
+      document.getElementById('payloadOutput').value = '';
+      document.getElementById('signatureOutput').textContent = '-';
+      document.getElementById('expiryInfo').style.display = 'none';
+      document.getElementById('result').style.display = 'none';
+    }
   </script>
 </body>
 </html>

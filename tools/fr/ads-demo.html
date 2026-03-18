@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdSense Demo - 205 Tools</title>
+  <meta name="description" content="Demo page showing all AdSense ad placements">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .ad-demo-section { margin: 30px 0; padding: 20px; background: var(--bg-secondary); border-radius: 12px; }
+    .ad-demo-title { font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--primary); }
+    .ad-code { background: #1a1a2e; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: monospace; font-size: 12px; overflow-x: auto; }
+    .ad-code code { color: #a5b4fc; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Accueil</a>
+    
+    <!-- Top Ad Banner -->
+    <div class="ad-container top-ad">
+      <div class="ad-label">Advertisement - Top Banner (728x90)</div>
+      <div class="ad-placeholder">
+        <!-- Google AdSense Code Here -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"></script>
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:728px;height:90px"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+    </div>
+    
+    <header>
+      <h1>📢 AdSense Demo Page</h1>
+      <p>This page demonstrates all recommended ad placements for 205 Tools</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Ad Placement Examples</h2>
+      </div>
+      
+      <!-- In-Content Ad 1 -->
+      <div class="ad-container">
+        <div class="ad-label">Advertisement - In-Content (Responsive)</div>
+        <div class="ad-placeholder">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+               data-ad-slot="XXXXXXXXXX"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+      </div>
+      
+      <div class="ad-demo-section">
+        <div class="ad-demo-title">1. Top Banner Ad (728x90)</div>
+        <p>Best placed immediately below the header. High visibility without interfering with tool usage.</p>
+        <div class="ad-code">
+          <code>
+&lt;div class="ad-container top-ad"&gt;\n
+  &lt;div class="ad-label"&gt;Advertisement&lt;/div&gt;\n
+  &lt;!-- AdSense Code --&gt;\n
+&lt;/div&gt;
+          </code>
+        </div>
+      </div>
+      
+      <div class="ad-demo-section">
+        <div class="ad-demo-title">2. In-Content Ad (Responsive)</div>
+        <p>Placed between tool sections. Adapts to container width automatically.</p>
+        <div class="ad-code">
+          <code>
+&lt;div class="ad-container"&gt;\n
+  &lt;div class="ad-label"&gt;Advertisement&lt;/div&gt;\n
+  &lt;!-- Responsive Ad Code --&gt;\n
+&lt;/div&gt;
+          </code>
+        </div>
+      </div>
+      
+      <div class="ad-demo-section">
+        <div class="ad-demo-title">3. Sidebar Ad (300x250) - Desktop Only</div>
+        <p>Placed in sidebar. Only visible on desktop screens (768px+).</p>
+        <div class="ad-code">
+          <code>
+@media (min-width: 769px) {\n
+  .sidebar-ad { display: block; }\n
+}
+          </code>
+        </div>
+      </div>
+      
+      <div class="ad-demo-section">
+        <div class="ad-demo-title">4. Bottom Banner Ad (728x90)</div>
+        <p>Placed above footer. Captures attention after tool use.</p>
+      </div>
+      
+      <!-- In-Content Ad 2 -->
+      <div class="ad-container">
+        <div class="ad-label">Advertisement - Native Ad</div>
+        <div class="ad-placeholder">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-format="fluid"
+               data-ad-layout-key="-fb+5w+4e-db+86"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+               data-ad-slot="XXXXXXXXXX"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+      </div>
+      
+      <div class="ad-demo-section">
+        <div class="ad-demo-title">AdSense Policy Compliance ✅</div>
+        <ul style="margin-left: 20px; line-height: 2;">
+          <li>✅ No ads over interactive tool elements</li>
+          <li>✅ Maximum 3 ads per page recommended</li>
+          <li>✅ Clear "Advertisement" label on all ads</li>
+          <li>✅ Responsive ads for mobile compatibility</li>
+          <li>✅ No auto-play video or popups</li>
+          <li>✅ No deceptive ad placement</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Bottom Ad -->
+    <div class="ad-container bottom-ad">
+      <div class="ad-label">Advertisement - Bottom Banner (728x90)</div>
+      <div class="ad-placeholder">
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:728px;height:90px"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+</body>
+</html>
