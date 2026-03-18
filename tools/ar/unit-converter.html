@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محول الوحدات - 205 Tools</title>
+  <meta name="description" content="حوّل بين وحدات القياس المختلفة: الطول، الوزن، الحرارة، الحجم، المساحة، السرعة، والوقت.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← الرئيسية</a>
+    <header>
+      <h1>📐 محول الوحدات</h1>
+      <p>حوّل بين وحدات القياس المختلفة</p>
+    </header>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>التحويل</h2>
+        <div class="lang-selector">
+          <a href="../en/unit-converter.html" class="lang-btn">EN</a>
+          <a href="../es/unit-converter.html" class="lang-btn">ES</a>
+          <a href="../fr/unit-converter.html" class="lang-btn">FR</a>
+          <a href="../de/unit-converter.html" class="lang-btn">DE</a>
+          <a href="./unit-converter.html" class="lang-btn active">AR</a>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>الفئة</label>
+        <select id="category" onchange="updateUnits()">
+          <option value="length">الطول</option>
+          <option value="weight">الوزن</option>
+          <option value="temperature">الحرارة</option>
+          <option value="volume">الحجم</option>
+          <option value="area">المساحة</option>
+          <option value="speed">السرعة</option>
+          <option value="time">الوقت</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>من</label>
+          <input type="number" id="inputValue" placeholder="أدخل القيمة" oninput="convert()">
+          <select id="fromUnit" onchange="convert()">
+            <option value="m">متر (م)</option>
+            <option value="km">كيلومتر (كم)</option>
+            <option value="cm">سنتيمتر (سم)</option>
+            <option value="mm">مليمتر (مم)</option>
+            <option value="ft">قدم (قدم)</option>
+            <option value="in">بوصة (بوصة)</option>
+            <option value="yd">ياردة (ياردة)</option>
+            <option value="mi">ميل (ميل)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>إلى</label>
+          <input type="number" id="outputValue" placeholder="النتيجة" readonly>
+          <select id="toUnit" onchange="convert()">
+            <option value="m">متر (م)</option>
+            <option value="km" selected>كيلومتر (كم)</option>
+            <option value="cm">سنتيمتر (سم)</option>
+            <option value="mm">مليمتر (مم)</option>
+            <option value="ft">قدم (قدم)</option>
+            <option value="in">بوصة (بوصة)</option>
+            <option value="yd">ياردة (ياردة)</option>
+            <option value="mi">ميل (ميل)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="swapUnits()">⇄ تبديل</button>
+      <button class="btn btn-secondary" onclick="reset()">إعادة تعيين</button>
+      <div id="formula" class="formula-display"></div>
+    </div>
+    <footer><p>205 Tools © 2025 - أدوات مجانية</p></footer>
+  </div>
+  <script>
+    const units = {
+      length: {
+        m: { name: 'متر', factor: 1 },
+        km: { name: 'كيلومتر', factor: 1000 },
+        cm: { name: 'سنتيمتر', factor: 0.01 },
+        mm: { name: 'مليمتر', factor: 0.001 },
+        ft: { name: 'قدم', factor: 0.3048 },
+        in: { name: 'بوصة', factor: 0.0254 },
+        yd: { name: 'ياردة', factor: 0.9144 },
+        mi: { name: 'ميل', factor: 1609.34 }
+      },
+      weight: {
+        kg: { name: 'كيلوغرام', factor: 1 },
+        g: { name: 'غرام', factor: 0.001 },
+        mg: { name: 'مليغرام', factor: 0.000001 },
+        lb: { name: 'رطل', factor: 0.453592 },
+        oz: { name: 'أونصة', factor: 0.0283495 },
+        t: { name: 'طن متري', factor: 1000 }
+      },
+      temperature: { c: { name: 'سلسيوس' }, f: { name: 'فهرنهايت' }, k: { name: 'كلفن' } },
+      volume: {
+        l: { name: 'لتر', factor: 1 },
+        ml: { name: 'ملليلتر', factor: 0.001 },
+        gal: { name: 'جالون (أمريكي)', factor: 3.78541 },
+        qt: { name: 'كوارت (أمريكي)', factor: 0.946353 },
+        pt: { name: 'باينت (أمريكي)', factor: 0.473176 },
+        cup: { name: 'كوب (أمريكي)', factor: 0.236588 },
+        floz: { name: 'أونصة سائلة (أمريكي)', factor: 0.0295735 }
+      },
+      area: {
+        m2: { name: 'متر مربع', factor: 1 },
+        km2: { name: 'كيلومتر مربع', factor: 1000000 },
+        ft2: { name: 'قدم مربع', factor: 0.092903 },
+        ac: { name: 'فدان', factor: 4046.86 },
+        ha: { name: 'هكتار', factor: 10000 }
+      },
+      speed: {
+        ms: { name: 'متر/ثانية', factor: 1 },
+        kmh: { name: 'كم/ساعة', factor: 0.277778 },
+        mph: { name: 'ميل/ساعة', factor: 0.44704 },
+        kn: { name: 'عقدة', factor: 0.514444 }
+      },
+      time: {
+        s: { name: 'ثانية', factor: 1 },
+        min: { name: 'دقيقة', factor: 60 },
+        h: { name: 'ساعة', factor: 3600 },
+        d: { name: 'يوم', factor: 86400 },
+        wk: { name: 'أسبوع', factor: 604800 },
+        mo: { name: 'شهر (متوسط)', factor: 2628000 },
+        y: { name: 'سنة', factor: 31536000 }
+      }
+    };
+    function updateUnits() {
+      const category = document.getElementById('category').value;
+      const fromSelect = document.getElementById('fromUnit');
+      const toSelect = document.getElementById('toUnit');
+      const categoryUnits = units[category];
+      const options = Object.keys(categoryUnits).map(key => `<option value="${key}">${categoryUnits[key].name} (${key})</option>`).join('');
+      fromSelect.innerHTML = options;
+      toSelect.innerHTML = options;
+      if (toSelect.options.length > 1) { toSelect.selectedIndex = 1; }
+      convert();
+    }
+    function convert() {
+      const category = document.getElementById('category').value;
+      const input = parseFloat(document.getElementById('inputValue').value);
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      if (isNaN(input)) { document.getElementById('outputValue').value = ''; return; }
+      let result;
+      if (category === 'temperature') { result = convertTemperature(input, from, to); }
+      else { const fromFactor = units[category][from].factor; const toFactor = units[category][to].factor; result = input * fromFactor / toFactor; }
+      document.getElementById('outputValue').value = Math.round(result * 100000) / 100000;
+      const fromName = units[category][from].name;
+      const toName = units[category][to].name;
+      document.getElementById('formula').textContent = `${input} ${fromName} = ${result.toFixed(6)} ${toName}`;
+    }
+    function convertTemperature(value, from, to) {
+      if (from === to) return value;
+      let celsius;
+      if (from === 'c') celsius = value;
+      else if (from === 'f') celsius = (value - 32) * 5/9;
+      else if (from === 'k') celsius = value - 273.15;
+      if (to === 'c') return celsius;
+      else if (to === 'f') return celsius * 9/5 + 32;
+      else if (to === 'k') return celsius + 273.15;
+    }
+    function swapUnits() {
+      const from = document.getElementById('fromUnit');
+      const to = document.getElementById('toUnit');
+      const temp = from.value; from.value = to.value; to.value = temp;
+      convert();
+    }
+    function reset() {
+      document.getElementById('inputValue').value = '';
+      document.getElementById('outputValue').value = '';
+      document.getElementById('formula').textContent = '';
+    }
+  </script>
+</body>
+</html>
