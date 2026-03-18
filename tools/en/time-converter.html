@@ -4,111 +4,126 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Time Converter - 205 Tools</title>
-  <meta name="description" content="Convert between seconds, minutes, hours, days and more.">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <meta name="description" content="Convert time between different units.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .converter-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 15px; align-items: center; margin: 20px 0; }
+    .swap-btn { font-size: 24px; padding: 10px; }
+    @media (max-width: 600px) { .converter-grid { grid-template-columns: 1fr; } .swap-btn { transform: rotate(90deg); } }
+    .presets { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+    .presets button { flex: 1; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>⏱️ Time Converter</h1>
-      <p>Convert between seconds, minutes, hours, days and more.</p>
+      <h1>⏰ Time Converter</h1>
+      <p>Convert between time units</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Convert</h2>
+        <h2>Converter</h2>
         <div class="lang-selector">
-          <a href="../en/time-converter.html" class="lang-btn active">EN</a><a href="../es/time-converter.html" class="lang-btn ">ES</a><a href="../fr/time-converter.html" class="lang-btn ">FR</a><a href="../de/time-converter.html" class="lang-btn ">DE</a><a href="../ar/time-converter.html" class="lang-btn ">AR</a>
+          <a href="./time-converter.html" class="lang-btn active">EN</a>
+          <a href="../es/time-converter.html" class="lang-btn">ES</a>
+          <a href="../fr/time-converter.html" class="lang-btn">FR</a>
+          <a href="../de/time-converter.html" class="lang-btn">DE</a>
+          <a href="../ar/time-converter.html" class="lang-btn">AR</a>
         </div>
       </div>
       
       <div class="converter-grid">
-        <div class="converter-box">
-          <div class="form-group">
-            <label for="fromUnit">From</label>
-            <select id="fromUnit">
-              <option value="s">Seconds</option><option value="min">Minutes</option><option value="h">Hours</option><option value="d">Days</option><option value="wk">Weeks</option><option value="mo">Months</option><option value="y">Years</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="inputValue">Value</label>
-            <input type="number" id="inputValue" placeholder="0" step="any">
-          </div>
+        <div class="form-group">
+          <label>From</label>
+          <input type="number" id="fromValue" value="1" step="any" oninput="convert()">
+          <select id="fromUnit" onchange="convert()">
+            <option value="ms">Milliseconds</option>
+            <option value="s">Seconds</option>
+            <option value="m">Minutes</option>
+            <option value="h" selected>Hours</option>
+            <option value="d">Days</option>
+            <option value="w">Weeks</option>
+            <option value="mo">Months (30d)</option>
+            <option value="y">Years (365d)</option>
+          </select>
         </div>
         
-        <button class="swap-btn" onclick="swapUnits()" title="Swap">⇄</button>
+        <button class="btn btn-secondary swap-btn" onclick="swap()">⇄</button>
         
-        <div class="converter-box">
-          <div class="form-group">
-            <label for="toUnit">To</label>
-            <select id="toUnit">
-              <option value="s">Seconds</option><option value="min">Minutes</option><option value="h">Hours</option><option value="d">Days</option><option value="wk">Weeks</option><option value="mo">Months</option><option value="y">Years</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Result</label>
-            <div class="result-value" id="resultValue">-</div>
-          </div>
+        <div class="form-group">
+          <label>To</label>
+          <input type="number" id="toValue" readonly>
+          <select id="toUnit" onchange="convert()">
+            <option value="ms">Milliseconds</option>
+            <option value="s">Seconds</option>
+            <option value="m">Minutes</option>
+            <option value="h">Hours</option>
+            <option value="d">Days</option>
+            <option value="w">Weeks</option>
+            <option value="mo">Months (30d)</option>
+            <option value="y" selected>Years (365d)</option>
+          </select>
         </div>
       </div>
       
-      <div class="result-box" id="resultBox" style="display:none;">
-        <div class="result-value" id="finalResult">-</div>
-        <div class="result-label" id="resultLabel"></div>
+      <div class="presets">
+        <button class="btn btn-sm btn-secondary" onclick="setPreset(1, 'h', 'm')">1 hour = ? min</button>
+        <button class="btn btn-sm btn-secondary" onclick="setPreset(24, 'h', 'd')">24 hours = ? days</button>
+        <button class="btn btn-sm btn-secondary" onclick="setPreset(7, 'd', 'w')">7 days = ? weeks</button>
+        <button class="btn btn-sm btn-secondary" onclick="setPreset(365, 'd', 'y')">365 days = ? years</button>
       </div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
-    const inputEl = document.getElementById('inputValue');
-    const fromEl = document.getElementById('fromUnit');
-    const toEl = document.getElementById('toUnit');
-    const resultValueEl = document.getElementById('resultValue');
-    const resultBoxEl = document.getElementById('resultBox');
-    const finalResultEl = document.getElementById('finalResult');
-    const resultLabelEl = document.getElementById('resultLabel');
+    const toSeconds = {
+      ms: 0.001,
+      s: 1,
+      m: 60,
+      h: 3600,
+      d: 86400,
+      w: 604800,
+      mo: 2592000,
+      y: 31536000
+    };
     
-    function calculate() {
-      const value = parseFloat(inputEl.value);
-      const from = fromEl.value;
-      const to = toEl.value;
+    function convert() {
+      const value = parseFloat(document.getElementById('fromValue').value) || 0;
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
       
-      if (isNaN(value)) {
-        resultValueEl.textContent = '-';
-        resultBoxEl.style.display = 'none';
-        return;
-      }
+      const seconds = value * toSeconds[from];
+      const result = seconds / toSeconds[to];
       
-      try {
-        const result = convertTime(value, from, to);
-        const formatted = formatNumber(result, 6);
-        
-        resultValueEl.textContent = formatted;
-        finalResultEl.textContent = formatted;
-        resultLabelEl.textContent = value + ' ' + fromEl.options[fromEl.selectedIndex].text + ' = ' + formatted + ' ' + toEl.options[toEl.selectedIndex].text;
-        resultBoxEl.style.display = 'block';
-      } catch (e) {
-        resultValueEl.textContent = 'Error';
-      }
+      document.getElementById('toValue').value = result.toLocaleString(undefined, { maximumFractionDigits: 10 });
     }
     
-    function swapUnits() {
-      const temp = fromEl.value;
-      fromEl.value = toEl.value;
-      toEl.value = temp;
-      calculate();
+    function swap() {
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      const value = document.getElementById('toValue').value;
+      
+      document.getElementById('fromUnit').value = to;
+      document.getElementById('toUnit').value = from;
+      document.getElementById('fromValue').value = value;
+      
+      convert();
     }
     
-    inputEl.addEventListener('input', calculate);
-    fromEl.addEventListener('change', calculate);
-    toEl.addEventListener('change', calculate);
+    function setPreset(value, from, to) {
+      document.getElementById('fromValue').value = value;
+      document.getElementById('fromUnit').value = from;
+      document.getElementById('toUnit').value = to;
+      convert();
+    }
+    
+    // Initial conversion
+    convert();
   </script>
 </body>
 </html>
