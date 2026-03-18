@@ -1,243 +1,211 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Cropper | 205-tools</title>
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        body[lang="ar"] { font-family: 'Tajawal', 'DM Sans', sans-serif; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Cropper - 205 Tools</title>
+  <meta name="description" content="Crop images to specific dimensions or aspect ratio.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .upload-area { border: 2px dashed var(--border); padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+    .upload-area:hover { border-color: var(--primary); }
+    .crop-container { display: none; margin: 20px 0; text-align: center; }
+    .crop-container img { max-width: 100%; max-height: 400px; }
+    .crop-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; }
+    @media (max-width: 600px) { .crop-options { grid-template-columns: repeat(2, 1fr); } }
+  </style>
 </head>
-<body lang="en">
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <a href="/" class="logo">
-                <div class="logo-icon">🛠️</div>
-                <span>205-tools</span>
-            </a>
-            <nav class="nav-links">
-                <a href="/en/">Home</a>
-                <a href="/en/tools.html">Tools</a>
-                <a href="/en/about.html">About</a>
-                <a href="/en/contact.html">Contact</a>
-            </nav>
-            <div class="language-selector">
-                <select id="languageSelector">
-                    <option value="en" selected>English</option>
-                    <option value="ar" >العربية</option>
-                    <option value="fr" >Français</option>
-                    <option value="es" >Español</option>
-                    <option value="de" >Deutsch</option>
-                </select>
-            </div>
-        </div>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>✂️ Image Cropper</h1>
+      <p>Crop images to specific dimensions</p>
     </header>
-
-    <!-- Main Content -->
-    <main class="main-container">
-        <!-- Tool Header -->
-        <section class="tool-header-section">
-            <div class="tool-icon">✂️</div>
-            <h1 class="tool-title">Image Cropper</h1>
-            <p class="tool-description">Crop images to your desired dimensions.</p>
-        </section>
-
-        <!-- Tool Container -->
-        <div class="tool-container">
-            <!-- Upload Area -->
-            <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">📁</div>
-                <div class="upload-text">Drop your image here or click to browse</div>
-                <div class="upload-hint">Supports various image formats (.*)</div>
-                <input type="file" class="upload-input" id="uploadInput" accept="image/*">
-            </div>
-
-            <!-- File Info -->
-            <div class="file-info hidden" id="fileInfo">
-                <span class="file-info-icon">📄</span>
-                <div class="file-info-details">
-                    <div class="file-info-name"></div>
-                    <div class="file-info-size"></div>
-                </div>
-                <button class="file-remove" onclick="removeFile()" title="Remove file">✕</button>
-            </div>
-
-            <!-- Preview Area -->
-            <div class="preview-area hidden" id="previewArea">
-                <div class="preview-title">Preview</div>
-            </div>
-
-            <!-- Controls Section -->
-            <div class="controls-section" id="controlsSection">
-                <div class="controls-title">Options</div>
-                
-                <div class="control-group">
-                    <label class="control-label">X Position</label>
-                    <input type="number" class="control-input" id="cropX" value="0" min="0">
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Y Position</label>
-                    <input type="number" class="control-input" id="cropY" value="0" min="0">
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Width</label>
-                    <input type="number" class="control-input" id="cropWidth" value="100" min="1">
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Height</label>
-                    <input type="number" class="control-input" id="cropHeight" value="100" min="1">
-                </div>
-            </div>
-
-            <!-- Progress Bar -->
-            <div class="progress-container" id="progressContainer">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-text" id="progressText">0%</div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="btn-group">
-                <button class="btn btn-primary" id="convertBtn" disabled onclick="processImage()">
-                    <span>Convert</span>
-                </button>
-                <button class="btn btn-secondary" onclick="resetTool()">
-                    <span>Reset</span>
-                </button>
-            </div>
-
-            <!-- Result Area -->
-            <div class="result-area" id="resultArea">
-                <div class="result-title">
-                    <span>✓</span> Success!
-                </div>
-                <div id="resultContent"></div>
-                <div class="btn-group">
-                    <button class="btn btn-success" id="downloadBtn" onclick="downloadResult()">
-                        <span>💾 Download</span>
-                    </button>
-                </div>
-            </div>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Upload Image</h2>
+        <div class="lang-selector">
+          <a href="./image-cropper.html" class="lang-btn active">EN</a>
+          <a href="../es/image-cropper.html" class="lang-btn">ES</a>
+          <a href="../fr/image-cropper.html" class="lang-btn">FR</a>
+          <a href="../de/image-cropper.html" class="lang-btn">DE</a>
+          <a href="../ar/image-cropper.html" class="lang-btn">AR</a>
         </div>
-
-        <!-- Info Section -->
-        <section class="info-section">
-            <h2 class="info-title">Image Cropper</h2>
-            <div class="info-content">
-                <p>Crop images to your desired dimensions.</p>
-                <p>Your images are processed locally in your browser.</p>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="/en/">Home</a>
-                <a href="/en/tools.html">Tools</a>
-                <a href="/en/privacy.html">Privacy Policy</a>
-                <a href="/en/terms.html">Terms of Service</a>
-            </div>
-            <div class="footer-copyright">© 2025 205-tools. All rights reserved.</div>
+      </div>
+      
+      <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+        📁 Click to upload image
+        <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFile(event)">
+      </div>
+      
+      <div class="crop-container" id="cropContainer">
+        <canvas id="canvas" style="border: 2px solid var(--border); max-width: 100%;"></canvas>
+        
+        <div class="crop-options">
+          <div class="form-group">
+            <label>X</label>
+            <input type="number" id="cropX" value="0" min="0">
+          </div>
+          
+          <div class="form-group">
+            <label>Y</label>
+            <input type="number" id="cropY" value="0" min="0">
+          </div>
+          
+          <div class="form-group">
+            <label>Width</label>
+            <input type="number" id="cropW" value="100" min="1">
+          </div>
+          
+          <div class="form-group">
+            <label>Height</label>
+            <input type="number" id="cropH" value="100" min="1">
+          </div>
         </div>
-    </footer>
-
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- Scripts -->
-    <script src="../assets/js/main.js"></script>
-    <script>
-        // Tool-specific configuration
-        const TOOL_CONFIG = {
-            id: 'image-cropper',
-            acceptedTypes: 'image/*',
-            outputFormat: 'auto',
-            mimeType: 'image/*',
-            outputExtension: 'auto'
+        
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="applyCrop()">✂️ Crop</button>
+          <button class="btn btn-secondary" onclick="setRatio('1:1')">1:1</button>
+          <button class="btn btn-secondary" onclick="setRatio('16:9')">16:9</button>
+          <button class="btn btn-secondary" onclick="setRatio('4:3')">4:3</button>
+          <button class="btn btn-success" onclick="downloadImage()">💾 Download</button>
+        </div>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    let originalImage = null;
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    
+    function handleFile(e) {
+      const file = e.target.files[0];
+      if (!file || !file.type.startsWith('image/')) { alert('Please select an image'); return; }
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        originalImage = new Image();
+        originalImage.onload = () => {
+          // Scale down for display
+          const maxSize = 600;
+          let w = originalImage.width;
+          let h = originalImage.height;
+          
+          if (w > maxSize || h > maxSize) {
+            const ratio = Math.min(maxSize / w, maxSize / h);
+            w *= ratio;
+            h *= ratio;
+          }
+          
+          canvas.width = w;
+          canvas.height = h;
+          ctx.drawImage(originalImage, 0, 0, w, h);
+          
+          document.getElementById('cropW').value = Math.floor(w / 2);
+          document.getElementById('cropH').value = Math.floor(h / 2);
+          document.getElementById('cropContainer').style.display = 'block';
+          
+          // Draw initial crop overlay
+          drawCropOverlay();
         };
-
-        // Translations
-        const TRANSLATIONS = {
-            convert: 'Convert',
-            processing: 'Processing...',
-            download: 'Download',
-            success: 'Success!',
-            error: 'Error',
-            original: 'Original',
-            output: 'Output'
-        };
-
-        // Store result for download
-        let processedResult = null;
-        let processedFileName = null;
-
-        // Tool-specific processing function
-        async function processImage() {
-            if (!currentFile) {
-                showToast('Error: No file selected', 'error');
-                return;
-            }
-
-            const convertBtn = document.getElementById('convertBtn');
-            convertBtn.disabled = true;
-            convertBtn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span> ' + TRANSLATIONS.processing;
-            
-            showProgress();
-            updateProgress(10);
-
-            try {
-                
-                updateProgress(30);
-                const x = parseInt(document.getElementById('cropX').value) || 0;
-                const y = parseInt(document.getElementById('cropY').value) || 0;
-                const width = parseInt(document.getElementById('cropWidth').value) || 100;
-                const height = parseInt(document.getElementById('cropHeight').value) || 100;
-                updateProgress(60);
-                
-                const canvas = cropImage(originalImage, x, y, width, height);
-                updateProgress(90);
-                
-                processedResult = canvas.toDataURL('image/png');
-                processedFileName = 'cropped_' + currentFile.name.replace(/\.[^/.]+$/, '.png');
-                
-                document.getElementById('resultContent').innerHTML = '<img src="' + processedResult + '" class="preview-image">';
-                showResult();
-                showToast(TRANSLATIONS.success, 'success');
-                convertBtn.innerHTML = '<span>' + TRANSLATIONS.convert + '</span>';
-                convertBtn.disabled = false;
-            } catch (error) {
-                console.error('Processing error:', error);
-                showToast(TRANSLATIONS.error + ': ' + error.message, 'error');
-                convertBtn.disabled = false;
-                convertBtn.innerHTML = '<span>' + TRANSLATIONS.convert + '</span>';
-            } finally {
-                hideProgress();
-            }
-        }
-
-        function resetTool() {
-            removeFile();
-            hideResult();
-            const convertBtn = document.getElementById('convertBtn');
-            convertBtn.disabled = true;
-            convertBtn.innerHTML = '<span>' + TRANSLATIONS.convert + '</span>';
-            processedResult = null;
-            processedFileName = null;
-        }
-
-        function downloadResult() {
-            if (processedResult) {
-                downloadFile(processedResult, processedFileName || 'converted.' + TOOL_CONFIG.outputExtension);
-            }
-        }
-    </script>
+        originalImage.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+    
+    function drawCropOverlay() {
+      if (!originalImage) return;
+      
+      // Redraw image
+      ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+      
+      // Get crop values
+      const x = parseInt(document.getElementById('cropX').value) || 0;
+      const y = parseInt(document.getElementById('cropY').value) || 0;
+      const w = parseInt(document.getElementById('cropW').value) || 100;
+      const h = parseInt(document.getElementById('cropH').value) || 100;
+      
+      // Draw dark overlay
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Clear crop area
+      ctx.clearRect(x, y, w, h);
+      ctx.drawImage(originalImage, 
+        x * (originalImage.width / canvas.width),
+        y * (originalImage.height / canvas.height),
+        w * (originalImage.width / canvas.width),
+        h * (originalImage.height / canvas.height),
+        x, y, w, h
+      );
+      
+      // Draw border
+      ctx.strokeStyle = '#4f8ef7';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, w, h);
+    }
+    
+    ['cropX', 'cropY', 'cropW', 'cropH'].forEach(id => {
+      document.getElementById(id).addEventListener('input', drawCropOverlay);
+    });
+    
+    function setRatio(ratio) {
+      const w = parseInt(document.getElementById('cropW').value) || 100;
+      if (ratio === '1:1') document.getElementById('cropH').value = w;
+      if (ratio === '16:9') document.getElementById('cropH').value = Math.floor(w * 9 / 16);
+      if (ratio === '4:3') document.getElementById('cropH').value = Math.floor(w * 3 / 4);
+      drawCropOverlay();
+    }
+    
+    function applyCrop() {
+      if (!originalImage) return;
+      
+      const x = parseInt(document.getElementById('cropX').value) || 0;
+      const y = parseInt(document.getElementById('cropY').value) || 0;
+      const w = parseInt(document.getElementById('cropW').value) || 100;
+      const h = parseInt(document.getElementById('cropH').value) || 100;
+      
+      // Create temp canvas for cropped image
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = w;
+      tempCanvas.height = h;
+      const tempCtx = tempCanvas.getContext('2d');
+      
+      tempCtx.drawImage(originalImage,
+        x * (originalImage.width / canvas.width),
+        y * (originalImage.height / canvas.height),
+        w * (originalImage.width / canvas.width),
+        h * (originalImage.height / canvas.height),
+        0, 0, w, h
+      );
+      
+      // Update main canvas
+      canvas.width = w;
+      canvas.height = h;
+      ctx.drawImage(tempCanvas, 0, 0);
+      
+      // Reset crop values
+      document.getElementById('cropX').value = 0;
+      document.getElementById('cropY').value = 0;
+      document.getElementById('cropW').value = w;
+      document.getElementById('cropH').value = h;
+      
+      // Update original image for further crops
+      originalImage.src = canvas.toDataURL();
+    }
+    
+    function downloadImage() {
+      const link = document.createElement('a');
+      link.download = 'cropped-image.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  </script>
 </body>
 </html>
