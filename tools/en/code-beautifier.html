@@ -3,60 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>code-beautifier - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Code Beautifier - 205 Tools</title>
+  <meta name="description" content="Format and beautify HTML, CSS, JavaScript, JSON, and SQL code.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .code-editor { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .editor-box { display: flex; flex-direction: column; }
+    .editor-box label { margin-bottom: 8px; font-size: 14px; color: var(--text-secondary); }
+    .editor-box textarea { flex: 1; min-height: 300px; font-family: 'Fira Code', 'Consolas', monospace; font-size: 13px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); padding: 12px; border-radius: 8px; }
+    @media (max-width: 768px) { .code-editor { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>✨ code-beautifier</h1>
-      <p></p>
+      <h1>✨ Code Beautifier</h1>
+      <p>Format and beautify your code</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Formatter</h2>
         <div class="lang-selector">
-          <a href="../en/code-beautifier.html" class="lang-btn active">EN</a><a href="../es/code-beautifier.html" class="lang-btn ">ES</a><a href="../fr/code-beautifier.html" class="lang-btn ">FR</a><a href="../de/code-beautifier.html" class="lang-btn ">DE</a><a href="../ar/code-beautifier.html" class="lang-btn ">AR</a>
+          <a href="./code-beautifier.html" class="lang-btn active">EN</a>
+          <a href="../es/code-beautifier.html" class="lang-btn">ES</a>
+          <a href="../fr/code-beautifier.html" class="lang-btn">FR</a>
+          <a href="../de/code-beautifier.html" class="lang-btn">DE</a>
+          <a href="../ar/code-beautifier.html" class="lang-btn">AR</a>
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Language</label>
+        <select id="language">
+          <option value="json">JSON</option>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="js">JavaScript</option>
+          <option value="sql">SQL</option>
+        </select>
       </div>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+      
+      <div class="code-editor">
+        <div class="editor-box">
+          <label>Input Code</label>
+          <textarea id="inputCode" placeholder="Paste your messy code here...">{"name":"John","age":30,"city":"New York"}</textarea>
+        </div>
+        
+        <div class="editor-box">
+          <label>Formatted Code</label>
+          <textarea id="outputCode" readonly placeholder="Beautified code will appear here..."></textarea>
+        </div>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div class="btn-group" style="margin-top: 20px;">
+        <button class="btn btn-primary" onclick="beautifyCode()">✨ Beautify</button>
+        <button class="btn btn-secondary" onclick="minifyCode()">🗜️ Minify</button>
+        <button class="btn btn-success" onclick="copyCode()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearCode()">Clear</button>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function beautifyCode() {
+      const code = document.getElementById('inputCode').value;
+      const lang = document.getElementById('language').value;
+      
+      try {
+        let result;
+        if (lang === 'json') {
+          result = JSON.stringify(JSON.parse(code), null, 2);
+        } else {
+          // Basic beautification for other languages
+          result = code.replace(/;/g, ';\n').replace(/{/g, ' {\n').replace(/}/g, '\n}').replace(/,/g, ',\n');
+        }
+        document.getElementById('outputCode').value = result;
+      } catch (e) {
+        alert('Error: ' + e.message);
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    }
     
+    function minifyCode() {
+      const code = document.getElementById('inputCode').value;
+      const lang = document.getElementById('language').value;
+      
+      try {
+        let result;
+        if (lang === 'json') {
+          result = JSON.stringify(JSON.parse(code));
+        } else {
+          result = code.replace(/\s+/g, ' ').trim();
+        }
+        document.getElementById('outputCode').value = result;
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
+    }
+    
+    function copyCode() {
+      const output = document.getElementById('outputCode');
+      output.select();
+      document.execCommand('copy');
+      alert('Copied!');
+    }
+    
+    function clearCode() {
+      document.getElementById('inputCode').value = '';
+      document.getElementById('outputCode').value = '';
+    }
   </script>
 </body>
 </html>

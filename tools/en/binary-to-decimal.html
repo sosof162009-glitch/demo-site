@@ -3,60 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>binary-to-decimal - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Binary to Decimal Converter - 205 Tools</title>
+  <meta name="description" content="Convert numbers between binary, decimal, hexadecimal, and octal formats.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .converter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    .converter-box { background: var(--bg-secondary); padding: 20px; border-radius: 12px; }
+    .converter-box h3 { margin-bottom: 12px; color: var(--primary); font-size: 14px; text-transform: uppercase; }
+    .converter-box input { width: 100%; font-family: monospace; font-size: 16px; padding: 12px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); border-radius: 6px; }
+    @media (max-width: 768px) { .converter-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>10 binary-to-decimal</h1>
-      <p></p>
+      <h1>🔢 Number Base Converter</h1>
+      <p>Convert between Binary, Decimal, Hexadecimal, and Octal</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Converter</h2>
         <div class="lang-selector">
-          <a href="../en/binary-to-decimal.html" class="lang-btn active">EN</a><a href="../es/binary-to-decimal.html" class="lang-btn ">ES</a><a href="../fr/binary-to-decimal.html" class="lang-btn ">FR</a><a href="../de/binary-to-decimal.html" class="lang-btn ">DE</a><a href="../ar/binary-to-decimal.html" class="lang-btn ">AR</a>
+          <a href="./binary-to-decimal.html" class="lang-btn active">EN</a>
+          <a href="../es/binary-to-decimal.html" class="lang-btn">ES</a>
+          <a href="../fr/binary-to-decimal.html" class="lang-btn">FR</a>
+          <a href="../de/binary-to-decimal.html" class="lang-btn">DE</a>
+          <a href="../ar/binary-to-decimal.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <p style="color: var(--text-secondary); margin-bottom: 15px;">Enter a number in any field - all other fields will update automatically.</p>
       
-      <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+      <div class="converter-grid">
+        <div class="converter-box">
+          <h3>Binary (Base 2)</h3>
+          <input type="text" id="binary" placeholder="101010" oninput="convertFrom('binary')">
+        </div>
+        
+        <div class="converter-box">
+          <h3>Decimal (Base 10)</h3>
+          <input type="text" id="decimal" placeholder="42" oninput="convertFrom('decimal')">
+        </div>
+        
+        <div class="converter-box">
+          <h3>Hexadecimal (Base 16)</h3>
+          <input type="text" id="hex" placeholder="2A" oninput="convertFrom('hex')">
+        </div>
+        
+        <div class="converter-box">
+          <h3>Octal (Base 8)</h3>
+          <input type="text" id="octal" placeholder="52" oninput="convertFrom('octal')">
+        </div>
       </div>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+      
+      <div class="btn-group" style="margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
+        <button class="btn btn-secondary" onclick="loadExample()">Load Example</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
-      </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
+    function convertFrom(source) {
+      let value = document.getElementById(source).value.trim();
+      if (!value) { clearAll(); return; }
+      
+      let decimal;
+      try {
+        switch(source) {
+          case 'binary':
+            if (!/^[01]+$/.test(value)) return;
+            decimal = parseInt(value, 2);
+            break;
+          case 'decimal':
+            if (!/^\d+$/.test(value)) return;
+            decimal = parseInt(value, 10);
+            break;
+          case 'hex':
+            if (!/^[0-9A-Fa-f]+$/.test(value)) return;
+            decimal = parseInt(value, 16);
+            break;
+          case 'octal':
+            if (!/^[0-7]+$/.test(value)) return;
+            decimal = parseInt(value, 8);
+            break;
+        }
+        
+        if (isNaN(decimal)) return;
+        
+        document.getElementById('binary').value = decimal.toString(2);
+        document.getElementById('decimal').value = decimal.toString(10);
+        document.getElementById('hex').value = decimal.toString(16).toUpperCase();
+        document.getElementById('octal').value = decimal.toString(8);
+      } catch (e) {}
+    }
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    function clearAll() {
+      document.getElementById('binary').value = '';
+      document.getElementById('decimal').value = '';
+      document.getElementById('hex').value = '';
+      document.getElementById('octal').value = '';
+    }
     
+    function loadExample() {
+      document.getElementById('decimal').value = '255';
+      convertFrom('decimal');
+    }
   </script>
 </body>
 </html>

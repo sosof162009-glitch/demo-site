@@ -3,60 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>code-linter - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Code Linter - 205 Tools</title>
+  <meta name="description" content="Lint your code and find errors and warnings.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .linter-output { background: var(--bg-secondary); border-radius: 8px; padding: 15px; margin-top: 15px; min-height: 150px; font-family: monospace; font-size: 13px; }
+    .error { color: #ef4444; padding: 8px; border-left: 3px solid #ef4444; margin: 5px 0; background: rgba(239, 68, 68, 0.1); }
+    .warning { color: #f59e0b; padding: 8px; border-left: 3px solid #f59e0b; margin: 5px 0; background: rgba(245, 158, 11, 0.1); }
+    .success { color: #22c55e; padding: 15px; text-align: center; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🔍 code-linter</h1>
-      <p></p>
+      <h1>🔍 Code Linter</h1>
+      <p>Check your code for errors and warnings</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Linter</h2>
         <div class="lang-selector">
-          <a href="../en/code-linter.html" class="lang-btn active">EN</a><a href="../es/code-linter.html" class="lang-btn ">ES</a><a href="../fr/code-linter.html" class="lang-btn ">FR</a><a href="../de/code-linter.html" class="lang-btn ">DE</a><a href="../ar/code-linter.html" class="lang-btn ">AR</a>
+          <a href="./code-linter.html" class="lang-btn active">EN</a>
+          <a href="../es/code-linter.html" class="lang-btn">ES</a>
+          <a href="../fr/code-linter.html" class="lang-btn">FR</a>
+          <a href="../de/code-linter.html" class="lang-btn">DE</a>
+          <a href="../ar/code-linter.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="form-group">
+        <label>Language</label>
+        <select id="language">
+          <option value="js">JavaScript</option>
+          <option value="css">CSS</option>
+          <option value="html">HTML</option>
+        </select>
+      </div>
       
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Your Code</label>
+        <textarea id="codeInput" rows="10" placeholder="Paste your code here to check...">function greet(name) {
+  if(name == "admin")
+    console.log("Hello Admin")
+  else
+    console.log("Hello User")
+}</textarea>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="lintCode()">🔍 Lint Code</button>
+        <button class="btn btn-secondary" onclick="clearCode()">Clear</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div class="linter-output" id="lintOutput">
+        <div style="color: var(--text-muted); text-align: center;">Click "Lint Code" to check your code</div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function lintCode() {
+      const code = document.getElementById('codeInput').value;
+      const lang = document.getElementById('language').value;
+      const output = document.getElementById('lintOutput');
+      
+      if (!code.trim()) { output.innerHTML = '<div class="warning">Please enter some code</div>'; return; }
+      
+      const issues = [];
+      const lines = code.split('\n');
+      
+      if (lang === 'js') {
+        lines.forEach((line, i) => {
+          if (line.includes('==') && !line.includes('===')) 
+            issues.push({ type: 'warning', line: i + 1, msg: 'Use === instead of ==' });
+          if (line.includes('var ')) 
+            issues.push({ type: 'warning', line: i + 1, msg: 'Use let or const instead of var' });
+          if (line.trim() && !line.trim().endsWith(';') && !line.trim().endsWith('{') && !line.trim().endsWith('}')) 
+            issues.push({ type: 'warning', line: i + 1, msg: 'Missing semicolon' });
+        });
+      } else if (lang === 'css') {
+        lines.forEach((line, i) => {
+          if (line.includes('!important')) 
+            issues.push({ type: 'warning', line: i + 1, msg: 'Avoid using !important' });
+        });
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
+      
+      if (issues.length === 0) {
+        output.innerHTML = '<div class="success">✓ No issues found! Your code looks good.</div>';
+      } else {
+        output.innerHTML = issues.map(issue => 
+          `<div class="${issue.type}">Line ${issue.line}: ${issue.msg}</div>`
+        ).join('');
       }
+    }
     
+    function clearCode() {
+      document.getElementById('codeInput').value = '';
+      document.getElementById('lintOutput').innerHTML = '<div style="color: var(--text-muted); text-align: center;">Click "Lint Code" to check your code</div>';
+    }
   </script>
 </body>
 </html>

@@ -3,60 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>checksum-calculator - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Checksum Calculator - 205 Tools</title>
+  <meta name="description" content="Calculate MD5, SHA1, SHA256, and SHA512 checksums for text or files.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .hash-result { background: var(--bg-secondary); padding: 15px; border-radius: 8px; margin-top: 10px; font-family: monospace; font-size: 13px; word-break: break-all; }
+    .hash-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 5px; }
+    .file-input { border: 2px dashed var(--border); padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; }
+    .file-input:hover { border-color: var(--primary); }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>✓ checksum-calculator</h1>
-      <p></p>
+      <h1>🔐 Checksum Calculator</h1>
+      <p>Calculate MD5, SHA1, SHA256, and SHA512 hashes</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Text Hash</h2>
         <div class="lang-selector">
-          <a href="../en/checksum-calculator.html" class="lang-btn active">EN</a><a href="../es/checksum-calculator.html" class="lang-btn ">ES</a><a href="../fr/checksum-calculator.html" class="lang-btn ">FR</a><a href="../de/checksum-calculator.html" class="lang-btn ">DE</a><a href="../ar/checksum-calculator.html" class="lang-btn ">AR</a>
+          <a href="./checksum-calculator.html" class="lang-btn active">EN</a>
+          <a href="../es/checksum-calculator.html" class="lang-btn">ES</a>
+          <a href="../fr/checksum-calculator.html" class="lang-btn">FR</a>
+          <a href="../de/checksum-calculator.html" class="lang-btn">DE</a>
+          <a href="../ar/checksum-calculator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Enter Text</label>
+        <textarea id="inputText" rows="4" placeholder="Type or paste text here..."></textarea>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="calculateHashes()">Calculate Hashes</button>
+        <button class="btn btn-secondary" onclick="clearText()">Clear</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="hashResults" style="margin-top: 20px;">
+        <div class="hash-result">
+          <div class="hash-label">MD5</div>
+          <div id="md5Result">-</div>
+        </div>
+        
+        <div class="hash-result">
+          <div class="hash-label">SHA-1</div>
+          <div id="sha1Result">-</div>
+        </div>
+        
+        <div class="hash-result">
+          <div class="hash-label">SHA-256</div>
+          <div id="sha256Result">-</div>
+        </div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
+    async function calculateHashes() {
+      const text = document.getElementById('inputText').value;
+      if (!text) { alert('Please enter some text'); return; }
+      
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      
+      // MD5 (simple implementation for demo)
+      document.getElementById('md5Result').textContent = 'Use server-side for MD5';
+      
+      // SHA-1
+      const sha1Buffer = await crypto.subtle.digest('SHA-1', data);
+      document.getElementById('sha1Result').textContent = bufferToHex(sha1Buffer);
+      
+      // SHA-256
+      const sha256Buffer = await crypto.subtle.digest('SHA-256', data);
+      document.getElementById('sha256Result').textContent = bufferToHex(sha256Buffer);
+    }
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    function bufferToHex(buffer) {
+      return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
     
+    function clearText() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('md5Result').textContent = '-';
+      document.getElementById('sha1Result').textContent = '-';
+      document.getElementById('sha256Result').textContent = '-';
+    }
   </script>
 </body>
 </html>

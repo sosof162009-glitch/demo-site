@@ -3,60 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>base64-encoder-decoder - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Base64 Encoder/Decoder - 205 Tools</title>
+  <meta name="description" content="Encode and decode text to/from Base64 format.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .mode-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
+    .mode-toggle button { flex: 1; padding: 12px; border: 2px solid var(--border); background: var(--bg-card); color: var(--text-secondary); border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+    .mode-toggle button.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+    .result-box { background: var(--bg-secondary); padding: 20px; border-radius: 8px; margin-top: 15px; }
+    .result-box label { display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 14px; }
+    .result-box textarea, .result-box input { width: 100%; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); padding: 12px; border-radius: 6px; font-family: monospace; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>64 base64-encoder-decoder</h1>
-      <p></p>
+      <h1>🔤 Base64 Encoder/Decoder</h1>
+      <p>Convert text to and from Base64 format</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Converter</h2>
         <div class="lang-selector">
-          <a href="../en/base64-encoder-decoder.html" class="lang-btn active">EN</a><a href="../es/base64-encoder-decoder.html" class="lang-btn ">ES</a><a href="../fr/base64-encoder-decoder.html" class="lang-btn ">FR</a><a href="../de/base64-encoder-decoder.html" class="lang-btn ">DE</a><a href="../ar/base64-encoder-decoder.html" class="lang-btn ">AR</a>
+          <a href="./base64-encoder-decoder.html" class="lang-btn active">EN</a>
+          <a href="../es/base64-encoder-decoder.html" class="lang-btn">ES</a>
+          <a href="../fr/base64-encoder-decoder.html" class="lang-btn">FR</a>
+          <a href="../de/base64-encoder-decoder.html" class="lang-btn">DE</a>
+          <a href="../ar/base64-encoder-decoder.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="mode-toggle">
+        <button class="active" id="encodeBtn" onclick="setMode('encode')">🔒 Encode to Base64</button>
+        <button id="decodeBtn" onclick="setMode('decode')">🔓 Decode from Base64</button>
+      </div>
       
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label id="inputLabel">Text to Encode</label>
+        <textarea id="inputText" rows="6" placeholder="Enter text here..."></textarea>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="convert()">Convert</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+        <button class="btn btn-secondary" onclick="loadExample()">Example</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
+      
+      <div class="result-box" id="resultBox" style="display: none;">
         <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+        <textarea id="outputText" rows="6" readonly></textarea>
+        <div class="btn-group" style="margin-top: 10px;">
+          <button class="btn btn-success" onclick="copyResult()">📋 Copy Result</button>
+        </div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
+    let mode = 'encode';
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    function setMode(newMode) {
+      mode = newMode;
+      document.getElementById('encodeBtn').classList.toggle('active', mode === 'encode');
+      document.getElementById('decodeBtn').classList.toggle('active', mode === 'decode');
+      document.getElementById('inputLabel').textContent = mode === 'encode' ? 'Text to Encode' : 'Base64 to Decode';
+      document.getElementById('inputText').placeholder = mode === 'encode' ? 'Enter text here...' : 'Enter Base64 here...';
+      clearAll();
+    }
     
+    function convert() {
+      const input = document.getElementById('inputText').value;
+      if (!input) { alert('Please enter some text'); return; }
+      
+      let result;
+      try {
+        if (mode === 'encode') {
+          result = btoa(unescape(encodeURIComponent(input)));
+        } else {
+          result = decodeURIComponent(escape(atob(input)));
+        }
+        document.getElementById('outputText').value = result;
+        document.getElementById('resultBox').style.display = 'block';
+      } catch (e) {
+        alert('Error: ' + (mode === 'decode' ? 'Invalid Base64 string' : 'Cannot encode this text'));
+      }
+    }
+    
+    function clearAll() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('outputText').value = '';
+      document.getElementById('resultBox').style.display = 'none';
+    }
+    
+    function loadExample() {
+      if (mode === 'encode') {
+        document.getElementById('inputText').value = 'Hello, World! 👋';
+      } else {
+        document.getElementById('inputText').value = 'SGVsbG8sIFdvcmxkISDwn5iL';
+      }
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('outputText');
+      output.select();
+      document.execCommand('copy');
+      alert('Copied to clipboard!');
+    }
   </script>
 </body>
 </html>
