@@ -99,6 +99,10 @@
     {
       "src": "/tools/(.*)",
       "dest": "/tools/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1.html"
     }
   ],
   "headers": [
