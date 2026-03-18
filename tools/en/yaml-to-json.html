@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YAML to JSON - 205 Tools</title>
+  <meta name="description" content="Convert YAML to JSON format.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .editor-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .editor-box { display: flex; flex-direction: column; }
+    .editor-box label { margin-bottom: 8px; }
+    .editor-box textarea { flex: 1; min-height: 300px; }
+    @media (max-width: 768px) { .editor-split { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>📝 YAML to JSON</h1>
+      <p>Convert YAML to JSON format</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Converter</h2>
+        <div class="lang-selector">
+          <a href="./yaml-to-json.html" class="lang-btn active">EN</a>
+          <a href="../es/yaml-to-json.html" class="lang-btn">ES</a>
+          <a href="../fr/yaml-to-json.html" class="lang-btn">FR</a>
+          <a href="../de/yaml-to-json.html" class="lang-btn">DE</a>
+          <a href="../ar/yaml-to-json.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="editor-split">
+        <div class="editor-box">
+          <label>YAML Input</label>
+          <textarea id="yamlInput" placeholder="name: John&#10;age: 30&#10;city: New York">name: John Doe
+age: 30
+city: New York
+hobbies:
+  - reading
+  - gaming
+  - coding
+address:
+  street: 123 Main St
+  zip: 10001</textarea>
+        </div>
+        
+        <div class="editor-box">
+          <label>JSON Output</label>
+          <textarea id="jsonOutput" readonly></textarea>
+        </div>
+      </div>
+      
+      <div class="btn-group" style="margin-top: 20px;">
+        <button class="btn btn-primary" onclick="convert()">🔄 Convert</button>
+        <button class="btn btn-success" onclick="copyResult()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div id="errorMsg" style="color: #ef4444; margin-top: 10px;"></div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function parseYAML(yaml) {
+      const lines = yaml.split('\n');
+      const result = {};
+      let current = result;
+      const stack = [result];
+      let lastIndent = 0;
+      let currentKey = null;
+      
+      for (let line of lines) {
+        if (!line.trim() || line.trim().startsWith('#')) continue;
+        
+        const indent = line.search(/\S/);
+        const content = line.trim();
+        
+        if (content.startsWith('- ')) {
+          // Array item
+          const value = content.substring(2).trim();
+          if (!current[currentKey]) current[currentKey] = [];
+          
+          if (value.includes(':')) {
+            // Array of objects
+            const obj = {};
+            const [k, v] = value.split(':').map(s => s.trim());
+            obj[k] = v;
+            current[currentKey].push(obj);
+          } else {
+            current[currentKey].push(value);
+          }
+        } else if (content.includes(':')) {
+          const [key, ...valueParts] = content.split(':');
+          const value = valueParts.join(':').trim();
+          
+          if (indent > lastIndent) {
+            // Nested object
+            if (currentKey) {
+              if (!current[currentKey]) current[currentKey] = {};
+              current = current[currentKey];
+              stack.push(current);
+            }
+          } else if (indent < lastIndent) {
+            // Go back up
+            while (stack.length > 1 && lastIndent > indent) {
+              stack.pop();
+              current = stack[stack.length - 1];
+              lastIndent -= 2;
+            }
+          }
+          
+          currentKey = key.trim();
+          if (value) {
+            // Try to parse as number or boolean
+            if (value === 'true') current[currentKey] = true;
+            else if (value === 'false') current[currentKey] = false;
+            else if (value === 'null' || value === '~') current[currentKey] = null;
+            else if (!isNaN(value) && value !== '') current[currentKey] = Number(value);
+            else current[currentKey] = value;
+          }
+          
+          lastIndent = indent;
+        }
+      }
+      
+      return result;
+    }
+    
+    function convert() {
+      const yaml = document.getElementById('yamlInput').value;
+      if (!yaml) return;
+      
+      try {
+        const obj = parseYAML(yaml);
+        document.getElementById('jsonOutput').value = JSON.stringify(obj, null, 2);
+        document.getElementById('errorMsg').textContent = '';
+      } catch (e) {
+        document.getElementById('errorMsg').textContent = 'Error: ' + e.message;
+      }
+    }
+    
+    function copyResult() {
+      navigator.clipboard.writeText(document.getElementById('jsonOutput').value);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('yamlInput').value = '';
+      document.getElementById('jsonOutput').value = '';
+      document.getElementById('errorMsg').textContent = '';
+    }
+    
+    // Convert on load
+    convert();
+  </script>
+</body>
+</html>
