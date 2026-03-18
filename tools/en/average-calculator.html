@@ -3,60 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>average-calculator - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Average Calculator - 205 Tools</title>
+  <meta name="description" content="Calculate mean, median, mode, and range from a set of numbers.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .stats-result { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+    .stat-box { background: var(--bg-secondary); padding: 20px; border-radius: 12px; text-align: center; }
+    .stat-box .value { font-size: 28px; font-weight: 700; color: var(--primary); }
+    .stat-box .label { font-size: 14px; color: var(--text-secondary); margin-top: 5px; text-transform: uppercase; }
+    .numbers-display { background: var(--bg-secondary); padding: 15px; border-radius: 8px; margin-top: 15px; font-family: monospace; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>x̄ average-calculator</h1>
-      <p></p>
+      <h1>📊 Average Calculator</h1>
+      <p>Calculate mean, median, mode, and range from numbers</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Enter Numbers</h2>
         <div class="lang-selector">
-          <a href="../en/average-calculator.html" class="lang-btn active">EN</a><a href="../es/average-calculator.html" class="lang-btn ">ES</a><a href="../fr/average-calculator.html" class="lang-btn ">FR</a><a href="../de/average-calculator.html" class="lang-btn ">DE</a><a href="../ar/average-calculator.html" class="lang-btn ">AR</a>
+          <a href="./average-calculator.html" class="lang-btn active">EN</a>
+          <a href="../es/average-calculator.html" class="lang-btn">ES</a>
+          <a href="../fr/average-calculator.html" class="lang-btn">FR</a>
+          <a href="../de/average-calculator.html" class="lang-btn">DE</a>
+          <a href="../ar/average-calculator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Enter numbers (comma, space, or newline separated)</label>
+        <textarea id="numbersInput" rows="4" placeholder="Example: 10, 20, 30, 40, 50"></textarea>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="calculateStats()">Calculate</button>
+        <button class="btn btn-secondary" onclick="clearStats()">Clear</button>
+        <button class="btn btn-secondary" onclick="loadExample()">Example</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="statsResult" style="display: none;">
+        <div class="numbers-display">
+          <strong>Numbers:</strong> <span id="numbersList"></span> 
+          <span style="color: var(--text-muted);">(Count: <span id="count">0</span>)</span>
+        </div>
+        
+        <div class="stats-result">
+          <div class="stat-box">
+            <div class="value" id="meanVal">0</div>
+            <div class="label">Mean (Average)</div>
+          </div>
+          <div class="stat-box">
+            <div class="value" id="medianVal">0</div>
+            <div class="label">Median</div>
+          </div>
+          <div class="stat-box">
+            <div class="value" id="modeVal">-</div>
+            <div class="label">Mode</div>
+          </div>
+          <div class="stat-box">
+            <div class="value" id="rangeVal">0</div>
+            <div class="label">Range</div>
+          </div>
+          <div class="stat-box">
+            <div class="value" id="sumVal">0</div>
+            <div class="label">Sum</div>
+          </div>
+          <div class="stat-box">
+            <div class="value" id="minVal">0</div>
+            <div class="label">Minimum</div>
+          </div>
+          <div class="stat-box">
+            <div class="value" id="maxVal">0</div>
+            <div class="label">Maximum</div>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function calculateStats() {
+      const input = document.getElementById('numbersInput').value;
+      const numbers = input.split(/[\s,]+/).map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+      
+      if (numbers.length === 0) {
+        alert('Please enter valid numbers');
+        return;
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
+      
+      numbers.sort((a, b) => a - b);
+      
+      const sum = numbers.reduce((a, b) => a + b, 0);
+      const mean = sum / numbers.length;
+      const min = numbers[0];
+      const max = numbers[numbers.length - 1];
+      const range = max - min;
+      
+      let median;
+      const mid = Math.floor(numbers.length / 2);
+      if (numbers.length % 2 === 0) {
+        median = (numbers[mid - 1] + numbers[mid]) / 2;
+      } else {
+        median = numbers[mid];
       }
+      
+      const frequency = {};
+      let maxFreq = 0;
+      numbers.forEach(n => {
+        frequency[n] = (frequency[n] || 0) + 1;
+        maxFreq = Math.max(maxFreq, frequency[n]);
+      });
+      const modes = Object.keys(frequency).filter(k => frequency[k] === maxFreq);
+      const mode = maxFreq === 1 ? 'No mode' : modes.join(', ');
+      
+      document.getElementById('numbersList').textContent = numbers.join(', ');
+      document.getElementById('count').textContent = numbers.length;
+      document.getElementById('meanVal').textContent = mean.toFixed(2);
+      document.getElementById('medianVal').textContent = median.toFixed(2);
+      document.getElementById('modeVal').textContent = mode;
+      document.getElementById('rangeVal').textContent = range.toFixed(2);
+      document.getElementById('sumVal').textContent = sum.toLocaleString();
+      document.getElementById('minVal').textContent = min;
+      document.getElementById('maxVal').textContent = max;
+      
+      document.getElementById('statsResult').style.display = 'block';
+    }
     
+    function clearStats() {
+      document.getElementById('numbersInput').value = '';
+      document.getElementById('statsResult').style.display = 'none';
+    }
+    
+    function loadExample() {
+      document.getElementById('numbersInput').value = '12, 45, 23, 67, 34, 89, 23, 56, 12, 78';
+    }
   </script>
 </body>
 </html>

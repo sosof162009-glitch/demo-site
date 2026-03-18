@@ -3,60 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>percentage-calculator - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Percentage Calculator - 205 Tools</title>
+  <meta name="description" content="Calculate percentages, percentage change, and percentage of a number.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .calc-section { background: var(--bg-secondary); padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+    .calc-section h3 { margin-bottom: 15px; color: var(--primary); }
+    .result-highlight { font-size: 24px; font-weight: 700; color: var(--primary); text-align: center; padding: 15px; background: var(--primary-light); border-radius: 8px; margin-top: 15px; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>% percentage-calculator</h1>
-      <p></p>
+      <h1>📈 Percentage Calculator</h1>
+      <p>Calculate percentages, percentage change, and more</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Calculators</h2>
         <div class="lang-selector">
-          <a href="../en/percentage-calculator.html" class="lang-btn active">EN</a><a href="../es/percentage-calculator.html" class="lang-btn ">ES</a><a href="../fr/percentage-calculator.html" class="lang-btn ">FR</a><a href="../de/percentage-calculator.html" class="lang-btn ">DE</a><a href="../ar/percentage-calculator.html" class="lang-btn ">AR</a>
+          <a href="./percentage-calculator.html" class="lang-btn active">EN</a>
+          <a href="../es/percentage-calculator.html" class="lang-btn">ES</a>
+          <a href="../fr/percentage-calculator.html" class="lang-btn">FR</a>
+          <a href="../de/percentage-calculator.html" class="lang-btn">DE</a>
+          <a href="../ar/percentage-calculator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <!-- Calculator 1: What is X% of Y? -->
+      <div class="calc-section">
+        <h3>What is % of a number?</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Percentage (%)</label>
+            <input type="number" id="p1-percent" placeholder="e.g., 20">
+          </div>
+          <div class="form-group">
+            <label>Of Number</label>
+            <input type="number" id="p1-number" placeholder="e.g., 100">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="calcPercentageOf()">Calculate</button>
+        <div class="result-highlight" id="p1-result" style="display: none;"></div>
+      </div>
       
-      <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+      <!-- Calculator 2: X is what % of Y? -->
+      <div class="calc-section">
+        <h3>X is what percentage of Y?</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Part (X)</label>
+            <input type="number" id="p2-part" placeholder="e.g., 25">
+          </div>
+          <div class="form-group">
+            <label>Whole (Y)</label>
+            <input type="number" id="p2-whole" placeholder="e.g., 100">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="calcWhatPercentage()">Calculate</button>
+        <div class="result-highlight" id="p2-result" style="display: none;"></div>
       </div>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+      
+      <!-- Calculator 3: Percentage Change -->
+      <div class="calc-section">
+        <h3>Percentage Change</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Original Value</label>
+            <input type="number" id="p3-original" placeholder="e.g., 100">
+          </div>
+          <div class="form-group">
+            <label>New Value</label>
+            <input type="number" id="p3-new" placeholder="e.g., 120">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="calcPercentageChange()">Calculate</button>
+        <div class="result-highlight" id="p3-result" style="display: none;"></div>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <!-- Calculator 4: Percentage Increase/Decrease -->
+      <div class="calc-section">
+        <h3>Add/Subtract Percentage</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Original Number</label>
+            <input type="number" id="p4-number" placeholder="e.g., 100">
+          </div>
+          <div class="form-group">
+            <label>Percentage (%)</label>
+            <input type="number" id="p4-percent" placeholder="e.g., 10">
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="calcAddPercentage()">Add %</button>
+          <button class="btn btn-secondary" onclick="calcSubtractPercentage()">Subtract %</button>
+        </div>
+        <div class="result-highlight" id="p4-result" style="display: none;"></div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
+    function calcPercentageOf() {
+      const percent = parseFloat(document.getElementById('p1-percent').value);
+      const number = parseFloat(document.getElementById('p1-number').value);
+      if (isNaN(percent) || isNaN(number)) { alert('Please enter valid numbers'); return; }
+      const result = (percent / 100) * number;
+      document.getElementById('p1-result').textContent = `${percent}% of ${number} = ${result}`;
+      document.getElementById('p1-result').style.display = 'block';
+    }
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    function calcWhatPercentage() {
+      const part = parseFloat(document.getElementById('p2-part').value);
+      const whole = parseFloat(document.getElementById('p2-whole').value);
+      if (isNaN(part) || isNaN(whole) || whole === 0) { alert('Please enter valid numbers'); return; }
+      const result = (part / whole) * 100;
+      document.getElementById('p2-result').textContent = `${part} is ${result.toFixed(2)}% of ${whole}`;
+      document.getElementById('p2-result').style.display = 'block';
+    }
     
+    function calcPercentageChange() {
+      const original = parseFloat(document.getElementById('p3-original').value);
+      const newVal = parseFloat(document.getElementById('p3-new').value);
+      if (isNaN(original) || isNaN(newVal) || original === 0) { alert('Please enter valid numbers'); return; }
+      const change = ((newVal - original) / original) * 100;
+      const direction = change >= 0 ? 'increase' : 'decrease';
+      document.getElementById('p3-result').textContent = `${Math.abs(change).toFixed(2)}% ${direction}`;
+      document.getElementById('p3-result').style.display = 'block';
+    }
+    
+    function calcAddPercentage() {
+      const number = parseFloat(document.getElementById('p4-number').value);
+      const percent = parseFloat(document.getElementById('p4-percent').value);
+      if (isNaN(number) || isNaN(percent)) { alert('Please enter valid numbers'); return; }
+      const result = number + ((percent / 100) * number);
+      document.getElementById('p4-result').textContent = `${number} + ${percent}% = ${result.toFixed(2)}`;
+      document.getElementById('p4-result').style.display = 'block';
+    }
+    
+    function calcSubtractPercentage() {
+      const number = parseFloat(document.getElementById('p4-number').value);
+      const percent = parseFloat(document.getElementById('p4-percent').value);
+      if (isNaN(number) || isNaN(percent)) { alert('Please enter valid numbers'); return; }
+      const result = number - ((percent / 100) * number);
+      document.getElementById('p4-result').textContent = `${number} - ${percent}% = ${result.toFixed(2)}`;
+      document.getElementById('p4-result').style.display = 'block';
+    }
   </script>
 </body>
 </html>

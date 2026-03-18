@@ -3,60 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>compound-interest-calculator - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Compound Interest Calculator - 205 Tools</title>
+  <meta name="description" content="Calculate compound interest and see how your investment grows over time.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .interest-result { text-align: center; padding: 30px; background: var(--bg-secondary); border-radius: 12px; margin-top: 20px; }
+    .interest-main { font-size: 36px; font-weight: 700; color: var(--success); }
+    .interest-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+    .interest-box { background: var(--bg-card); padding: 15px; border-radius: 8px; }
+    .interest-box .value { font-size: 20px; font-weight: 700; color: var(--primary); }
+    .interest-box .label { font-size: 12px; color: var(--text-secondary); }
+    .chart-placeholder { background: var(--bg-card); padding: 20px; border-radius: 12px; margin-top: 20px; text-align: center; min-height: 200px; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>💰 compound-interest-calculator</h1>
-      <p></p>
+      <h1>💰 Compound Interest Calculator</h1>
+      <p>See how your investment grows over time</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Investment Details</h2>
         <div class="lang-selector">
-          <a href="../en/compound-interest-calculator.html" class="lang-btn active">EN</a><a href="../es/compound-interest-calculator.html" class="lang-btn ">ES</a><a href="../fr/compound-interest-calculator.html" class="lang-btn ">FR</a><a href="../de/compound-interest-calculator.html" class="lang-btn ">DE</a><a href="../ar/compound-interest-calculator.html" class="lang-btn ">AR</a>
+          <a href="./compound-interest-calculator.html" class="lang-btn active">EN</a>
+          <a href="../es/compound-interest-calculator.html" class="lang-btn">ES</a>
+          <a href="../fr/compound-interest-calculator.html" class="lang-btn">FR</a>
+          <a href="../de/compound-interest-calculator.html" class="lang-btn">DE</a>
+          <a href="../ar/compound-interest-calculator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="form-group">
+        <label>Initial Investment ($)</label>
+        <input type="number" id="principal" placeholder="e.g., 10000" step="100">
+      </div>
       
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Monthly Contribution ($)</label>
+        <input type="number" id="monthly" placeholder="e.g., 500" step="10">
       </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Annual Interest Rate (%)</label>
+          <input type="number" id="rate" placeholder="e.g., 7" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>Years</label>
+          <input type="number" id="years" placeholder="e.g., 20" min="1" max="50">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Compounding Frequency</label>
+        <select id="frequency">
+          <option value="1">Annually</option>
+          <option value="2">Semi-annually</option>
+          <option value="4">Quarterly</option>
+          <option value="12">Monthly</option>
+          <option value="365">Daily</option>
+        </select>
+      </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="calculateInterest()">Calculate</button>
+        <button class="btn btn-secondary" onclick="resetInterest()">Reset</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="interestResult" class="interest-result" style="display: none;">
+        <div>Future Value</div>
+        <div class="interest-main" id="futureValue">$0</div>
+        
+        <div class="interest-breakdown">
+          <div class="interest-box">
+            <div class="value" id="totalPrincipal">$0</div>
+            <div class="label">Total Invested</div>
+          </div>
+          <div class="interest-box">
+            <div class="value" id="totalInterest">$0</div>
+            <div class="label">Interest Earned</div>
+          </div>
+          <div class="interest-box">
+            <div class="value" id="totalContributions">$0</div>
+            <div class="label">Monthly Contributions</div>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function calculateInterest() {
+      const principal = parseFloat(document.getElementById('principal').value) || 0;
+      const monthly = parseFloat(document.getElementById('monthly').value) || 0;
+      const rate = parseFloat(document.getElementById('rate').value);
+      const years = parseFloat(document.getElementById('years').value);
+      const frequency = parseFloat(document.getElementById('frequency').value);
+      
+      if (!rate || !years) {
+        alert('Please enter interest rate and years');
+        return;
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
+      
+      const r = rate / 100;
+      const n = frequency;
+      const t = years;
+      
+      // Compound interest formula: A = P(1 + r/n)^(nt)
+      let amount = principal * Math.pow((1 + r/n), (n * t));
+      
+      // Add monthly contributions
+      if (monthly > 0) {
+        const monthlyRate = r / 12;
+        const months = t * 12;
+        const futureValueContributions = monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+        amount += futureValueContributions;
       }
+      
+      const totalContributions = monthly * 12 * t;
+      const totalPrincipal = principal + totalContributions;
+      const totalInterest = amount - totalPrincipal;
+      
+      document.getElementById('futureValue').textContent = '$' + amount.toLocaleString(undefined, {maximumFractionDigits: 0});
+      document.getElementById('totalPrincipal').textContent = '$' + principal.toLocaleString();
+      document.getElementById('totalContributions').textContent = '$' + totalContributions.toLocaleString();
+      document.getElementById('totalInterest').textContent = '$' + totalInterest.toLocaleString(undefined, {maximumFractionDigits: 0});
+      
+      document.getElementById('interestResult').style.display = 'block';
+    }
     
+    function resetInterest() {
+      document.getElementById('principal').value = '';
+      document.getElementById('monthly').value = '';
+      document.getElementById('rate').value = '';
+      document.getElementById('years').value = '';
+      document.getElementById('frequency').value = '12';
+      document.getElementById('interestResult').style.display = 'none';
+    }
   </script>
 </body>
 </html>
