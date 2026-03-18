@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temperature Converter - 205 Tools</title>
+  <meta name="description" content="Convert between Celsius, Fahrenheit, and Kelvin temperature units.">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🌡️ Temperature Converter</h1>
+      <p>Convert between Celsius, Fahrenheit, and Kelvin.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Convert Temperature</h2>
+        <div class="lang-selector">
+          <a href="../en/unit-converter-temperature.html" class="lang-btn active">EN</a>
+          <a href="../es/unit-converter-temperature.html" class="lang-btn">ES</a>
+          <a href="../fr/unit-converter-temperature.html" class="lang-btn">FR</a>
+          <a href="../de/unit-converter-temperature.html" class="lang-btn">DE</a>
+          <a href="../ar/unit-converter-temperature.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="converter-grid">
+        <div class="converter-box">
+          <div class="form-group">
+            <label for="fromUnit">From</label>
+            <select id="fromUnit" class="tool-select">
+              <option value="C" selected>Celsius (°C)</option>
+              <option value="F">Fahrenheit (°F)</option>
+              <option value="K">Kelvin (K)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="inputValue">Temperature</label>
+            <input type="number" id="inputValue" class="tool-input" placeholder="0" step="any" value="0">
+          </div>
+        </div>
+        
+        <button class="swap-btn" onclick="swapUnits()" title="Swap">⇄</button>
+        
+        <div class="converter-box">
+          <div class="form-group">
+            <label for="toUnit">To</label>
+            <select id="toUnit" class="tool-select">
+              <option value="C">Celsius (°C)</option>
+              <option value="F" selected>Fahrenheit (°F)</option>
+              <option value="K">Kelvin (K)</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Result</label>
+            <div class="result-display" id="resultValue">-</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="reference-points">
+        <h4>Reference Points</h4>
+        <div class="ref-grid">
+          <div class="ref-item">
+            <span class="temp">-273.15°C</span>
+            <span class="desc">Absolute Zero</span>
+          </div>
+          <div class="ref-item">
+            <span class="temp">0°C</span>
+            <span class="desc">Water Freezes</span>
+          </div>
+          <div class="ref-item">
+            <span class="temp">37°C</span>
+            <span class="desc">Body Temperature</span>
+          </div>
+          <div class="ref-item">
+            <span class="temp">100°C</span>
+            <span class="desc">Water Boils</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="formula-box">
+        <h4>Formulas</h4>
+        <div class="formula-grid">
+          <div class="formula">°C to °F: (°C × 9/5) + 32</div>
+          <div class="formula">°F to °C: (°F - 32) × 5/9</div>
+          <div class="formula">°C to K: °C + 273.15</div>
+          <div class="formula">K to °C: K - 273.15</div>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Tools</p>
+    </footer>
+  </div>
+  
+  <style>
+    .converter-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; }
+    .converter-box { background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); }
+    .swap-btn { background: var(--primary); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; transition: var(--transition); }
+    .swap-btn:hover { background: var(--primary-hover); transform: rotate(180deg); }
+    .form-group { margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-secondary); font-size: 14px; }
+    .tool-input, .tool-select { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; color: var(--text-primary); font-size: 15px; }
+    .result-display { background: var(--bg-input); border: 1px solid var(--primary); border-radius: var(--radius-sm); padding: 14px; color: var(--primary); font-size: 24px; font-weight: 700; min-height: 56px; display: flex; align-items: center; }
+    .reference-points, .formula-box { margin-top: 24px; padding: 20px; background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); }
+    .reference-points h4, .formula-box h4 { margin-bottom: 16px; color: var(--text-secondary); font-size: 14px; text-transform: uppercase; }
+    .ref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .ref-item { padding: 14px; background: var(--bg-input); border-radius: var(--radius-sm); text-align: center; }
+    .ref-item .temp { display: block; font-size: 18px; font-weight: 600; color: var(--primary); }
+    .ref-item .desc { display: block; font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+    .formula-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .formula { padding: 12px; background: var(--bg-input); border-radius: var(--radius-sm); font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-secondary); }
+    @media (max-width: 768px) { .converter-grid { grid-template-columns: 1fr; } .swap-btn { transform: rotate(90deg); margin: 0 auto; } }
+  </style>
+  
+  <script>
+    function convert() {
+      const value = parseFloat(document.getElementById('inputValue').value);
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      
+      if (isNaN(value)) {
+        document.getElementById('resultValue').textContent = '-';
+        return;
+      }
+      
+      let result;
+      
+      // Convert to Celsius first
+      let celsius;
+      switch(from) {
+        case 'C': celsius = value; break;
+        case 'F': celsius = (value - 32) * 5/9; break;
+        case 'K': celsius = value - 273.15; break;
+      }
+      
+      // Convert from Celsius to target
+      switch(to) {
+        case 'C': result = celsius; break;
+        case 'F': result = celsius * 9/5 + 32; break;
+        case 'K': result = celsius + 273.15; break;
+      }
+      
+      const symbol = to === 'C' ? '°C' : to === 'F' ? '°F' : 'K';
+      document.getElementById('resultValue').textContent = result.toFixed(2) + ' ' + symbol;
+    }
+    
+    function swapUnits() {
+      const fromEl = document.getElementById('fromUnit');
+      const toEl = document.getElementById('toUnit');
+      const temp = fromEl.value;
+      fromEl.value = toEl.value;
+      toEl.value = temp;
+      convert();
+    }
+    
+    document.getElementById('inputValue').addEventListener('input', convert);
+    document.getElementById('fromUnit').addEventListener('change', convert);
+    document.getElementById('toUnit').addEventListener('change', convert);
+    
+    convert();
+  </script>
+</body>
+</html>

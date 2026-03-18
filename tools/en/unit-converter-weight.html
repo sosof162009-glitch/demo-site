@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weight Converter - 205 Tools</title>
+  <meta name="description" content="Convert between kilograms, pounds, ounces and other weight units.">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>⚖️ Weight Converter</h1>
+      <p>Convert between kilograms, pounds, ounces and more.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Convert Weight</h2>
+        <div class="lang-selector">
+          <a href="../en/unit-converter-weight.html" class="lang-btn active">EN</a>
+          <a href="../es/unit-converter-weight.html" class="lang-btn">ES</a>
+          <a href="../fr/unit-converter-weight.html" class="lang-btn">FR</a>
+          <a href="../de/unit-converter-weight.html" class="lang-btn">DE</a>
+          <a href="../ar/unit-converter-weight.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="converter-grid">
+        <div class="converter-box">
+          <div class="form-group">
+            <label for="fromUnit">From</label>
+            <select id="fromUnit" class="tool-select">
+              <option value="kg" selected>Kilograms (kg)</option>
+              <option value="g">Grams (g)</option>
+              <option value="mg">Milligrams (mg)</option>
+              <option value="lb">Pounds (lb)</option>
+              <option value="oz">Ounces (oz)</option>
+              <option value="st">Stone (st)</option>
+              <option value="t">Metric Tonnes (t)</option>
+              <option value="us_ton">US Tons</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="inputValue">Value</label>
+            <input type="number" id="inputValue" class="tool-input" placeholder="0" step="any" value="1">
+          </div>
+        </div>
+        
+        <button class="swap-btn" onclick="swapUnits()" title="Swap">⇄</button>
+        
+        <div class="converter-box">
+          <div class="form-group">
+            <label for="toUnit">To</label>
+            <select id="toUnit" class="tool-select">
+              <option value="kg">Kilograms (kg)</option>
+              <option value="g">Grams (g)</option>
+              <option value="mg">Milligrams (mg)</option>
+              <option value="lb" selected>Pounds (lb)</option>
+              <option value="oz">Ounces (oz)</option>
+              <option value="st">Stone (st)</option>
+              <option value="t">Metric Tonnes (t)</option>
+              <option value="us_ton">US Tons</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Result</label>
+            <div class="result-display" id="resultValue">-</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="quick-conversions">
+        <h4>Common Conversions</h4>
+        <div class="quick-grid">
+          <div class="quick-item">1 kg = 2.205 lb</div>
+          <div class="quick-item">1 lb = 16 oz</div>
+          <div class="quick-item">1 st = 14 lb</div>
+          <div class="quick-item">1 t = 1000 kg</div>
+          <div class="quick-item">1 oz = 28.35 g</div>
+          <div class="quick-item">1 g = 1000 mg</div>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Tools</p>
+    </footer>
+  </div>
+  
+  <style>
+    .converter-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; }
+    .converter-box { background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); }
+    .swap-btn { background: var(--primary); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; transition: var(--transition); }
+    .swap-btn:hover { background: var(--primary-hover); transform: rotate(180deg); }
+    .form-group { margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-secondary); font-size: 14px; }
+    .tool-input, .tool-select { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; color: var(--text-primary); font-size: 15px; }
+    .result-display { background: var(--bg-input); border: 1px solid var(--primary); border-radius: var(--radius-sm); padding: 14px; color: var(--primary); font-size: 24px; font-weight: 700; min-height: 56px; display: flex; align-items: center; }
+    .quick-conversions { margin-top: 24px; padding: 20px; background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); }
+    .quick-conversions h4 { margin-bottom: 16px; color: var(--text-secondary); font-size: 14px; text-transform: uppercase; }
+    .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .quick-item { padding: 10px 12px; background: var(--bg-input); border-radius: var(--radius-sm); text-align: center; font-size: 13px; color: var(--text-secondary); }
+    @media (max-width: 768px) { .converter-grid { grid-template-columns: 1fr; } .swap-btn { transform: rotate(90deg); margin: 0 auto; } }
+  </style>
+  
+  <script>
+    // Conversion factors to grams
+    const toGrams = {
+      g: 1,
+      kg: 1000,
+      mg: 0.001,
+      lb: 453.592,
+      oz: 28.3495,
+      st: 6350.29,
+      t: 1000000,
+      us_ton: 907185
+    };
+    
+    function convert() {
+      const value = parseFloat(document.getElementById('inputValue').value);
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      
+      if (isNaN(value)) {
+        document.getElementById('resultValue').textContent = '-';
+        return;
+      }
+      
+      const grams = value * toGrams[from];
+      const result = grams / toGrams[to];
+      
+      document.getElementById('resultValue').textContent = formatNumber(result, 6);
+    }
+    
+    function swapUnits() {
+      const fromEl = document.getElementById('fromUnit');
+      const toEl = document.getElementById('toUnit');
+      const temp = fromEl.value;
+      fromEl.value = toEl.value;
+      toEl.value = temp;
+      convert();
+    }
+    
+    document.getElementById('inputValue').addEventListener('input', convert);
+    document.getElementById('fromUnit').addEventListener('change', convert);
+    document.getElementById('toUnit').addEventListener('change', convert);
+    
+    convert();
+  </script>
+</body>
+</html>

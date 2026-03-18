@@ -3,60 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>duplicate-remover - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Duplicate Remover - 205 Tools</title>
+  <meta name="description" content="Remove duplicate lines from text.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .stats-bar { display: flex; gap: 30px; padding: 15px; background: var(--bg-secondary); border-radius: 8px; margin: 20px 0; }
+    .stats-bar span { color: var(--text-secondary); }
+    .stats-bar strong { color: var(--primary); }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🗑️ duplicate-remover</h1>
-      <p></p>
+      <h1>🗑️ Duplicate Remover</h1>
+      <p>Remove duplicate lines from text</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Input</h2>
         <div class="lang-selector">
-          <a href="../en/duplicate-remover.html" class="lang-btn active">EN</a><a href="../es/duplicate-remover.html" class="lang-btn ">ES</a><a href="../fr/duplicate-remover.html" class="lang-btn ">FR</a><a href="../de/duplicate-remover.html" class="lang-btn ">DE</a><a href="../ar/duplicate-remover.html" class="lang-btn ">AR</a>
+          <a href="./duplicate-remover.html" class="lang-btn active">EN</a>
+          <a href="../es/duplicate-remover.html" class="lang-btn">ES</a>
+          <a href="../fr/duplicate-remover.html" class="lang-btn">FR</a>
+          <a href="../de/duplicate-remover.html" class="lang-btn">DE</a>
+          <a href="../ar/duplicate-remover.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="form-group">
+        <label><input type="checkbox" id="caseSensitive" checked> Case sensitive</label>
+        <label style="margin-left: 20px;"><input type="checkbox" id="trimWhitespace" checked> Trim whitespace</label>
+      </div>
       
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <textarea id="inputText" rows="8" placeholder="Paste text with duplicate lines...">apple
+banana
+apple
+cherry
+banana
+date</textarea>
       </div>
+      
+      <div class="stats-bar">
+        <span>Original lines: <strong id="originalCount">0</strong></span>
+        <span>Unique lines: <strong id="uniqueCount">0</strong></span>
+        <span>Removed: <strong id="removedCount">0</strong></span>
+      </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="removeDuplicates()">🗑️ Remove Duplicates</button>
+        <button class="btn btn-success" onclick="sortUnique()">📊 Sort & Unique</button>
+        <button class="btn btn-secondary" onclick="copyResult()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
       </div>
+      
       <div class="form-group" style="margin-top: 20px;">
         <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+        <textarea id="outputText" rows="8" readonly></textarea>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function removeDuplicates() {
+      const text = document.getElementById('inputText').value;
+      const caseSensitive = document.getElementById('caseSensitive').checked;
+      const trimWhitespace = document.getElementById('trimWhitespace').checked;
+      
+      if (!text.trim()) { updateStats(0, 0, 0); return; }
+      
+      const lines = text.split('\n');
+      const seen = new Set();
+      const unique = [];
+      
+      for (const line of lines) {
+        let key = trimWhitespace ? line.trim() : line;
+        if (!caseSensitive) key = key.toLowerCase();
+        
+        if (!seen.has(key)) {
+          seen.add(key);
+          unique.push(line);
+        }
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+      
+      document.getElementById('outputText').value = unique.join('\n');
+      updateStats(lines.length, unique.length, lines.length - unique.length);
+    }
     
+    function sortUnique() {
+      const text = document.getElementById('inputText').value;
+      const trimWhitespace = document.getElementById('trimWhitespace').checked;
+      
+      if (!text.trim()) return;
+      
+      const lines = text.split('\n');
+      const unique = [...new Set(trimWhitespace ? lines.map(l => l.trim()) : lines)];
+      unique.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+      
+      document.getElementById('outputText').value = unique.join('\n');
+      updateStats(lines.length, unique.length, lines.length - unique.length);
+    }
+    
+    function updateStats(original, unique, removed) {
+      document.getElementById('originalCount').textContent = original;
+      document.getElementById('uniqueCount').textContent = unique;
+      document.getElementById('removedCount').textContent = removed;
+    }
+    
+    function copyResult() {
+      const text = document.getElementById('outputText').value;
+      navigator.clipboard.writeText(text);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('outputText').value = '';
+      updateStats(0, 0, 0);
+    }
   </script>
 </body>
 </html>
