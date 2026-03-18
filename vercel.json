@@ -7,45 +7,22 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/tools/assets/(.*)",
-      "dest": "/tools/assets/$1"
+      "source": "/admin",
+      "destination": "/admin/login.html"
     },
     {
-      "src": "/admin/css/(.*)",
-      "dest": "/admin/css/$1"
+      "source": "/admin/:path*",
+      "destination": "/admin/:path*.html"
     },
     {
-      "src": "/admin/js/(.*)",
-      "dest": "/admin/js/$1"
+      "source": "/tools/:path*",
+      "destination": "/tools/:path*.html"
     },
     {
-      "src": "/admin$",
-      "dest": "/admin/login.html"
-    },
-    {
-      "src": "/admin/(.*)",
-      "dest": "/admin/$1.html"
-    },
-    {
-      "src": "/tools/(.*)",
-      "dest": "/tools/$1.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1.html"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
+      "source": "/:path*",
+      "destination": "/:path*.html"
     }
   ]
 }
