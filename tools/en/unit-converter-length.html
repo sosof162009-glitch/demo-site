@@ -3,10 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Length Converter - 205 Tools</title>
-  <meta name="description" content="Convert between meters, feet, inches, miles and other length units.">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Unit Converter (Length) - 205 Tools</title>
+  <meta name="description" content="Convert between length units.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .converter-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 15px; align-items: end; }
+    .swap-btn { padding: 10px 15px; font-size: 20px; }
+    @media (max-width: 600px) { .converter-grid { grid-template-columns: 1fr; } .swap-btn { transform: rotate(90deg); } }
+    .quick-conversions { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 20px; }
+    .quick-box { background: var(--bg-secondary); padding: 15px; border-radius: 8px; text-align: center; }
+    .quick-box .value { font-size: 18px; font-weight: 600; color: var(--primary); }
+    .quick-box .unit { font-size: 12px; color: var(--text-secondary); }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -14,14 +22,14 @@
     
     <header>
       <h1>📏 Length Converter</h1>
-      <p>Convert between meters, feet, inches, miles and more.</p>
+      <p>Convert between length units</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Convert Length</h2>
+        <h2>Converter</h2>
         <div class="lang-selector">
-          <a href="../en/unit-converter-length.html" class="lang-btn active">EN</a>
+          <a href="./unit-converter-length.html" class="lang-btn active">EN</a>
           <a href="../es/unit-converter-length.html" class="lang-btn">ES</a>
           <a href="../fr/unit-converter-length.html" class="lang-btn">FR</a>
           <a href="../de/unit-converter-length.html" class="lang-btn">DE</a>
@@ -29,133 +37,130 @@
         </div>
       </div>
       
+      <div class="form-group">
+        <label>Value</label>
+        <input type="number" id="value" value="1" step="any" oninput="convert()">
+      </div>
+      
       <div class="converter-grid">
-        <div class="converter-box">
-          <div class="form-group">
-            <label for="fromUnit">From</label>
-            <select id="fromUnit" class="tool-select">
-              <option value="m">Meters (m)</option>
-              <option value="km">Kilometers (km)</option>
-              <option value="cm">Centimeters (cm)</option>
-              <option value="mm">Millimeters (mm)</option>
-              <option value="ft" selected>Feet (ft)</option>
-              <option value="in">Inches (in)</option>
-              <option value="yd">Yards (yd)</option>
-              <option value="mi">Miles (mi)</option>
-              <option value="nm">Nanometers (nm)</option>
-              <option value="um">Micrometers (μm)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="inputValue">Value</label>
-            <input type="number" id="inputValue" class="tool-input" placeholder="0" step="any" value="1">
-          </div>
+        <div class="form-group">
+          <label>From</label>
+          <select id="fromUnit" onchange="convert()">
+            <option value="m">Meters (m)</option>
+            <option value="km">Kilometers (km)</option>
+            <option value="cm">Centimeters (cm)</option>
+            <option value="mm">Millimeters (mm)</option>
+            <option value="mi">Miles (mi)</option>
+            <option value="yd">Yards (yd)</option>
+            <option value="ft">Feet (ft)</option>
+            <option value="in">Inches (in)</option>
+            <option value="nm">Nanometers (nm)</option>
+            <option value="um">Micrometers (μm)</option>
+          </select>
         </div>
         
-        <button class="swap-btn" onclick="swapUnits()" title="Swap">⇄</button>
+        <button class="btn btn-secondary swap-btn" onclick="swap()">⇄</button>
         
-        <div class="converter-box">
-          <div class="form-group">
-            <label for="toUnit">To</label>
-            <select id="toUnit" class="tool-select">
-              <option value="m" selected>Meters (m)</option>
-              <option value="km">Kilometers (km)</option>
-              <option value="cm">Centimeters (cm)</option>
-              <option value="mm">Millimeters (mm)</option>
-              <option value="ft">Feet (ft)</option>
-              <option value="in">Inches (in)</option>
-              <option value="yd">Yards (yd)</option>
-              <option value="mi">Miles (mi)</option>
-              <option value="nm">Nanometers (nm)</option>
-              <option value="um">Micrometers (μm)</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label>Result</label>
-            <div class="result-display" id="resultValue">-</div>
-          </div>
+        <div class="form-group">
+          <label>To</label>
+          <select id="toUnit" onchange="convert()">
+            <option value="m">Meters (m)</option>
+            <option value="km">Kilometers (km)</option>
+            <option value="cm">Centimeters (cm)</option>
+            <option value="mm">Millimeters (mm)</option>
+            <option value="mi">Miles (mi)</option>
+            <option value="yd">Yards (yd)</option>
+            <option value="ft" selected>Feet (ft)</option>
+            <option value="in">Inches (in)</option>
+            <option value="nm">Nanometers (nm)</option>
+            <option value="um">Micrometers (μm)</option>
+          </select>
         </div>
       </div>
       
+      <div class="result-box" style="margin-top: 20px;">
+        <div class="result-label">Result</div>
+        <div class="result-value" id="result">3.28084</div>
+        <div class="result-formula" id="formula">1 m = 3.28084 ft</div>
+      </div>
+      
       <div class="quick-conversions">
-        <h4>Common Conversions</h4>
-        <div class="quick-grid">
-          <div class="quick-item">1 m = 3.281 ft</div>
-          <div class="quick-item">1 km = 0.621 mi</div>
-          <div class="quick-item">1 in = 2.54 cm</div>
-          <div class="quick-item">1 yd = 0.914 m</div>
-          <div class="quick-item">1 mi = 1.609 km</div>
-          <div class="quick-item">1 ft = 12 in</div>
+        <div class="quick-box">
+          <div class="value" id="toM">1</div>
+          <div class="unit">Meters</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toKm">0.001</div>
+          <div class="unit">Kilometers</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toCm">100</div>
+          <div class="unit">Centimeters</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toMi">0.000621</div>
+          <div class="unit">Miles</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toFt">3.281</div>
+          <div class="unit">Feet</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toIn">39.37</div>
+          <div class="unit">Inches</div>
         </div>
       </div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
-  <style>
-    .converter-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; }
-    .converter-box { background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); }
-    .swap-btn { background: var(--primary); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; transition: var(--transition); }
-    .swap-btn:hover { background: var(--primary-hover); transform: rotate(180deg); }
-    .form-group { margin-bottom: 16px; }
-    .form-group:last-child { margin-bottom: 0; }
-    .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-secondary); font-size: 14px; }
-    .tool-input, .tool-select { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; color: var(--text-primary); font-size: 15px; }
-    .result-display { background: var(--bg-input); border: 1px solid var(--primary); border-radius: var(--radius-sm); padding: 14px; color: var(--primary); font-size: 24px; font-weight: 700; min-height: 56px; display: flex; align-items: center; }
-    .quick-conversions { margin-top: 24px; padding: 20px; background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); }
-    .quick-conversions h4 { margin-bottom: 16px; color: var(--text-secondary); font-size: 14px; text-transform: uppercase; }
-    .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
-    .quick-item { padding: 10px 12px; background: var(--bg-input); border-radius: var(--radius-sm); text-align: center; font-size: 13px; color: var(--text-secondary); }
-    @media (max-width: 768px) { .converter-grid { grid-template-columns: 1fr; } .swap-btn { transform: rotate(90deg); margin: 0 auto; } }
-  </style>
-  
   <script>
-    // Conversion factors to meters
     const toMeters = {
       m: 1,
       km: 1000,
       cm: 0.01,
       mm: 0.001,
+      mi: 1609.344,
+      yd: 0.9144,
       ft: 0.3048,
       in: 0.0254,
-      yd: 0.9144,
-      mi: 1609.344,
       nm: 1e-9,
       um: 1e-6
     };
     
     function convert() {
-      const value = parseFloat(document.getElementById('inputValue').value);
+      const value = parseFloat(document.getElementById('value').value) || 0;
       const from = document.getElementById('fromUnit').value;
       const to = document.getElementById('toUnit').value;
-      
-      if (isNaN(value)) {
-        document.getElementById('resultValue').textContent = '-';
-        return;
-      }
       
       const meters = value * toMeters[from];
       const result = meters / toMeters[to];
       
-      document.getElementById('resultValue').textContent = formatNumber(result, 6);
+      document.getElementById('result').textContent = result.toLocaleString(undefined, { maximumFractionDigits: 10 });
+      document.getElementById('formula').textContent = `1 ${from} = ${(toMeters[from] / toMeters[to]).toPrecision(6)} ${to}`;
+      
+      // Update quick conversions
+      document.getElementById('toM').textContent = (meters).toPrecision(4);
+      document.getElementById('toKm').textContent = (meters / 1000).toPrecision(4);
+      document.getElementById('toCm').textContent = (meters * 100).toPrecision(4);
+      document.getElementById('toMi').textContent = (meters / 1609.344).toPrecision(4);
+      document.getElementById('toFt').textContent = (meters / 0.3048).toPrecision(4);
+      document.getElementById('toIn').textContent = (meters / 0.0254).toPrecision(4);
     }
     
-    function swapUnits() {
-      const fromEl = document.getElementById('fromUnit');
-      const toEl = document.getElementById('toUnit');
-      const temp = fromEl.value;
-      fromEl.value = toEl.value;
-      toEl.value = temp;
+    function swap() {
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      document.getElementById('fromUnit').value = to;
+      document.getElementById('toUnit').value = from;
       convert();
     }
-    
-    document.getElementById('inputValue').addEventListener('input', convert);
-    document.getElementById('fromUnit').addEventListener('change', convert);
-    document.getElementById('toUnit').addEventListener('change', convert);
     
     convert();
   </script>

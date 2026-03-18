@@ -3,10 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weight Converter - 205 Tools</title>
-  <meta name="description" content="Convert between kilograms, pounds, ounces and other weight units.">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Unit Converter (Weight) - 205 Tools</title>
+  <meta name="description" content="Convert between weight/mass units.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .converter-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 15px; align-items: end; }
+    .swap-btn { padding: 10px 15px; font-size: 20px; }
+    @media (max-width: 600px) { .converter-grid { grid-template-columns: 1fr; } .swap-btn { transform: rotate(90deg); } }
+    .quick-conversions { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 20px; }
+    .quick-box { background: var(--bg-secondary); padding: 15px; border-radius: 8px; text-align: center; }
+    .quick-box .value { font-size: 18px; font-weight: 600; color: var(--primary); }
+    .quick-box .unit { font-size: 12px; color: var(--text-secondary); }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -14,14 +22,14 @@
     
     <header>
       <h1>⚖️ Weight Converter</h1>
-      <p>Convert between kilograms, pounds, ounces and more.</p>
+      <p>Convert between weight units</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Convert Weight</h2>
+        <h2>Converter</h2>
         <div class="lang-selector">
-          <a href="../en/unit-converter-weight.html" class="lang-btn active">EN</a>
+          <a href="./unit-converter-weight.html" class="lang-btn active">EN</a>
           <a href="../es/unit-converter-weight.html" class="lang-btn">ES</a>
           <a href="../fr/unit-converter-weight.html" class="lang-btn">FR</a>
           <a href="../de/unit-converter-weight.html" class="lang-btn">DE</a>
@@ -29,127 +37,123 @@
         </div>
       </div>
       
+      <div class="form-group">
+        <label>Value</label>
+        <input type="number" id="value" value="1" step="any" oninput="convert()">
+      </div>
+      
       <div class="converter-grid">
-        <div class="converter-box">
-          <div class="form-group">
-            <label for="fromUnit">From</label>
-            <select id="fromUnit" class="tool-select">
-              <option value="kg" selected>Kilograms (kg)</option>
-              <option value="g">Grams (g)</option>
-              <option value="mg">Milligrams (mg)</option>
-              <option value="lb">Pounds (lb)</option>
-              <option value="oz">Ounces (oz)</option>
-              <option value="st">Stone (st)</option>
-              <option value="t">Metric Tonnes (t)</option>
-              <option value="us_ton">US Tons</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="inputValue">Value</label>
-            <input type="number" id="inputValue" class="tool-input" placeholder="0" step="any" value="1">
-          </div>
+        <div class="form-group">
+          <label>From</label>
+          <select id="fromUnit" onchange="convert()">
+            <option value="kg">Kilograms (kg)</option>
+            <option value="g">Grams (g)</option>
+            <option value="mg">Milligrams (mg)</option>
+            <option value="lb">Pounds (lb)</option>
+            <option value="oz">Ounces (oz)</option>
+            <option value="st">Stone (st)</option>
+            <option value="t">Metric Ton (t)</option>
+            <option value="ton">US Ton</option>
+          </select>
         </div>
         
-        <button class="swap-btn" onclick="swapUnits()" title="Swap">⇄</button>
+        <button class="btn btn-secondary swap-btn" onclick="swap()">⇄</button>
         
-        <div class="converter-box">
-          <div class="form-group">
-            <label for="toUnit">To</label>
-            <select id="toUnit" class="tool-select">
-              <option value="kg">Kilograms (kg)</option>
-              <option value="g">Grams (g)</option>
-              <option value="mg">Milligrams (mg)</option>
-              <option value="lb" selected>Pounds (lb)</option>
-              <option value="oz">Ounces (oz)</option>
-              <option value="st">Stone (st)</option>
-              <option value="t">Metric Tonnes (t)</option>
-              <option value="us_ton">US Tons</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label>Result</label>
-            <div class="result-display" id="resultValue">-</div>
-          </div>
+        <div class="form-group">
+          <label>To</label>
+          <select id="toUnit" onchange="convert()">
+            <option value="kg">Kilograms (kg)</option>
+            <option value="g">Grams (g)</option>
+            <option value="mg">Milligrams (mg)</option>
+            <option value="lb" selected>Pounds (lb)</option>
+            <option value="oz">Ounces (oz)</option>
+            <option value="st">Stone (st)</option>
+            <option value="t">Metric Ton (t)</option>
+            <option value="ton">US Ton</option>
+          </select>
         </div>
       </div>
       
+      <div class="result-box" style="margin-top: 20px;">
+        <div class="result-label">Result</div>
+        <div class="result-value" id="result">2.20462</div>
+        <div class="result-formula" id="formula">1 kg = 2.20462 lb</div>
+      </div>
+      
       <div class="quick-conversions">
-        <h4>Common Conversions</h4>
-        <div class="quick-grid">
-          <div class="quick-item">1 kg = 2.205 lb</div>
-          <div class="quick-item">1 lb = 16 oz</div>
-          <div class="quick-item">1 st = 14 lb</div>
-          <div class="quick-item">1 t = 1000 kg</div>
-          <div class="quick-item">1 oz = 28.35 g</div>
-          <div class="quick-item">1 g = 1000 mg</div>
+        <div class="quick-box">
+          <div class="value" id="toKg">1</div>
+          <div class="unit">Kilograms</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toG">1000</div>
+          <div class="unit">Grams</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toLb">2.205</div>
+          <div class="unit">Pounds</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toOz">35.274</div>
+          <div class="unit">Ounces</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toSt">0.157</div>
+          <div class="unit">Stone</div>
+        </div>
+        
+        <div class="quick-box">
+          <div class="value" id="toT">0.001</div>
+          <div class="unit">Metric Tons</div>
         </div>
       </div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
-  <style>
-    .converter-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; }
-    .converter-box { background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); }
-    .swap-btn { background: var(--primary); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; transition: var(--transition); }
-    .swap-btn:hover { background: var(--primary-hover); transform: rotate(180deg); }
-    .form-group { margin-bottom: 16px; }
-    .form-group:last-child { margin-bottom: 0; }
-    .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-secondary); font-size: 14px; }
-    .tool-input, .tool-select { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; color: var(--text-primary); font-size: 15px; }
-    .result-display { background: var(--bg-input); border: 1px solid var(--primary); border-radius: var(--radius-sm); padding: 14px; color: var(--primary); font-size: 24px; font-weight: 700; min-height: 56px; display: flex; align-items: center; }
-    .quick-conversions { margin-top: 24px; padding: 20px; background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); }
-    .quick-conversions h4 { margin-bottom: 16px; color: var(--text-secondary); font-size: 14px; text-transform: uppercase; }
-    .quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
-    .quick-item { padding: 10px 12px; background: var(--bg-input); border-radius: var(--radius-sm); text-align: center; font-size: 13px; color: var(--text-secondary); }
-    @media (max-width: 768px) { .converter-grid { grid-template-columns: 1fr; } .swap-btn { transform: rotate(90deg); margin: 0 auto; } }
-  </style>
-  
   <script>
-    // Conversion factors to grams
-    const toGrams = {
-      g: 1,
-      kg: 1000,
-      mg: 0.001,
-      lb: 453.592,
-      oz: 28.3495,
-      st: 6350.29,
-      t: 1000000,
-      us_ton: 907185
+    const toKg = {
+      kg: 1,
+      g: 0.001,
+      mg: 0.000001,
+      lb: 0.453592,
+      oz: 0.0283495,
+      st: 6.35029,
+      t: 1000,
+      ton: 907.185
     };
     
     function convert() {
-      const value = parseFloat(document.getElementById('inputValue').value);
+      const value = parseFloat(document.getElementById('value').value) || 0;
       const from = document.getElementById('fromUnit').value;
       const to = document.getElementById('toUnit').value;
       
-      if (isNaN(value)) {
-        document.getElementById('resultValue').textContent = '-';
-        return;
-      }
+      const kg = value * toKg[from];
+      const result = kg / toKg[to];
       
-      const grams = value * toGrams[from];
-      const result = grams / toGrams[to];
+      document.getElementById('result').textContent = result.toLocaleString(undefined, { maximumFractionDigits: 10 });
+      document.getElementById('formula').textContent = `1 ${from} = ${(toKg[from] / toKg[to]).toPrecision(6)} ${to}`;
       
-      document.getElementById('resultValue').textContent = formatNumber(result, 6);
+      document.getElementById('toKg').textContent = (kg).toPrecision(4);
+      document.getElementById('toG').textContent = (kg * 1000).toPrecision(4);
+      document.getElementById('toLb').textContent = (kg / 0.453592).toPrecision(4);
+      document.getElementById('toOz').textContent = (kg / 0.0283495).toPrecision(4);
+      document.getElementById('toSt').textContent = (kg / 6.35029).toPrecision(4);
+      document.getElementById('toT').textContent = (kg / 1000).toPrecision(4);
     }
     
-    function swapUnits() {
-      const fromEl = document.getElementById('fromUnit');
-      const toEl = document.getElementById('toUnit');
-      const temp = fromEl.value;
-      fromEl.value = toEl.value;
-      toEl.value = temp;
+    function swap() {
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      document.getElementById('fromUnit').value = to;
+      document.getElementById('toUnit').value = from;
       convert();
     }
-    
-    document.getElementById('inputValue').addEventListener('input', convert);
-    document.getElementById('fromUnit').addEventListener('change', convert);
-    document.getElementById('toUnit').addEventListener('change', convert);
     
     convert();
   </script>
