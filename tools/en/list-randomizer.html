@@ -3,60 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>list-randomizer - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>List Randomizer - 205 Tools</title>
+  <meta name="description" content="Randomize and shuffle lists.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .list-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .list-box { display: flex; flex-direction: column; }
+    .list-box label { margin-bottom: 8px; font-size: 14px; color: var(--text-secondary); }
+    .list-box textarea { flex: 1; min-height: 300px; }
+    .stats-bar { display: flex; gap: 20px; padding: 15px; background: var(--bg-secondary); border-radius: 8px; margin-bottom: 15px; }
+    @media (max-width: 768px) { .list-container { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🎲 list-randomizer</h1>
-      <p></p>
+      <h1>🎲 List Randomizer</h1>
+      <p>Shuffle and randomize your lists</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Randomizer</h2>
         <div class="lang-selector">
-          <a href="../en/list-randomizer.html" class="lang-btn active">EN</a><a href="../es/list-randomizer.html" class="lang-btn ">ES</a><a href="../fr/list-randomizer.html" class="lang-btn ">FR</a><a href="../de/list-randomizer.html" class="lang-btn ">DE</a><a href="../ar/list-randomizer.html" class="lang-btn ">AR</a>
+          <a href="./list-randomizer.html" class="lang-btn active">EN</a>
+          <a href="../es/list-randomizer.html" class="lang-btn">ES</a>
+          <a href="../fr/list-randomizer.html" class="lang-btn">FR</a>
+          <a href="../de/list-randomizer.html" class="lang-btn">DE</a>
+          <a href="../ar/list-randomizer.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="stats-bar">
+        <span>Items: <strong id="itemCount">0</strong></span>
+      </div>
       
-      <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+      <div class="list-container">
+        <div class="list-box">
+          <label>Original List</label>
+          <textarea id="inputList" placeholder="Enter items (one per line)..." oninput="countItems()">Apple
+Banana
+Cherry
+Date
+Elderberry</textarea>
+        </div>
+        
+        <div class="list-box">
+          <label>Shuffled List</label>
+          <textarea id="outputList" readonly></textarea>
+        </div>
       </div>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+      
+      <div class="btn-group" style="margin-top: 20px;">
+        <button class="btn btn-primary" onclick="shuffle()">🎲 Shuffle</button>
+        <button class="btn btn-secondary" onclick="sortAsc()">Sort A-Z</button>
+        <button class="btn btn-secondary" onclick="sortDesc()">Sort Z-A</button>
+        <button class="btn btn-secondary" onclick="reverse()">Reverse</button>
+        <button class="btn btn-success" onclick="copyResult()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
-      </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
+    function countItems() {
+      const text = document.getElementById('inputList').value.trim();
+      const count = text ? text.split('\n').filter(l => l.trim()).length : 0;
+      document.getElementById('itemCount').textContent = count;
+    }
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function shuffle() {
+      const text = document.getElementById('inputList').value.trim();
+      if (!text) return;
+      
+      const items = text.split('\n');
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+      document.getElementById('outputList').value = items.join('\n');
+    }
     
+    function sortAsc() {
+      const text = document.getElementById('inputList').value.trim();
+      if (!text) return;
+      const items = text.split('\n').sort((a, b) => a.localeCompare(b));
+      document.getElementById('outputList').value = items.join('\n');
+    }
+    
+    function sortDesc() {
+      const text = document.getElementById('inputList').value.trim();
+      if (!text) return;
+      const items = text.split('\n').sort((a, b) => b.localeCompare(a));
+      document.getElementById('outputList').value = items.join('\n');
+    }
+    
+    function reverse() {
+      const text = document.getElementById('inputList').value.trim();
+      if (!text) return;
+      const items = text.split('\n').reverse();
+      document.getElementById('outputList').value = items.join('\n');
+    }
+    
+    function copyResult() {
+      const text = document.getElementById('outputList').value;
+      navigator.clipboard.writeText(text);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('inputList').value = '';
+      document.getElementById('outputList').value = '';
+      countItems();
+    }
+    
+    // Initial count
+    countItems();
   </script>
 </body>
 </html>

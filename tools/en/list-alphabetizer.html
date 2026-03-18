@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List Alphabetizer - 205 Tools</title>
+  <meta name="description" content="Sort lists alphabetically (A-Z or Z-A).">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .options-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+    .options-row label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .result-box { background: var(--bg-secondary); padding: 20px; border-radius: 12px; margin-top: 20px; }
+    .stats { color: var(--text-secondary); font-size: 14px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🔤 List Alphabetizer</h1>
+      <p>Sort lists alphabetically</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Sort</h2>
+        <div class="lang-selector">
+          <a href="./list-alphabetizer.html" class="lang-btn active">EN</a>
+          <a href="../es/list-alphabetizer.html" class="lang-btn">ES</a>
+          <a href="../fr/list-alphabetizer.html" class="lang-btn">FR</a>
+          <a href="../de/list-alphabetizer.html" class="lang-btn">DE</a>
+          <a href="../ar/list-alphabetizer.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="options-row">
+        <label><input type="radio" name="order" value="asc" checked> A → Z</label>
+        <label><input type="radio" name="order" value="desc"> Z → A</label>
+        <label><input type="checkbox" id="ignoreCase" checked> Ignore case</label>
+        <label><input type="checkbox" id="removeDupes"> Remove duplicates</label>
+      </div>
+      
+      <div class="form-group">
+        <label>Enter List (one item per line)</label>
+        <textarea id="inputList" rows="10" placeholder="Banana&#10;Apple&#10;Cherry&#10;Date">Banana
+Apple
+Cherry
+Date</textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="sort()">🔤 Sort</button>
+        <button class="btn btn-success" onclick="copyResult()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div class="result-box" id="resultBox" style="display: none;">
+        <div class="stats" id="stats"></div>
+        <pre id="outputList"></pre>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function sort() {
+      const text = document.getElementById('inputList').value.trim();
+      if (!text) return;
+      
+      const order = document.querySelector('input[name="order"]:checked').value;
+      const ignoreCase = document.getElementById('ignoreCase').checked;
+      const removeDupes = document.getElementById('removeDupes').checked;
+      
+      let items = text.split('\n').map(l => l.trim()).filter(l => l);
+      const originalCount = items.length;
+      
+      if (removeDupes) {
+        if (ignoreCase) {
+          const seen = new Set();
+          items = items.filter(item => {
+            const lower = item.toLowerCase();
+            if (seen.has(lower)) return false;
+            seen.add(lower);
+            return true;
+          });
+        } else {
+          items = [...new Set(items)];
+        }
+      }
+      
+      items.sort((a, b) => {
+        const compareA = ignoreCase ? a.toLowerCase() : a;
+        const compareB = ignoreCase ? b.toLowerCase() : b;
+        return order === 'asc' 
+          ? compareA.localeCompare(compareB)
+          : compareB.localeCompare(compareA);
+      });
+      
+      document.getElementById('outputList').textContent = items.join('\n');
+      document.getElementById('stats').textContent = `Items: ${items.length}${removeDupes ? ` (removed ${originalCount - items.length} duplicates)` : ''}`;
+      document.getElementById('resultBox').style.display = 'block';
+    }
+    
+    function copyResult() {
+      const text = document.getElementById('outputList').textContent;
+      navigator.clipboard.writeText(text);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('inputList').value = '';
+      document.getElementById('resultBox').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
