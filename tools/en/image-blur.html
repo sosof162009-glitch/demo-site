@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Rotator | 205-tools</title>
+    <title>Image Blur | 205-tools</title>
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,9 +42,9 @@
     <main class="main-container">
         <!-- Tool Header -->
         <section class="tool-header-section">
-            <div class="tool-icon">🔄</div>
-            <h1 class="tool-title">Image Rotator</h1>
-            <p class="tool-description">Rotate images by any angle.</p>
+            <div class="tool-icon">💨</div>
+            <h1 class="tool-title">Image Blur</h1>
+            <p class="tool-description">Apply blur effect to images with adjustable intensity.</p>
         </section>
 
         <!-- Tool Container -->
@@ -53,7 +53,7 @@
             <div class="upload-area" id="uploadArea">
                 <div class="upload-icon">📁</div>
                 <div class="upload-text">Drop your image here or click to browse</div>
-                <div class="upload-hint">Supports various image formats (.*)</div>
+                <div class="upload-hint">Supports JPG, PNG, WebP (max 10MB)</div>
                 <input type="file" class="upload-input" id="uploadInput" accept="image/*">
             </div>
 
@@ -77,9 +77,17 @@
                 <div class="controls-title">Options</div>
                 
                 <div class="control-group">
-                    <label class="control-label">Angle (0-360°)</label>
-                    <input type="range" class="control-range" id="rotateAngle" min="0" max="360" value="90" oninput="document.getElementById('rotateValue').textContent = this.value + '°'">
-                    <span class="range-value" id="rotateValue">90°</span>
+                    <label class="control-label">Blur Radius (0-20px)</label>
+                    <input type="range" class="control-range" id="blurRadius" min="0" max="20" value="5" oninput="document.getElementById('blurValue').textContent = this.value + 'px'">
+                    <span class="range-value" id="blurValue">5px</span>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Output Format</label>
+                    <select class="control-select" id="outputFormat">
+                        <option value="image/jpeg">JPEG</option>
+                        <option value="image/png">PNG</option>
+                        <option value="image/webp">WebP</option>
+                    </select>
                 </div>
             </div>
 
@@ -94,7 +102,7 @@
             <!-- Action Buttons -->
             <div class="btn-group">
                 <button class="btn btn-primary" id="convertBtn" disabled onclick="processImage()">
-                    <span>Convert</span>
+                    <span>Apply Blur</span>
                 </button>
                 <button class="btn btn-secondary" onclick="resetTool()">
                     <span>Reset</span>
@@ -117,10 +125,10 @@
 
         <!-- Info Section -->
         <section class="info-section">
-            <h2 class="info-title">Image Rotator</h2>
+            <h2 class="info-title">Image Blur Tool</h2>
             <div class="info-content">
-                <p>Rotate images by any angle.</p>
-                <p>Your images are processed locally in your browser.</p>
+                <p>Apply a blur effect to your images with adjustable intensity. Perfect for creating soft backgrounds or artistic effects.</p>
+                <p>Your images are processed locally in your browser - no data is uploaded to any server.</p>
             </div>
         </section>
     </main>
@@ -146,7 +154,7 @@
     <script>
         // Tool-specific configuration
         const TOOL_CONFIG = {
-            id: 'image-rotator',
+            id: 'image-blur',
             acceptedTypes: 'image/*',
             outputFormat: 'auto',
             mimeType: 'image/*',
@@ -155,7 +163,7 @@
 
         // Translations
         const TRANSLATIONS = {
-            convert: 'Convert',
+            convert: 'Apply Blur',
             processing: 'Processing...',
             download: 'Download',
             success: 'Success!',
@@ -183,16 +191,16 @@
             updateProgress(10);
 
             try {
-                
                 updateProgress(30);
-                const angle = parseInt(document.getElementById('rotateAngle').value) || 90;
-                updateProgress(60);
+                const radius = parseInt(document.getElementById('blurRadius').value) || 5;
+                const format = document.getElementById('outputFormat').value;
                 
-                const canvas = rotateImage(originalImage, angle);
+                updateProgress(60);
+                const canvas = applyBlur(originalImage, radius);
                 updateProgress(90);
                 
-                processedResult = canvas.toDataURL('image/png');
-                processedFileName = 'rotated_' + currentFile.name.replace(/\.[^/.]+$/, '.png');
+                processedResult = canvas.toDataURL(format, 0.9);
+                processedFileName = 'blurred_' + currentFile.name.replace(/\.[^/.]+$/, '.') + getExtensionFromMimeType(format);
                 
                 document.getElementById('resultContent').innerHTML = '<img src="' + processedResult + '" class="preview-image">';
                 showResult();
@@ -221,7 +229,7 @@
 
         function downloadResult() {
             if (processedResult) {
-                downloadFile(processedResult, processedFileName || 'converted.' + TOOL_CONFIG.outputExtension);
+                downloadFile(processedResult, processedFileName || 'blurred_image.png');
             }
         }
     </script>

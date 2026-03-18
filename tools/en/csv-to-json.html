@@ -3,60 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>csv-to-json - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>CSV to JSON Converter - 205 Tools</title>
+  <meta name="description" content="Convert CSV data to JSON format online.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .csv-output { background: var(--bg-secondary); padding: 15px; border-radius: 8px; font-family: monospace; font-size: 13px; overflow-x: auto; }
+    .options-row { display: flex; gap: 20px; margin-bottom: 15px; }
+    .options-row label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>⇄ csv-to-json</h1>
-      <p></p>
+      <h1>📊 CSV to JSON</h1>
+      <p>Convert CSV data to JSON format</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Converter</h2>
         <div class="lang-selector">
-          <a href="../en/csv-to-json.html" class="lang-btn active">EN</a><a href="../es/csv-to-json.html" class="lang-btn ">ES</a><a href="../fr/csv-to-json.html" class="lang-btn ">FR</a><a href="../de/csv-to-json.html" class="lang-btn ">DE</a><a href="../ar/csv-to-json.html" class="lang-btn ">AR</a>
+          <a href="./csv-to-json.html" class="lang-btn active">EN</a>
+          <a href="../es/csv-to-json.html" class="lang-btn">ES</a>
+          <a href="../fr/csv-to-json.html" class="lang-btn">FR</a>
+          <a href="../de/csv-to-json.html" class="lang-btn">DE</a>
+          <a href="../ar/csv-to-json.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="options-row">
+        <label><input type="checkbox" id="hasHeaders" checked> First row is headers</label>
+        <label><input type="checkbox" id="trimSpaces" checked> Trim spaces</label>
+      </div>
       
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>CSV Input</label>
+        <textarea id="csvInput" rows="8" placeholder="name,age,city&#10;John,30,New York&#10;Jane,25,London"></textarea>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="convertCSV()">🔄 Convert</button>
+        <button class="btn btn-secondary" onclick="loadExample()">Example</button>
+        <button class="btn btn-success" onclick="copyJSON()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="outputContainer" style="margin-top: 20px; display: none;">
+        <label>JSON Output</label>
+        <pre id="jsonOutput" class="csv-output"></pre>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function convertCSV() {
+      const csv = document.getElementById('csvInput').value.trim();
+      const hasHeaders = document.getElementById('hasHeaders').checked;
+      const trimSpaces = document.getElementById('trimSpaces').checked;
+      
+      if (!csv) { alert('Please enter CSV data'); return; }
+      
+      const lines = csv.split('\n').filter(l => l.trim());
+      if (lines.length === 0) { alert('No data found'); return; }
+      
+      const delimiter = csv.includes('\t') ? '\t' : ',';
+      const result = [];
+      
+      let headers = [];
+      let startIdx = 0;
+      
+      if (hasHeaders) {
+        headers = parseLine(lines[0], delimiter, trimSpaces);
+        startIdx = 1;
+      } else {
+        headers = lines[0].split(delimiter).map((_, i) => 'col' + (i + 1));
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
+      
+      for (let i = startIdx; i < lines.length; i++) {
+        const values = parseLine(lines[i], delimiter, trimSpaces);
+        const obj = {};
+        headers.forEach((h, idx) => { obj[h] = values[idx] || ''; });
+        result.push(obj);
       }
+      
+      document.getElementById('jsonOutput').textContent = JSON.stringify(result, null, 2);
+      document.getElementById('outputContainer').style.display = 'block';
+    }
     
+    function parseLine(line, delimiter, trim) {
+      const values = [];
+      let current = '';
+      let inQuotes = false;
+      
+      for (let char of line) {
+        if (char === '"') { inQuotes = !inQuotes; }
+        else if (char === delimiter && !inQuotes) { values.push(trim ? current.trim() : current); current = ''; }
+        else { current += char; }
+      }
+      values.push(trim ? current.trim() : current);
+      return values;
+    }
+    
+    function loadExample() {
+      document.getElementById('csvInput').value = `name,age,city,active
+John Doe,30,New York,true
+Jane Smith,25,London,false
+Bob Johnson,35,Paris,true`;
+      convertCSV();
+    }
+    
+    function copyJSON() {
+      const text = document.getElementById('jsonOutput').textContent;
+      navigator.clipboard.writeText(text);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('csvInput').value = '';
+      document.getElementById('outputContainer').style.display = 'none';
+    }
   </script>
 </body>
 </html>

@@ -840,6 +840,96 @@ async function processEps(file) {
 }
 
 /**
+ * Apply blur effect to image
+ */
+function applyBlur(img, radius) {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.naturalWidth || img.width;
+  canvas.height = img.naturalHeight || img.height;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.filter = `blur(${radius}px)`;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+  return canvas;
+}
+
+/**
+ * Adjust image brightness
+ */
+function adjustBrightness(img, value) {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.naturalWidth || img.width;
+  canvas.height = img.naturalHeight || img.height;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.filter = `brightness(${100 + value}%)`;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+  return canvas;
+}
+
+/**
+ * Adjust image contrast
+ */
+function adjustContrast(img, value) {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.naturalWidth || img.width;
+  canvas.height = img.naturalHeight || img.height;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.filter = `contrast(${100 + value}%)`;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+  return canvas;
+}
+
+/**
+ * Apply sepia effect to image
+ */
+function applySepia(img, value) {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.naturalWidth || img.width;
+  canvas.height = img.naturalHeight || img.height;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.filter = `sepia(${value}%)`;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+  return canvas;
+}
+
+/**
+ * Convert image to grayscale
+ */
+function applyGrayscale(img, value) {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.naturalWidth || img.width;
+  canvas.height = img.naturalHeight || img.height;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.filter = `grayscale(${value}%)`;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+  return canvas;
+}
+
+/**
+ * Invert image colors
+ */
+function applyInvert(img) {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.naturalWidth || img.width;
+  canvas.height = img.naturalHeight || img.height;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.filter = 'invert(100%)';
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+  return canvas;
+}
+
+/**
  * Convert GIF to MP4 (requires ffmpeg.js in production)
  */
 async function gifToMp4(file) {

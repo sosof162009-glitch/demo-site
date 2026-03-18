@@ -3,60 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>json-formatter - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>JSON Formatter - 205 Tools</title>
+  <meta name="description" content="Format, beautify, and validate JSON data with syntax highlighting.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .json-output { background: #1e1e2e; color: #cdd6f4; padding: 15px; border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 13px; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+    .json-key { color: #89b4fa; }
+    .json-string { color: #a6e3a1; }
+    .json-number { color: #fab387; }
+    .json-boolean { color: #f38ba8; }
+    .json-null { color: #f38ba8; }
+    .error-msg { color: #ef4444; padding: 15px; background: rgba(239,68,68,0.1); border-radius: 8px; }
+    .btn-group-inline { display: flex; gap: 10px; margin-bottom: 15px; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>{ } json-formatter</h1>
-      <p></p>
+      <h1>📋 JSON Formatter</h1>
+      <p>Format and beautify JSON data</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Formatter</h2>
         <div class="lang-selector">
-          <a href="../en/json-formatter.html" class="lang-btn active">EN</a><a href="../es/json-formatter.html" class="lang-btn ">ES</a><a href="../fr/json-formatter.html" class="lang-btn ">FR</a><a href="../de/json-formatter.html" class="lang-btn ">DE</a><a href="../ar/json-formatter.html" class="lang-btn ">AR</a>
+          <a href="./json-formatter.html" class="lang-btn active">EN</a>
+          <a href="../es/json-formatter.html" class="lang-btn">ES</a>
+          <a href="../fr/json-formatter.html" class="lang-btn">FR</a>
+          <a href="../de/json-formatter.html" class="lang-btn">DE</a>
+          <a href="../ar/json-formatter.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="btn-group-inline">
+        <button class="btn btn-secondary" onclick="loadExample()">Load Example</button>
+        <button class="btn btn-secondary" onclick="minifyJSON()">Minify</button>
+      </div>
       
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>JSON Input</label>
+        <textarea id="jsonInput" rows="8" placeholder="Paste your JSON here..."></textarea>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="formatJSON()">✨ Format</button>
+        <button class="btn btn-success" onclick="copyOutput()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="outputContainer" style="margin-top: 20px; display: none;">
+        <label>Formatted JSON</label>
+        <div id="jsonOutput" class="json-output"></div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function formatJSON() {
+      const input = document.getElementById('jsonInput').value.trim();
+      if (!input) { alert('Please enter JSON'); return; }
+      
+      try {
+        const parsed = JSON.parse(input);
+        const formatted = JSON.stringify(parsed, null, 2);
+        document.getElementById('jsonOutput').innerHTML = syntaxHighlight(formatted);
+        document.getElementById('outputContainer').style.display = 'block';
+      } catch (e) {
+        document.getElementById('jsonOutput').innerHTML = '<div class="error-msg">❌ Error: ' + e.message + '</div>';
+        document.getElementById('outputContainer').style.display = 'block';
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    }
     
+    function syntaxHighlight(json) {
+      return json.replace(/(".*?"):/g, '<span class="json-key">$1</span>:')
+                 .replace(/: (".*?")/g, ': <span class="json-string">$1</span>')
+                 .replace(/: (\d+)/g, ': <span class="json-number">$1</span>')
+                 .replace(/: (true|false)/g, ': <span class="json-boolean">$1</span>')
+                 .replace(/: (null)/g, ': <span class="json-null">$1</span>');
+    }
+    
+    function minifyJSON() {
+      const input = document.getElementById('jsonInput').value.trim();
+      if (!input) return;
+      try {
+        const parsed = JSON.parse(input);
+        document.getElementById('jsonInput').value = JSON.stringify(parsed);
+      } catch (e) { alert('Invalid JSON'); }
+    }
+    
+    function loadExample() {
+      const example = {
+        "name": "John Doe",
+        "age": 30,
+        "email": "john@example.com",
+        "isActive": true,
+        "address": {
+          "street": "123 Main St",
+          "city": "New York",
+          "zip": "10001"
+        },
+        "hobbies": ["reading", "gaming", "coding"]
+      };
+      document.getElementById('jsonInput').value = JSON.stringify(example);
+      formatJSON();
+    }
+    
+    function copyOutput() {
+      const text = document.getElementById('jsonOutput').innerText;
+      navigator.clipboard.writeText(text);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('jsonInput').value = '';
+      document.getElementById('outputContainer').style.display = 'none';
+    }
   </script>
 </body>
 </html>
