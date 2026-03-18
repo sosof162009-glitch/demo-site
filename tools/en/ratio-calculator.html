@@ -4,9 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ratio Calculator - 205 Tools</title>
-  <meta name="description" content="Calculate ratios, simplify ratios, and solve proportion problems.">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <meta name="description" content="Calculate ratios and proportions.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .ratio-display { display: flex; align-items: center; justify-content: center; gap: 20px; font-size: 32px; margin: 20px 0; }
+    .ratio-box { background: var(--bg-secondary); padding: 20px 30px; border-radius: 12px; min-width: 80px; text-align: center; }
+    .ratio-separator { color: var(--primary); font-weight: 700; }
+    .simplified { text-align: center; margin-top: 15px; font-size: 18px; color: var(--text-secondary); }
+    .simplified strong { color: var(--primary); }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -14,14 +20,14 @@
     
     <header>
       <h1>⚖️ Ratio Calculator</h1>
-      <p>Calculate ratios, simplify ratios, and solve proportion problems.</p>
+      <p>Calculate and simplify ratios</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Calculators</h2>
+        <h2>Calculator</h2>
         <div class="lang-selector">
-          <a href="../en/ratio-calculator.html" class="lang-btn active">EN</a>
+          <a href="./ratio-calculator.html" class="lang-btn active">EN</a>
           <a href="../es/ratio-calculator.html" class="lang-btn">ES</a>
           <a href="../fr/ratio-calculator.html" class="lang-btn">FR</a>
           <a href="../de/ratio-calculator.html" class="lang-btn">DE</a>
@@ -29,237 +35,87 @@
         </div>
       </div>
       
-      <!-- Simplify Ratio -->
-      <div class="calc-section">
-        <h3>🔽 Simplify Ratio</h3>
-        <div class="ratio-row">
-          <input type="number" id="simpA" class="tool-input ratio-input" placeholder="A">
-          <span class="ratio-colon">:</span>
-          <input type="number" id="simpB" class="tool-input ratio-input" placeholder="B">
-          <span class="ratio-colon">:</span>
-          <input type="number" id="simpC" class="tool-input ratio-input" placeholder="C (optional)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Value</label>
+          <input type="number" id="a" value="4" oninput="calculate()">
         </div>
-        <button class="btn btn-primary" onclick="simplifyRatio()">Simplify</button>
-        <div class="result-highlight" id="simpResult" style="display: none;"></div>
+        
+        <div class="form-group">
+          <label>Second Value</label>
+          <input type="number" id="b" value="6" oninput="calculate()">
+        </div>
       </div>
       
-      <!-- Solve Proportion -->
-      <div class="calc-section">
-        <h3>🔀 Solve Proportion (A:B = C:D)</h3>
-        <div class="proportion-grid">
-          <input type="number" id="propA" class="tool-input" placeholder="A">
-          <span class="ratio-colon">:</span>
-          <input type="number" id="propB" class="tool-input" placeholder="B">
-          <span class="ratio-equals">=</span>
-          <input type="number" id="propC" class="tool-input" placeholder="C">
-          <span class="ratio-colon">:</span>
-          <input type="number" id="propD" class="tool-input" placeholder="D">
-        </div>
-        <p class="hint">Leave one field empty to solve for it</p>
-        <button class="btn btn-primary" onclick="solveProportion()">Solve</button>
-        <div class="result-highlight" id="propResult" style="display: none;"></div>
+      <div class="ratio-display">
+        <div class="ratio-box" id="displayA">4</div>
+        <div class="ratio-separator">:</div>
+        <div class="ratio-box" id="displayB">6</div>
       </div>
       
-      <!-- Ratio to Percentage -->
-      <div class="calc-section">
-        <h3>📊 Ratio to Percentage</h3>
-        <div class="ratio-row">
-          <input type="number" id="pctA" class="tool-input ratio-input" placeholder="Part A">
-          <span class="ratio-colon">:</span>
-          <input type="number" id="pctB" class="tool-input ratio-input" placeholder="Part B">
-        </div>
-        <button class="btn btn-primary" onclick="ratioToPercentage()">Convert</button>
-        <div class="result-highlight" id="pctResult" style="display: none;"></div>
+      <div class="simplified">
+        Simplified: <strong id="simplified">2:3</strong>
       </div>
       
-      <!-- Aspect Ratio Calculator -->
-      <div class="calc-section">
-        <h3>🖼️ Aspect Ratio Calculator</h3>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Width (px)</label>
-            <input type="number" id="arWidth" class="tool-input" placeholder="1920">
-          </div>
-          <div class="form-group">
-            <label>Height (px)</label>
-            <input type="number" id="arHeight" class="tool-input" placeholder="1080">
-          </div>
-        </div>
-        <button class="btn btn-primary" onclick="calcAspectRatio()">Calculate</button>
-        <div class="result-highlight" id="arResult" style="display: none;"></div>
+      <div class="form-group" style="margin-top: 30px;">
+        <label>Proportion: If <span id="propA">4</span>:<span id="propB">6</span> = <span id="propC">?</span>:<input type="number" id="propD" value="12" style="width: 80px; display: inline;" oninput="calculateProp()"></label>
+        <div style="margin-top: 10px; font-size: 20px; color: var(--primary);" id="propResult">= 8</div>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="calculate()">Simplify</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
       </div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
-  <style>
-    .calc-section { background: var(--bg-card); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 24px; }
-    .calc-section h3 { margin-bottom: 20px; color: var(--primary); font-size: 1.1rem; }
-    .ratio-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-    .ratio-input { width: 100px; text-align: center; }
-    .ratio-colon { font-size: 24px; font-weight: 700; color: var(--primary); }
-    .ratio-equals { font-size: 24px; font-weight: 700; color: var(--text-secondary); margin: 0 10px; }
-    .proportion-grid { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 8px; align-items: center; margin-bottom: 8px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-secondary); font-size: 14px; }
-    .tool-input { background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; color: var(--text-primary); font-size: 14px; }
-    .result-highlight { font-size: 20px; font-weight: 600; color: var(--primary); text-align: center; padding: 20px; background: var(--bg-input); border-radius: var(--radius-sm); margin-top: 16px; border: 1px solid var(--border); }
-    .hint { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
-    @media (max-width: 768px) { 
-      .proportion-grid { grid-template-columns: 1fr 1fr; gap: 12px; } 
-      .ratio-equals { display: none; }
-      .form-row { grid-template-columns: 1fr; }
-    }
-  </style>
-  
   <script>
-    function gcd(a, b) {
-      return b === 0 ? a : gcd(b, a % b);
-    }
+    function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
     
-    function simplifyRatio() {
-      const a = parseInt(document.getElementById('simpA').value);
-      const b = parseInt(document.getElementById('simpB').value);
-      const c = document.getElementById('simpC').value ? parseInt(document.getElementById('simpC').value) : null;
+    function calculate() {
+      const a = parseInt(document.getElementById('a').value) || 0;
+      const b = parseInt(document.getElementById('b').value) || 0;
       
-      if (isNaN(a) || isNaN(b) || a < 0 || b < 0) {
-        alert('Please enter valid positive numbers');
+      document.getElementById('displayA').textContent = a;
+      document.getElementById('displayB').textContent = b;
+      document.getElementById('propA').textContent = a;
+      document.getElementById('propB').textContent = b;
+      
+      if (a === 0 || b === 0) {
+        document.getElementById('simplified').textContent = '0:0';
         return;
       }
       
-      let divisor;
-      if (c !== null && !isNaN(c) && c > 0) {
-        divisor = gcd(gcd(a, b), c);
-        document.getElementById('simpResult').innerHTML = `
-          <div style="font-size: 32px;">${a/divisor}:${b/divisor}:${c/divisor}</div>
-          <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
-            Divided by ${divisor}
-          </div>
-        `;
-      } else {
-        divisor = gcd(a, b);
-        document.getElementById('simpResult').innerHTML = `
-          <div style="font-size: 32px;">${a/divisor}:${b/divisor}</div>
-          <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
-            Divided by ${divisor}
-          </div>
-        `;
-      }
-      document.getElementById('simpResult').style.display = 'block';
+      const divisor = gcd(Math.abs(a), Math.abs(b));
+      document.getElementById('simplified').textContent = (a / divisor) + ':' + (b / divisor);
+      
+      calculateProp();
     }
     
-    function solveProportion() {
-      const a = parseFloat(document.getElementById('propA').value);
-      const b = parseFloat(document.getElementById('propB').value);
-      const c = parseFloat(document.getElementById('propC').value);
-      const d = parseFloat(document.getElementById('propD').value);
+    function calculateProp() {
+      const a = parseFloat(document.getElementById('a').value) || 0;
+      const b = parseFloat(document.getElementById('b').value) || 0;
+      const d = parseFloat(document.getElementById('propD').value) || 0;
       
-      const values = [a, b, c, d];
-      const emptyCount = values.filter(v => isNaN(v)).length;
+      if (b === 0) { document.getElementById('propResult').textContent = ''; return; }
       
-      if (emptyCount !== 1) {
-        alert('Please leave exactly one field empty to solve for it');
-        return;
-      }
-      
-      let result, solvedFor;
-      if (isNaN(a)) {
-        result = (b * c) / d;
-        solvedFor = 'A';
-        document.getElementById('propA').value = result.toFixed(4);
-      } else if (isNaN(b)) {
-        result = (a * d) / c;
-        solvedFor = 'B';
-        document.getElementById('propB').value = result.toFixed(4);
-      } else if (isNaN(c)) {
-        result = (a * d) / b;
-        solvedFor = 'C';
-        document.getElementById('propC').value = result.toFixed(4);
-      } else {
-        result = (b * c) / a;
-        solvedFor = 'D';
-        document.getElementById('propD').value = result.toFixed(4);
-      }
-      
-      document.getElementById('propResult').innerHTML = `
-        <div style="font-size: 28px;">${solvedFor} = ${result.toFixed(4)}</div>
-        <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
-          ${a}:${b} = ${c}:${d}
-        </div>
-      `;
-      document.getElementById('propResult').style.display = 'block';
+      const c = (a * d) / b;
+      document.getElementById('propResult').textContent = '= ' + c.toFixed(2);
     }
     
-    function ratioToPercentage() {
-      const a = parseFloat(document.getElementById('pctA').value);
-      const b = parseFloat(document.getElementById('pctB').value);
-      
-      if (isNaN(a) || isNaN(b) || a < 0 || b < 0) {
-        alert('Please enter valid positive numbers');
-        return;
-      }
-      
-      const total = a + b;
-      const pctA = (a / total * 100).toFixed(2);
-      const pctB = (b / total * 100).toFixed(2);
-      
-      document.getElementById('pctResult').innerHTML = `
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-          <div>
-            <div style="font-size: 28px;">${pctA}%</div>
-            <div style="font-size: 12px; color: var(--text-secondary);">Part A</div>
-          </div>
-          <div>
-            <div style="font-size: 28px;">${pctB}%</div>
-            <div style="font-size: 12px; color: var(--text-secondary);">Part B</div>
-          </div>
-        </div>
-        <div style="font-size: 14px; color: var(--text-secondary); margin-top: 12px;">
-          Total: ${total}
-        </div>
-      `;
-      document.getElementById('pctResult').style.display = 'block';
+    function clearAll() {
+      document.getElementById('a').value = '';
+      document.getElementById('b').value = '';
+      document.getElementById('propD').value = '';
+      document.getElementById('displayA').textContent = '0';
+      document.getElementById('displayB').textContent = '0';
+      document.getElementById('simplified').textContent = '';
+      document.getElementById('propResult').textContent = '';
     }
     
-    function calcAspectRatio() {
-      const width = parseInt(document.getElementById('arWidth').value);
-      const height = parseInt(document.getElementById('arHeight').value);
-      
-      if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
-        alert('Please enter valid positive dimensions');
-        return;
-      }
-      
-      const divisor = gcd(width, height);
-      const ratioW = width / divisor;
-      const ratioH = height / divisor;
-      
-      const commonRatios = {
-        '16:9': 'Widescreen (HD, 4K)',
-        '4:3': 'Standard (Classic TV)',
-        '21:9': 'Ultrawide',
-        '1:1': 'Square',
-        '3:2': 'Photo (35mm)',
-        '9:16': 'Portrait (Mobile)',
-        '2.39:1': 'Cinemascope'
-      };
-      
-      const ratioKey = `${ratioW}:${ratioH}`;
-      const ratioName = commonRatios[ratioKey] || 'Custom';
-      
-      document.getElementById('arResult').innerHTML = `
-        <div style="font-size: 36px; font-weight: 700;">${ratioKey}</div>
-        <div style="font-size: 16px; color: var(--primary); margin-top: 4px;">${ratioName}</div>
-        <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
-          ${width} × ${height} pixels
-        </div>
-      `;
-      document.getElementById('arResult').style.display = 'block';
-    }
+    calculate();
   </script>
 </body>
 </html>
