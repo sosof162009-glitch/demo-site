@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palindrome Checker - 205 Tools</title>
+  <meta name="description" content="Check if text is a palindrome (reads same forwards and backwards).">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .result-box { text-align: center; padding: 40px; border-radius: 16px; margin: 20px 0; }
+    .result-box.palindrome { background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.1)); border: 2px solid #22c55e; }
+    .result-box.not-palindrome { background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.1)); border: 2px solid #ef4444; }
+    .result-icon { font-size: 48px; margin-bottom: 15px; }
+    .result-text { font-size: 24px; font-weight: 600; }
+    .result-detail { margin-top: 10px; color: var(--text-secondary); }
+    .visual-comparison { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+    .compare-box { background: var(--bg-card); padding: 15px 25px; border-radius: 8px; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🔄 Palindrome Checker</h1>
+      <p>Check if text reads the same forwards and backwards</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Check</h2>
+        <div class="lang-selector">
+          <a href="./palindrome-checker.html" class="lang-btn active">EN</a>
+          <a href="../es/palindrome-checker.html" class="lang-btn">ES</a>
+          <a href="../fr/palindrome-checker.html" class="lang-btn">FR</a>
+          <a href="../de/palindrome-checker.html" class="lang-btn">DE</a>
+          <a href="../ar/palindrome-checker.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label><input type="checkbox" id="ignoreCase" checked> Ignore case</label>
+        <label style="margin-left: 20px;"><input type="checkbox" id="ignoreSpaces" checked> Ignore spaces & punctuation</label>
+      </div>
+      
+      <div class="form-group">
+        <textarea id="inputText" rows="4" placeholder="Enter text to check...">A man a plan a canal Panama</textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="check()">🔄 Check</button>
+        <button class="btn btn-secondary" onclick="loadExample('radar')">"radar"</button>
+        <button class="btn btn-secondary" onclick="loadExample('level')">"level"</button>
+        <button class="btn btn-secondary" onclick="loadExample('hello')">"hello"</button>
+        <button class="btn btn-secondary" onclick="clearText()">Clear</button>
+      </div>
+      
+      <div id="resultBox" class="result-box" style="display: none;">
+        <div class="result-icon" id="resultIcon"></div>
+        <div class="result-text" id="resultText"></div>
+        <div class="result-detail" id="resultDetail"></div>
+        
+        <div class="visual-comparison" id="visualCompare"></div>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function check() {
+      const text = document.getElementById('inputText').value;
+      const ignoreCase = document.getElementById('ignoreCase').checked;
+      const ignoreSpaces = document.getElementById('ignoreSpaces').checked;
+      
+      if (!text.trim()) {
+        document.getElementById('resultBox').style.display = 'none';
+        return;
+      }
+      
+      let processed = text;
+      if (ignoreCase) processed = processed.toLowerCase();
+      if (ignoreSpaces) processed = processed.replace(/[^a-zA-Z0-9]/g, '');
+      
+      const reversed = processed.split('').reverse().join('');
+      const isPalindrome = processed === reversed && processed.length > 0;
+      
+      const resultBox = document.getElementById('resultBox');
+      resultBox.style.display = 'block';
+      resultBox.className = 'result-box ' + (isPalindrome ? 'palindrome' : 'not-palindrome');
+      
+      document.getElementById('resultIcon').textContent = isPalindrome ? '✅' : '❌';
+      document.getElementById('resultText').textContent = isPalindrome ? 'Palindrome!' : 'Not a palindrome';
+      document.getElementById('resultDetail').textContent = isPalindrome 
+        ? `"${text}" reads the same forwards and backwards`
+        : `"${text}" does not read the same backwards`;
+      
+      document.getElementById('visualCompare').innerHTML = `
+        <div class="compare-box">Forwards: ${processed}</div>
+        <div class="compare-box">Backwards: ${reversed}</div>
+      `;
+    }
+    
+    function loadExample(word) {
+      const examples = {
+        'radar': 'radar',
+        'level': 'Was it a car or a cat I saw',
+        'hello': 'hello world'
+      };
+      document.getElementById('inputText').value = examples[word] || word;
+      check();
+    }
+    
+    function clearText() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('resultBox').style.display = 'none';
+    }
+    
+    // Check on load
+    check();
+  </script>
+</body>
+</html>

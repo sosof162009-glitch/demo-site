@@ -1,122 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Text to Slug | 205 Tools</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  
+  <title>Text to Slug - 205 Tools</title>
+  <meta name="description" content="Convert text to URL-friendly slug format.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .slug-preview { background: var(--bg-secondary); padding: 20px; border-radius: 12px; margin-top: 20px; font-family: monospace; font-size: 18px; word-break: break-all; }
+    .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0; }
+    .option-box { background: var(--bg-card); padding: 15px; border-radius: 8px; }
+    .option-box label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  </style>
 </head>
 <body>
-  <div class="lang-selector">
-    <select onchange="window.location.href=this.value">
-      <option value="text-to-slug.html" selected>English</option>
-      <option value="../ar/text-to-slug.html" >العربية</option>
-      <option value="../fr/text-to-slug.html" >Français</option>
-      <option value="../es/text-to-slug.html" >Español</option>
-      <option value="../de/text-to-slug.html" >Deutsch</option>
-    </select>
-  </div>
-
-  <div class="tool-container">
-    <header class="tool-header">
-      <h1>Text to Slug</h1>
-      <p>Convert text to URL-friendly slug format</p>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🔗 Text to Slug</h1>
+      <p>Convert text to URL-friendly slugs</p>
     </header>
-
-    <div class="tool-card">
-      <div class="input-group">
-        <label for="text-input">Text:</label>
-        <textarea id="text-input" class="tool-textarea" placeholder="Enter text to convert to slug..."></textarea>
-      </div>
-
-      <div class="options-group">
-        <div class="option-item">
-          <label for="separator">Separator:</label>
-          <select id="separator" class="tool-select">
-            <option value="-">Hyphen (-)</option>
-            <option value="_">Underscore (_)</option>
-            <option value=".">Dot (.)</option>
-          </select>
-        </div>
-        <div class="option-item">
-          <input type="checkbox" id="lowercase" checked>
-          <label for="lowercase">Lowercase</label>
-        </div>
-        <div class="option-item">
-          <input type="checkbox" id="remove-stopwords">
-          <label for="remove-stopwords">Remove stop words (a, an, the, etc.)</label>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Converter</h2>
+        <div class="lang-selector">
+          <a href="./text-to-slug.html" class="lang-btn active">EN</a>
+          <a href="../es/text-to-slug.html" class="lang-btn">ES</a>
+          <a href="../fr/text-to-slug.html" class="lang-btn">FR</a>
+          <a href="../de/text-to-slug.html" class="lang-btn">DE</a>
+          <a href="../ar/text-to-slug.html" class="lang-btn">AR</a>
         </div>
       </div>
-
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="convertToSlug()">Convert</button>
-        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
-      </div>
-
-      <div class="input-group" style="margin-top: 20px;">
-        <label for="text-output">Slug:</label>
-        <input type="text" id="text-output" class="tool-input" placeholder="Slug will appear here..." readonly>
-      </div>
-
-      <div class="btn-group">
-        <button class="btn btn-success" onclick="copyResult()">Copy</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast">
-    <div class="toast-icon">✓</div>
-    <span>Copied!</span>
-  </div>
-
-  <script>
-    const stopWords = ['a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with'];
-
-    function convertToSlug() {
-      let text = document.getElementById('text-input').value;
-      const separator = document.getElementById('separator').value;
-      const lowercase = document.getElementById('lowercase').checked;
-      const removeStop = document.getElementById('remove-stopwords').checked;
       
-      if (text === '') {
-        document.getElementById('text-output').value = '';
-        return;
-      }
+      <div class="form-group">
+        <label>Enter Text</label>
+        <textarea id="inputText" rows="4" placeholder="Type text to convert..." oninput="convert()">Hello World Example Title</textarea>
+      </div>
+      
+      <div class="options">
+        <div class="option-box">
+          <label><input type="radio" name="separator" value="-" checked onchange="convert()"> Hyphen (-)</label>
+        </div>
+        
+        <div class="option-box">
+          <label><input type="radio" name="separator" value="_" onchange="convert()"> Underscore (_)</label>
+        </div>
+        
+        <div class="option-box">
+          <label><input type="checkbox" id="lowercase" checked onchange="convert()"> Lowercase</label>
+        </div>
+        
+        <div class="option-box">
+          <label><input type="checkbox" id="removeStopWords" onchange="convert()"> Remove stop words</label>
+        </div>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="copySlug()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearText()">Clear</button>
+      </div>
+      
+      <div class="slug-preview" id="slugOutput">hello-world-example-title</div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    const stopWords = ['a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'];
+    
+    function convert() {
+      let text = document.getElementById('inputText').value;
+      const separator = document.querySelector('input[name="separator"]:checked').value;
+      const lowercase = document.getElementById('lowercase').checked;
+      const removeStop = document.getElementById('removeStopWords').checked;
       
       if (lowercase) text = text.toLowerCase();
+      
+      // Transliterate common non-ASCII characters
+      text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       
       if (removeStop) {
         const words = text.split(/\s+/);
         text = words.filter(w => !stopWords.includes(w.toLowerCase())).join(' ');
       }
       
-      let slug = text
-        .replace(/[^&\w\s-]/g, '')
-        .replace(/[\s_-]+/g, separator)
-        .replace(/^-+|-+$/g, '');
+      // Replace non-alphanumeric with separator
+      text = text.replace(/[^a-zA-Z0-9\s]+/g, ' ').trim();
+      text = text.replace(/\s+/g, separator);
       
-      document.getElementById('text-output').value = slug;
+      document.getElementById('slugOutput').textContent = text || 'your-slug-here';
     }
-
-    function copyResult() {
-      const output = document.getElementById('text-output');
-      output.select();
-      document.execCommand('copy');
-      showToast();
+    
+    function copySlug() {
+      const slug = document.getElementById('slugOutput').textContent;
+      navigator.clipboard.writeText(slug);
+      alert('Copied: ' + slug);
     }
-
-    function showToast() {
-      const toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
+    
+    function clearText() {
+      document.getElementById('inputText').value = '';
+      convert();
     }
-
-    function clearAll() {
-      document.getElementById('text-input').value = '';
-      document.getElementById('text-output').value = '';
-    }
+    
+    // Initial conversion
+    convert();
   </script>
 </body>
 </html>
