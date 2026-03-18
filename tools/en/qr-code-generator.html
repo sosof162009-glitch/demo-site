@@ -4,96 +4,108 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Code Generator - 205 Tools</title>
-  <meta name="description" content="Generate QR codes for URLs, text, and more.">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <meta name="description" content="Generate QR codes from text, URLs, or contact information.">
+  <link rel="stylesheet" href="../assets/tools.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <style>
+    #qrcode { display: flex; justify-content: center; padding: 20px; background: white; border-radius: 12px; margin: 20px 0; }
+    .qr-options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+    @media (max-width: 600px) { .qr-options { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🔲 QR Code Generator</h1>
-      <p>Generate QR codes for URLs, text, and more.</p>
+      <h1>📱 QR Code Generator</h1>
+      <p>Generate QR codes from text or URLs</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Generate</h2>
+        <h2>Generator</h2>
         <div class="lang-selector">
-          <a href="../en/qr-code-generator.html" class="lang-btn active">EN</a><a href="../es/qr-code-generator.html" class="lang-btn ">ES</a><a href="../fr/qr-code-generator.html" class="lang-btn ">FR</a><a href="../de/qr-code-generator.html" class="lang-btn ">DE</a><a href="../ar/qr-code-generator.html" class="lang-btn ">AR</a>
+          <a href="./qr-code-generator.html" class="lang-btn active">EN</a>
+          <a href="../es/qr-code-generator.html" class="lang-btn">ES</a>
+          <a href="../fr/qr-code-generator.html" class="lang-btn">FR</a>
+          <a href="../de/qr-code-generator.html" class="lang-btn">DE</a>
+          <a href="../ar/qr-code-generator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="qr-options">
+        <div class="form-group">
+          <label>Size (px)</label>
+          <select id="qrSize">
+            <option value="128">Small (128)</option>
+            <option value="200" selected>Medium (200)</option>
+            <option value="256">Large (256)</option>
+            <option value="300">Extra Large (300)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Error Correction</label>
+          <select id="qrLevel">
+            <option value="1">Low (7%)</option>
+            <option value="0">Medium (15%)</option>
+            <option value="3">High (25%)</option>
+            <option value="2">Highest (30%)</option>
+          </select>
+        </div>
+      </div>
       
       <div class="form-group">
-        <label>Content (URL, Text, etc.)</label>
-        <textarea id="qrContent" placeholder="https://example.com or any text" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Size</label>
-        <select id="qrSize">
-          <option value="200">Small (200x200)</option>
-          <option value="300" selected>Medium (300x300)</option>
-          <option value="400">Large (400x400)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Color</label>
-        <input type="color" id="qrColor" value="#000000">
+        <label>Text or URL</label>
+        <textarea id="qrText" rows="3" placeholder="Enter text or URL to encode...">https://205tools.com</textarea>
       </div>
       
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="generateQRCode()">Generate</button>
-        <button class="btn btn-secondary" onclick="downloadQR()">Download</button>
+        <button class="btn btn-primary" onclick="generateQR()">Generate QR Code</button>
+        <button class="btn btn-secondary" onclick="downloadQR()">💾 Download</button>
       </div>
       
-      <div class="result-box" style="margin-top: 20px;">
-        <div id="qrcode"></div>
-      </div>
-      
-      <script>
-        let currentQR = null;
-        
-        function generateQRCode() {
-          const content = document.getElementById('qrContent').value;
-          if (!content) {
-            alert('Please enter content');
-            return;
-          }
-          
-          const size = parseInt(document.getElementById('qrSize').value);
-          const color = document.getElementById('qrColor').value;
-          
-          document.getElementById('qrcode').innerHTML = '';
-          
-          currentQR = new QRCode(document.getElementById('qrcode'), {
-            text: content,
-            width: size,
-            height: size,
-            colorDark: color,
-            colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.H
-          });
-        }
-        
-        function downloadQR() {
-          const img = document.querySelector('#qrcode img');
-          if (img) {
-            const a = document.createElement('a');
-            a.href = img.src;
-            a.download = 'qrcode.png';
-            a.click();
-          }
-        }
-      </script>
+      <div id="qrcode"></div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
+  
+  <script>
+    let qrCode = null;
+    
+    function generateQR() {
+      const text = document.getElementById('qrText').value;
+      const size = parseInt(document.getElementById('qrSize').value);
+      const level = parseInt(document.getElementById('qrLevel').value);
+      
+      if (!text) { alert('Please enter text or URL'); return; }
+      
+      document.getElementById('qrcode').innerHTML = '';
+      
+      qrCode = new QRCode(document.getElementById('qrcode'), {
+        text: text,
+        width: size,
+        height: size,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: level
+      });
+    }
+    
+    function downloadQR() {
+      const canvas = document.querySelector('#qrcode canvas');
+      if (!canvas) { alert('Generate a QR code first'); return; }
+      
+      const link = document.createElement('a');
+      link.download = 'qrcode.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+    
+    // Generate on load
+    window.onload = generateQR;
+  </script>
 </body>
 </html>

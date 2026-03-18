@@ -3,60 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>random-number-generator - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>Random Number Generator - 205 Tools</title>
+  <meta name="description" content="Generate random numbers within a specified range.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .result-display { text-align: center; padding: 40px; background: var(--bg-secondary); border-radius: 16px; margin: 20px 0; }
+    .result-number { font-size: 72px; font-weight: 700; color: var(--primary); font-family: monospace; }
+    .history-list { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .history-item { background: var(--bg-card); padding: 8px 16px; border-radius: 20px; font-family: monospace; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🎲 random-number-generator</h1>
-      <p></p>
+      <h1>🎲 Random Number Generator</h1>
+      <p>Generate random numbers in any range</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Settings</h2>
         <div class="lang-selector">
-          <a href="../en/random-number-generator.html" class="lang-btn active">EN</a><a href="../es/random-number-generator.html" class="lang-btn ">ES</a><a href="../fr/random-number-generator.html" class="lang-btn ">FR</a><a href="../de/random-number-generator.html" class="lang-btn ">DE</a><a href="../ar/random-number-generator.html" class="lang-btn ">AR</a>
+          <a href="./random-number-generator.html" class="lang-btn active">EN</a>
+          <a href="../es/random-number-generator.html" class="lang-btn">ES</a>
+          <a href="../fr/random-number-generator.html" class="lang-btn">FR</a>
+          <a href="../de/random-number-generator.html" class="lang-btn">DE</a>
+          <a href="../ar/random-number-generator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="form-row">
+        <div class="form-group">
+          <label>Min</label>
+          <input type="number" id="min" value="1">
+        </div>
+        
+        <div class="form-group">
+          <label>Max</label>
+          <input type="number" id="max" value="100">
+        </div>
+      </div>
       
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Quantity</label>
+        <input type="number" id="quantity" value="1" min="1" max="100">
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="generate()">🎲 Generate</button>
+        <button class="btn btn-secondary" onclick="clearHistory()">Clear History</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div class="result-display">
+        <div class="result-number" id="result">--</div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
+      
+      <div id="historySection" style="display: none;">
+        <label>History</label>
+        <div class="history-list" id="history"></div>
+      </div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
+    let history = [];
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function generate() {
+      const min = parseInt(document.getElementById('min').value) || 1;
+      const max = parseInt(document.getElementById('max').value) || 100;
+      const qty = parseInt(document.getElementById('quantity').value) || 1;
+      
+      if (min >= max) { alert('Min must be less than Max'); return; }
+      if (qty < 1 || qty > 100) { alert('Quantity must be between 1 and 100'); return; }
+      
+      if (qty === 1) {
+        const num = Math.floor(Math.random() * (max - min + 1)) + min;
+        document.getElementById('result').textContent = num;
+        addToHistory(num);
+      } else {
+        const numbers = [];
+        for (let i = 0; i < qty; i++) {
+          numbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
+        }
+        document.getElementById('result').textContent = qty + ' numbers';
+        addToHistory(numbers.join(', '));
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    }
     
+    function addToHistory(num) {
+      history.unshift(num);
+      if (history.length > 10) history.pop();
+      
+      document.getElementById('history').innerHTML = history.map(h => 
+        `<div class="history-item">${h}</div>`
+      ).join('');
+      document.getElementById('historySection').style.display = 'block';
+    }
+    
+    function clearHistory() {
+      history = [];
+      document.getElementById('history').innerHTML = '';
+      document.getElementById('historySection').style.display = 'none';
+    }
   </script>
 </body>
 </html>
