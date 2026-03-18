@@ -3,60 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sql-formatter - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>SQL Formatter - 205 Tools</title>
+  <meta name="description" content="Format and beautify SQL queries.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    pre { background: var(--bg-secondary); padding: 15px; border-radius: 8px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 14px; white-space: pre-wrap; }
+    .keyword { color: #c678dd; }
+    .string { color: #98c379; }
+    .number { color: #d19a66; }
+    .comment { color: #5c6370; font-style: italic; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🗃️ sql-formatter</h1>
-      <p></p>
+      <h1>🗄️ SQL Formatter</h1>
+      <p>Format and beautify SQL queries</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Input</h2>
         <div class="lang-selector">
-          <a href="../en/sql-formatter.html" class="lang-btn active">EN</a><a href="../es/sql-formatter.html" class="lang-btn ">ES</a><a href="../fr/sql-formatter.html" class="lang-btn ">FR</a><a href="../de/sql-formatter.html" class="lang-btn ">DE</a><a href="../ar/sql-formatter.html" class="lang-btn ">AR</a>
+          <a href="./sql-formatter.html" class="lang-btn active">EN</a>
+          <a href="../es/sql-formatter.html" class="lang-btn">ES</a>
+          <a href="../fr/sql-formatter.html" class="lang-btn">FR</a>
+          <a href="../de/sql-formatter.html" class="lang-btn">DE</a>
+          <a href="../ar/sql-formatter.html" class="lang-btn">AR</a>
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <textarea id="input" rows="10" placeholder="Paste SQL query...">SELECT u.id, u.name, u.email, COUNT(o.id) as order_count FROM users u LEFT JOIN orders o ON u.id = o.user_id WHERE u.active = 1 GROUP BY u.id ORDER BY order_count DESC LIMIT 10;</textarea>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="format()">✨ Format</button>
+        <button class="btn btn-success" onclick="copyResult()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
       </div>
+      
       <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+        <label>Formatted SQL</label>
+        <pre id="output"></pre>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
+    const keywords = ['SELECT', 'FROM', 'WHERE', 'INSERT', 'UPDATE', 'DELETE', 'JOIN', 'LEFT', 'RIGHT', 'INNER', 'OUTER', 'ON', 'GROUP', 'BY', 'ORDER', 'HAVING', 'LIMIT', 'OFFSET', 'UNION', 'ALL', 'DISTINCT', 'AS', 'AND', 'OR', 'NOT', 'NULL', 'IS', 'IN', 'BETWEEN', 'LIKE', 'EXISTS', 'CASE', 'WHEN', 'THEN', 'ELSE', 'END', 'CREATE', 'TABLE', 'DROP', 'ALTER', 'INDEX', 'VIEW', 'PRIMARY', 'KEY', 'FOREIGN', 'REFERENCES', 'DEFAULT', 'AUTO_INCREMENT'];
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    function format() {
+      let sql = document.getElementById('input').value.trim();
+      if (!sql) return;
+      
+      // Basic formatting
+      sql = sql
+        .replace(/\s+/g, ' ')
+        .replace(/\s*,\s*/g, ', ')
+        .replace(/\s*\(\s*/g, '(')
+        .replace(/\s*\)\s*/g, ')');
+      
+      // Add newlines for major clauses
+      const clauses = ['SELECT', 'FROM', 'WHERE', 'GROUP BY', 'HAVING', 'ORDER BY', 'LIMIT'];
+      clauses.forEach(clause => {
+        const regex = new RegExp(`\\b${clause}\\b`, 'gi');
+        sql = sql.replace(regex, '\n' + clause);
+      });
+      
+      // Format JOINs
+      sql = sql.replace(/\b(LEFT|RIGHT|INNER|OUTER|CROSS)?\s*JOIN\b/gi, '\n$1 JOIN');
+      sql = sql.replace(/\bON\b/gi, '\n  ON');
+      
+      // Indent subqueries
+      let lines = sql.split('\n');
+      let indent = 0;
+      lines = lines.map(line => {
+        line = line.trim();
+        if (line.startsWith(')')) indent = Math.max(0, indent - 1);
+        const result = '  '.repeat(indent) + line;
+        if (line.includes('(') && !line.includes(')')) indent++;
+        return result;
+      });
+      
+      sql = lines.join('\n').trim();
+      
+      // Syntax highlighting
+      let highlighted = sql
+        .replace(/\b(SELECT|FROM|WHERE|INSERT|UPDATE|DELETE|JOIN|LEFT|RIGHT|INNER|OUTER|ON|GROUP|BY|ORDER|HAVING|LIMIT|AND|OR|NOT|NULL|IS|IN|AS|DISTINCT|UNION|ALL)\b/g, '<span class="keyword">$1</span>')
+        .replace(/'[^']*'/g, '<span class="string">$\u0026</span>')
+        .replace(/\b\d+\b/g, '<span class="number">$\u0026</span>')
+        .replace(/--.*$/gm, '<span class="comment">$\u0026</span>');
+      
+      document.getElementById('output').innerHTML = highlighted;
+    }
     
+    function copyResult() {
+      const text = document.getElementById('output').innerText;
+      navigator.clipboard.writeText(text);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('input').value = '';
+      document.getElementById('output').innerHTML = '';
+    }
   </script>
 </body>
 </html>
