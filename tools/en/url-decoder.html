@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Decoder - 205 Tools</title>
+  <meta name="description" content="Decode URL-encoded strings.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🔗 URL Decoder</h1>
+      <p>Decode URL-encoded strings</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Decoder</h2>
+        <div class="lang-selector">
+          <a href="./url-decoder.html" class="lang-btn active">EN</a>
+          <a href="../es/url-decoder.html" class="lang-btn">ES</a>
+          <a href="../fr/url-decoder.html" class="lang-btn">FR</a>
+          <a href="../de/url-decoder.html" class="lang-btn">DE</a>
+          <a href="../ar/url-decoder.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>URL-Encoded Text</label>
+        <textarea id="input" rows="8" placeholder="Enter URL-encoded text...">Hello%20World%21%20%F0%9F%91%8B</textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="decode()">🔗 Decode</button>
+        <button class="btn btn-success" onclick="copyResult()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Decoded Result</label>
+        <textarea id="output" rows="6" readonly></textarea>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function decode() {
+      const text = document.getElementById('input').value.trim();
+      if (!text) { alert('Please enter URL-encoded text'); return; }
+      
+      try {
+        const result = decodeURIComponent(text);
+        document.getElementById('output').value = result;
+      } catch (e) {
+        alert('Error decoding URL: ' + e.message);
+      }
+    }
+    
+    function copyResult() {
+      navigator.clipboard.writeText(document.getElementById('output').value);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('input').value = '';
+      document.getElementById('output').value = '';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificador de Densidad de Palabras Clave - 205 Tools</title>
+  <meta name="description" content="Analiza la densidad de palabras clave en tu contenido para SEO.">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Inicio</a>
+    
+    <header>
+      <h1>📈 Verificador de Densidad de Palabras Clave</h1>
+      <p>Analiza la densidad de palabras clave en tu contenido para mejor optimización SEO.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Analizar</h2>
+        <div class="lang-selector">
+          <a href="../en/keyword-density-checker.html" class="lang-btn ">EN</a><a href="../es/keyword-density-checker.html" class="lang-btn active">ES</a><a href="../fr/keyword-density-checker.html" class="lang-btn ">FR</a><a href="../de/keyword-density-checker.html" class="lang-btn ">DE</a><a href="../ar/keyword-density-checker.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Texto del Contenido</label>
+        <textarea id="content" rows="10" placeholder="Pega tu artículo o contenido aquí..."></textarea>
+        <small id="wordCount">0 palabras</small>
+      </div>
+      <div class="form-group">
+        <label>Palabra Clave Objetivo (opcional)</label>
+        <input type="text" id="targetKeyword" placeholder="Ingresa palabra clave para verificar densidad">
+      </div>
+      <div class="form-group">
+        <label>Longitud Mínima de Palabra</label>
+        <input type="number" id="minLength" value="3" min="1" max="10">
+      </div>
+      <div class="form-group">
+        <label>Excluir Palabras Vacías Comunes</label>
+        <input type="checkbox" id="excludeStopWords" checked>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="analyzeDensity()">Analizar</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Limpiar</button>
+      </div>
+      
+      <div id="results" style="display:none; margin-top:20px;">
+        <h3>Resultados del Análisis</h3>
+        <div id="targetResult" style="display:none; padding:15px; background:#f0f7ff; border-radius:8px; margin-bottom:15px;">
+          <strong>Palabra Clave Objetivo:</strong> <span id="targetWord"></span><br>
+          <strong>Ocurrencias:</strong> <span id="targetCount"></span><br>
+          <strong>Densidad:</strong> <span id="targetDensity"></span>%<br>
+          <small id="targetAdvice"></small>
+        </div>
+        <table class="data-table" style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr style="background:#f5f5f5;">
+              <th style="padding:10px; text-align:left; border-bottom:2px solid #ddd;">Palabra Clave</th>
+              <th style="padding:10px; text-align:center; border-bottom:2px solid #ddd;">Conteo</th>
+              <th style="padding:10px; text-align:center; border-bottom:2px solid #ddd;">Densidad</th>
+            </tr>
+          </thead>
+          <tbody id="resultsTable"></tbody>
+        </table>
+      </div>
+      
+      <script>
+        const stopWords = new Set(['el', 'la', 'los', 'las', 'un', 'una', 'y', 'o', 'pero', 'de', 'del', 'a', 'al', 'en', 'por', 'para', 'con', 'sin', 'sobre', 'entre', 'que', 'es', 'son', 'fue', 'era', 'ser', 'este', 'esta', 'esto', 'ese', 'esa', 'eso', 'como', 'más', 'muy', 'ya', 'todo', 'todos', 'toda', 'todas', 'otro', 'otra', 'otros', 'otras', 'cada', 'cual', 'quien', 'cuando', 'donde', 'porque', 'si', 'no', 'sí', 'también', 'hasta', 'desde', 'hacia', 'durante', 'ante', 'tras', 'bajo', 'sobre', 'ante', 'contra', 'según', 'mediante']);
+        
+        document.getElementById('content').addEventListener('input', function() {
+          const words = this.value.trim().split(/\s+/).filter(w => w.length > 0);
+          document.getElementById('wordCount').textContent = words.length + ' palabras';
+        });
+        
+        function analyzeDensity() {
+          const content = document.getElementById('content').value.trim();
+          const targetKeyword = document.getElementById('targetKeyword').value.trim().toLowerCase();
+          const minLength = parseInt(document.getElementById('minLength').value) || 3;
+          const excludeStop = document.getElementById('excludeStopWords').checked;
+          
+          if (!content) {
+            alert('Por favor ingresa contenido para analizar');
+            return;
+          }
+          
+          const cleanContent = content.toLowerCase().replace(/[^a-záéíóúüñ0-9\s]/g, ' ');
+          const words = cleanContent.split(/\s+/).filter(w => w.length >= minLength);
+          const totalWords = content.trim().split(/\s+/).filter(w => w.length > 0).length;
+          
+          if (totalWords === 0) {
+            alert('No se encontraron palabras en el contenido');
+            return;
+          }
+          
+          const wordCounts = {};
+          words.forEach(word => {
+            if (excludeStop && stopWords.has(word)) return;
+            wordCounts[word] = (wordCounts[word] || 0) + 1;
+          });
+          
+          const sortedWords = Object.entries(wordCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 20);
+          
+          const tbody = document.getElementById('resultsTable');
+          tbody.innerHTML = '';
+          
+          sortedWords.forEach(([word, count], index) => {
+            const density = ((count / totalWords) * 100).toFixed(2);
+            const row = document.createElement('tr');
+            row.style.background = index % 2 === 0 ? '#fff' : '#f9f9f9';
+            row.innerHTML = `
+              <td style="padding:10px; border-bottom:1px solid #eee;">${word}</td>
+              <td style="padding:10px; text-align:center; border-bottom:1px solid #eee;">${count}</td>
+              <td style="padding:10px; text-align:center; border-bottom:1px solid #eee;">${density}%</td>
+            `;
+            tbody.appendChild(row);
+          });
+          
+          if (targetKeyword) {
+            const targetRegex = new RegExp('\\b' + targetKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'gi');
+            const targetMatches = content.match(targetRegex) || [];
+            const targetCount = targetMatches.length;
+            const targetDensity = ((targetCount / totalWords) * 100).toFixed(2);
+            
+            document.getElementById('targetWord').textContent = targetKeyword;
+            document.getElementById('targetCount').textContent = targetCount;
+            document.getElementById('targetDensity').textContent = targetDensity;
+            
+            let advice = '';
+            if (targetDensity < 0.5) {
+              advice = '⚠️ La densidad es baja. Considera usar la palabra clave más naturalmente en tu contenido.';
+            } else if (targetDensity > 3) {
+              advice = '⚠️ La densidad es alta. Evita el relleno de palabras clave.';
+            } else {
+              advice = '✅ Buena densidad de palabras clave (0.5% - 3%).';
+            }
+            document.getElementById('targetAdvice').textContent = advice;
+            document.getElementById('targetResult').style.display = 'block';
+          } else {
+            document.getElementById('targetResult').style.display = 'none';
+          }
+          
+          document.getElementById('results').style.display = 'block';
+        }
+        
+        function clearFields() {
+          document.getElementById('content').value = '';
+          document.getElementById('targetKeyword').value = '';
+          document.getElementById('wordCount').textContent = '0 palabras';
+          document.getElementById('results').style.display = 'none';
+        }
+      </script>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Herramientas</p>
+    </footer>
+  </div>
+</body>
+</html>

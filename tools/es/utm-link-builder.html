@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constructor de Enlaces UTM - 205 Tools</title>
+  <meta name="description" content="Construye URLs de seguimiento UTM para campañas de marketing.">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Inicio</a>
+    
+    <header>
+      <h1>📊 Constructor de Enlaces UTM</h1>
+      <p>Construye URLs de seguimiento UTM para tus campañas de marketing.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Construir URL</h2>
+        <div class="lang-selector">
+          <a href="../en/utm-link-builder.html" class="lang-btn ">EN</a><a href="../es/utm-link-builder.html" class="lang-btn active">ES</a><a href="../fr/utm-link-builder.html" class="lang-btn ">FR</a><a href="../de/utm-link-builder.html" class="lang-btn ">DE</a><a href="../ar/utm-link-builder.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>URL del Sitio Web *</label>
+        <input type="url" id="baseUrl" placeholder="https://ejemplo.com/landing">
+      </div>
+      <div class="form-group">
+        <label>Fuente UTM * (ej: google, facebook, newsletter)</label>
+        <input type="text" id="utmSource" placeholder="google">
+      </div>
+      <div class="form-group">
+        <label>Medio UTM * (ej: cpc, email, social)</label>
+        <select id="utmMedium">
+          <option value="">Seleccionar medio...</option>
+          <option value="cpc">CPC (Costo Por Clic)</option>
+          <option value="email">Email</option>
+          <option value="social">Social</option>
+          <option value="organic">Orgánico</option>
+          <option value="referral">Referido</option>
+          <option value="display">Display</option>
+          <option value="affiliate">Afiliado</option>
+          <option value="custom">Personalizado</option>
+        </select>
+        <input type="text" id="utmMediumCustom" placeholder="Ingresa medio personalizado" style="display:none; margin-top:8px;">
+      </div>
+      <div class="form-group">
+        <label>Campaña UTM * (ej: venta_verano, lanzamiento)</label>
+        <input type="text" id="utmCampaign" placeholder="venta_verano_2025">
+      </div>
+      <div class="form-group">
+        <label>Término UTM (opcional - para palabras clave de búsqueda pagada)</label>
+        <input type="text" id="utmTerm" placeholder="zapatillas correr">
+      </div>
+      <div class="form-group">
+        <label>Contenido UTM (opcional - para pruebas A/B)</label>
+        <input type="text" id="utmContent" placeholder="banner_a">
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="buildUTM()">Construir URL</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Limpiar</button>
+      </div>
+      
+      <div class="code-output" id="output" style="display:none;">
+        <pre id="codeContent"></pre>
+        <button class="btn btn-success" data-success="¡Copiado!" onclick="copyToClipboard(document.getElementById('codeContent').textContent, this)">Copiar</button>
+      </div>
+      
+      <script>
+        document.getElementById('utmMedium').addEventListener('change', function() {
+          const customInput = document.getElementById('utmMediumCustom');
+          if (this.value === 'custom') {
+            customInput.style.display = 'block';
+            customInput.focus();
+          } else {
+            customInput.style.display = 'none';
+          }
+        });
+        
+        function buildUTM() {
+          const baseUrl = document.getElementById('baseUrl').value.trim();
+          const source = document.getElementById('utmSource').value.trim();
+          let medium = document.getElementById('utmMedium').value;
+          const campaign = document.getElementById('utmCampaign').value.trim();
+          const term = document.getElementById('utmTerm').value.trim();
+          const content = document.getElementById('utmContent').value.trim();
+          
+          if (!baseUrl) {
+            alert('Por favor ingresa una URL');
+            return;
+          }
+          if (!source) {
+            alert('Por favor ingresa la Fuente UTM');
+            return;
+          }
+          if (!medium) {
+            alert('Por favor selecciona el Medio UTM');
+            return;
+          }
+          if (!campaign) {
+            alert('Por favor ingresa la Campaña UTM');
+            return;
+          }
+          
+          if (medium === 'custom') {
+            medium = document.getElementById('utmMediumCustom').value.trim();
+          }
+          
+          let url = baseUrl;
+          if (!url.includes('?')) {
+            url += '?';
+          } else {
+            url += '&';
+          }
+          
+          const params = [];
+          params.push('utm_source=' + encodeURIComponent(source));
+          params.push('utm_medium=' + encodeURIComponent(medium));
+          params.push('utm_campaign=' + encodeURIComponent(campaign));
+          if (term) params.push('utm_term=' + encodeURIComponent(term));
+          if (content) params.push('utm_content=' + encodeURIComponent(content));
+          
+          url += params.join('&');
+          
+          document.getElementById('codeContent').textContent = url;
+          document.getElementById('output').style.display = 'block';
+        }
+        
+        function clearFields() {
+          document.getElementById('baseUrl').value = '';
+          document.getElementById('utmSource').value = '';
+          document.getElementById('utmMedium').value = '';
+          document.getElementById('utmMediumCustom').value = '';
+          document.getElementById('utmMediumCustom').style.display = 'none';
+          document.getElementById('utmCampaign').value = '';
+          document.getElementById('utmTerm').value = '';
+          document.getElementById('utmContent').value = '';
+          document.getElementById('output').style.display = 'none';
+        }
+      </script>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Herramientas</p>
+    </footer>
+  </div>
+</body>
+</html>

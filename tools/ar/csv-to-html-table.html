@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV إلى جدول HTML - 205 Tools</title>
+  <meta name="description" content="تحويل بيانات CSV إلى كود جدول HTML.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .output-box { background: var(--bg-secondary); padding: 15px; border-radius: 8px; font-family: monospace; font-size: 13px; overflow-x: auto; white-space: pre-wrap; }
+    .preview-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    .preview-table th, .preview-table td { border: 1px solid var(--border-color); padding: 10px; text-align: right; }
+    .preview-table th { background: var(--bg-secondary); }
+    .preview-table tr:nth-child(even) { background: var(--bg-secondary); }
+    .options { display: flex; gap: 20px; margin: 15px 0; flex-wrap: wrap; }
+    .options label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← الرئيسية</a>
+    
+    <header>
+      <h1>📊 CSV إلى جدول HTML</h1>
+      <p>تحويل بيانات CSV إلى كود جدول HTML</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>المحول</h2>
+        <div class="lang-selector">
+          <a href="../en/csv-to-html-table.html" class="lang-btn">EN</a>
+          <a href="../es/csv-to-html-table.html" class="lang-btn">ES</a>
+          <a href="../fr/csv-to-html-table.html" class="lang-btn">FR</a>
+          <a href="../de/csv-to-html-table.html" class="lang-btn">DE</a>
+          <a href="./csv-to-html-table.html" class="lang-btn active">AR</a>
+        </div>
+      </div>
+      
+      <div class="options">
+        <label><input type="checkbox" id="hasHeaders" checked> الصف الأول يحتوي على عناوين</label>
+        <label><input type="checkbox" id="addClasses"> إضافة فئات CSS</label>
+        <label><input type="checkbox" id="useThead" checked> استخدام thead/tbody</label>
+      </div>
+      
+      <div class="form-group">
+        <label>بيانات CSV</label>
+        <textarea id="csvInput" rows="8" placeholder="الاسم,العمر,المدينة&#10;أحمد,30,الرياض&#10;فاطمة,25,جدة"></textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="convertToHTML()">🔄 تحويل</button>
+        <button class="btn btn-secondary" onclick="loadExample()">مثال</button>
+        <button class="btn btn-success" onclick="copyOutput()">📋 نسخ</button>
+        <button class="btn btn-secondary" onclick="clearAll()">مسح</button>
+      </div>
+      
+      <div id="previewSection" style="margin-top: 20px; display: none;">
+        <label>معاينة</label>
+        <div id="tablePreview"></div>
+      </div>
+      
+      <div id="outputSection" style="margin-top: 20px; display: none;">
+        <label>مخرجات HTML</label>
+        <pre id="htmlOutput" class="output-box"></pre>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - أدوات مجانية</p></footer>
+  </div>
+  
+  <script>
+    function convertToHTML() {
+      const csv = document.getElementById('csvInput').value.trim();
+      if (!csv) { alert('الرجاء إدخال بيانات CSV'); return; }
+      
+      const hasHeaders = document.getElementById('hasHeaders').checked;
+      const addClasses = document.getElementById('addClasses').checked;
+      const useThead = document.getElementById('useThead').checked;
+      
+      const delimiter = csv.includes('\t') ? '\t' : ',';
+      const lines = csv.split('\n').filter(l => l.trim());
+      
+      if (lines.length === 0) { alert('لم يتم العثور على بيانات'); return; }
+      
+      const rows = lines.map(l => parseLine(l, delimiter));
+      
+      let html = addClasses ? '<table class="data-table"\u003e\n' : '<table\u003e\n';
+      
+      rows.forEach((row, idx) => {
+        const isHeader = idx === 0 && hasHeaders;
+        const cellTag = isHeader ? 'th' : 'td';
+        const cellClass = addClasses ? ` class="${isHeader ? 'header' : 'cell'}"` : '';
+        
+        if (idx === 0 && useThead && hasHeaders) {
+          html += '  <thead\u003e\n';
+        } else if (idx === (hasHeaders ? 1 : 0) && useThead) {
+          html += '  <tbody\u003e\n';
+        }
+        
+        html += '    <tr\u003e';
+        row.forEach(cell => {
+          const escaped = escapeHtml(cell);
+          html += `<${cellTag}${cellClass}>${escaped}</${cellTag}>`;
+        });
+        html += '</tr\u003e\n';
+        
+        if (idx === 0 && useThead && hasHeaders) {
+          html += '  </thead\u003e\n';
+        }
+      });
+      
+      if (useThead && rows.length > (hasHeaders ? 1 : 0)) {
+        html += '  </tbody\u003e\n';
+      }
+      
+      html += '</table>';
+      
+      document.getElementById('htmlOutput').textContent = html;
+      document.getElementById('tablePreview').innerHTML = html;
+      document.getElementById('previewSection').style.display = 'block';
+      document.getElementById('outputSection').style.display = 'block';
+    }
+    
+    function parseLine(line, delimiter) {
+      const values = [];
+      let current = '';
+      let inQuotes = false;
+      
+      for (let char of line) {
+        if (char === '"') { inQuotes = !inQuotes; }
+        else if (char === delimiter && !inQuotes) { values.push(current.trim()); current = ''; }
+        else { current += char; }
+      }
+      values.push(current.trim());
+      return values;
+    }
+    
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+    
+    function loadExample() {
+      document.getElementById('csvInput').value = `المنتج,السعر,المخزون,الفئة
+لابتوب,999.99,15,إلكترونيات
+فأرة,29.99,150,ملحقات
+لوحة مفاتيح,79.99,80,ملحقات
+شاشة,349.99,45,إلكترونيات`;
+      convertToHTML();
+    }
+    
+    function copyOutput() {
+      const text = document.getElementById('htmlOutput').textContent;
+      navigator.clipboard.writeText(text);
+      alert('تم النسخ!');
+    }
+    
+    function clearAll() {
+      document.getElementById('csvInput').value = '';
+      document.getElementById('previewSection').style.display = 'none';
+      document.getElementById('outputSection').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

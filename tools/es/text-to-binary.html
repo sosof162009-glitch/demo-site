@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertidor de Texto a Binario | 205 Herramientas</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="../en/text-to-binary.html">English</option>
+      <option value="../ar/text-to-binary.html">العربية</option>
+      <option value="../fr/text-to-binary.html">Français</option>
+      <option value="text-to-binary.html" selected>Español</option>
+      <option value="../de/text-to-binary.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Convertidor de Texto a Binario</h1>
+      <p>Convierte texto a código binario y viceversa</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="options-group">
+        <div class="option-item">
+          <input type="radio" name="mode" id="to-binary" value="to-binary" checked onchange="switchMode()">
+          <label for="to-binary">Texto → Binario</label>
+        </div>
+        <div class="option-item">
+          <input type="radio" name="mode" id="to-text" value="to-text" onchange="switchMode()">
+          <label for="to-text">Binario → Texto</label>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="text-input" id="input-label">Texto:</label>
+        <textarea id="text-input" class="tool-textarea" placeholder="Ingresa el texto para convertir..."></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="convert()">Convertir</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Limpiar</button>
+      </div>
+
+      <div class="input-group" style="margin-top: 20px;">
+        <label for="text-output">Resultado:</label>
+        <textarea id="text-output" class="tool-textarea" placeholder="El resultado aparecerá aquí..." readonly></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="copyResult()">Copiar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span>¡Copiado!</span>
+  </div>
+
+  <script>
+    function switchMode() {
+      const mode = document.querySelector('input[name="mode"]:checked').value;
+      document.getElementById('input-label').textContent = mode === 'to-binary' ? 'Texto:' : 'Binario:';
+      document.getElementById('text-input').placeholder = mode === 'to-binary' ? 'Ingresa el texto para convertir...' : 'Ingresa el código binario (bytes separados por espacios)...';
+    }
+
+    function convert() {
+      const input = document.getElementById('text-input').value;
+      const mode = document.querySelector('input[name="mode"]:checked').value;
+      
+      if (!input) {
+        document.getElementById('text-output').value = '';
+        return;
+      }
+      
+      let result;
+      if (mode === 'to-binary') {
+        result = input.split('').map(char => {
+          return char.charCodeAt(0).toString(2).padStart(8, '0');
+        }).join(' ');
+      } else {
+        const bytes = input.trim().split(/\s+/);
+        result = bytes.map(byte => {
+          const code = parseInt(byte, 2);
+          return String.fromCharCode(code);
+        }).join('');
+      }
+      
+      document.getElementById('text-output').value = result;
+    }
+
+    function copyResult() {
+      const output = document.getElementById('text-output');
+      if (!output.value) {
+        alert('No hay nada para copiar. Convierte primero.');
+        return;
+      }
+      output.select();
+      document.execCommand('copy');
+      showToast();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function clearAll() {
+      document.getElementById('text-input').value = '';
+      document.getElementById('text-output').value = '';
+    }
+  </script>
+</body>
+</html>

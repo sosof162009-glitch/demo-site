@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Shadow Generator - 205 Tools</title>
+  <meta name="description" content="Generate beautiful CSS text shadows with live preview.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .preview-text {
+      font-size: 48px;
+      font-weight: 700;
+      text-align: center;
+      margin: 40px 0;
+      color: #333;
+      transition: all 0.3s ease;
+      padding: 20px;
+    }
+    .controls {
+      display: grid;
+      gap: 20px;
+    }
+    .control-group {
+      background: var(--bg-secondary);
+      padding: 15px;
+      border-radius: 12px;
+    }
+    .control-group label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .control-group input[type="range"] {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      outline: none;
+      -webkit-appearance: none;
+      background: var(--border);
+    }
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      background: var(--accent);
+      border: 2px solid white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .control-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    .color-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .color-control input[type="color"] {
+      width: 50px;
+      height: 40px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .result-box {
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .code-output {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .text-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>📝 Text Shadow Generator</h1>
+      <p>Generate beautiful CSS text shadows with live preview</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Generator</h2>
+        <div class="lang-selector">
+          <a href="./text-shadow-generator.html" class="lang-btn active">EN</a>
+          <a href="../es/text-shadow-generator.html" class="lang-btn">ES</a>
+          <a href="../fr/text-shadow-generator.html" class="lang-btn">FR</a>
+          <a href="../de/text-shadow-generator.html" class="lang-btn">DE</a>
+          <a href="../ar/text-shadow-generator.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <input type="text" id="previewTextInput" class="text-input" value="Text Shadow" placeholder="Enter text...">
+      
+      <div id="previewText" class="preview-text">
+        Text Shadow
+      </div>
+      
+      <div class="controls">
+        <div class="control-row">
+          <div class="control-group">
+            <label>Horizontal Offset <span id="hOffsetVal">2px</span></label>
+            <input type="range" id="hOffset" min="-20" max="20" value="2">
+          </div>
+          <div class="control-group">
+            <label>Vertical Offset <span id="vOffsetVal">2px</span></label>
+            <input type="range" id="vOffset" min="-20" max="20" value="2">
+          </div>
+        </div>
+        
+        <div class="control-row">
+          <div class="control-group">
+            <label>Blur Radius <span id="blurVal">4px</span></label>
+            <input type="range" id="blur" min="0" max="50" value="4">
+          </div>
+          <div class="control-group">
+            <label>Text Color</label>
+            <div class="color-control">
+              <input type="color" id="textColor" value="#333333">
+              <span>Text Color</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <label>Shadow Color & Opacity</label>
+          <div class="color-control">
+            <input type="color" id="shadowColor" value="#000000">
+            <input type="range" id="opacity" min="0" max="100" value="50" style="flex: 1;">
+            <span id="opacityVal">50%</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="result-box">
+        <label>CSS Code</label>
+        <pre class="code-output" id="codeOutput">text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+color: #333333;</pre>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="copyCSS()">📋 Copy CSS</button>
+        <button class="btn btn-secondary" onclick="resetDefaults()">🔄 Reset</button>
+        <button class="btn btn-success" onclick="randomShadow()">🎲 Random</button>
+      </div>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Free Online Tools</p>
+    </footer>
+  </div>
+  
+  <script>
+    const hOffset = document.getElementById('hOffset');
+    const vOffset = document.getElementById('vOffset');
+    const blur = document.getElementById('blur');
+    const shadowColor = document.getElementById('shadowColor');
+    const textColor = document.getElementById('textColor');
+    const opacity = document.getElementById('opacity');
+    const previewTextInput = document.getElementById('previewTextInput');
+    const previewText = document.getElementById('previewText');
+    const codeOutput = document.getElementById('codeOutput');
+    
+    function updateShadow() {
+      const h = hOffset.value + 'px';
+      const v = vOffset.value + 'px';
+      const b = blur.value + 'px';
+      const color = shadowColor.value;
+      const alpha = opacity.value / 100;
+      const txtColor = textColor.value;
+      
+      // Convert hex to rgba
+      const r = parseInt(color.slice(1, 3), 16);
+      const g = parseInt(color.slice(3, 5), 16);
+      const bVal = parseInt(color.slice(5, 7), 16);
+      
+      const shadowValue = `${h} ${v} ${b} rgba(${r}, ${g}, ${bVal}, ${alpha})`;
+      
+      previewText.style.textShadow = shadowValue;
+      previewText.style.color = txtColor;
+      previewText.textContent = previewTextInput.value || 'Text Shadow';
+      
+      codeOutput.textContent = `text-shadow: ${shadowValue};\ncolor: ${txtColor};`;
+      
+      // Update value displays
+      document.getElementById('hOffsetVal').textContent = h;
+      document.getElementById('vOffsetVal').textContent = v;
+      document.getElementById('blurVal').textContent = b;
+      document.getElementById('opacityVal').textContent = opacity.value + '%';
+    }
+    
+    function copyCSS() {
+      navigator.clipboard.writeText(codeOutput.textContent).then(() => {
+        alert('CSS copied to clipboard!');
+      });
+    }
+    
+    function resetDefaults() {
+      hOffset.value = 2;
+      vOffset.value = 2;
+      blur.value = 4;
+      shadowColor.value = '#000000';
+      textColor.value = '#333333';
+      opacity.value = 50;
+      previewTextInput.value = 'Text Shadow';
+      updateShadow();
+    }
+    
+    function randomShadow() {
+      hOffset.value = Math.floor(Math.random() * 10) - 5;
+      vOffset.value = Math.floor(Math.random() * 10) - 5;
+      blur.value = Math.floor(Math.random() * 20) + 2;
+      opacity.value = Math.floor(Math.random() * 60) + 30;
+      const randomColor = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+      shadowColor.value = '#' + randomColor;
+      updateShadow();
+    }
+    
+    // Event listeners
+    [hOffset, vOffset, blur, shadowColor, textColor, opacity, previewTextInput].forEach(el => {
+      el.addEventListener('input', updateShadow);
+    });
+    
+    // Initialize
+    updateShadow();
+  </script>
+</body>
+</html>

@@ -3,60 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sha512-generator - 205 Tools</title>
-  <meta name="description" content="">
+  <title>Générateur SHA512 - 205 Tools</title>
+  <meta name="description" content="Générer le hash SHA512 d'un texte.">
   <link rel="stylesheet" href="../assets/tools.css">
-  <script src="../assets/tools.js" defer></script>
+  <style>
+    .hash-output { background: var(--bg-secondary); padding: 20px; border-radius: 12px; font-family: 'Fira Code', monospace; font-size: 14px; word-break: break-all; text-align: center; margin: 20px 0; color: var(--primary); }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Accueil</a>
     
     <header>
-      <h1>#️⃣ sha512-generator</h1>
-      <p></p>
+      <h1>🔐 Générateur SHA512</h1>
+      <p>Générer le hash SHA512 d'un texte</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Générateur</h2>
         <div class="lang-selector">
-          <a href="../en/sha512-generator.html" class="lang-btn ">EN</a><a href="../es/sha512-generator.html" class="lang-btn ">ES</a><a href="../fr/sha512-generator.html" class="lang-btn active">FR</a><a href="../de/sha512-generator.html" class="lang-btn ">DE</a><a href="../ar/sha512-generator.html" class="lang-btn ">AR</a>
+          <a href="../en/sha512-generator.html" class="lang-btn">EN</a>
+          <a href="../es/sha512-generator.html" class="lang-btn">ES</a>
+          <a href="./sha512-generator.html" class="lang-btn active">FR</a>
+          <a href="../de/sha512-generator.html" class="lang-btn">DE</a>
+          <a href="../ar/sha512-generator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Texte</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Entrer le Texte</label>
+        <textarea id="inputText" rows="6" placeholder="Tapez ou collez du texte...">Bonjour le monde</textarea>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convertir</button>
-        <button class="btn btn-secondary" onclick="resetText()">Réinitialiser</button>
+        <button class="btn btn-primary" onclick="generateSHA512()">Générer SHA512</button>
+        <button class="btn btn-success" onclick="copyHash()">📋 Copier</button>
+        <button class="btn btn-secondary" onclick="clearText()">Effacer</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Résultat</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
-      </div>
-      <button class="btn btn-success" data-success="Copié!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copier</button>
+      
+      <div class="hash-output" id="hashOutput"></div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Outils</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Outils Gratuits</p></footer>
   </div>
   
   <script>
+    async function generateSHA512() {
+      const text = document.getElementById('inputText').value;
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-512', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      document.getElementById('hashOutput').textContent = hashHex;
+    }
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function copyHash() {
+      const hash = document.getElementById('hashOutput').textContent;
+      if (hash) {
+        navigator.clipboard.writeText(hash);
+        alert('Hash copié!');
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    }
     
+    function clearText() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('hashOutput').textContent = '';
+    }
+    
+    generateSHA512();
   </script>
 </body>
 </html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JPG a PDF | 205 Tools</title>
+  <meta name="description" content="Convertir imágenes JPG a documentos PDF">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <style>
+    .tool-category-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+    .badge-image { background: rgba(79, 142, 247, 0.1); color: #4f8ef7; }
+    .badge-pdf { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+    .image-preview { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-top: 16px; }
+    .image-item { border: 1px solid var(--border); border-radius: 8px; padding: 8px; text-align: center; }
+    .image-item img { max-width: 100%; max-height: 100px; border-radius: 4px; }
+    .image-item span { display: block; margin-top: 4px; font-size: 11px; color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="./" class="logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </div><span>205 Tools</span>
+      </a>
+      <nav class="header-nav"><a href="./">Inicio</a><a href="./#image-tools">Herramientas de imagen</a><a href="./#pdf-tools">Herramientas PDF</a></nav>
+      <div class="language-selector">
+        <button class="lang-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg><span>ES</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-dropdown"><a href="../en/jpg-to-pdf.html" class="lang-option">EN</a><a href="../fr/jpg-to-pdf.html" class="lang-option">FR</a><a href="../de/jpg-to-pdf.html" class="lang-option">DE</a></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="tool-container">
+    <div class="tool-header">
+      <span class="tool-category-badge badge-image">Herramientas de imagen</span>
+      <h1>JPG a PDF</h1>
+      <p>Convertir imágenes JPG a documentos PDF</p>
+    </div>
+    
+    <div class="tool-card">
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        <h3>Subir imágenes JPG</h3><p>Arrastra y suelta tus imágenes aquí, o haz clic para explorar</p>
+        <input type="file" id="fileInput" accept="image/jpeg,image/jpg" multiple>
+      </div>
+      <div class="file-preview" id="filePreview"></div>
+      <div class="image-preview" id="imagePreview"></div>
+    </div>
+    
+    <div class="tool-card" id="settingsCard" style="display:none;">
+      <div class="btn-group">
+        <button class="btn btn-primary" id="convertBtn">Convertir a PDF</button>
+        <button class="btn btn-secondary" id="resetBtn">Reiniciar</button>
+      </div>
+    </div>
+    
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">0%</div>
+    </div>
+    
+    <div class="results-container" id="resultsContainer"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section"><h3>205 Tools</h3><p>205 Tools es tu caja de herramientas online todo en uno.</p></div>
+      <div class="footer-section"><h3>Herramientas populares</h3>
+        <ul class="footer-links"><li><a href="./jpg-to-pdf.html">JPG a PDF</a></li><li><a href="./pdf-merge.html">Combinar PDF</a></li><li><a href="./pdf-compress.html">Comprimir PDF</a></li></ul>
+      </div>
+      <div class="footer-section"><h3>Contacto</h3><ul class="footer-links"><li><a href="#">Política de privacidad</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 205 Tools. Todos los derechos reservados.</p></div>
+  </footer>
+
+  <script src="../assets/js/tools.js"></script>
+  <script>
+    const { PDFDocument } = PDFLib;
+    const fileInput = document.getElementById('fileInput'), uploadArea = document.getElementById('uploadArea');
+    const filePreview = document.getElementById('filePreview'), settingsCard = document.getElementById('settingsCard');
+    const convertBtn = document.getElementById('convertBtn'), resetBtn = document.getElementById('resetBtn');
+    const progressContainer = document.getElementById('progressContainer'), progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText'), resultsContainer = document.getElementById('resultsContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    let currentFiles = [];
+    
+    uploadArea.addEventListener('click', () => fileInput.click());
+    uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+    uploadArea.addEventListener('drop', (e) => { e.preventDefault(); uploadArea.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); });
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFiles(fileInput.files); });
+    
+    function handleFiles(files) {
+      currentFiles = Array.from(files).filter(f => f.type === 'image/jpeg' || f.type === 'image/jpg');
+      if (currentFiles.length === 0) { Tools.notify('Por favor selecciona archivos JPG válidos', 'error'); return; }
+      updatePreview(); settingsCard.style.display = 'block';
+    }
+    
+    function updatePreview() {
+      filePreview.innerHTML = currentFiles.map((file, i) => `
+        <div class="preview-item"><div class="preview-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f8ef7" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+          <div class="preview-info"><div class="preview-name">${file.name}</div><div class="preview-size">${Tools.formatFileSize(file.size)}</div></div>
+          <button class="preview-remove" onclick="removeFile(${i})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>`).join('');
+      filePreview.classList.add('show');
+      imagePreview.innerHTML = currentFiles.map(file => `<div class="image-item"><img src="${URL.createObjectURL(file)}" alt="${file.name}"><span>${file.name}</span></div>`).join('');
+    }
+    
+    window.removeFile = function(index) { currentFiles.splice(index, 1); if (currentFiles.length) updatePreview(); else resetAll(); };
+    
+    convertBtn.addEventListener('click', async () => {
+      if (currentFiles.length === 0) return; convertBtn.disabled = true; progressContainer.classList.add('show'); progressFill.style.width = '20%';
+      try {
+        const pdfDoc = await PDFDocument.create();
+        for (let i = 0; i < currentFiles.length; i++) {
+          progressFill.style.width = (20 + (i / currentFiles.length) * 60) + '%';
+          const arrayBuffer = await currentFiles[i].arrayBuffer();
+          const image = await pdfDoc.embedJpg(arrayBuffer);
+          const page = pdfDoc.addPage([image.width, image.height]);
+          page.drawImage(image, { x: 0, y: 0, width: image.width, height: image.height });
+        }
+        progressFill.style.width = '90%';
+        const pdfBytes = await pdfDoc.save(); progressFill.style.width = '100%';
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        resultsContainer.innerHTML = `
+          <div class="alert alert-success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>¡${currentFiles.length} imagen(es) convertida(s) a PDF exitosamente!</span></div>
+          <div class="btn-group" style="margin-top:16px;"><button class="btn btn-primary" onclick="downloadPdf()">Descargar PDF</button></div>`;
+        resultsContainer.classList.add('show');
+        window.downloadPdf = () => Tools.downloadFile(blob, 'imagenes.pdf');
+      } catch (error) { Tools.notify('Error al convertir: ' + error.message, 'error'); }
+      finally { convertBtn.disabled = false; progressContainer.classList.remove('show'); }
+    });
+    
+    function resetAll() { currentFiles = []; filePreview.classList.remove('show'); filePreview.innerHTML = ''; imagePreview.innerHTML = ''; settingsCard.style.display = 'none'; resultsContainer.innerHTML = ''; resultsContainer.classList.remove('show'); fileInput.value = ''; }
+    resetBtn.addEventListener('click', resetAll);
+  </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard-Generator - 205 Tools</title>
+  <meta name="description" content="vCard-Kontaktdaten für einfaches Teilen generieren.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .output-box { background: var(--bg-secondary); padding: 15px; border-radius: 8px; font-family: monospace; font-size: 13px; overflow-x: auto; white-space: pre-wrap; }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+    .qr-preview { text-align: center; padding: 20px; }
+    #qrcode { display: inline-block; padding: 10px; background: white; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Startseite</a>
+    <header><h1>👤 vCard-Generator</h1><p>vCard-Kontaktdaten und QR-Codes generieren</p></header>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Generator</h2>
+        <div class="lang-selector">
+          <a href="../en/vcard-generator.html" class="lang-btn">EN</a>
+          <a href="../es/vcard-generator.html" class="lang-btn">ES</a>
+          <a href="../fr/vcard-generator.html" class="lang-btn">FR</a>
+          <a href="./vcard-generator.html" class="lang-btn active">DE</a>
+          <a href="../ar/vcard-generator.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Vorname</label><input type="text" id="firstName" placeholder="Hans"></div>
+        <div class="form-group"><label>Nachname</label><input type="text" id="lastName" placeholder="Schmidt"></div>
+        <div class="form-group"><label>Telefon</label><input type="tel" id="phone" placeholder="+49 123 456789"></div>
+        <div class="form-group"><label>E-Mail</label><input type="email" id="email" placeholder="hans@beispiel.de"></div>
+        <div class="form-group"><label>Unternehmen</label><input type="text" id="org" placeholder="Firma GmbH"></div>
+        <div class="form-group"><label>Position</label><input type="text" id="title" placeholder="Manager"></div>
+        <div class="form-group"><label>Webseite</label><input type="url" id="url" placeholder="https://beispiel.de"></div>
+        <div class="form-group"><label>Adresse</label><input type="text" id="address" placeholder="Hauptstraße 123, Berlin"></div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateVCard()">🔄 Generieren</button>
+        <button class="btn btn-secondary" onclick="loadExample()">Beispiel</button>
+        <button class="btn btn-success" onclick="copyVCard()">📋 Kopieren</button>
+        <button class="btn btn-secondary" onclick="downloadVCard()">💾 Herunterladen</button>
+      </div>
+      <div id="outputSection" style="margin-top: 20px; display: none;">
+        <div class="qr-preview"><label>QR-Code</label><div id="qrcode"></div></div>
+        <label style="margin-top: 20px; display: block;">vCard-Ausgabe</label>
+        <pre id="vcardOutput" class="output-box"></pre>
+      </div>
+    </div>
+    <footer><p>205 Tools © 2025 - Kostenlose Online-Tools</p></footer>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    let currentVCard = '';
+    function generateVCard() {
+      const fn = document.getElementById('firstName').value.trim();
+      const ln = document.getElementById('lastName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const org = document.getElementById('org').value.trim();
+      const title = document.getElementById('title').value.trim();
+      const url = document.getElementById('url').value.trim();
+      const address = document.getElementById('address').value.trim();
+      if (!fn && !ln) { alert('Bitte geben Sie mindestens einen Namen ein'); return; }
+      let vcard = 'BEGIN:VCARD\nVERSION:3.0\n';
+      vcard += 'N:' + ln + ';' + fn + ';;;\n';
+      vcard += 'FN:' + fn + ' ' + ln + '\n';
+      if (phone) vcard += 'TEL;TYPE=CELL:' + phone + '\n';
+      if (email) vcard += 'EMAIL;TYPE=WORK:' + email + '\n';
+      if (org) vcard += 'ORG:' + org + '\n';
+      if (title) vcard += 'TITLE:' + title + '\n';
+      if (url) vcard += 'URL:' + url + '\n';
+      if (address) vcard += 'ADR;TYPE=WORK:;;' + address + ';;;;\n';
+      vcard += 'END:VCARD';
+      currentVCard = vcard;
+      document.getElementById('vcardOutput').textContent = vcard;
+      document.getElementById('qrcode').innerHTML = '';
+      new QRCode(document.getElementById('qrcode'), { text: vcard, width: 200, height: 200 });
+      document.getElementById('outputSection').style.display = 'block';
+    }
+    function loadExample() {
+      document.getElementById('firstName').value = 'Hans';
+      document.getElementById('lastName').value = 'Schmidt';
+      document.getElementById('phone').value = '+49 555 123 456';
+      document.getElementById('email').value = 'hans.schmidt@beispiel.de';
+      document.getElementById('org').value = 'Beispiel GmbH';
+      document.getElementById('title').value = 'Senior Manager';
+      document.getElementById('url').value = 'https://beispiel.de';
+      document.getElementById('address').value = 'Hauptstraße 123, Berlin, 10115';
+      generateVCard();
+    }
+    function copyVCard() { navigator.clipboard.writeText(currentVCard); alert('Kopiert!'); }
+    function downloadVCard() {
+      const fn = document.getElementById('firstName').value || 'kontakt';
+      const ln = document.getElementById('lastName').value || '';
+      const blob = new Blob([currentVCard], { type: 'text/vcard' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fn + '_' + ln + '.vcf';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morse Code Translator - 205 Tools</title>
+  <meta name="description" content="Translate text to and from Morse code.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>📡 Morse Code Translator</h1>
+      <p>Convert text to Morse code and vice versa</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Text ↔ Morse Code</h2>
+        <div class="lang-selector">
+          <a href="./morse-code-translator.html" class="lang-btn active">EN</a>
+          <a href="../es/morse-code-translator.html" class="lang-btn">ES</a>
+          <a href="../fr/morse-code-translator.html" class="lang-btn">FR</a>
+          <a href="../de/morse-code-translator.html" class="lang-btn">DE</a>
+          <a href="../ar/morse-code-translator.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Text</label>
+        <textarea id="textInput" rows="4" placeholder="Enter text to convert to Morse..."></textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="textToMorse()">To Morse</button>
+        <button class="btn btn-primary" onclick="morseToText()">To Text</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Morse Code</label>
+        <textarea id="morseOutput" rows="4" readonly placeholder="Morse code will appear here..."></textarea>
+      </div>
+      
+      <button class="btn btn-primary" onclick="copyResult()">Copy</button>
+      <button class="btn btn-primary" onclick="playMorse()" id="playBtn">🔊 Play</button>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    const morseCode = {
+      'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+      'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+      'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+      'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+      'Y': '-.--', 'Z': '--..', '0': '-----', '1': '.----', '2': '..---',
+      '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...',
+      '8': '---..', '9': '----.', '.': '.-.-.-', ',': '--..--', '?': '..--..',
+      "'": '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.', ')': '-.--.-',
+      '&': '.-...', ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.',
+      '-': '-....-', '_': '..--.-', '"': '.-..-.', '$': '...-..-', '@': '.--.-.',
+      ' ': '/'
+    };
+    
+    const reverseMorse = Object.fromEntries(Object.entries(morseCode).map(([k, v]) => [v, k]));
+    
+    function textToMorse() {
+      const text = document.getElementById('textInput').value.toUpperCase();
+      const result = text.split('').map(c => morseCode[c] || c).join(' ');
+      document.getElementById('morseOutput').value = result;
+    }
+    
+    function morseToText() {
+      const morse = document.getElementById('textInput').value.trim();
+      const result = morse.split(' ').map(c => reverseMorse[c] || c).join('');
+      document.getElementById('morseOutput').value = result;
+    }
+    
+    function clearAll() {
+      document.getElementById('textInput').value = '';
+      document.getElementById('morseOutput').value = '';
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('morseOutput');
+      output.select();
+      document.execCommand('copy');
+      alert('Copied to clipboard!');
+    }
+    
+    function playMorse() {
+      const morse = document.getElementById('morseOutput').value;
+      if (!morse || !window.AudioContext) return;
+      
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const dotDuration = 0.1;
+      let time = ctx.currentTime;
+      
+      for (const char of morse) {
+        if (char === '.') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.value = 600;
+          osc.start(time);
+          osc.stop(time + dotDuration);
+          time += dotDuration * 2;
+        } else if (char === '-') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.value = 600;
+          osc.start(time);
+          osc.stop(time + dotDuration * 3);
+          time += dotDuration * 4;
+        } else if (char === ' ') {
+          time += dotDuration * 2;
+        } else if (char === '/') {
+          time += dotDuration * 4;
+        }
+      }
+    }
+  </script>
+</body>
+</html>

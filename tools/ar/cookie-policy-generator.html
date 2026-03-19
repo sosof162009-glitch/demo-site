@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مولد سياسة الكوكيز - 205 Tools</title>
+  <meta name="description" content="إنشاء سياسة كوكيز لموقعك.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script src="../assets/tools.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← الرئيسية</a>
+    
+    <header>
+      <h1>🍪 مولد سياسة الكوكيز</h1>
+      <p>إنشاء سياسة كوكيز لموقعك.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Details</h2>
+        <div class="lang-selector">
+          <a href="../en/cookie-policy-generator.html" class="lang-btn ">EN</a><a href="../es/cookie-policy-generator.html" class="lang-btn ">ES</a><a href="../fr/cookie-policy-generator.html" class="lang-btn ">FR</a><a href="../de/cookie-policy-generator.html" class="lang-btn ">DE</a><a href="../ar/cookie-policy-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Company/Website Name</label>
+        <input type="text" id="companyName" placeholder="Your Company Name">
+      </div>
+      <div class="form-group">
+        <label>Website URL</label>
+        <input type="text" id="websiteUrl" placeholder="https://example.com">
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox" id="analyticsCookies" checked> Uses Analytics Cookies</label>
+        <label><input type="checkbox" id="marketingCookies"> Uses Marketing Cookies</label>
+        <label><input type="checkbox" id="thirdPartyCookies"> Uses Third-Party Cookies</label>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateCookiePolicy()">إنشاء</button>
+      </div>
+      <div class="result-box" style="margin-top: 20px;">
+        <textarea id="cookieResult" style="width: 100%; height: 400px; font-family: inherit;" readonly></textarea>
+      </div>
+      <div class="btn-group" style="margin-top: 15px;">
+        <button class="btn btn-success" onclick="copyToClipboard(document.getElementById('cookieResult').value)">نسخ</button>
+        <button class="btn btn-secondary" onclick="downloadCookiePolicy()">Download</button>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function generateCookiePolicy() {
+      const company = document.getElementById('companyName').value || 'Your Company';
+      const url = document.getElementById('websiteUrl').value || 'https://example.com';
+      const analytics = document.getElementById('analyticsCookies').checked;
+      const marketing = document.getElementById('marketingCookies').checked;
+      const thirdParty = document.getElementById('thirdPartyCookies').checked;
+      const date = new Date().toLocaleDateString();
+      
+      let cookieTypes = 'We use the following types of cookies:\n\n';
+      cookieTypes += '**Necessary Cookies**: Essential for the website to function properly.\n';
+      if (analytics) cookieTypes += '**Analytics Cookies**: Help us understand how visitors interact with our website.\n';
+      if (marketing) cookieTypes += '**Marketing Cookies**: Used to deliver relevant advertisements.\n';
+      if (thirdParty) cookieTypes += '**Third-Party Cookies**: Set by external services we use.\n';
+      
+      const policy = `COOKIE POLICY
+
+Last updated: ${date}
+
+1. WHAT ARE COOKIES
+Cookies are small text files stored on your device when you visit a website. They help us provide you with a better experience.
+
+2. HOW WE USE COOKIES
+${company} uses cookies to:
+- Ensure website functionality
+- Remember your preferences
+- Analyze website traffic
+- Improve our services
+
+3. TYPES OF COOKIES WE USE
+${cookieTypes}
+
+4. MANAGING COOKIES
+You can control and manage cookies through your browser settings. Please note that disabling certain cookies may affect website functionality.
+
+5. COOKIES WE USE
+- Session cookies: Temporary cookies that expire when you close your browser
+- Persistent cookies: Remain on your device for a specified period
+- First-party cookies: Set by ${url}
+${thirdParty ? '- Third-party cookies: Set by our partners and service providers' : ''}
+
+6. CHANGES TO THIS POLICY
+We may update this Cookie Policy from time to time. Please review it periodically.
+
+7. CONTACT US
+For any questions about our Cookie Policy, please visit ${url}
+`;
+      
+      document.getElementById('cookieResult').value = policy;
+    }
+    
+    function downloadCookiePolicy() {
+      const policy = document.getElementById('cookieResult').value;
+      if (!policy) return;
+      const blob = new Blob([policy], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'cookie-policy.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

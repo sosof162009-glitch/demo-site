@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>http-status-checker - 205 Tools</title>
-  <meta name="description" content="">
+  <title>HTTP-Status-Checker - 205 Tools</title>
+  <meta name="description" content="Überprüft HTTP-Statuscodes von URLs.">
   <link rel="stylesheet" href="../assets/tools.css">
   <script src="../assets/tools.js" defer></script>
 </head>
@@ -13,50 +13,114 @@
     <a href="/" class="back-link">← Startseite</a>
     
     <header>
-      <h1>✓ http-status-checker</h1>
-      <p></p>
+      <h1>🔍 HTTP-Status-Checker</h1>
+      <p>Überprüfe HTTP-Statuscodes von URLs und verstehe ihre Bedeutung.</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Optionen</h2>
+        <h2>Status prüfen</h2>
         <div class="lang-selector">
           <a href="../en/http-status-checker.html" class="lang-btn ">EN</a><a href="../es/http-status-checker.html" class="lang-btn ">ES</a><a href="../fr/http-status-checker.html" class="lang-btn ">FR</a><a href="../de/http-status-checker.html" class="lang-btn active">DE</a><a href="../ar/http-status-checker.html" class="lang-btn ">AR</a>
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>URL prüfen</label>
+        <input type="url" id="checkUrl" placeholder="https://beispiel.com">
+        <small>Hinweis: Aufgrund von Browser-Sicherheitsbeschränkungen (CORS) kann diese Seite Statuscodes nur für URLs anzeigen, die CORS-Header zulassen. Für eine vollständige Prüfung verwenden Sie bitte Server-Tools oder cURL.</small>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Umrechnen</button>
-        <button class="btn btn-secondary" onclick="resetText()">Zurücksetzen</button>
+        <button class="btn btn-primary" onclick="checkStatus()">Status prüfen</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Zurücksetzen</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Ergebnis</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="result" style="display:none; margin-top:20px; padding:15px; border-radius:8px;">
+        <h3>Ergebnis</h3>
+        <div id="statusInfo"></div>
       </div>
-      <button class="btn btn-success" data-success="Kopiert!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Kopieren</button>
+      
+      <div class="info-box" style="margin-top:30px; padding:15px; background:#f8f9fa; border-radius:8px;">
+        <h3 style="margin-top:0;">Häufige HTTP-Statuscodes</h3>
+        <table style="width:100%; border-collapse:collapse; margin-top:10px;">
+          <thead>
+            <tr style="background:#e9ecef;">
+              <th style="padding:10px; text-align:left; border-bottom:2px solid #dee2e6;">Code</th>
+              <th style="padding:10px; text-align:left; border-bottom:2px solid #dee2e6;">Bedeutung</th>
+              <th style="padding:10px; text-align:left; border-bottom:2px solid #dee2e6;">Beschreibung</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>200</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">OK</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Anfrage erfolgreich</td></tr>
+            <tr style="background:#f8f9fa;"><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>301</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Moved Permanently</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Permanente Weiterleitung</td></tr>
+            <tr><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>302</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Found</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Temporäre Weiterleitung</td></tr>
+            <tr style="background:#f8f9fa;"><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>400</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Bad Request</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Ungültige Anfrage</td></tr>
+            <tr><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>401</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Unauthorized</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Nicht autorisiert</td></tr>
+            <tr style="background:#f8f9fa;"><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>403</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Forbidden</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Zugriff verweigert</td></tr>
+            <tr><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>404</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Not Found</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Seite nicht gefunden</td></tr>
+            <tr style="background:#f8f9fa;"><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>500</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Internal Server Error</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Serverfehler</td></tr>
+            <tr><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>502</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Bad Gateway</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Ungültiges Gateway</td></tr>
+            <tr style="background:#f8f9fa;"><td style="padding:8px; border-bottom:1px solid #dee2e6;"><strong>503</strong></td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Service Unavailable</td><td style="padding:8px; border-bottom:1px solid #dee2e6;">Dienst nicht verfügbar</td></tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <script>
+        const statusCodes = {
+          200: { name: 'OK', desc: 'Anfrage erfolgreich', color: '#28a745' },
+          201: { name: 'Created', desc: 'Ressource erstellt', color: '#28a745' },
+          204: { name: 'No Content', desc: 'Kein Inhalt', color: '#28a745' },
+          301: { name: 'Moved Permanently', desc: 'Permanente Weiterleitung', color: '#ffc107' },
+          302: { name: 'Found', desc: 'Temporäre Weiterleitung', color: '#ffc107' },
+          304: { name: 'Not Modified', desc: 'Nicht modifiziert', color: '#ffc107' },
+          400: { name: 'Bad Request', desc: 'Ungültige Anfrage', color: '#dc3545' },
+          401: { name: 'Unauthorized', desc: 'Nicht autorisiert', color: '#dc3545' },
+          403: { name: 'Forbidden', desc: 'Zugriff verweigert', color: '#dc3545' },
+          404: { name: 'Not Found', desc: 'Seite nicht gefunden', color: '#dc3545' },
+          500: { name: 'Internal Server Error', desc: 'Serverfehler', color: '#dc3545' },
+          502: { name: 'Bad Gateway', desc: 'Ungültiges Gateway', color: '#dc3545' },
+          503: { name: 'Service Unavailable', desc: 'Dienst nicht verfügbar', color: '#dc3545' }
+        };
+        
+        function checkStatus() {
+          const url = document.getElementById('checkUrl').value.trim();
+          if (!url) {
+            alert('Bitte geben Sie eine URL ein');
+            return;
+          }
+          
+          // Simulate checking (actual checking would require server-side due to CORS)
+          const resultDiv = document.getElementById('result');
+          const infoDiv = document.getElementById('statusInfo');
+          
+          infoDiv.innerHTML = `
+            <p><strong>URL:</strong> ${escapeHtml(url)}</p>
+            <p style="color:#666;">Hinweis: Aus Sicherheitsgründen (CORS) kann der Status nur serverseitig geprüft werden.</p>
+            <p>Verwenden Sie für eine vollständige Prüfung: <code>curl -I ${escapeHtml(url)}</code></p>
+          `;
+          
+          resultDiv.style.display = 'block';
+          resultDiv.style.background = '#f8f9fa';
+          resultDiv.style.border = '1px solid #dee2e6';
+        }
+        
+        function escapeHtml(text) {
+          const div = document.createElement('div');
+          div.textContent = text;
+          return div.innerHTML;
+        }
+        
+        function clearFields() {
+          document.getElementById('checkUrl').value = '';
+          document.getElementById('result').style.display = 'none';
+        }
+      </script>
     </div>
     
     <footer>
       <p>205 Tools © 2025 - Tools</p>
     </footer>
   </div>
-  
-  <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
-    
-  </script>
 </body>
 </html>

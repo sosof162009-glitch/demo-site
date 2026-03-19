@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upside Down Text - 205 Tools</title>
+  <meta name="description" content="Flip your text upside down.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🙃 Upside Down Text</h1>
+      <p>Flip your text upside down for fun effects</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Input</h2>
+        <div class="lang-selector">
+          <a href="./upside-down-text.html" class="lang-btn active">EN</a>
+          <a href="../es/upside-down-text.html" class="lang-btn">ES</a>
+          <a href="../fr/upside-down-text.html" class="lang-btn">FR</a>
+          <a href="../de/upside-down-text.html" class="lang-btn">DE</a>
+          <a href="../ar/upside-down-text.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <textarea id="textInput" rows="6" placeholder="Enter text to flip..."></textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="flipText()">Flip Text</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Upside Down Result</label>
+        <textarea id="output" rows="6" readonly placeholder="Flipped text will appear here..."></textarea>
+      </div>
+      
+      <button class="btn btn-primary" onclick="copyResult()">Copy Result</button>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    const flipMap = {
+      'a': 'ɐ', 'b': 'q', 'c': 'ɔ', 'd': 'p', 'e': 'ǝ', 'f': 'ɟ', 'g': 'ƃ', 'h': 'ɥ',
+      'i': 'ᴉ', 'j': 'ɾ', 'k': 'ʞ', 'l': 'l', 'm': 'ɯ', 'n': 'u', 'o': 'o', 'p': 'd',
+      'q': 'b', 'r': 'ɹ', 's': 's', 't': 'ʇ', 'u': 'n', 'v': 'ʌ', 'w': 'ʍ', 'x': 'x',
+      'y': 'ʎ', 'z': 'z', 'A': '∀', 'B': 'q', 'C': 'Ɔ', 'D': 'p', 'E': 'Ǝ', 'F': 'Ⅎ',
+      'G': 'פ', 'H': 'H', 'I': 'I', 'J': 'ſ', 'K': 'ʞ', 'L': '˥', 'M': 'W', 'N': 'N',
+      'O': 'O', 'P': 'd', 'Q': 'b', 'R': 'ɹ', 'S': 'S', 'T': '┴', 'U': '∩', 'V': 'Λ',
+      'W': 'M', 'X': 'X', 'Y': '⅄', 'Z': 'Z', '0': '0', '1': 'Ɩ', '2': 'ᄅ', '3': 'Ɛ',
+      '4': 'h', '5': 'ϛ', '6': '9', '7': 'L', '8': '8', '9': '6', '.': '˙', ',': "'",
+      "'": ',', '?': '¿', '!': '¡', '"': '„', '(': ')', ')': '(', '[': ']', ']': '[',
+      '{': '}', '}': '{', '<': '>', '>': '<', '&': '⅋', '_': '‾'
+    };
+    
+    function flipText() {
+      const text = document.getElementById('textInput').value;
+      const flipped = text.split('').reverse().map(c => flipMap[c] || c).join('');
+      document.getElementById('output').value = flipped;
+    }
+    
+    function clearAll() {
+      document.getElementById('textInput').value = '';
+      document.getElementById('output').value = '';
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('output');
+      output.select();
+      document.execCommand('copy');
+      alert('Copied to clipboard!');
+    }
+  </script>
+</body>
+</html>

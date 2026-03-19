@@ -3,60 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>jwt-decoder - 205 Tools</title>
-  <meta name="description" content="">
+  <title>Décodeur JWT - 205 Tools</title>
+  <meta name="description" content="Décoder les tokens JSON Web.">
   <link rel="stylesheet" href="../assets/tools.css">
-  <script src="../assets/tools.js" defer></script>
+  <style>
+    .jwt-section { background: var(--bg-secondary); padding: 20px; border-radius: 12px; margin: 15px 0; }
+    .jwt-section h3 { margin-bottom: 10px; color: var(--primary); }
+    .jwt-header { color: #e06c75; }
+    .jwt-payload { color: #98c379; }
+    .jwt-signature { color: #d19a66; }
+    pre { background: var(--bg-card); padding: 15px; border-radius: 8px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 13px; }
+    .error { color: #ef4444; margin-top: 10px; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Accueil</a>
     
     <header>
-      <h1>🔑 jwt-decoder</h1>
-      <p></p>
+      <h1>🔓 Décodeur JWT</h1>
+      <p>Décoder les JSON Web Tokens</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Décoder</h2>
         <div class="lang-selector">
-          <a href="../en/jwt-decoder.html" class="lang-btn ">EN</a><a href="../es/jwt-decoder.html" class="lang-btn ">ES</a><a href="../fr/jwt-decoder.html" class="lang-btn active">FR</a><a href="../de/jwt-decoder.html" class="lang-btn ">DE</a><a href="../ar/jwt-decoder.html" class="lang-btn ">AR</a>
+          <a href="../en/jwt-decoder.html" class="lang-btn">EN</a>
+          <a href="../es/jwt-decoder.html" class="lang-btn">ES</a>
+          <a href="./jwt-decoder.html" class="lang-btn active">FR</a>
+          <a href="../de/jwt-decoder.html" class="lang-btn">DE</a>
+          <a href="../ar/jwt-decoder.html" class="lang-btn">AR</a>
         </div>
       </div>
       
-      
       <div class="form-group">
-        <label>Texte</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+        <label>Token JWT</label>
+        <textarea id="jwtInput" rows="4" placeholder="eyJhbGciOiJIUzI1NiIs...">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</textarea>
       </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convertir</button>
-        <button class="btn btn-secondary" onclick="resetText()">Réinitialiser</button>
+        <button class="btn btn-primary" onclick="decodeJWT()">🔓 Décoder</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Effacer</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Résultat</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="errorMsg" class="error"></div>
+      
+      <div class="jwt-section">
+        <h3 class="jwt-header">HEADER (Algorithme et Type de Token)</h3>
+        <pre id="headerOutput"></pre>
       </div>
-      <button class="btn btn-success" data-success="Copié!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copier</button>
+      
+      <div class="jwt-section">
+        <h3 class="jwt-payload">PAYLOAD (Données)</h3>
+        <pre id="payloadOutput"></pre>
+      </div>
+      
+      <div class="jwt-section">
+        <h3 class="jwt-signature">SIGNATURE</h3>
+        <pre id="signatureOutput"></pre>
+      </div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Outils</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Outils Gratuits</p></footer>
   </div>
   
   <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function decodeJWT() {
+      const token = document.getElementById('jwtInput').value.trim();
+      if (!token) return;
+      
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        document.getElementById('errorMsg').textContent = 'Format JWT invalide. Le token doit avoir 3 parties séparées par des points.';
+        return;
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
+      
+      try {
+        const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
+        document.getElementById('headerOutput').textContent = JSON.stringify(header, null, 2);
+        
+        const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+        document.getElementById('payloadOutput').textContent = JSON.stringify(payload, null, 2);
+        
+        document.getElementById('signatureOutput').textContent = parts[2];
+        
+        document.getElementById('errorMsg').textContent = '';
+      } catch (e) {
+        document.getElementById('errorMsg').textContent = 'Erreur de décodage: ' + e.message;
       }
+    }
     
+    function clearAll() {
+      document.getElementById('jwtInput').value = '';
+      document.getElementById('headerOutput').textContent = '';
+      document.getElementById('payloadOutput').textContent = '';
+      document.getElementById('signatureOutput').textContent = '';
+      document.getElementById('errorMsg').textContent = '';
+    }
+    
+    decodeJWT();
   </script>
 </body>
 </html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zusätzliche Leerzeichen Entfernen - 205 Tools</title>
+  <meta name="description" content="Entfernen Sie zusätzliche Leerzeichen aus Ihrem Text.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Startseite</a>
+    
+    <header>
+      <h1>✂️ Zusätzliche Leerzeichen Entfernen</h1>
+      <p>Entfernen Sie zusätzliche Leerzeichen, Tabulatoren und bereinigen Sie den Text</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Eingabetext</h2>
+        <div class="lang-selector">
+          <a href="../en/remove-extra-spaces.html" class="lang-btn">EN</a>
+          <a href="../es/remove-extra-spaces.html" class="lang-btn">ES</a>
+          <a href="../fr/remove-extra-spaces.html" class="lang-btn">FR</a>
+          <a href="./remove-extra-spaces.html" class="lang-btn active">DE</a>
+          <a href="../ar/remove-extra-spaces.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <textarea id="input" rows="8" placeholder="Text mit zusätzlichen Leerzeichen hier einfügen..."></textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="removeExtraSpaces()">Zusätzliche Entfernen</button>
+        <button class="btn btn-primary" onclick="removeAllSpaces()">ALLE Leerzeichen Entfernen</button>
+        <button class="btn btn-primary" onclick="trimLines()">Jede Zeile Kürzen</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Löschen</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Ergebnis</label>
+        <textarea id="output" rows="8" readonly placeholder="Bereinigter Text erscheint hier..."></textarea>
+      </div>
+      
+      <button class="btn btn-primary" onclick="copyResult()">Ergebnis Kopieren</button>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Kostenlose Online-Tools</p></footer>
+  </div>
+  
+  <script>
+    function removeExtraSpaces() {
+      let text = document.getElementById('input').value;
+      text = text.replace(/\s+/g, ' ').replace(/^\s+|\s+$/gm, '');
+      document.getElementById('output').value = text;
+    }
+    
+    function removeAllSpaces() {
+      let text = document.getElementById('input').value;
+      text = text.replace(/\s/g, '');
+      document.getElementById('output').value = text;
+    }
+    
+    function trimLines() {
+      let text = document.getElementById('input').value;
+      text = text.split('\n').map(line => line.trim()).join('\n');
+      document.getElementById('output').value = text;
+    }
+    
+    function clearAll() {
+      document.getElementById('input').value = '';
+      document.getElementById('output').value = '';
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('output');
+      output.select();
+      document.execCommand('copy');
+      alert('In die Zwischenablage kopiert!');
+    }
+  </script>
+</body>
+</html>

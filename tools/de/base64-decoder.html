@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Decoder - 205 Tools</title>
+  <meta name="description" content="Text aus Base64-Format dekodieren.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .result-box { background: var(--bg-secondary); padding: 20px; border-radius: 8px; margin-top: 15px; }
+    .result-box label { display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 14px; }
+    .result-box textarea { width: 100%; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); padding: 12px; border-radius: 6px; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Startseite</a>
+    
+    <header>
+      <h1>🔓 Base64 Decoder</h1>
+      <p>Text aus Base64-Format dekodieren</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Decoder</h2>
+        <div class="lang-selector">
+          <a href="../en/base64-decoder.html" class="lang-btn">EN</a>
+          <a href="../es/base64-decoder.html" class="lang-btn">ES</a>
+          <a href="../fr/base64-decoder.html" class="lang-btn">FR</a>
+          <a href="./base64-decoder.html" class="lang-btn active">DE</a>
+          <a href="../ar/base64-decoder.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Base64-Text zum Dekodieren</label>
+        <textarea id="inputText" rows="6" placeholder="Base64 hier eingeben...">SGFsbG8gV2VsdCEg8J+Yiw==</textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="decode()">🔓 Dekodieren</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Löschen</button>
+        <button class="btn btn-secondary" onclick="loadExample()">Beispiel</button>
+      </div>
+      
+      <div class="result-box" id="resultBox" style="display: none;">
+        <label>Ergebnis</label>
+        <textarea id="outputText" rows="6" readonly></textarea>
+        <div class="btn-group" style="margin-top: 10px;">
+          <button class="btn btn-success" onclick="copyResult()">📋 Ergebnis Kopieren</button>
+        </div>
+      </div>
+      
+      <div id="errorMsg" style="color: #ef4444; margin-top: 10px;"></div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Kostenlose Tools</p></footer>
+  </div>
+  
+  <script>
+    function decode() {
+      const input = document.getElementById('inputText').value.trim();
+      if (!input) { alert('Bitte Base64-Text eingeben'); return; }
+      
+      try {
+        const result = decodeURIComponent(escape(atob(input)));
+        document.getElementById('outputText').value = result;
+        document.getElementById('resultBox').style.display = 'block';
+        document.getElementById('errorMsg').textContent = '';
+      } catch (e) {
+        document.getElementById('errorMsg').textContent = 'Fehler: Ungültige Base64-Zeichenkette';
+        document.getElementById('resultBox').style.display = 'none';
+      }
+    }
+    
+    function clearAll() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('outputText').value = '';
+      document.getElementById('resultBox').style.display = 'none';
+      document.getElementById('errorMsg').textContent = '';
+    }
+    
+    function loadExample() {
+      document.getElementById('inputText').value = 'SGFsbG8gV2VsdCEg8J+Yiw==';
+      decode();
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('outputText');
+      output.select();
+      document.execCommand('copy');
+      alert('In die Zwischenablage kopiert!');
+    }
+  </script>
+</body>
+</html>

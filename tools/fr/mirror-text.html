@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Texte Miroir - 205 Tools</title>
+  <meta name="description" content="Créez des effets de texte miroir/reflet.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .mirror-output { text-align: center; font-size: 24px; line-height: 1.5; }
+    .mirror-line { display: block; }
+    .mirror-reflected { transform: scaleY(-1); opacity: 0.5; filter: blur(1px); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Accueil</a>
+    
+    <header>
+      <h1>🪞 Texte Miroir</h1>
+      <p>Créez des effets de texte miroir/reflet</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Entrée</h2>
+        <div class="lang-selector">
+          <a href="../en/mirror-text.html" class="lang-btn">EN</a>
+          <a href="../es/mirror-text.html" class="lang-btn">ES</a>
+          <a href="./mirror-text.html" class="lang-btn active">FR</a>
+          <a href="../de/mirror-text.html" class="lang-btn">DE</a>
+          <a href="../ar/mirror-text.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <textarea id="textInput" rows="4" placeholder="Entrez le texte pour miroir..."></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Style de Miroir</label>
+        <select id="mirrorStyle">
+          <option value="reverse">Inversé (Horizontal)</option>
+          <option value="vertical">Retournement Vertical</option>
+          <option value="both">Les Deux Directions</option>
+        </select>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="mirrorText()">Miroir</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Effacer</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Résultat</label>
+        <textarea id="output" rows="4" readonly placeholder="Le texte miroir apparaîtra ici..."></textarea>
+      </div>
+      
+      <button class="btn btn-primary" onclick="copyResult()">Copier Résultat</button>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Outils en Ligne Gratuits</p></footer>
+  </div>
+  
+  <script>
+    function mirrorText() {
+      const text = document.getElementById('textInput').value;
+      const style = document.getElementById('mirrorStyle').value;
+      let result = '';
+      
+      if (!text) return;
+      
+      switch(style) {
+        case 'reverse':
+          result = text.split('').reverse().join('');
+          break;
+        case 'vertical':
+          result = text.split('\n').reverse().join('\n');
+          break;
+        case 'both':
+          result = text.split('').reverse().join('').split('\n').reverse().join('\n');
+          break;
+      }
+      
+      document.getElementById('output').value = result;
+    }
+    
+    function clearAll() {
+      document.getElementById('textInput').value = '';
+      document.getElementById('output').value = '';
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('output');
+      output.select();
+      document.execCommand('copy');
+      alert('Copié dans le presse-papiers!');
+    }
+  </script>
+</body>
+</html>

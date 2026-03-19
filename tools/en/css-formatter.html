@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Formatter - 205 Tools</title>
+  <meta name="description" content="Format and beautify CSS code.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .options { display: flex; gap: 20px; margin-bottom: 15px; flex-wrap: wrap; }
+    .options label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .options input[type="checkbox"] { width: 18px; height: 18px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🎨 CSS Formatter</h1>
+      <p>Format and beautify CSS code</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Formatter</h2>
+        <div class="lang-selector">
+          <a href="./css-formatter.html" class="lang-btn active">EN</a>
+          <a href="../es/css-formatter.html" class="lang-btn">ES</a>
+          <a href="../fr/css-formatter.html" class="lang-btn">FR</a>
+          <a href="../de/css-formatter.html" class="lang-btn">DE</a>
+          <a href="../ar/css-formatter.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="options">
+        <label><input type="checkbox" id="indent2" checked> 2-space indent</label>
+        <label><input type="checkbox" id="newline" checked> Newline between rules</label>
+      </div>
+      
+      <div class="form-group">
+        <label>CSS Code</label>
+        <textarea id="input" rows="10" placeholder="/* Paste CSS here */">.container{max-width:1200px;margin:0 auto;padding:20px;}h1{color:#333;font-size:24px;}p{line-height:1.6;}</textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="formatCSS()">✨ Format</button>
+        <button class="btn btn-success" onclick="copyResult()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Formatted CSS</label>
+        <textarea id="output" rows="10" readonly></textarea>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function formatCSS() {
+      let css = document.getElementById('input').value.trim();
+      if (!css) return;
+      
+      const indentSize = document.getElementById('indent2').checked ? 2 : 4;
+      const newlineBetween = document.getElementById('newline').checked;
+      const indent = ' '.repeat(indentSize);
+      
+      // Remove existing whitespace
+      css = css.replace(/\/\*[\s\S]*?\*\//g, match => match.replace(/\n\s*/g, ' '));
+      css = css.replace(/\s+/g, ' ');
+      css = css.replace(/\s*([{}:;])\s*/g, '$1');
+      
+      // Split into rules
+      const rules = [];
+      let depth = 0;
+      let current = '';
+      
+      for (const char of css) {
+        if (char === '{') depth++;
+        if (char === '}') depth--;
+        current += char;
+        if (depth === 0 && char === '}') {
+          rules.push(current.trim());
+          current = '';
+        }
+      }
+      
+      // Format each rule
+      const formatted = rules.map(rule => {
+        const match = rule.match(/^([^{]+)\{([^}]*)\}$/);
+        if (!match) return rule;
+        
+        const [_, selector, declarations] = match;
+        const props = declarations.split(';').filter(p => p.trim());
+        
+        const formattedProps = props.map(p => indent + p.trim() + ';').join('\n');
+        return selector.trim() + ' {\n' + formattedProps + '\n}';
+      });
+      
+      const separator = newlineBetween ? '\n\n' : '\n';
+      document.getElementById('output').value = formatted.join(separator);
+    }
+    
+    function copyResult() {
+      navigator.clipboard.writeText(document.getElementById('output').value);
+      alert('Copied!');
+    }
+    
+    function clearAll() {
+      document.getElementById('input').value = '';
+      document.getElementById('output').value = '';
+    }
+    
+    // Format on load
+    formatCSS();
+  </script>
+</body>
+</html>

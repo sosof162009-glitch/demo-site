@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertisseur de Tailles de Vêtements - 205 Tools</title>
+  <meta name="description" content="Convertissez entre les tailles de vêtements internationales (US, UK, EU).">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Accueil</a>
+    
+    <header>
+      <h1>👔 Convertisseur de Tailles de Vêtements</h1>
+      <p>Convertissez entre les tailles US, UK, EU et Internationales.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Convertir</h2>
+        <div class="lang-selector">
+          <a href="../en/clothing-size-converter.html" class="lang-btn">EN</a><a href="../es/clothing-size-converter.html" class="lang-btn">ES</a><a href="../fr/clothing-size-converter.html" class="lang-btn active">FR</a><a href="../de/clothing-size-converter.html" class="lang-btn">DE</a><a href="../ar/clothing-size-converter.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="sizeType">Type de Vêtement</label>
+        <select id="sizeType" onchange="updateSizes()">
+          <option value="women_tops">Hauts/Robes Femme</option>
+          <option value="women_pants">Pantalons/Jeans Femme</option>
+          <option value="men_tops">Chemises/Homme</option>
+          <option value="men_pants">Pantalons/Jeans Homme</option>
+        </select>
+      </div>
+      
+      <div class="converter-grid">
+        <div class="converter-box">
+          <div class="form-group">
+            <label for="fromSystem">De</label>
+            <select id="fromSystem" onchange="updateSizes()">
+              <option value="us">US</option>
+              <option value="uk">UK</option>
+              <option value="eu">EU</option>
+              <option value="int">International</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="inputSize">Taille</label>
+            <select id="inputSize"></select>
+          </div>
+        </div>
+        
+        <button class="swap-btn" onclick="swapSystems()" title="Échanger">⇄</button>
+        
+        <div class="converter-box">
+          <div class="form-group">
+            <label for="toSystem">Vers</label>
+            <select id="toSystem" onchange="convert()">
+              <option value="us">US</option>
+              <option value="uk">UK</option>
+              <option value="eu" selected>EU</option>
+              <option value="int">International</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Résultat</label>
+            <div class="result-value" id="resultValue">-</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="result-box" id="resultBox" style="display:none;">
+        <div class="result-value" id="finalResult">-</div>
+        <div class="result-label" id="resultLabel"></div>
+      </div>
+      
+      <div class="info-box" style="margin-top: 20px; padding: 15px; background: var(--bg-secondary); border-radius: 8px;">
+        <h3>Guide des Tailles</h3>
+        <p style="font-size: 12px; color: var(--text-secondary);">Les tailles sont approximatives et peuvent varier selon la marque. Consultez toujours le guide des tailles spécifique de la marque.</p>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Outils Gratuits</p></footer>
+  </div>
+  
+  <script>
+    const sizeData = {
+      women_tops: {
+        us: ['00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20'],
+        uk: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '24'],
+        eu: ['30', '32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52'],
+        int: ['XXS', 'XS', 'XS', 'S', 'S', 'M', 'M', 'L', 'L', 'XL', 'XL', 'XXL']
+      },
+      women_pants: {
+        us: ['00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20'],
+        uk: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '24'],
+        eu: ['30', '32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52'],
+        int: ['XXS', 'XS', 'XS', 'S', 'S', 'M', 'M', 'L', 'L', 'XL', 'XL', 'XXL']
+      },
+      men_tops: {
+        us: ['34', '36', '38', '40', '42', '44', '46', '48', '50', '52'],
+        uk: ['34', '36', '38', '40', '42', '44', '46', '48', '50', '52'],
+        eu: ['44', '46', '48', '50', '52', '54', '56', '58', '60', '62'],
+        int: ['XS', 'S', 'S', 'M', 'M', 'L', 'L', 'XL', 'XL', 'XXL']
+      },
+      men_pants: {
+        us: ['28', '30', '32', '34', '36', '38', '40', '42', '44', '46'],
+        uk: ['28', '30', '32', '34', '36', '38', '40', '42', '44', '46'],
+        eu: ['44', '46', '48', '50', '52', '54', '56', '58', '60', '62'],
+        int: ['XS', 'S', 'S', 'M', 'M', 'L', 'L', 'XL', 'XL', 'XXL']
+      }
+    };
+    
+    const fromSystemEl = document.getElementById('fromSystem');
+    const toSystemEl = document.getElementById('toSystem');
+    const sizeTypeEl = document.getElementById('sizeType');
+    const inputSizeEl = document.getElementById('inputSize');
+    const resultValueEl = document.getElementById('resultValue');
+    const resultBoxEl = document.getElementById('resultBox');
+    const finalResultEl = document.getElementById('finalResult');
+    const resultLabelEl = document.getElementById('resultLabel');
+    
+    function updateSizes() {
+      const type = sizeTypeEl.value;
+      const system = fromSystemEl.value;
+      const sizes = sizeData[type][system];
+      
+      inputSizeEl.innerHTML = '';
+      sizes.forEach(size => {
+        const option = document.createElement('option');
+        option.value = size;
+        option.textContent = size;
+        inputSizeEl.appendChild(option);
+      });
+      
+      convert();
+    }
+    
+    function convert() {
+      const type = sizeTypeEl.value;
+      const from = fromSystemEl.value;
+      const to = toSystemEl.value;
+      const inputSize = inputSizeEl.value;
+      
+      const fromSizes = sizeData[type][from];
+      const toSizes = sizeData[type][to];
+      
+      const index = fromSizes.indexOf(inputSize);
+      if (index === -1) {
+        resultValueEl.textContent = '-';
+        resultBoxEl.style.display = 'none';
+        return;
+      }
+      
+      const result = toSizes[index];
+      resultValueEl.textContent = result;
+      finalResultEl.textContent = result;
+      resultLabelEl.textContent = `${inputSize} (${from.toUpperCase()}) = ${result} (${to.toUpperCase()})`;
+      resultBoxEl.style.display = 'block';
+    }
+    
+    function swapSystems() {
+      const temp = fromSystemEl.value;
+      fromSystemEl.value = toSystemEl.value;
+      toSystemEl.value = temp;
+      updateSizes();
+    }
+    
+    inputSizeEl.addEventListener('change', convert);
+    updateSizes();
+  </script>
+</body>
+</html>

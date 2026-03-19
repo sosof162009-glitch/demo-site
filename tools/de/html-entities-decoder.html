@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML-Entitäten-Decoder - 205 Tools</title>
+  <meta name="description" content="HTML-Entitäten in Sonderzeichen dekodieren.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Startseite</a>
+    
+    <header>
+      <h1>🔓 HTML-Entitäten-Decoder</h1>
+      <p>HTML-Entitäten in Sonderzeichen umwandeln</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Decoder</h2>
+        <div class="lang-selector">
+          <a href="../en/html-entities-decoder.html" class="lang-btn">EN</a>
+          <a href="../es/html-entities-decoder.html" class="lang-btn">ES</a>
+          <a href="../fr/html-entities-decoder.html" class="lang-btn">FR</a>
+          <a href="./html-entities-decoder.html" class="lang-btn active">DE</a>
+          <a href="../ar/html-entities-decoder.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Zu Dekodierende HTML-Entitäten</label>
+        <textarea id="input" rows="8" placeholder="HTML mit Entitäten eingeben...">&lt;div&gt;Hallo &amp; Willkommen!&lt;/div&gt;
+&lt;p&gt;5 &lt; 10 &amp; 10 &gt; 5&lt;/p&gt;
+&quot;Anführungszeichen&quot; und &#39;Apostrophe&#39;
+Copyright &copy; 2025</textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="decode()">🔓 Dekodieren</button>
+        <button class="btn btn-success" onclick="copyResult()">📋 Kopieren</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Löschen</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Dekodierter Text</label>
+        <textarea id="output" rows="8" readonly></textarea>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Kostenlose Online-Tools</p></footer>
+  </div>
+  
+  <script>
+    function decode() {
+      let html = document.getElementById('input').value;
+      if (!html) return;
+      
+      const textarea = document.createElement('textarea');
+      textarea.innerHTML = html;
+      document.getElementById('output').value = textarea.value;
+    }
+    
+    function copyResult() {
+      navigator.clipboard.writeText(document.getElementById('output').value);
+      alert('Kopiert!');
+    }
+    
+    function clearAll() {
+      document.getElementById('input').value = '';
+      document.getElementById('output').value = '';
+    }
+  </script>
+</body>
+</html>

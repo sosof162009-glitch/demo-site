@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فك تشفير URL - 205 Tools</title>
+  <meta name="description" content="فك تشفير النص المشفر في URL.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .result-box { background: var(--bg-secondary); padding: 20px; border-radius: 8px; margin-top: 15px; }
+    .result-box label { display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 14px; }
+    .result-box textarea { width: 100%; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); padding: 12px; border-radius: 6px; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← الرئيسية</a>
+    
+    <header>
+      <h1>🔓 فك تشفير URL</h1>
+      <p>فك تشفير النص المشفر في URL</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>فك التشفير</h2>
+        <div class="lang-selector">
+          <a href="../en/url-decoder.html" class="lang-btn">EN</a>
+          <a href="../es/url-decoder.html" class="lang-btn">ES</a>
+          <a href="../fr/url-decoder.html" class="lang-btn">FR</a>
+          <a href="../de/url-decoder.html" class="lang-btn">DE</a>
+          <a href="./url-decoder.html" class="lang-btn active">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>نص URL مشفر لفك التشفير</label>
+        <textarea id="inputText" rows="6" placeholder="أدخل النص المشفر في URL...">2KfZhNin2KjYqCDYp9mE2YXZhiDYudmE2Ykg2KfZhNmF2LHYs9iMINmE2YXZhiE=</textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="decode()">🔓 فك التشفير</button>
+        <button class="btn btn-secondary" onclick="clearAll()">مسح</button>
+        <button class="btn btn-secondary" onclick="loadExample()">مثال</button>
+      </div>
+      
+      <div class="result-box" id="resultBox" style="display: none;">
+        <label>النتيجة</label>
+        <textarea id="outputText" rows="6" readonly></textarea>
+        <div class="btn-group" style="margin-top: 10px;">
+          <button class="btn btn-success" onclick="copyResult()">📋 نسخ النتيجة</button>
+        </div>
+      </div>
+      
+      <div id="errorMsg" style="color: #ef4444; margin-top: 10px;"></div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - أدوات مجانية</p></footer>
+  </div>
+  
+  <script>
+    function decode() {
+      const input = document.getElementById('inputText').value.trim();
+      if (!input) { alert('الرجاء إدخال نص URL مشفر'); return; }
+      
+      try {
+        const result = decodeURIComponent(input);
+        document.getElementById('outputText').value = result;
+        document.getElementById('resultBox').style.display = 'block';
+        document.getElementById('errorMsg').textContent = '';
+      } catch (e) {
+        document.getElementById('errorMsg').textContent = 'خطأ: نص URL مشفر غير صالح';
+        document.getElementById('resultBox').style.display = 'none';
+      }
+    }
+    
+    function clearAll() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('outputText').value = '';
+      document.getElementById('resultBox').style.display = 'none';
+      document.getElementById('errorMsg').textContent = '';
+    }
+    
+    function loadExample() {
+      document.getElementById('inputText').value = '2KfZhNin2KjYqCDYp9mE2YXZhiDYudmE2Ykg2KfZhNmF2LHYs9iMINmE2YXZhiE=';
+      decode();
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('outputText');
+      output.select();
+      document.execCommand('copy');
+      alert('تم النسخ إلى الحافظة!');
+    }
+  </script>
+</body>
+</html>

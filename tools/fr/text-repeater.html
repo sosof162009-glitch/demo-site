@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Répéteur de Texte - 205 Tools</title>
+  <meta name="description" content="Répétez du texte plusieurs fois avec diverses options.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Accueil</a>
+    
+    <header>
+      <h1>🔄 Répéteur de Texte</h1>
+      <p>Répétez du texte plusieurs fois avec des options personnalisées</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Entrée</h2>
+        <div class="lang-selector">
+          <a href="../en/text-repeater.html" class="lang-btn">EN</a>
+          <a href="../es/text-repeater.html" class="lang-btn">ES</a>
+          <a href="./text-repeater.html" class="lang-btn active">FR</a>
+          <a href="../de/text-repeater.html" class="lang-btn">DE</a>
+          <a href="../ar/text-repeater.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Texte à Répéter</label>
+        <input type="text" id="textInput" placeholder="Entrez le texte à répéter...">
+      </div>
+      
+      <div class="form-group">
+        <label>Nombre de Répétitions</label>
+        <input type="number" id="repeatCount" value="10" min="1" max="1000">
+      </div>
+      
+      <div class="form-group">
+        <label>Séparateur</label>
+        <select id="separator">
+          <option value="">Aucun</option>
+          <option value=" ">Espace</option>
+          <option value="\n">Nouvelle Ligne</option>
+          <option value=",">Virgule</option>
+          <option value=" - ">Tiret</option>
+        </select>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="repeatText()">Répéter</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Effacer</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Résultat</label>
+        <textarea id="output" rows="8" readonly placeholder="Le texte répété apparaîtra ici..."></textarea>
+      </div>
+      
+      <button class="btn btn-primary" onclick="copyResult()">Copier Résultat</button>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Outils en Ligne Gratuits</p></footer>
+  </div>
+  
+  <script>
+    function repeatText() {
+      const text = document.getElementById('textInput').value;
+      const count = parseInt(document.getElementById('repeatCount').value) || 10;
+      const separator = document.getElementById('separator').value;
+      
+      if (!text) return;
+      
+      const result = Array(count).fill(text).join(separator);
+      document.getElementById('output').value = result;
+    }
+    
+    function clearAll() {
+      document.getElementById('textInput').value = '';
+      document.getElementById('output').value = '';
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('output');
+      output.select();
+      document.execCommand('copy');
+      alert('Copié dans le presse-papiers!');
+    }
+  </script>
+</body>
+</html>

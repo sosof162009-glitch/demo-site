@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estimador de Tiempo de Lectura - 205 Tools</title>
+  <meta name="description" content="Estime cuánto tiempo toma leer su texto.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+    .stat-box { background: var(--bg-secondary); padding: 20px; border-radius: 12px; text-align: center; }
+    .stat-box .number { font-size: 28px; font-weight: 700; color: var(--primary); }
+    .stat-box .label { font-size: 12px; color: var(--text-secondary); margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Inicio</a>
+    
+    <header>
+      <h1>⏱️ Estimador de Tiempo de Lectura</h1>
+      <p>Estime cuánto tiempo toma leer su texto</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Su Texto</h2>
+        <div class="lang-selector">
+          <a href="../en/reading-time-estimator.html" class="lang-btn">EN</a>
+          <a href="./reading-time-estimator.html" class="lang-btn active">ES</a>
+          <a href="../fr/reading-time-estimator.html" class="lang-btn">FR</a>
+          <a href="../de/reading-time-estimator.html" class="lang-btn">DE</a>
+          <a href="../ar/reading-time-estimator.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <textarea id="textInput" rows="10" placeholder="Pegue su texto aquí..." oninput="estimateTime()"></textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-secondary" onclick="clearText()">Limpiar</button>
+      </div>
+      
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="number" id="wordCount">0</div>
+          <div class="label">Palabras</div>
+        </div>
+        
+        <div class="stat-box">
+          <div class="number" id="slowTime">0:00</div>
+          <div class="label">Lento (100 ppm)</div>
+        </div>
+        
+        <div class="stat-box">
+          <div class="number" id="avgTime">0:00</div>
+          <div class="label">Promedio (200 ppm)</div>
+        </div>
+        
+        <div class="stat-box">
+          <div class="number" id="fastTime">0:00</div>
+          <div class="label">Rápido (300 ppm)</div>
+        </div>
+        
+        <div class="stat-box">
+          <div class="number" id="speakingTime">0:00</div>
+          <div class="label">Hablando (130 ppm)</div>
+        </div>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Herramientas Online Gratis</p></footer>
+  </div>
+  
+  <script>
+    function estimateTime() {
+      const text = document.getElementById('textInput').value;
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      
+      document.getElementById('wordCount').textContent = words;
+      document.getElementById('slowTime').textContent = formatTime(words / 100);
+      document.getElementById('avgTime').textContent = formatTime(words / 200);
+      document.getElementById('fastTime').textContent = formatTime(words / 300);
+      document.getElementById('speakingTime').textContent = formatTime(words / 130);
+    }
+    
+    function formatTime(minutes) {
+      if (minutes < 1) {
+        return Math.round(minutes * 60) + 's';
+      }
+      const hrs = Math.floor(minutes / 60);
+      const mins = Math.round(minutes % 60);
+      if (hrs > 0) {
+        return `${hrs}h ${mins}m`;
+      }
+      return mins + ' min';
+    }
+    
+    function clearText() {
+      document.getElementById('textInput').value = '';
+      estimateTime();
+    }
+  </script>
+</body>
+</html>

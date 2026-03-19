@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertisseur Emoji vers Unicode | 205 Outils</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="../en/emoji-to-unicode.html">English</option>
+      <option value="../ar/emoji-to-unicode.html">العربية</option>
+      <option value="emoji-to-unicode.html" selected>Français</option>
+      <option value="../es/emoji-to-unicode.html">Español</option>
+      <option value="../de/emoji-to-unicode.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Convertisseur Emoji vers Unicode</h1>
+      <p>Convertissez les caractères emoji en points de code Unicode</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="emoji-input">Emoji:</label>
+        <input type="text" id="emoji-input" class="tool-input" placeholder="Collez ou tapez l'emoji ici...">
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="convertToUnicode()">Convertir</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Effacer</button>
+      </div>
+
+      <div class="input-group" style="margin-top: 20px;">
+        <label for="unicode-output">Point(s) de Code Unicode:</label>
+        <textarea id="unicode-output" class="tool-textarea" placeholder="Les points de code Unicode apparaîtront ici..." readonly></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="copyResult()">Copier</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span>Copié!</span>
+  </div>
+
+  <script>
+    function convertToUnicode() {
+      const input = document.getElementById('emoji-input').value;
+      
+      if (!input) {
+        document.getElementById('unicode-output').value = '';
+        return;
+      }
+      
+      const codePoints = [];
+      for (const char of input) {
+        const code = char.codePointAt(0).toString(16).toUpperCase();
+        codePoints.push(`U+${code.padStart(4, '0')}`);
+      }
+      
+      document.getElementById('unicode-output').value = codePoints.join(' ');
+    }
+
+    function copyResult() {
+      const output = document.getElementById('unicode-output');
+      if (!output.value) {
+        alert('Rien à copier. Convertissez un emoji d\'abord.');
+        return;
+      }
+      output.select();
+      document.execCommand('copy');
+      showToast();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function clearAll() {
+      document.getElementById('emoji-input').value = '';
+      document.getElementById('unicode-output').value = '';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGB to CMYK Converter - 205 Tools</title>
+  <meta name="description" content="Convert RGB values to CMYK color values instantly.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .color-preview {
+      width: 100%;
+      height: 120px;
+      border-radius: 12px;
+      border: 3px solid var(--border);
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+    }
+    .rgb-inputs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .rgb-input-group {
+      background: var(--bg-secondary);
+      padding: 15px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      text-align: center;
+    }
+    .rgb-input-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .rgb-input-group input {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      text-align: center;
+      font-family: monospace;
+    }
+    .rgb-input-group:nth-child(1) { border-color: #ff4444; }
+    .rgb-input-group:nth-child(2) { border-color: #44ff44; }
+    .rgb-input-group:nth-child(3) { border-color: #4444ff; }
+    .result-box {
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 2px solid var(--accent);
+    }
+    .result-value {
+      font-family: monospace;
+      font-size: 22px;
+      color: var(--accent);
+      text-align: center;
+      margin: 10px 0;
+    }
+    .cmyk-output {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .cmyk-box {
+      background: var(--bg-secondary);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      border: 2px solid var(--border);
+    }
+    .cmyk-box label {
+      display: block;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+    .cmyk-box span {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .cmyk-box.c-box { border-color: #00bcd4; }
+    .cmyk-box.m-box { border-color: #e91e63; }
+    .cmyk-box.y-box { border-color: #ffeb3b; }
+    .cmyk-box.k-box { border-color: #212121; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🎨 RGB to CMYK Converter</h1>
+      <p>Convert RGB values to CMYK color values</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Converter</h2>
+        <div class="lang-selector">
+          <a href="./rgb-to-cmyk.html" class="lang-btn active">EN</a>
+          <a href="../es/rgb-to-cmyk.html" class="lang-btn">ES</a>
+          <a href="../fr/rgb-to-cmyk.html" class="lang-btn">FR</a>
+          <a href="../de/rgb-to-cmyk.html" class="lang-btn">DE</a>
+          <a href="../ar/rgb-to-cmyk.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>RGB Values (0-255)</label>
+        <div class="rgb-inputs">
+          <div class="rgb-input-group">
+            <label style="color: #ff4444;">Red</label>
+            <input type="number" id="rInput" min="0" max="255" value="79">
+          </div>
+          <div class="rgb-input-group">
+            <label style="color: #44ff44;">Green</label>
+            <input type="number" id="gInput" min="0" max="255" value="142">
+          </div>
+          <div class="rgb-input-group">
+            <label style="color: #4444ff;">Blue</label>
+            <input type="number" id="bInput" min="0" max="255" value="247">
+          </div>
+        </div>
+      </div>
+      
+      <div class="slider-container">
+        <div class="slider-group" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <label style="width: 50px; font-weight: 600; color: #ff4444;">R</label>
+          <input type="range" id="rSlider" min="0" max="255" value="79" style="flex: 1;">
+          <span id="rVal" style="width: 40px; text-align: center;">79</span>
+        </div>
+        <div class="slider-group" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <label style="width: 50px; font-weight: 600; color: #44ff44;">G</label>
+          <input type="range" id="gSlider" min="0" max="255" value="142" style="flex: 1;">
+          <span id="gVal" style="width: 40px; text-align: center;">142</span>
+        </div>
+        <div class="slider-group" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <label style="width: 50px; font-weight: 600; color: #4444ff;">B</label>
+          <input type="range" id="bSlider" min="0" max="255" value="247" style="flex: 1;">
+          <span id="bVal" style="width: 40px; text-align: center;">247</span>
+        </div>
+      </div>
+      
+      <div id="colorPreview" class="color-preview" style="background-color: rgb(79, 142, 247);">
+        <span id="previewText">Preview</span>
+      </div>
+      
+      <div class="result-box">
+        <label>CMYK Result</label>
+        <div class="result-value" id="cmykResult">68%, 42%, 0%, 3%</div>
+        <div class="cmyk-output">
+          <div class="cmyk-box c-box">
+            <label style="color: #00bcd4;">Cyan</label>
+            <span id="cValue">68%</span>
+          </div>
+          <div class="cmyk-box m-box">
+            <label style="color: #e91e63;">Magenta</label>
+            <span id="mValue">42%</span>
+          </div>
+          <div class="cmyk-box y-box">
+            <label style="color: #fbc02d;">Yellow</label>
+            <span id="yValue">0%</span>
+          </div>
+          <div class="cmyk-box k-box">
+            <label style="color: #212121;">Black</label>
+            <span id="kValue">3%</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="copyCMYK()">📋 Copy CMYK</button>
+        <button class="btn btn-secondary" onclick="copyCSS()">📝 Copy CSS</button>
+        <button class="btn btn-success" onclick="randomColor()">🎲 Random</button>
+      </div>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Free Online Tools</p>
+    </footer>
+  </div>
+  
+  <script>
+    const rInput = document.getElementById('rInput');
+    const gInput = document.getElementById('gInput');
+    const bInput = document.getElementById('bInput');
+    const rSlider = document.getElementById('rSlider');
+    const gSlider = document.getElementById('gSlider');
+    const bSlider = document.getElementById('bSlider');
+    const colorPreview = document.getElementById('colorPreview');
+    const previewText = document.getElementById('previewText');
+    const cmykResult = document.getElementById('cmykResult');
+    
+    function updateFromInputs() {
+      let r = parseInt(rInput.value) || 0;
+      let g = parseInt(gInput.value) || 0;
+      let b = parseInt(bInput.value) || 0;
+      
+      r = Math.max(0, Math.min(255, r));
+      g = Math.max(0, Math.min(255, g));
+      b = Math.max(0, Math.min(255, b));
+      
+      rSlider.value = r;
+      gSlider.value = g;
+      bSlider.value = b;
+      
+      document.getElementById('rVal').textContent = r;
+      document.getElementById('gVal').textContent = g;
+      document.getElementById('bVal').textContent = b;
+      
+      updateDisplay(r, g, b);
+    }
+    
+    function updateFromSliders() {
+      const r = parseInt(rSlider.value);
+      const g = parseInt(gSlider.value);
+      const b = parseInt(bSlider.value);
+      
+      rInput.value = r;
+      gInput.value = g;
+      bInput.value = b;
+      
+      document.getElementById('rVal').textContent = r;
+      document.getElementById('gVal').textContent = g;
+      document.getElementById('bVal').textContent = b;
+      
+      updateDisplay(r, g, b);
+    }
+    
+    function updateDisplay(r, g, b) {
+      const cmyk = rgbToCmyk(r, g, b);
+      
+      colorPreview.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+      
+      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      previewText.style.color = brightness > 128 ? '#000' : '#fff';
+      
+      cmykResult.textContent = `${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%`;
+      document.getElementById('cValue').textContent = cmyk.c + '%';
+      document.getElementById('mValue').textContent = cmyk.m + '%';
+      document.getElementById('yValue').textContent = cmyk.y + '%';
+      document.getElementById('kValue').textContent = cmyk.k + '%';
+    }
+    
+    function rgbToCmyk(r, g, b) {
+      let c = 1 - (r / 255);
+      let m = 1 - (g / 255);
+      let y = 1 - (b / 255);
+      let k = Math.min(c, m, y);
+      
+      if (k === 1) {
+        return { c: 0, m: 0, y: 0, k: 100 };
+      }
+      
+      c = Math.round(((c - k) / (1 - k)) * 100);
+      m = Math.round(((m - k) / (1 - k)) * 100);
+      y = Math.round(((y - k) / (1 - k)) * 100);
+      k = Math.round(k * 100);
+      
+      return { c, m, y, k };
+    }
+    
+    function copyCMYK() {
+      navigator.clipboard.writeText(cmykResult.textContent).then(() => {
+        alert('CMYK copied: ' + cmykResult.textContent);
+      });
+    }
+    
+    function copyCSS() {
+      const css = `color: ${cmykResult.textContent};`;
+      navigator.clipboard.writeText(css).then(() => {
+        alert('CSS copied: ' + css);
+      });
+    }
+    
+    function randomColor() {
+      rInput.value = Math.floor(Math.random() * 256);
+      gInput.value = Math.floor(Math.random() * 256);
+      bInput.value = Math.floor(Math.random() * 256);
+      updateFromInputs();
+    }
+    
+    // Event listeners
+    rInput.addEventListener('input', updateFromInputs);
+    gInput.addEventListener('input', updateFromInputs);
+    bInput.addEventListener('input', updateFromInputs);
+    rSlider.addEventListener('input', updateFromSliders);
+    gSlider.addEventListener('input', updateFromSliders);
+    bSlider.addEventListener('input', updateFromSliders);
+    
+    // Initialize
+    updateFromInputs();
+  </script>
+</body>
+</html>

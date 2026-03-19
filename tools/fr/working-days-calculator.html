@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr"><head><meta charset="UTF-8">
+<title>Calculateur de Jours Ouvrés - 205 Tools</title>
+<link rel="stylesheet" href="../assets/css/tools.css">
+<style>
+.result-display{text-align:center;padding:40px;background:linear-gradient(135deg,rgba(79,142,247,.1) 0%,transparent 100%);border-radius:12px;border:1px solid var(--border);margin-top:20px}
+.result-number{font-size:72px;font-weight:700;color:var(--primary)}
+.result-label{font-size:20px;color:var(--text-secondary);margin-top:10px}
+.result-details{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;margin-top:30px}
+.result-box{background:var(--bg-card);padding:20px;border-radius:8px;text-align:center}
+.result-box .number{font-size:28px;font-weight:700}
+.result-box.working .number{color:var(--success)}
+.result-box.weekend .number{color:var(--warning)}
+.result-box.holiday .number{color:var(--error)}
+.result-box .label{font-size:11px;color:var(--text-secondary);margin-top:5px;text-transform:uppercase}
+.calendar-view{margin-top:30px}
+.calendar-month{margin-bottom:20px;background:var(--bg-card);border-radius:8px;padding:15px}
+.calendar-month h4{color:var(--primary);margin-bottom:10px;text-align:center}
+.mini-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.mini-day{text-align:center;padding:10px 5px;border-radius:4px;font-size:12px}
+.mini-day.header{color:var(--primary);font-weight:600}
+.mini-day.working{background:rgba(34,197,94,.2);color:#86efac}
+.mini-day.weekend{background:rgba(245,158,11,.2);color:#fbbf24}
+.mini-day.holiday{background:rgba(239,68,68,.2);color:#fca5a5}
+.legend{display:flex;gap:20px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-secondary)}
+.legend-box{width:20px;height:20px;border-radius:4px}
+.legend-box.working{background:rgba(34,197,94,.2)}
+.legend-box.weekend{background:rgba(245,158,11,.2)}
+.legend-box.holiday{background:rgba(239,68,68,.2)}
+.options-group{background:var(--bg-card);padding:20px;border-radius:8px;margin-bottom:20px}
+.checkbox-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+.checkbox-item{display:flex;align-items:center;gap:8px}
+</style></head>
+<body><div class="container">
+<a href="/" class="back-link">← Accueil</a>
+<header><h1>💼 Calculateur de Jours Ouvrés</h1><p>Calculez les jours ouvrés entre deux dates</p></header>
+<div class="tool-container">
+<div class="tool-header">
+<h2>Calculer Jours Ouvrés</h2>
+<div class="lang-selector">
+<a href="../en/working-days-calculator.html" class="lang-btn">EN</a>
+<a href="../es/working-days-calculator.html" class="lang-btn">ES</a>
+<a href="./working-days-calculator.html" class="lang-btn active">FR</a>
+<a href="../de/working-days-calculator.html" class="lang-btn">DE</a>
+<a href="../ar/working-days-calculator.html" class="lang-btn">AR</a>
+</div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<div class="form-group"><label>Date de Début</label><input type="date" id="startDate" class="tool-input"></div>
+<div class="form-group"><label>Date de Fin</label><input type="date" id="endDate" class="tool-input"></div>
+</div>
+<div class="options-group"><h4>⚙️ Options</h4><div class="checkbox-grid">
+<div class="checkbox-item"><input type="checkbox" id="includeStart" checked><label for="includeStart">Inclure date début</label></div>
+<div class="checkbox-item"><input type="checkbox" id="includeEnd" checked><label for="includeEnd">Inclure date fin</label></div>
+<div class="checkbox-item"><input type="checkbox" id="excludeWeekends" checked><label for="excludeWeekends">Exclure week-ends</label></div>
+<div class="checkbox-item"><input type="checkbox" id="showCalendar"><label for="showCalendar">Afficher calendrier</label></div>
+</div></div>
+<div class="form-group"><label>Jours Fériés Personnalisés (un par ligne, format MM-JJ)</label><textarea id="holidays" class="tool-input" rows="3" placeholder="25-12\n01-01"></textarea></div>
+<div class="btn-group">
+<button class="btn btn-primary" onclick="calculateWorkingDays()">Calculer</button>
+<button class="btn btn-secondary" onclick="setThisMonth()">Ce Mois</button>
+<button class="btn btn-secondary" onclick="setThisYear()">Cette Année</button>
+</div>
+<div id="result" class="result-display" style="display:none">
+<div class="result-number" id="workingDays"></div>
+<div class="result-label">Jours Ouvrés</div>
+<div class="result-details">
+<div class="result-box working"><div class="number" id="totalWorking"></div><div class="label">Ouvrés</div></div>
+<div class="result-box weekend"><div class="number" id="totalWeekends"></div><div class="label">Week-ends</div></div>
+<div class="result-box holiday"><div class="number" id="totalHolidays"></div><div class="label">Fériés</div></div>
+<div class="result-box"><div class="number" id="totalDays"></div><div class="label">Jours Totaux</div></div>
+</div>
+<div class="legend">
+<div class="legend-item"><div class="legend-box working"></div><span>Ouvré</span></div>
+<div class="legend-item"><div class="legend-box weekend"></div><span>Week-end</span></div>
+<div class="legend-item"><div class="legend-box holiday"></div><span>Férié</span></div>
+</div>
+</div>
+<div id="calendarView" class="calendar-view" style="display:none"></div>
+</div>
+<footer><p>205 Tools © 2025 - Outils Gratuits</p></footer>
+</div>
+<script>
+const dayNames=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+const monthNames=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+function setThisMonth(){const now=new Date();const start=new Date(now.getFullYear(),now.getMonth(),1);const end=new Date(now.getFullYear(),now.getMonth()+1,0);document.getElementById('startDate').value=start.toISOString().split('T')[0];document.getElementById('endDate').value=end.toISOString().split('T')[0];calculateWorkingDays();}
+function setThisYear(){const now=new Date();document.getElementById('startDate').value=`${now.getFullYear()}-01-01`;document.getElementById('endDate').value=`${now.getFullYear()}-12-31`;calculateWorkingDays();}
+function parseHolidays(){return document.getElementById('holidays').value.split('\n').map(h=>h.trim()).filter(h=>h);}
+function isHoliday(date,holidays){const month=String(date.getMonth()+1).padStart(2,'0');const day=String(date.getDate()).padStart(2,'0');return holidays.includes(`${month}-${day}`);}
+function calculateWorkingDays(){
+const startValue=document.getElementById('startDate').value;const endValue=document.getElementById('endDate').value;
+if(!startValue||!endValue){alert('Veuillez sélectionner les deux dates');return;}
+const start=new Date(startValue+'T00:00:00');const end=new Date(endValue+'T00:00:00');
+if(start>end){alert('La date de début doit être antérieure');return;}
+const includeStart=document.getElementById('includeStart').checked;const includeEnd=document.getElementById('includeEnd').checked;
+const excludeWeekends=document.getElementById('excludeWeekends').checked;const showCalendar=document.getElementById('showCalendar').checked;
+const holidays=parseHolidays();let current=new Date(start);if(!includeStart)current.setDate(current.getDate()+1);
+let workingDays=0,weekendDays=0,holidayDays=0,totalDays=0;const calendarDays=[];
+while(current<=end){
+const dayOfWeek=current.getDay();const isWeekend=dayOfWeek===0||dayOfWeek===6;const isHol=isHoliday(current,holidays);
+calendarDays.push({date:new Date(current),isWorking:!isWeekend&&!isHol,isWeekend:isWeekend,isHoliday:isHol});
+if(isHol)holidayDays++;else if(isWeekend)weekendDays++;else workingDays++;totalDays++;current.setDate(current.getDate()+1);
+}
+if(!includeEnd){totalDays--;const last=calendarDays.pop();if(last.isHoliday)holidayDays--;else if(last.isWeekend)weekendDays--;else workingDays--;}
+document.getElementById('workingDays').textContent=workingDays;document.getElementById('totalWorking').textContent=workingDays;
+document.getElementById('totalWeekends').textContent=weekendDays;document.getElementById('totalHolidays').textContent=holidayDays;document.getElementById('totalDays').textContent=totalDays;
+document.getElementById('result').style.display='block';
+if(showCalendar)renderCalendar(calendarDays);else document.getElementById('calendarView').style.display='none';
+}
+function renderCalendar(days){const container=document.getElementById('calendarView');const months={};days.forEach(day=>{const key=`${day.date.getFullYear()}-${day.date.getMonth()}`;if(!months[key])months[key]={year:day.date.getFullYear(),month:day.date.getMonth(),days:[]};months[key].days.push(day);});let html='<h3>Vue Calendrier</h3>';Object.values(months).forEach(m=>{html+=`<div class="calendar-month"><h4>${monthNames[m.month]} ${m.year}</h4><div class="mini-calendar">`;dayNames.forEach(d=>html+=`<div class="mini-day header">${d}</div>`);const firstDay=new Date(m.year,m.month,1);for(let i=0;i<firstDay.getDay();i++)html+='<div class="mini-day"></div>';const daysInMonth=new Date(m.year,m.month+1,0).getDate();const dayMap=new Map(m.days.map(d=>[d.date.getDate(),d]));for(let d=1;d<=daysInMonth;d++){const dayInfo=dayMap.get(d);let cls='mini-day';if(dayInfo){if(dayInfo.isHoliday)cls+=' holiday';else if(dayInfo.isWeekend)cls+=' weekend';else cls+=' working';}html+=`<div class="${cls}">${d}</div>`;}html+='</div></div>';});container.innerHTML=html;container.style.display='block';}
+</script></body></html>

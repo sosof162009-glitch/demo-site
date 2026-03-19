@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL-Slug-Generator - 205 Tools</title>
+  <meta name="description" content="Erstellt SEO-freundliche URL-Slugs aus Text.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script src="../assets/tools.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Startseite</a>
+    
+    <header>
+      <h1>🔗 URL-Slug-Generator</h1>
+      <p>Erstellt SEO-freundliche URL-Slugs aus beliebigem Text.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Generieren</h2>
+        <div class="lang-selector">
+          <a href="../en/url-slug-generator.html" class="lang-btn ">EN</a><a href="../es/url-slug-generator.html" class="lang-btn ">ES</a><a href="../fr/url-slug-generator.html" class="lang-btn ">FR</a><a href="../de/url-slug-generator.html" class="lang-btn active">DE</a><a href="../ar/url-slug-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Text / Titel</label>
+        <textarea id="inputText" rows="4" placeholder="Geben Sie hier den Titel Ihrer Seite oder Text ein..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Optionen</label>
+        <div style="display:flex; gap:15px; flex-wrap:wrap;">
+          <label style="display:flex; align-items:center; gap:5px;">
+            <input type="checkbox" id="lowercase" checked> Kleinbuchstaben
+          </label>
+          <label style="display:flex; align-items:center; gap:5px;">
+            <input type="checkbox" id="removeStopWords"> Stoppwörter entfernen
+          </label>
+          <label style="display:flex; align-items:center; gap:5px;">
+            <input type="checkbox" id="maxLength"> Maximale Länge
+            <input type="number" id="maxChars" value="60" min="10" max="200" style="width:60px; padding:4px;">
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Trennzeichen</label>
+        <select id="separator">
+          <option value="-">Bindestrich (-)</option>
+          <option value="_">Unterstrich (_)</option>
+        </select>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateSlug()">Slug generieren</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Zurücksetzen</button>
+      </div>
+      
+      <div class="code-output" id="output" style="display:none;">
+        <pre id="codeContent"></pre>
+        <button class="btn btn-success" data-success="Kopiert!" onclick="copyToClipboard(document.getElementById('codeContent').textContent, this)">Kopieren</button>
+      </div>
+      
+      <script>
+        const stopWords = ['der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einer', 'eines', 'einem', 'einen', 'und', 'oder', 'aber', 'von', 'vom', 'zu', 'zum', 'zur', 'bei', 'beim', 'mit', 'ohne', 'für', 'gegen', 'um', 'an', 'am', 'auf', 'aus', 'nach', 'ist', 'sind', 'war', 'waren', 'sein', 'worden'];
+        
+        function generateSlug() {
+          let text = document.getElementById('inputText').value.trim();
+          const lowercase = document.getElementById('lowercase').checked;
+          const removeStop = document.getElementById('removeStopWords').checked;
+          const useMaxLength = document.getElementById('maxLength').checked;
+          const maxChars = parseInt(document.getElementById('maxChars').value) || 60;
+          const separator = document.getElementById('separator').value;
+          
+          if (!text) {
+            alert('Bitte geben Sie einen Text ein');
+            return;
+          }
+          
+          if (lowercase) {
+            text = text.toLowerCase();
+          }
+          
+          if (removeStop) {
+            const words = text.split(/\s+/);
+            text = words.filter(w => !stopWords.includes(w.toLowerCase())).join(' ');
+          }
+          
+          let slug = text
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-zA-Z0-9\s-]/g, '')
+            .replace(/\s+/g, separator)
+            .replace(new RegExp(separator + '+', 'g'), separator);
+          
+          slug = slug.replace(new RegExp('^' + separator + '+|' + separator + '+$', 'g'), '');
+          
+          if (useMaxLength && slug.length > maxChars) {
+            slug = slug.substring(0, maxChars);
+            const lastSepIndex = slug.lastIndexOf(separator);
+            if (lastSepIndex > maxChars * 0.7) {
+              slug = slug.substring(0, lastSepIndex);
+            }
+            slug = slug.replace(new RegExp(separator + '+$', 'g'), '');
+          }
+          
+          document.getElementById('codeContent').textContent = slug;
+          document.getElementById('output').style.display = 'block';
+        }
+        
+        function clearFields() {
+          document.getElementById('inputText').value = '';
+          document.getElementById('output').style.display = 'none';
+        }
+      </script>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Tools</p>
+    </footer>
+  </div>
+</body>
+</html>

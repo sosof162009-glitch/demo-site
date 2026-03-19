@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seitenverhältnis Rechner - 205 Tools</title>
+  <meta name="description" content="Berechnen Sie Seitenverhältnisse für Bilder, Videos und Displays.">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Startseite</a>
+    
+    <header>
+      <h1>📐 Seitenverhältnis Rechner</h1>
+      <p>Berechnen Sie Seitenverhältnisse für Bilder, Videos und Displays.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Berechnen</h2>
+        <div class="lang-selector">
+          <a href="../en/aspect-ratio-calculator.html" class="lang-btn">EN</a><a href="../es/aspect-ratio-calculator.html" class="lang-btn">ES</a><a href="../fr/aspect-ratio-calculator.html" class="lang-btn">FR</a><a href="../de/aspect-ratio-calculator.html" class="lang-btn active">DE</a><a href="../ar/aspect-ratio-calculator.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="ratio-tab" onclick="switchTab('ratio-tab')">Verhältnis Finden</button>
+        <button class="tab-btn" data-tab="dimensions-tab" onclick="switchTab('dimensions-tab')">Abmessungen Finden</button>
+        <button class="tab-btn" data-tab="common-tab" onclick="switchTab('common-tab')">Häufige Verhältnisse</button>
+      </div>
+      
+      <div id="ratio-tab" class="tab-content active">
+        <div class="converter-grid">
+          <div class="converter-box">
+            <div class="form-group">
+              <label for="width">Breite (Pixel)</label>
+              <input type="number" id="width" placeholder="1920" oninput="calculateRatio()">
+            </div>
+          </div>
+          <div class="converter-box">
+            <div class="form-group">
+              <label for="height">Höhe (Pixel)</label>
+              <input type="number" id="height" placeholder="1080" oninput="calculateRatio()">
+            </div>
+          </div>
+        </div>
+        
+        <div class="result-box" id="ratioResult" style="display:none; margin-top: 20px;">
+          <div class="result-value" id="ratioValue">-</div>
+          <div class="result-label">Seitenverhältnis</div>
+        </div>
+      </div>
+      
+      <div id="dimensions-tab" class="tab-content">
+        <div class="form-group">
+          <label for="aspectRatio">Seitenverhältnis</label>
+          <select id="aspectRatio" onchange="calculateDimensions()">
+            <option value="16:9">16:9 (HD, Full HD, 4K)</option>
+            <option value="4:3">4:3 (Standard)</option>
+            <option value="21:9">21:9 (Ultra-Wide)</option>
+            <option value="1:1">1:1 (Quadrat)</option>
+            <option value="3:2">3:2 (Fotografie)</option>
+            <option value="9:16">9:16 (Vertikales Video)</option>
+            <option value="2.35:1">2.35:1 (Cinemascope)</option>
+          </select>
+        </div>
+        
+        <div class="converter-grid">
+          <div class="converter-box">
+            <div class="form-group">
+              <label for="knownSide">Bekannte Seite</label>
+              <select id="knownSide" onchange="calculateDimensions()">
+                <option value="width">Breite</option>
+                <option value="height">Höhe</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="knownValue">Wert (Pixel)</label>
+              <input type="number" id="knownValue" placeholder="1920" oninput="calculateDimensions()">
+            </div>
+          </div>
+          <div class="converter-box">
+            <div class="form-group">
+              <label>Berechnete Abmessungen</label>
+              <div class="result-value" id="calcDimensions" style="font-size: 24px;">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="common-tab" class="tab-content">
+        <table class="data-table" style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: var(--bg-secondary);">
+              <th style="padding: 10px; text-align: left;">Verhältnis</th>
+              <th style="padding: 10px; text-align: left;">Häufige Verwendung</th>
+              <th style="padding: 10px; text-align: left;">Beispielauflösung</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">16:9</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">HD-TV, Monitore, YouTube</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">1920×1080</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">4:3</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">Alter TV, iPad</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">1024×768</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">21:9</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">Ultra-Wide Monitore</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">2560×1080</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">1:1</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">Instagram, Profilbilder</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">1080×1080</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">3:2</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">DSLR-Fotografie</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">3000×2000</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">9:16</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">Stories, TikTok, Reels</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">1080×1920</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">2.35:1</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">Kinofilme</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">2560×1088</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Kostenlose Tools</p></footer>
+  </div>
+  
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+    }
+    
+    function gcd(a, b) {
+      return b === 0 ? a : gcd(b, a % b);
+    }
+    
+    function calculateRatio() {
+      const width = parseInt(document.getElementById('width').value);
+      const height = parseInt(document.getElementById('height').value);
+      const resultBox = document.getElementById('ratioResult');
+      const resultValue = document.getElementById('ratioValue');
+      
+      if (!width || !height || width <= 0 || height <= 0) {
+        resultBox.style.display = 'none';
+        return;
+      }
+      
+      const divisor = gcd(width, height);
+      const ratioW = width / divisor;
+      const ratioH = height / divisor;
+      const decimal = (width / height).toFixed(3);
+      
+      resultValue.textContent = `${ratioW}:${ratioH} (${decimal})`;
+      resultBox.style.display = 'block';
+    }
+    
+    function calculateDimensions() {
+      const ratio = document.getElementById('aspectRatio').value;
+      const knownSide = document.getElementById('knownSide').value;
+      const knownValue = parseFloat(document.getElementById('knownValue').value);
+      const resultEl = document.getElementById('calcDimensions');
+      
+      if (!knownValue || knownValue <= 0) {
+        resultEl.textContent = '-';
+        return;
+      }
+      
+      const [ratioW, ratioH] = ratio.split(':').map(Number);
+      let width, height;
+      
+      if (knownSide === 'width') {
+        width = knownValue;
+        height = Math.round(knownValue * ratioH / ratioW);
+      } else {
+        height = knownValue;
+        width = Math.round(knownValue * ratioW / ratioH);
+      }
+      
+      resultEl.textContent = `${width} × ${height}`;
+    }
+  </script>
+</body>
+</html>

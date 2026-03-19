@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Schema Validator - 205 Tools</title>
+  <meta name="description" content="Validate JSON against JSON Schema.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .editor-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .editor-box { display: flex; flex-direction: column; }
+    .editor-box label { margin-bottom: 8px; }
+    .editor-box textarea { flex: 1; min-height: 250px; }
+    @media (max-width: 768px) { .editor-split { grid-template-columns: 1fr; } }
+    .valid { color: #22c55e; background: rgba(34,197,94,0.1); padding: 15px; border-radius: 8px; margin-top: 15px; }
+    .invalid { color: #ef4444; background: rgba(239,68,68,0.1); padding: 15px; border-radius: 8px; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>✅ JSON Schema Validator</h1>
+      <p>Validate JSON data against a JSON Schema</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Validator</h2>
+        <div class="lang-selector">
+          <a href="./json-schema-validator.html" class="lang-btn active">EN</a>
+          <a href="../es/json-schema-validator.html" class="lang-btn">ES</a>
+          <a href="../fr/json-schema-validator.html" class="lang-btn">FR</a>
+          <a href="../de/json-schema-validator.html" class="lang-btn">DE</a>
+          <a href="../ar/json-schema-validator.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="editor-split">
+        <div class="editor-box">
+          <label>JSON Data</label>
+          <textarea id="jsonInput" placeholder="Paste your JSON here...">{
+  "name": "John Doe",
+  "age": 30,
+  "email": "john@example.com"
+}</textarea>
+        </div>
+        
+        <div class="editor-box">
+          <label>JSON Schema</label>
+          <textarea id="schemaInput" placeholder="Paste your JSON Schema here...">{
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "age": { "type": "integer", "minimum": 0 },
+    "email": { "type": "string", "format": "email" }
+  },
+  "required": ["name", "age"]
+}</textarea>
+        </div>
+      </div>
+      
+      <div class="btn-group" style="margin-top: 20px;">
+        <button class="btn btn-primary" onclick="validate()">✅ Validate</button>
+        <button class="btn btn-secondary" onclick="loadExample()">Load Example</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div id="result"></div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function validate() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '';
+      
+      let jsonData, schemaData;
+      
+      try {
+        jsonData = JSON.parse(document.getElementById('jsonInput').value);
+      } catch (e) {
+        resultDiv.innerHTML = '<div class="invalid">❌ JSON Parse Error: ' + e.message + '</div>';
+        return;
+      }
+      
+      try {
+        schemaData = JSON.parse(document.getElementById('schemaInput').value);
+      } catch (e) {
+        resultDiv.innerHTML = '<div class="invalid">❌ Schema Parse Error: ' + e.message + '</div>';
+        return;
+      }
+      
+      const errors = validateSchema(jsonData, schemaData);
+      
+      if (errors.length === 0) {
+        resultDiv.innerHTML = '<div class="valid">✅ Valid! JSON matches the schema.</div>';
+      } else {
+        let errorHtml = '<div class="invalid">❌ Validation Errors:<ul>';
+        errors.forEach(err => {
+          errorHtml += '<li>' + err + '</li>';
+        });
+        errorHtml += '</ul></div>';
+        resultDiv.innerHTML = errorHtml;
+      }
+    }
+    
+    function validateSchema(data, schema, path = '') {
+      const errors = [];
+      
+      if (schema.type) {
+        const actualType = getJsonType(data);
+        if (schema.type !== actualType) {
+          errors.push(path + ': Expected type "' + schema.type + '" but got "' + actualType + '"');
+        }
+      }
+      
+      if (schema.type === 'object' && schema.properties) {
+        for (const [key, propSchema] of Object.entries(schema.properties)) {
+          const newPath = path ? path + '.' + key : key;
+          if (key in data) {
+            errors.push(...validateSchema(data[key], propSchema, newPath));
+          } else if (schema.required && schema.required.includes(key)) {
+            errors.push(newPath + ': Required property missing');
+          }
+        }
+      }
+      
+      if (schema.type === 'array' && schema.items) {
+        if (Array.isArray(data)) {
+          data.forEach((item, i) => {
+            errors.push(...validateSchema(item, schema.items, path + '[' + i + ']'));
+          });
+        }
+      }
+      
+      if (schema.minimum !== undefined && data < schema.minimum) {
+        errors.push(path + ': Value must be >= ' + schema.minimum);
+      }
+      
+      if (schema.maximum !== undefined && data > schema.maximum) {
+        errors.push(path + ': Value must be <= ' + schema.maximum);
+      }
+      
+      if (schema.minLength !== undefined && data.length < schema.minLength) {
+        errors.push(path + ': String must be at least ' + schema.minLength + ' characters');
+      }
+      
+      if (schema.maxLength !== undefined && data.length > schema.maxLength) {
+        errors.push(path + ': String must be at most ' + schema.maxLength + ' characters');
+      }
+      
+      return errors;
+    }
+    
+    function getJsonType(value) {
+      if (value === null) return 'null';
+      if (Array.isArray(value)) return 'array';
+      return typeof value;
+    }
+    
+    function loadExample() {
+      document.getElementById('jsonInput').value = JSON.stringify({
+        "name": "John Doe",
+        "age": 30,
+        "email": "john@example.com"
+      }, null, 2);
+      document.getElementById('schemaInput').value = JSON.stringify({
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "age": { "type": "integer", "minimum": 0 },
+          "email": { "type": "string" }
+        },
+        "required": ["name", "age"]
+      }, null, 2);
+    }
+    
+    function clearAll() {
+      document.getElementById('jsonInput').value = '';
+      document.getElementById('schemaInput').value = '';
+      document.getElementById('result').innerHTML = '';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مولد رابط واتساب | 205 أداة</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="../en/whatsapp-link-generator.html">English</option>
+      <option value="whatsapp-link-generator.html" selected>العربية</option>
+      <option value="../fr/whatsapp-link-generator.html">Français</option>
+      <option value="../es/whatsapp-link-generator.html">Español</option>
+      <option value="../de/whatsapp-link-generator.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>مولد رابط واتساب</h1>
+      <p>أنشئ روابط واتساب قابلة للنقر مع رسائل مسبقة التعبئة</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="phone-input">رقم الهاتف (مع رمز الدولة):</label>
+        <input type="text" id="phone-input" class="tool-input" placeholder="مثال: +966123456789">
+        <small class="help-text">أدخل رقم الهاتف مع رمز الدولة بدون مسافات أو شرطات</small>
+      </div>
+
+      <div class="input-group">
+        <label for="message-input">رسالة مسبقة (اختياري):</label>
+        <textarea id="message-input" class="tool-textarea" placeholder="أدخل رسالتك..."></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateLink()">إنشاء الرابط</button>
+        <button class="btn btn-secondary" onclick="clearAll()">مسح</button>
+      </div>
+
+      <div class="input-group" style="margin-top: 20px;">
+        <label for="link-output">الرابط المُنشأ:</label>
+        <textarea id="link-output" class="tool-textarea" placeholder="سيظهر رابط واتساب هنا..." readonly></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="copyLink()">نسخ الرابط</button>
+        <button class="btn btn-primary" onclick="openLink()">فتح الرابط</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span>تم النسخ!</span>
+  </div>
+
+  <script>
+    function generateLink() {
+      const phone = document.getElementById('phone-input').value.trim();
+      const message = document.getElementById('message-input').value.trim();
+      
+      if (!phone) {
+        alert('الرجاء إدخال رقم الهاتف');
+        return;
+      }
+      
+      // Remove non-digit characters from phone
+      const cleanPhone = phone.replace(/\D/g, '');
+      
+      let link = `https://wa.me/${cleanPhone}`;
+      if (message) {
+        link += `?text=${encodeURIComponent(message)}`;
+      }
+      
+      document.getElementById('link-output').value = link;
+    }
+
+    function copyLink() {
+      const output = document.getElementById('link-output');
+      if (!output.value) {
+        alert('لا يوجد رابط للنسخ. قم بإنشاء الرابط أولاً.');
+        return;
+      }
+      output.select();
+      document.execCommand('copy');
+      showToast();
+    }
+
+    function openLink() {
+      const link = document.getElementById('link-output').value;
+      if (!link) {
+        alert('لا يوجد رابط للفتح. قم بإنشاء الرابط أولاً.');
+        return;
+      }
+      window.open(link, '_blank');
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function clearAll() {
+      document.getElementById('phone-input').value = '';
+      document.getElementById('message-input').value = '';
+      document.getElementById('link-output').value = '';
+    }
+  </script>
+</body>
+</html>

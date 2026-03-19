@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertisseur HEX vers RGB - 205 Tools</title>
+  <meta name="description" content="Convertissez les codes couleur HEX en valeurs RGB instantanément.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .color-preview { width: 100%; height: 120px; border-radius: 12px; border: 3px solid var(--border); margin: 20px 0; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.3); transition: background-color 0.3s ease; }
+    .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+    .input-group input { flex: 1; padding: 15px; font-size: 18px; font-family: monospace; text-align: center; text-transform: uppercase; }
+    .result-box { background: var(--bg-secondary); border-radius: 12px; padding: 20px; margin: 20px 0; border: 2px solid var(--border); }
+    .result-value { font-family: monospace; font-size: 24px; color: var(--accent); text-align: center; margin: 10px 0; }
+    .color-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+    .info-box { background: var(--bg-secondary); padding: 15px; border-radius: 8px; text-align: center; }
+    .info-box label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; }
+    .info-box span { font-size: 20px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Accueil</a>
+    <header><h1>🎨 Convertisseur HEX vers RGB</h1><p>Convertissez les codes couleur HEX en valeurs RGB</p></header>
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Convertisseur</h2>
+        <div class="lang-selector">
+          <a href="../en/hex-to-rgb.html" class="lang-btn">EN</a>
+          <a href="../es/hex-to-rgb.html" class="lang-btn">ES</a>
+          <a href="./hex-to-rgb.html" class="lang-btn active">FR</a>
+          <a href="../de/hex-to-rgb.html" class="lang-btn">DE</a>
+          <a href="../ar/hex-to-rgb.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Code HEX</label>
+        <div class="input-group">
+          <span style="font-size: 24px; padding: 15px;">#</span>
+          <input type="text" id="hexInput" placeholder="4f8ef7" maxlength="6" value="4f8ef7">
+        </div>
+      </div>
+      
+      <div id="colorPreview" class="color-preview" style="background-color: #4f8ef7;">
+        <span id="previewText">#4f8ef7</span>
+      </div>
+      
+      <div class="result-box">
+        <label>Résultat RGB</label>
+        <div class="result-value" id="rgbResult">rgb(79, 142, 247)</div>
+      </div>
+      
+      <div class="color-info">
+        <div class="info-box">
+          <label>Rouge (R)</label>
+          <span id="rValue" style="color: #ff4444;">79</span>
+        </div>
+        <div class="info-box">
+          <label>Vert (G)</label>
+          <span id="gValue" style="color: #44ff44;">142</span>
+        </div>
+        <div class="info-box">
+          <label>Bleu (B)</label>
+          <span id="bValue" style="color: #4444ff;">247</span>
+        </div>
+      </div>
+      
+      <div class="btn-group" style="margin-top: 20px;">
+        <button class="btn btn-primary" onclick="copyRGB()">📋 Copier RGB</button>
+        <button class="btn btn-secondary" onclick="copyCSS()">📝 Copier CSS</button>
+        <button class="btn btn-success" onclick="randomColor()">🎲 Aléatoire</button>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Outils Gratuits</p></footer>
+  </div>
+  
+  <script>
+    const hexInput = document.getElementById('hexInput');
+    const colorPreview = document.getElementById('colorPreview');
+    const previewText = document.getElementById('previewText');
+    const rgbResult = document.getElementById('rgbResult');
+    const rValue = document.getElementById('rValue');
+    const gValue = document.getElementById('gValue');
+    const bValue = document.getElementById('bValue');
+    
+    hexInput.addEventListener('input', convertHexToRGB);
+    
+    function convertHexToRGB() {
+      let hex = hexInput.value.trim().replace('#', '');
+      if (hex.length === 3) { hex = hex.split('').map(c => c + c).join(''); }
+      if (!/^[0-9A-Fa-f]{6}$/.test(hex)) { return; }
+      
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+      const fullHex = '#' + hex;
+      
+      colorPreview.style.backgroundColor = fullHex;
+      previewText.textContent = fullHex;
+      
+      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      previewText.style.color = brightness > 128 ? '#000' : '#fff';
+      
+      rgbResult.textContent = `rgb(${r}, ${g}, ${b})`;
+      rValue.textContent = r;
+      gValue.textContent = g;
+      bValue.textContent = b;
+    }
+    
+    function copyRGB() {
+      navigator.clipboard.writeText(rgbResult.textContent).then(() => {
+        alert('RGB copié: ' + rgbResult.textContent);
+      });
+    }
+    
+    function copyCSS() {
+      const css = `color: ${rgbResult.textContent};`;
+      navigator.clipboard.writeText(css).then(() => {
+        alert('CSS copié: ' + css);
+      });
+    }
+    
+    function randomColor() {
+      const randomHex = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+      hexInput.value = randomHex;
+      convertHexToRGB();
+    }
+    
+    convertHexToRGB();
+  </script>
+</body>
+</html>

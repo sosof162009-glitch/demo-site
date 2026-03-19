@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image en Niveaux de Gris | 205-tools</title>
+    <meta name="description" content="Convertissez des images en niveaux de gris en ligne. Transformez des photos colorées en noir et blanc instantanément.">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body[lang="ar"] { font-family: 'Tajawal', 'DM Sans', sans-serif; }
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+        .comparison-box { text-align: center; padding: 15px; background: var(--bg-secondary); border-radius: 8px; }
+        .comparison-box img { max-width: 100%; max-height: 250px; border-radius: 8px; }
+        .intensity-slider { width: 100%; margin: 15px 0; }
+        .intensity-value { text-align: center; font-weight: 600; color: var(--primary); }
+    </style>
+</head>
+<body lang="fr">
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">🛠️</div>
+                <span>205-tools</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/fr/">Accueil</a>
+                <a href="/fr/tools.html">Outils</a>
+                <a href="/fr/about.html">À propos</a>
+                <a href="/fr/contact.html">Contact</a>
+            </nav>
+            <div class="language-selector">
+                <select id="languageSelector">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="fr" selected>Français</option>
+                    <option value="es">Español</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="tool-header-section">
+            <div class="tool-icon">⚫</div>
+            <h1 class="tool-title">Image en Niveaux de Gris</h1>
+            <p class="tool-description">Convertissez des images en noir et blanc.</p>
+        </section>
+
+        <div class="tool-container">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Déposez votre image ici ou cliquez pour parcourir</div>
+                <div class="upload-hint">Prend en charge les formats JPG, PNG, WebP, GIF</div>
+                <input type="file" class="upload-input" id="uploadInput" accept="image/*">
+            </div>
+
+            <div class="file-info hidden" id="fileInfo">
+                <span class="file-info-icon">📄</span>
+                <div class="file-info-details">
+                    <div class="file-info-name"></div>
+                    <div class="file-info-size"></div>
+                </div>
+                <button class="file-remove" onclick="removeFile()" title="Supprimer le fichier">✕</button>
+            </div>
+
+            <div class="preview-area hidden" id="previewArea">
+                <div class="preview-title">Aperçu</div>
+            </div>
+
+            <div class="controls-section" id="controlsSection">
+                <div class="controls-title">Paramètres des Niveaux de Gris</div>
+                <div class="control-group">
+                    <label class="control-label">Format de Sortie</label>
+                    <select class="control-input" id="outputFormat">
+                        <option value="png">PNG (Meilleure qualité)</option>
+                        <option value="jpg">JPG (Taille plus petite)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="comparison hidden" id="comparison">
+                <div class="comparison-box">
+                    <div><strong>Original</strong></div>
+                    <img id="originalPreview" src="" alt="Original">
+                </div>
+                <div class="comparison-box">
+                    <div><strong>Niveaux de Gris</strong></div>
+                    <img id="grayscalePreview" src="" alt="Niveaux de Gris">
+                </div>
+            </div>
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" id="convertBtn" disabled onclick="convertToGrayscale()">
+                    <span>⚫ Convertir en Niveaux de Gris</span>
+                </button>
+                <button class="btn btn-secondary" onclick="resetTool()">
+                    <span>Réinitialiser</span>
+                </button>
+            </div>
+
+            <div class="result-area" id="resultArea">
+                <div class="result-title"><span>✓</span> Conversion Terminée !</div>
+                <div class="btn-group">
+                    <button class="btn btn-success" id="downloadBtn" onclick="downloadResult()">
+                        <span>💾 Télécharger l'Image en Niveaux de Gris</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <section class="info-section">
+            <h2 class="info-title">À propos de la Conversion en Niveaux de Gris</h2>
+            <div class="info-content">
+                <p>Convertissez des images colorées en noir et blanc en utilisant la méthode de luminosité, qui prend en compte la perception humaine de la luminosité des couleurs.</p>
+                <p>Tout le traitement se fait localement dans votre navigateur - vos images ne sont jamais téléchargées sur un serveur.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/fr/">Accueil</a>
+                <a href="/fr/tools.html">Outils</a>
+                <a href="/fr/privacy.html">Politique de Confidentialité</a>
+            </div>
+            <div class="footer-copyright">© 2025 205-tools. Tous droits réservés.</div>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        let currentFile = null;
+        let grayscaleDataUrl = null;
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) {
+                showToast('Veuillez sélectionner un fichier image', 'error');
+                return;
+            }
+            currentFile = file;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'preview-image';
+                img.id = 'previewImage';
+                
+                const previewArea = document.getElementById('previewArea');
+                previewArea.innerHTML = '<div class="preview-title">Aperçu</div>';
+                previewArea.appendChild(img);
+                previewArea.classList.remove('hidden');
+                
+                document.getElementById('fileInfo').querySelector('.file-info-name').textContent = file.name;
+                document.getElementById('fileInfo').querySelector('.file-info-size').textContent = formatFileSize(file.size);
+                document.getElementById('fileInfo').classList.remove('hidden');
+                
+                document.getElementById('convertBtn').disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function convertToGrayscale() {
+            if (!currentFile) return;
+            
+            const format = document.getElementById('outputFormat').value;
+            const convertBtn = document.getElementById('convertBtn');
+            convertBtn.disabled = true;
+            convertBtn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span> Conversion...';
+            
+            showProgress();
+            updateProgress(20);
+            
+            setTimeout(() => {
+                const img = document.getElementById('previewImage');
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                
+                updateProgress(50);
+                
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const pixels = imageData.data;
+                
+                for (let i = 0; i < pixels.length; i += 4) {
+                    const r = pixels[i];
+                    const g = pixels[i + 1];
+                    const b = pixels[i + 2];
+                    
+                    const gray = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+                    
+                    pixels[i] = gray;
+                    pixels[i + 1] = gray;
+                    pixels[i + 2] = gray;
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+                
+                updateProgress(80);
+                
+                if (format === 'jpg') {
+                    grayscaleDataUrl = canvas.toDataURL('image/jpeg', 0.95);
+                } else {
+                    grayscaleDataUrl = canvas.toDataURL('image/png');
+                }
+                
+                document.getElementById('originalPreview').src = img.src;
+                document.getElementById('grayscalePreview').src = grayscaleDataUrl;
+                document.getElementById('comparison').classList.remove('hidden');
+                
+                updateProgress(100);
+                showResult();
+                showToast('Conversion terminée !', 'success');
+                
+                convertBtn.innerHTML = '<span>⚫ Convertir en Niveaux de Gris</span>';
+                convertBtn.disabled = false;
+                hideProgress();
+            }, 100);
+        }
+
+        function downloadResult() {
+            if (grayscaleDataUrl) {
+                const link = document.createElement('a');
+                const format = document.getElementById('outputFormat').value;
+                const extension = format === 'jpg' ? '.jpg' : '.png';
+                link.download = 'niveaux-gris-' + (currentFile ? currentFile.name.replace(/\.[^/.]+$/, '') : 'image') + extension;
+                link.href = grayscaleDataUrl;
+                link.click();
+            }
+        }
+
+        function removeFile() {
+            currentFile = null;
+            grayscaleDataUrl = null;
+            document.getElementById('uploadInput').value = '';
+            document.getElementById('fileInfo').classList.add('hidden');
+            document.getElementById('previewArea').classList.add('hidden');
+            document.getElementById('comparison').classList.add('hidden');
+            document.getElementById('convertBtn').disabled = true;
+            hideResult();
+        }
+
+        function resetTool() {
+            removeFile();
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Octets';
+            const k = 1024;
+            const sizes = ['Octets', 'Ko', 'Mo'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showProgress() {
+            document.getElementById('progressContainer').style.display = 'block';
+        }
+
+        function hideProgress() {
+            document.getElementById('progressContainer').style.display = 'none';
+            updateProgress(0);
+        }
+
+        function updateProgress(percent) {
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = percent + '%';
+        }
+
+        function showResult() {
+            document.getElementById('resultArea').style.display = 'block';
+        }
+
+        function hideResult() {
+            document.getElementById('resultArea').style.display = 'none';
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-' + type;
+            toast.textContent = message;
+            document.getElementById('toastContainer').appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        document.getElementById('uploadInput').addEventListener('change', function(e) {
+            if (e.target.files.length) handleFile(e.target.files[0]);
+        });
+
+        const uploadArea = document.getElementById('uploadArea');
+        uploadArea.addEventListener('click', () => document.getElementById('uploadInput').click());
+        uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+    </script>
+</body>
+</html>

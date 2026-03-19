@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حاسبة دقة الشاشة - 205 Tools</title>
+  <meta name="description" content="احسب دقة الشاشات وكثافة البكسل (PPI) ومسافات المشاهدة.">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← الصفحة الرئيسية</a>
+    
+    <header>
+      <h1>🖥️ حاسبة دقة الشاشة</h1>
+      <p>احسب دقة الشاشات وكثافة البكسل (PPI) ومسافات المشاهدة.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>حساب</h2>
+        <div class="lang-selector">
+          <a href="../en/screen-resolution-calculator.html" class="lang-btn">EN</a><a href="../es/screen-resolution-calculator.html" class="lang-btn">ES</a><a href="../fr/screen-resolution-calculator.html" class="lang-btn">FR</a><a href="../de/screen-resolution-calculator.html" class="lang-btn">DE</a><a href="../ar/screen-resolution-calculator.html" class="lang-btn active">AR</a>
+        </div>
+      </div>
+      
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="ppi-tab" onclick="switchTab('ppi-tab')">حاسبة PPI</button>
+        <button class="tab-btn" data-tab="res-tab" onclick="switchTab('res-tab')">قائمة الدقة</button>
+      </div>
+      
+      <div id="ppi-tab" class="tab-content active">
+        <div class="converter-grid">
+          <div class="converter-box">
+            <div class="form-group">
+              <label for="screenWidth">عرض الدقة (بكسل)</label>
+              <input type="number" id="screenWidth" value="1920" oninput="calculatePPI()">
+            </div>
+            <div class="form-group">
+              <label for="screenHeight">ارتفاع الدقة (بكسل)</label>
+              <input type="number" id="screenHeight" value="1080" oninput="calculatePPI()">
+            </div>
+          </div>
+          <div class="converter-box">
+            <div class="form-group">
+              <label for="screenSize">الحجم القطري (بوصة)</label>
+              <input type="number" id="screenSize" value="24" step="0.1" oninput="calculatePPI()">
+            </div>
+            <div class="form-group">
+              <label>كثافة البكسل (PPI)</label>
+              <div class="result-value" id="ppiResult">91.79</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="result-box" id="ppiDetails" style="margin-top: 20px;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+            <div style="text-align: center; padding: 15px; background: var(--bg-secondary); border-radius: 8px;">
+              <div style="font-size: 24px; font-weight: bold; color: var(--primary);" id="totalPixels">2.07 MP</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">إجمالي الميجابكسل</div>
+            </div>
+            <div style="text-align: center; padding: 15px; background: var(--bg-secondary); border-radius: 8px;">
+              <div style="font-size: 24px; font-weight: bold; color: var(--primary);" id="aspectRatioResult">16:9</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">نسبة العرض</div>
+            </div>
+            <div style="text-align: center; padding: 15px; background: var(--bg-secondary); border-radius: 8px;">
+              <div style="font-size: 24px; font-weight: bold; color: var(--primary);" id="viewingDistance">3.8 قدم</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">مسافة المشاهدة المثلى</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="res-tab" class="tab-content">
+        <table class="data-table" style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: var(--bg-secondary);">
+              <th style="padding: 10px; text-align: right;">الدقة</th>
+              <th style="padding: 10px; text-align: right;">الاسم</th>
+              <th style="padding: 10px; text-align: right;">النسبة</th>
+              <th style="padding: 10px; text-align: right;">الميجابكسل</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">1280×720</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">HD / 720p</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">16:9</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">0.92 MP</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">1920×1080</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">Full HD / 1080p</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">16:9</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">2.07 MP</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">2560×1440</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">QHD / 1440p</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">16:9</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">3.69 MP</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">3840×2160</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">4K UHD</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">16:9</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">8.29 MP</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">7680×4320</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">8K UHD</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">16:9</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">33.18 MP</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">3440×1440</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">UltraWide QHD</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">21:9</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">4.95 MP</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">5120×1440</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">Super UltraWide</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">32:9</td><td style="padding: 10px; border-bottom: 1px solid var(--border-color);">7.37 MP</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - أدوات مجانية</p></footer>
+  </div>
+  
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+    }
+    
+    function gcd(a, b) {
+      return b === 0 ? a : gcd(b, a % b);
+    }
+    
+    function calculatePPI() {
+      const width = parseFloat(document.getElementById('screenWidth').value) || 0;
+      const height = parseFloat(document.getElementById('screenHeight').value) || 0;
+      const diagonal = parseFloat(document.getElementById('screenSize').value) || 0;
+      
+      if (width > 0 && height > 0 && diagonal > 0) {
+        const ppi = Math.sqrt(width * width + height * height) / diagonal;
+        document.getElementById('ppiResult').textContent = ppi.toFixed(2);
+        
+        const megapixels = (width * height / 1000000).toFixed(2);
+        document.getElementById('totalPixels').textContent = megapixels + ' MP';
+        
+        const divisor = gcd(Math.round(width), Math.round(height));
+        const arW = Math.round(width / divisor);
+        const arH = Math.round(height / divisor);
+        document.getElementById('aspectRatioResult').textContent = arW + ':' + arH;
+        
+        const viewingDist = Math.round(diagonal * 1.5 * 10) / 10;
+        document.getElementById('viewingDistance').textContent = viewingDist + ' قدم';
+      }
+    }
+    
+    calculatePPI();
+  </script>
+</body>
+</html>

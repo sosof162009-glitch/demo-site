@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكرر النص - 205 Tools</title>
+  <meta name="description" content="كرر النص عدة مرات مع خيارات مختلفة.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← الرئيسية</a>
+    
+    <header>
+      <h1>🔄 مكرر النص</h1>
+      <p>كرر النص عدة مرات مع خيارات مخصصة</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>الإدخال</h2>
+        <div class="lang-selector">
+          <a href="../en/text-repeater.html" class="lang-btn">EN</a>
+          <a href="../es/text-repeater.html" class="lang-btn">ES</a>
+          <a href="../fr/text-repeater.html" class="lang-btn">FR</a>
+          <a href="../de/text-repeater.html" class="lang-btn">DE</a>
+          <a href="./text-repeater.html" class="lang-btn active">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>النص للتكرار</label>
+        <input type="text" id="textInput" placeholder="أدخل النص للتكرار...">
+      </div>
+      
+      <div class="form-group">
+        <label>عدد التكرارات</label>
+        <input type="number" id="repeatCount" value="10" min="1" max="1000">
+      </div>
+      
+      <div class="form-group">
+        <label>الفاصل</label>
+        <select id="separator">
+          <option value="">لا شيء</option>
+          <option value=" ">مسافة</option>
+          <option value="\n">سطر جديد</option>
+          <option value=",">فاصلة</option>
+          <option value=" - ">شرطة</option>
+        </select>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="repeatText()">تكرار</button>
+        <button class="btn btn-secondary" onclick="clearAll()">مسح</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>النتيجة</label>
+        <textarea id="output" rows="8" readonly placeholder="سيظهر النص المكرر هنا..."></textarea>
+      </div>
+      
+      <button class="btn btn-primary" onclick="copyResult()">نسخ النتيجة</button>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - أدوات مجانية على الإنترنت</p></footer>
+  </div>
+  
+  <script>
+    function repeatText() {
+      const text = document.getElementById('textInput').value;
+      const count = parseInt(document.getElementById('repeatCount').value) || 10;
+      const separator = document.getElementById('separator').value;
+      
+      if (!text) return;
+      
+      const result = Array(count).fill(text).join(separator);
+      document.getElementById('output').value = result;
+    }
+    
+    function clearAll() {
+      document.getElementById('textInput').value = '';
+      document.getElementById('output').value = '';
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('output');
+      output.select();
+      document.execCommand('copy');
+      alert('تم النسخ إلى الحافظة!');
+    }
+  </script>
+</body>
+</html>

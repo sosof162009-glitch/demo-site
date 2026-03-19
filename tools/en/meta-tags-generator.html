@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta Tags Generator - 205 Tools</title>
+  <meta name="description" content="Generate comprehensive SEO meta tags for your website.">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🏷️ Meta Tags Generator</h1>
+      <p>Generate comprehensive SEO meta tags for your website.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Generate</h2>
+        <div class="lang-selector">
+          <a href="../en/meta-tags-generator.html" class="lang-btn active">EN</a><a href="../es/meta-tags-generator.html" class="lang-btn ">ES</a><a href="../fr/meta-tags-generator.html" class="lang-btn ">FR</a><a href="../de/meta-tags-generator.html" class="lang-btn ">DE</a><a href="../ar/meta-tags-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Page Title</label>
+        <input type="text" id="pageTitle" placeholder="My Awesome Page" maxlength="60">
+        <small>Recommended: 50-60 characters</small>
+      </div>
+      <div class="form-group">
+        <label>Meta Description</label>
+        <textarea id="metaDesc" placeholder="Describe your page content..." maxlength="160"></textarea>
+        <small>Recommended: 150-160 characters</small>
+      </div>
+      <div class="form-group">
+        <label>Keywords (comma separated)</label>
+        <input type="text" id="keywords" placeholder="seo, meta tags, generator">
+      </div>
+      <div class="form-group">
+        <label>Author</label>
+        <input type="text" id="author" placeholder="Your Name">
+      </div>
+      <div class="form-group">
+        <label>Canonical URL</label>
+        <input type="url" id="canonicalUrl" placeholder="https://example.com/page">
+      </div>
+      <div class="form-group">
+        <label>Robots</label>
+        <select id="robots">
+          <option value="index, follow">Index, Follow</option>
+          <option value="noindex, follow">No Index, Follow</option>
+          <option value="index, nofollow">Index, No Follow</option>
+          <option value="noindex, nofollow">No Index, No Follow</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Language</label>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="ar">Arabic</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Viewport (for responsive design)</label>
+        <input type="checkbox" id="viewport" checked> Include viewport meta tag
+      </div>
+      <div class="form-group">
+        <label>Charset</label>
+        <select id="charset">
+          <option value="UTF-8">UTF-8</option>
+          <option value="ISO-8859-1">ISO-8859-1</option>
+        </select>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateMetaTags()">Generate</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Clear</button>
+      </div>
+      
+      <div class="code-output" id="output" style="display:none;">
+        <pre id="codeContent"></pre>
+        <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('codeContent').textContent, this)">Copy</button>
+      </div>
+      
+      <script>
+        function generateMetaTags() {
+          const title = document.getElementById('pageTitle').value;
+          const desc = document.getElementById('metaDesc').value;
+          const keywords = document.getElementById('keywords').value;
+          const author = document.getElementById('author').value;
+          const canonical = document.getElementById('canonicalUrl').value;
+          const robots = document.getElementById('robots').value;
+          const language = document.getElementById('language').value;
+          const charset = document.getElementById('charset').value;
+          const viewport = document.getElementById('viewport').checked;
+          
+          let meta = '';
+          
+          meta += '<!-- Basic Meta Tags -->\n';
+          meta += '<meta charset="' + charset + '">\n';
+          if (viewport) {
+            meta += '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+          }
+          if (title) {
+            meta += '<title>' + escapeHtml(title) + '</title>\n';
+            meta += '<meta name="title" content="' + escapeHtml(title) + '">\n';
+          }
+          if (desc) {
+            meta += '<meta name="description" content="' + escapeHtml(desc) + '">\n';
+          }
+          if (keywords) {
+            meta += '<meta name="keywords" content="' + escapeHtml(keywords) + '">\n';
+          }
+          if (author) {
+            meta += '<meta name="author" content="' + escapeHtml(author) + '">\n';
+          }
+          meta += '<meta name="language" content="' + language + '">\n';
+          meta += '<meta name="robots" content="' + robots + '">\n';
+          
+          if (canonical) {
+            meta += '\n<!-- Canonical URL -->\n';
+            meta += '<link rel="canonical" href="' + escapeHtml(canonical) + '">\n';
+          }
+          
+          document.getElementById('codeContent').textContent = meta;
+          document.getElementById('output').style.display = 'block';
+        }
+        
+        function escapeHtml(text) {
+          const div = document.createElement('div');
+          div.textContent = text;
+          return div.innerHTML;
+        }
+        
+        function clearFields() {
+          document.getElementById('pageTitle').value = '';
+          document.getElementById('metaDesc').value = '';
+          document.getElementById('keywords').value = '';
+          document.getElementById('author').value = '';
+          document.getElementById('canonicalUrl').value = '';
+          document.getElementById('output').style.display = 'none';
+        }
+      </script>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Tools</p>
+    </footer>
+  </div>
+</body>
+</html>

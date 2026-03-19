@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake Data Generator - 205 Tools</title>
+  <meta name="description" content="Generate realistic fake data for testing and development.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .output-box { background: var(--bg-secondary); padding: 15px; border-radius: 8px; font-family: monospace; font-size: 13px; overflow-x: auto; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
+    .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0; }
+    .option-item { display: flex; align-items: center; gap: 10px; }
+    .option-item label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .format-options { display: flex; gap: 15px; margin: 15px 0; flex-wrap: wrap; }
+    .format-options label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🎲 Fake Data Generator</h1>
+      <p>Generate realistic fake data for testing and development</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Generator</h2>
+        <div class="lang-selector">
+          <a href="./fake-data-generator.html" class="lang-btn active">EN</a>
+          <a href="../es/fake-data-generator.html" class="lang-btn">ES</a>
+          <a href="../fr/fake-data-generator.html" class="lang-btn">FR</a>
+          <a href="../de/fake-data-generator.html" class="lang-btn">DE</a>
+          <a href="../ar/fake-data-generator.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Number of Records</label>
+          <input type="number" id="recordCount" value="10" min="1" max="100">
+        </div>
+        <div class="form-group">
+          <label>Format</label>
+          <select id="outputFormat">
+            <option value="json">JSON</option>
+            <option value="csv">CSV</option>
+            <option value="sql">SQL INSERT</option>
+          </select>
+        </div>
+      </div>
+      
+      <label>Select Fields:</label>
+      <div class="options-grid">
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="id" checked> ID</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="name" checked> Full Name</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="email" checked> Email</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="phone"> Phone</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="address"> Address</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="city"> City</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="country"> Country</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="company"> Company</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="jobTitle"> Job Title</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="age"> Age</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="date"> Date</label></div>
+        <div class="option-item"><label><input type="checkbox" class="field-check" value="boolean"> Boolean</label></div>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateData()">🎲 Generate</button>
+        <button class="btn btn-success" onclick="copyOutput()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="downloadData()">💾 Download</button>
+      </div>
+      
+      <div id="outputSection" style="margin-top: 20px; display: none;">
+        <label>Generated Data</label>
+        <pre id="dataOutput" class="output-box"></pre>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    const firstNames = ['James', 'Mary', 'John', 'Patricia', 'Robert', 'Jennifer', 'Michael', 'Linda', 'William', 'Elizabeth', 'David', 'Susan', 'Richard', 'Jessica', 'Joseph', 'Sarah', 'Thomas', 'Karen', 'Charles', 'Nancy'];
+    const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin'];
+    const domains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'company.com'];
+    const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'London', 'Paris', 'Berlin', 'Tokyo', 'Sydney'];
+    const countries = ['USA', 'UK', 'Canada', 'Australia', 'Germany', 'France', 'Japan', 'Spain', 'Italy', 'Brazil'];
+    const companies = ['TechCorp', 'GlobalTech', 'DataSystems', 'CloudNine', 'Innovate Inc', 'Future Systems', 'Digital Dynamics', 'Smart Solutions', 'NextGen Tech', 'Cyber Systems'];
+    const jobTitles = ['Software Engineer', 'Product Manager', 'Data Analyst', 'UX Designer', 'Marketing Manager', 'Sales Director', 'HR Manager', 'DevOps Engineer', 'QA Tester', 'CTO', 'CEO', 'Designer'];
+    const streets = ['Main St', 'Oak Ave', 'Park Rd', 'Elm St', 'Maple Dr', 'Cedar Ln', 'Washington Blvd', 'Lake St', 'Hill Ave', 'River Rd'];
+
+    function generateData() {
+      const count = parseInt(document.getElementById('recordCount').value) || 10;
+      const format = document.getElementById('outputFormat').value;
+      const fields = Array.from(document.querySelectorAll('.field-check:checked')).map(cb => cb.value);
+      
+      if (fields.length === 0) { alert('Please select at least one field'); return; }
+      
+      const records = [];
+      for (let i = 0; i < count; i++) {
+        records.push(generateRecord(i + 1, fields));
+      }
+      
+      let output;
+      switch(format) {
+        case 'csv': output = toCSV(records, fields); break;
+        case 'sql': output = toSQL(records, fields); break;
+        default: output = JSON.stringify(records, null, 2);
+      }
+      
+      document.getElementById('dataOutput').textContent = output;
+      document.getElementById('outputSection').style.display = 'block';
+    }
+    
+    function generateRecord(id, fields) {
+      const record = {};
+      const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+      const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+      
+      fields.forEach(field => {
+        switch(field) {
+          case 'id': record.id = id; break;
+          case 'name': record.name = `${firstName} ${lastName}`; break;
+          case 'email': record.email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@${domains[Math.floor(Math.random() * domains.length)]}`; break;
+          case 'phone': record.phone = `+1 (${Math.floor(Math.random() * 900) + 100}) ${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`; break;
+          case 'address': record.address = `${Math.floor(Math.random() * 9999) + 1} ${streets[Math.floor(Math.random() * streets.length)]}`; break;
+          case 'city': record.city = cities[Math.floor(Math.random() * cities.length)]; break;
+          case 'country': record.country = countries[Math.floor(Math.random() * countries.length)]; break;
+          case 'company': record.company = companies[Math.floor(Math.random() * companies.length)]; break;
+          case 'jobTitle': record.jobTitle = jobTitles[Math.floor(Math.random() * jobTitles.length)]; break;
+          case 'age': record.age = Math.floor(Math.random() * 43) + 22; break;
+          case 'date': record.date = new Date(Date.now() - Math.floor(Math.random() * 31536000000)).toISOString().split('T')[0]; break;
+          case 'boolean': record.active = Math.random() > 0.5; break;
+        }
+      });
+      return record;
+    }
+    
+    function toCSV(records, fields) {
+      const header = fields.join(',');
+      const rows = records.map(r => fields.map(f => {
+        const val = r[f];
+        if (typeof val === 'string' && (val.includes(',') || val.includes('"'))) {
+          return `"${val.replace(/"/g, '""')}"`;
+        }
+        return val;
+      }).join(','));
+      return [header, ...rows].join('\n');
+    }
+    
+    function toSQL(records, fields) {
+      const tableName = 'users';
+      return records.map(r => {
+        const cols = fields.join(', ');
+        const vals = fields.map(f => {
+          const val = r[f];
+          if (typeof val === 'string') return `'${val.replace(/'/g, "''")}'`;
+          if (typeof val === 'boolean') return val ? 1 : 0;
+          return val;
+        }).join(', ');
+        return `INSERT INTO ${tableName} (${cols}) VALUES (${vals});`;
+      }).join('\n');
+    }
+    
+    function copyOutput() {
+      const text = document.getElementById('dataOutput').textContent;
+      navigator.clipboard.writeText(text);
+      alert('Copied!');
+    }
+    
+    function downloadData() {
+      const text = document.getElementById('dataOutput').textContent;
+      const format = document.getElementById('outputFormat').value;
+      const extensions = { json: 'json', csv: 'csv', sql: 'sql' };
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `fake-data.${extensions[format]}`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

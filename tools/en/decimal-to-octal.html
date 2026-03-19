@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decimal to Octal Converter - 205 Tools</title>
+  <meta name="description" content="Convert decimal numbers to octal format.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .converter-box { background: var(--bg-secondary); padding: 25px; border-radius: 12px; margin-top: 20px; }
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 14px; text-transform: uppercase; }
+    .input-group input { width: 100%; font-family: monospace; font-size: 18px; padding: 15px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); border-radius: 6px; }
+    .result-box { background: var(--bg-card); padding: 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid var(--primary); }
+    .result-box label { color: var(--primary); font-size: 12px; text-transform: uppercase; display: block; margin-bottom: 5px; }
+    .result-box .value { font-family: monospace; font-size: 24px; color: var(--text-primary); word-break: break-all; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🔢 Decimal to Octal Converter</h1>
+      <p>Convert decimal numbers to octal format</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Converter</h2>
+        <div class="lang-selector">
+          <a href="./decimal-to-octal.html" class="lang-btn active">EN</a>
+          <a href="../es/decimal-to-octal.html" class="lang-btn">ES</a>
+          <a href="../fr/decimal-to-octal.html" class="lang-btn">FR</a>
+          <a href="../de/decimal-to-octal.html" class="lang-btn">DE</a>
+          <a href="../ar/decimal-to-octal.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="converter-box">
+        <div class="input-group">
+          <label>Decimal Number (Base 10)</label>
+          <input type="text" id="decimalInput" placeholder="Enter a decimal number (e.g., 255)" oninput="convertToOctal()">
+        </div>
+        
+        <div class="result-box">
+          <label>Octal Result (Base 8)</label>
+          <div class="value" id="octalResult">-</div>
+        </div>
+      </div>
+      
+      <div class="btn-group" style="margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+        <button class="btn btn-success" onclick="copyResult()">Copy Result</button>
+        <button class="btn btn-secondary" onclick="loadExample()">Example</button>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function convertToOctal() {
+      const input = document.getElementById('decimalInput').value.trim();
+      const resultEl = document.getElementById('octalResult');
+      
+      if (!input) {
+        resultEl.textContent = '-';
+        return;
+      }
+      
+      if (!/^\d+$/.test(input)) {
+        resultEl.textContent = 'Invalid decimal number';
+        resultEl.style.color = 'var(--error)';
+        return;
+      }
+      
+      const decimal = parseInt(input, 10);
+      if (isNaN(decimal)) {
+        resultEl.textContent = 'Invalid number';
+        resultEl.style.color = 'var(--error)';
+        return;
+      }
+      
+      resultEl.style.color = 'var(--text-primary)';
+      resultEl.textContent = decimal.toString(8);
+    }
+    
+    function clearAll() {
+      document.getElementById('decimalInput').value = '';
+      document.getElementById('octalResult').textContent = '-';
+      document.getElementById('octalResult').style.color = 'var(--text-primary)';
+    }
+    
+    function copyResult() {
+      const result = document.getElementById('octalResult').textContent;
+      if (result !== '-' && !result.includes('Invalid')) {
+        navigator.clipboard.writeText(result).then(() => {
+          const btn = event.target;
+          const originalText = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = originalText, 1500);
+        });
+      }
+    }
+    
+    function loadExample() {
+      document.getElementById('decimalInput').value = '255';
+      convertToOctal();
+    }
+  </script>
+</body>
+</html>

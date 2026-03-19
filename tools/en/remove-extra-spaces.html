@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remove Extra Spaces - 205 Tools</title>
+  <meta name="description" content="Remove extra spaces from your text.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>✂️ Remove Extra Spaces</h1>
+      <p>Remove extra spaces, tabs, and clean up whitespace in your text</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Input Text</h2>
+        <div class="lang-selector">
+          <a href="./remove-extra-spaces.html" class="lang-btn active">EN</a>
+          <a href="../es/remove-extra-spaces.html" class="lang-btn">ES</a>
+          <a href="../fr/remove-extra-spaces.html" class="lang-btn">FR</a>
+          <a href="../de/remove-extra-spaces.html" class="lang-btn">DE</a>
+          <a href="../ar/remove-extra-spaces.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <textarea id="input" rows="8" placeholder="Paste text with extra spaces here..."></textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="removeExtraSpaces()">Remove Extra Spaces</button>
+        <button class="btn btn-primary" onclick="removeAllSpaces()">Remove ALL Spaces</button>
+        <button class="btn btn-primary" onclick="trimLines()">Trim Each Line</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Result</label>
+        <textarea id="output" rows="8" readonly placeholder="Cleaned text will appear here..."></textarea>
+      </div>
+      
+      <button class="btn btn-primary" onclick="copyResult()">Copy Result</button>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function removeExtraSpaces() {
+      let text = document.getElementById('input').value;
+      text = text.replace(/\s+/g, ' ').replace(/^\s+|\s+$/gm, '');
+      document.getElementById('output').value = text;
+    }
+    
+    function removeAllSpaces() {
+      let text = document.getElementById('input').value;
+      text = text.replace(/\s/g, '');
+      document.getElementById('output').value = text;
+    }
+    
+    function trimLines() {
+      let text = document.getElementById('input').value;
+      text = text.split('\n').map(line => line.trim()).join('\n');
+      document.getElementById('output').value = text;
+    }
+    
+    function clearAll() {
+      document.getElementById('input').value = '';
+      document.getElementById('output').value = '';
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('output');
+      output.select();
+      document.execCommand('copy');
+      alert('Copied to clipboard!');
+    }
+  </script>
+</body>
+</html>

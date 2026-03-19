@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zufälliger PIN-Generator - 205 Tools</title>
+  <meta name="description" content="Generieren Sie sichere zufällige PIN-Codes.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script src="../assets/tools.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Startseite</a>
+    
+    <header>
+      <h1>🔢 Zufälliger PIN-Generator</h1>
+      <p>Generieren Sie sichere zufällige PIN-Codes.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Optionen</h2>
+        <div class="lang-selector">
+          <a href="../en/random-pin-generator.html" class="lang-btn ">EN</a><a href="../es/random-pin-generator.html" class="lang-btn ">ES</a><a href="../fr/random-pin-generator.html" class="lang-btn ">FR</a><a href="../de/random-pin-generator.html" class="lang-btn ">DE</a><a href="../ar/random-pin-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>PIN Length</label>
+        <select id="pinLength">
+          <option value="4" selected>4 digits</option>
+          <option value="5">5 digits</option>
+          <option value="6">6 digits</option>
+          <option value="8">8 digits</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox" id="noRepeat"> No repeating digits</label>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generatePIN()">Generieren</button>
+      </div>
+      <div class="result-box" style="margin-top: 20px;">
+        <div class="result-value" id="pinResult" style="font-family: monospace; font-size: 24px; letter-spacing: 8px;">-</div>
+      </div>
+      <div class="btn-group" style="margin-top: 15px;">
+        <button class="btn btn-success" onclick="copyToClipboard(document.getElementById('pinResult').textContent)">Kopieren</button>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function generatePIN() {
+      const length = parseInt(document.getElementById('pinLength').value);
+      const noRepeat = document.getElementById('noRepeat').checked;
+      
+      let pin = '';
+      const digits = '0123456789';
+      
+      if (noRepeat && length > 10) {
+        alert('Cannot generate PIN with no repeating digits longer than 10 digits');
+        return;
+      }
+      
+      let available = digits.split('');
+      
+      for (let i = 0; i < length; i++) {
+        if (noRepeat) {
+          const index = Math.floor(Math.random() * available.length);
+          pin += available[index];
+          available.splice(index, 1);
+        } else {
+          pin += digits[Math.floor(Math.random() * 10)];
+        }
+      }
+      
+      document.getElementById('pinResult').textContent = pin;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de URL Canónica - 205 Tools</title>
+  <meta name="description" content="Genera etiquetas de enlace canónico para SEO.">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+  <script src="../assets/js/utils.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Inicio</a>
+    
+    <header>
+      <h1>📎 Generador de URL Canónica</h1>
+      <p>Genera etiquetas de enlace canónico para prevenir problemas de contenido duplicado.</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Generar</h2>
+        <div class="lang-selector">
+          <a href="../en/canonical-url-generator.html" class="lang-btn ">EN</a><a href="../es/canonical-url-generator.html" class="lang-btn active">ES</a><a href="../fr/canonical-url-generator.html" class="lang-btn ">FR</a><a href="../de/canonical-url-generator.html" class="lang-btn ">DE</a><a href="../ar/canonical-url-generator.html" class="lang-btn ">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>URL Canónica *</label>
+        <input type="url" id="canonicalUrl" placeholder="https://ejemplo.com/pagina">
+        <small>La versión preferida de esta página que los motores de búsqueda deben indexar.</small>
+      </div>
+      <div class="form-group">
+        <label>Idioma (opcional)</label>
+        <select id="hreflang">
+          <option value="">Ninguno</option>
+          <option value="es">Español</option>
+          <option value="en">Inglés</option>
+          <option value="fr">Francés</option>
+          <option value="de">Alemán</option>
+          <option value="ar">Árabe</option>
+          <option value="it">Italiano</option>
+          <option value="pt">Portugués</option>
+          <option value="ru">Ruso</option>
+          <option value="zh">Chino</option>
+          <option value="ja">Japonés</option>
+          <option value="x-default">x-default</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Región (opcional, ej: US, GB, ES)</label>
+        <input type="text" id="region" placeholder="ES" maxlength="2">
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateCanonical()">Generar</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Limpiar</button>
+      </div>
+      
+      <div class="code-output" id="output" style="display:none;">
+        <pre id="codeContent"></pre>
+        <button class="btn btn-success" data-success="¡Copiado!" onclick="copyToClipboard(document.getElementById('codeContent').textContent, this)">Copiar</button>
+      </div>
+      
+      <div class="info-box" style="margin-top:20px; padding:15px; background:#f0f7ff; border-radius:8px; border-left:4px solid #0066cc;">
+        <h3 style="margin-top:0; color:#0066cc;">¿Qué es una URL Canónica?</h3>
+        <p>Una URL canónica indica a los motores de búsqueda cuál es la versión "maestra" o preferida de una página cuando hay múltiples URLs con contenido similar o duplicado. Esto ayuda a prevenir problemas de SEO relacionados con contenido duplicado.</p>
+      </div>
+      
+      <script>
+        function generateCanonical() {
+          const url = document.getElementById('canonicalUrl').value.trim();
+          const lang = document.getElementById('hreflang').value;
+          const region = document.getElementById('region').value.trim().toUpperCase();
+          
+          if (!url) {
+            alert('Por favor ingresa una URL canónica');
+            return;
+          }
+          
+          let output = '<!-- URL Canónica -->\n';
+          output += '<link rel="canonical" href="' + escapeHtml(url) + '">\n';
+          
+          if (lang) {
+            const langRegion = region ? lang + '-' + region : lang;
+            output += '\n<!-- Hreflang para orientación por idioma/región -->\n';
+            output += '<link rel="alternate" hreflang="' + langRegion + '" href="' + escapeHtml(url) + '">';
+          }
+          
+          document.getElementById('codeContent').textContent = output;
+          document.getElementById('output').style.display = 'block';
+        }
+        
+        function escapeHtml(text) {
+          const div = document.createElement('div');
+          div.textContent = text;
+          return div.innerHTML;
+        }
+        
+        function clearFields() {
+          document.getElementById('canonicalUrl').value = '';
+          document.getElementById('hreflang').value = '';
+          document.getElementById('region').value = '';
+          document.getElementById('output').style.display = 'none';
+        }
+      </script>
+    </div>
+    
+    <footer>
+      <p>205 Tools © 2025 - Herramientas</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sort Lines - 205 Tools</title>
+  <meta name="description" content="Sort lines alphabetically or numerically.">
+  <link rel="stylesheet" href="../assets/tools.css">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>📋 Sort Lines</h1>
+      <p>Sort lines alphabetically, numerically, or by length</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Input Text</h2>
+        <div class="lang-selector">
+          <a href="./sort-lines.html" class="lang-btn active">EN</a>
+          <a href="../es/sort-lines.html" class="lang-btn">ES</a>
+          <a href="../fr/sort-lines.html" class="lang-btn">FR</a>
+          <a href="../de/sort-lines.html" class="lang-btn">DE</a>
+          <a href="../ar/sort-lines.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <textarea id="input" rows="8" placeholder="Paste lines to sort here..."></textarea>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="sortLines('asc')">A-Z</button>
+        <button class="btn btn-primary" onclick="sortLines('desc')">Z-A</button>
+        <button class="btn btn-primary" onclick="sortLines('length')">By Length</button>
+        <button class="btn btn-primary" onclick="sortLines('reverse')">Reverse Order</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Result</label>
+        <textarea id="output" rows="8" readonly placeholder="Sorted result will appear here..."></textarea>
+      </div>
+      
+      <button class="btn btn-primary" onclick="copyResult()">Copy Result</button>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    function sortLines(order) {
+      const input = document.getElementById('input').value;
+      if (!input.trim()) return;
+      
+      let lines = input.split('\n');
+      
+      switch(order) {
+        case 'asc':
+          lines.sort((a, b) => a.localeCompare(b));
+          break;
+        case 'desc':
+          lines.sort((a, b) => b.localeCompare(a));
+          break;
+        case 'length':
+          lines.sort((a, b) => a.length - b.length);
+          break;
+        case 'reverse':
+          lines.reverse();
+          break;
+      }
+      
+      document.getElementById('output').value = lines.join('\n');
+    }
+    
+    function clearAll() {
+      document.getElementById('input').value = '';
+      document.getElementById('output').value = '';
+    }
+    
+    function copyResult() {
+      const output = document.getElementById('output');
+      output.select();
+      document.execCommand('copy');
+      alert('Copied to clipboard!');
+    }
+  </script>
+</body>
+</html>

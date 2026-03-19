@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محول الإيموجي إلى يونيكود | 205 أداة</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="../en/emoji-to-unicode.html">English</option>
+      <option value="emoji-to-unicode.html" selected>العربية</option>
+      <option value="../fr/emoji-to-unicode.html">Français</option>
+      <option value="../es/emoji-to-unicode.html">Español</option>
+      <option value="../de/emoji-to-unicode.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>محول الإيموجي إلى يونيكود</h1>
+      <p>تحويل رموز الإيموجي إلى نقاط كود يونيكود</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="emoji-input">الإيموجي:</label>
+        <input type="text" id="emoji-input" class="tool-input" placeholder="ألصق أو اكتب الإيموجي هنا...">
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="convertToUnicode()">تحويل</button>
+        <button class="btn btn-secondary" onclick="clearAll()">مسح</button>
+      </div>
+
+      <div class="input-group" style="margin-top: 20px;">
+        <label for="unicode-output">نقاط كود يونيكود:</label>
+        <textarea id="unicode-output" class="tool-textarea" placeholder="ستظهر نقاط كود يونيكود هنا..." readonly></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="copyResult()">نسخ</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span>تم النسخ!</span>
+  </div>
+
+  <script>
+    function convertToUnicode() {
+      const input = document.getElementById('emoji-input').value;
+      
+      if (!input) {
+        document.getElementById('unicode-output').value = '';
+        return;
+      }
+      
+      const codePoints = [];
+      for (const char of input) {
+        const code = char.codePointAt(0).toString(16).toUpperCase();
+        codePoints.push(`U+${code.padStart(4, '0')}`);
+      }
+      
+      document.getElementById('unicode-output').value = codePoints.join(' ');
+    }
+
+    function copyResult() {
+      const output = document.getElementById('unicode-output');
+      if (!output.value) {
+        alert('لا يوجد شيء للنسخ. قم بتحويل إيموجي أولاً.');
+        return;
+      }
+      output.select();
+      document.execCommand('copy');
+      showToast();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function clearAll() {
+      document.getElementById('emoji-input').value = '';
+      document.getElementById('unicode-output').value = '';
+    }
+  </script>
+</body>
+</html>

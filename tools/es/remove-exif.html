@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Datos EXIF | 205-tools</title>
+    <meta name="description" content="Elimine metadatos EXIF de imágenes en línea. Proteja su privacidad eliminando información de ubicación y dispositivo.">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body[lang="ar"] { font-family: 'Tajawal', 'DM Sans', sans-serif; }
+        .exif-info { background: var(--bg-secondary); padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .exif-info h3 { margin-bottom: 10px; color: var(--primary); }
+        .exif-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .exif-table td { padding: 8px; border-bottom: 1px solid var(--border); }
+        .exif-table td:first-child { font-weight: 500; color: var(--text-secondary); width: 40%; }
+        .privacy-note { background: var(--warning-light); border-left: 4px solid var(--warning); padding: 15px; margin: 15px 0; border-radius: 0 8px 8px 0; }
+        .privacy-note h4 { margin-bottom: 5px; color: var(--warning); }
+    </style>
+</head>
+<body lang="es">
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">🛠️</div>
+                <span>205-tools</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/es/">Inicio</a>
+                <a href="/es/tools.html">Herramientas</a>
+                <a href="/es/about.html">Acerca de</a>
+                <a href="/es/contact.html">Contacto</a>
+            </nav>
+            <div class="language-selector">
+                <select id="languageSelector">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="fr">Français</option>
+                    <option value="es" selected>Español</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="tool-header-section">
+            <div class="tool-icon">🔒</div>
+            <h1 class="tool-title">Eliminar Datos EXIF</h1>
+            <p class="tool-description">Elimine metadatos de imágenes para proteger su privacidad.</p>
+        </section>
+
+        <div class="privacy-note">
+            <h4>⚠️ ¿Por qué eliminar datos EXIF?</h4>
+            <p>Las imágenes a menudo contienen metadatos ocultos incluyendo ubicación GPS, modelo de cámara, fecha de captura y más. Elimine estos datos antes de compartir imágenes en línea.</p>
+        </div>
+
+        <div class="tool-container">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Arrastra tu imagen aquí o haz clic para buscar</div>
+                <div class="upload-hint">Soporta formatos JPG, PNG, TIFF</div>
+                <input type="file" class="upload-input" id="uploadInput" accept="image/*">
+            </div>
+
+            <div class="file-info hidden" id="fileInfo">
+                <span class="file-info-icon">📄</span>
+                <div class="file-info-details">
+                    <div class="file-info-name"></div>
+                    <div class="file-info-size"></div>
+                </div>
+                <button class="file-remove" onclick="removeFile()" title="Eliminar archivo">✕</button>
+            </div>
+
+            <div class="preview-area hidden" id="previewArea">
+                <div class="preview-title">Vista previa</div>
+            </div>
+
+            <div class="exif-info hidden" id="exifInfo">
+                <h3>📋 Metadatos Detectados</h3>
+                <div id="exifContent"></div>
+            </div>
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" id="removeBtn" disabled onclick="removeExif()">
+                    <span>🔒 Eliminar Datos EXIF</span>
+                </button>
+                <button class="btn btn-secondary" onclick="resetTool()">
+                    <span>Reiniciar</span>
+                </button>
+            </div>
+
+            <div class="result-area" id="resultArea">
+                <div class="result-title"><span>✓</span> ¡Datos EXIF Eliminados!</div>
+                <p>Su imagen ha sido limpiada de todos los metadatos.</p>
+                <div class="btn-group">
+                    <button class="btn btn-success" id="downloadBtn" onclick="downloadResult()">
+                        <span>💾 Descargar Imagen Limpia</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <section class="info-section">
+            <h2 class="info-title">Acerca de los Datos EXIF</h2>
+            <div class="info-content">
+                <p>Los datos EXIF (Exchangeable Image File Format) son metadatos almacenados en archivos de imagen. Pueden incluir:</p>
+                <ul>
+                    <li>Coordenadas GPS (ubicación exacta donde se tomó la foto)</li>
+                    <li>Modelo de cámara/teléfono y fabricante</li>
+                    <li>Fecha y hora en que se tomó la foto</li>
+                    <li>Configuración de la cámara (apertura, velocidad de obturación, ISO)</li>
+                    <li>Imágenes en miniatura</li>
+                </ul>
+                <p>Todo el procesamiento ocurre localmente en su navegador - sus imágenes nunca se cargan en ningún servidor.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/es/">Inicio</a>
+                <a href="/es/tools.html">Herramientas</a>
+                <a href="/es/privacy.html">Política de Privacidad</a>
+            </div>
+            <div class="footer-copyright">© 2025 205-tools. Todos los derechos reservados.</div>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        let currentFile = null;
+        let cleanDataUrl = null;
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) {
+                showToast('Por favor seleccione un archivo de imagen', 'error');
+                return;
+            }
+            currentFile = file;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'preview-image';
+                img.id = 'previewImage';
+                
+                const previewArea = document.getElementById('previewArea');
+                previewArea.innerHTML = '<div class="preview-title">Vista previa</div>';
+                previewArea.appendChild(img);
+                previewArea.classList.remove('hidden');
+                
+                document.getElementById('fileInfo').querySelector('.file-info-name').textContent = file.name;
+                document.getElementById('fileInfo').querySelector('.file-info-size').textContent = formatFileSize(file.size);
+                document.getElementById('fileInfo').classList.remove('hidden');
+                
+                displayExifInfo(file);
+                
+                document.getElementById('removeBtn').disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function displayExifInfo(file) {
+            const exifContent = document.getElementById('exifContent');
+            const exifInfo = document.getElementById('exifInfo');
+            
+            const info = [
+                { label: 'Nombre del Archivo', value: file.name },
+                { label: 'Tipo de Archivo', value: file.type },
+                { label: 'Tamaño del Archivo', value: formatFileSize(file.size) },
+                { label: 'Última Modificación', value: new Date(file.lastModified).toLocaleString('es-ES') }
+            ];
+            
+            let html = '<table class="exif-table">';
+            info.forEach(item => {
+                html += `<tr><td>${item.label}</td><td>${item.value}</td></tr>`;
+            });
+            html += '</table>';
+            html += '<p style="margin-top: 10px; color: var(--text-secondary); font-size: 0.85rem;">Nota: Los datos EXIF detallados (GPS, info de cámara) también pueden estar presentes pero no se muestran aquí por seguridad.</p>';
+            
+            exifContent.innerHTML = html;
+            exifInfo.classList.remove('hidden');
+        }
+
+        function removeExif() {
+            if (!currentFile) return;
+            
+            const removeBtn = document.getElementById('removeBtn');
+            removeBtn.disabled = true;
+            removeBtn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span> Procesando...';
+            
+            showProgress();
+            updateProgress(30);
+            
+            setTimeout(() => {
+                const img = document.getElementById('previewImage');
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                
+                updateProgress(70);
+                
+                const outputFormat = currentFile.type === 'image/png' ? 'image/png' : 'image/jpeg';
+                cleanDataUrl = canvas.toDataURL(outputFormat, 0.95);
+                
+                updateProgress(100);
+                showResult();
+                showToast('¡Datos EXIF eliminados exitosamente!', 'success');
+                
+                removeBtn.innerHTML = '<span>🔒 Eliminar Datos EXIF</span>';
+                removeBtn.disabled = false;
+                hideProgress();
+            }, 100);
+        }
+
+        function downloadResult() {
+            if (cleanDataUrl) {
+                const link = document.createElement('a');
+                const extension = currentFile && currentFile.type === 'image/png' ? '.png' : '.jpg';
+                link.download = 'limpio-' + (currentFile ? currentFile.name.replace(/\.[^/.]+$/, '') : 'imagen') + extension;
+                link.href = cleanDataUrl;
+                link.click();
+            }
+        }
+
+        function removeFile() {
+            currentFile = null;
+            cleanDataUrl = null;
+            document.getElementById('uploadInput').value = '';
+            document.getElementById('fileInfo').classList.add('hidden');
+            document.getElementById('previewArea').classList.add('hidden');
+            document.getElementById('exifInfo').classList.add('hidden');
+            document.getElementById('removeBtn').disabled = true;
+            hideResult();
+        }
+
+        function resetTool() {
+            removeFile();
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showProgress() {
+            document.getElementById('progressContainer').style.display = 'block';
+        }
+
+        function hideProgress() {
+            document.getElementById('progressContainer').style.display = 'none';
+            updateProgress(0);
+        }
+
+        function updateProgress(percent) {
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = percent + '%';
+        }
+
+        function showResult() {
+            document.getElementById('resultArea').style.display = 'block';
+        }
+
+        function hideResult() {
+            document.getElementById('resultArea').style.display = 'none';
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-' + type;
+            toast.textContent = message;
+            document.getElementById('toastContainer').appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        document.getElementById('uploadInput').addEventListener('change', function(e) {
+            if (e.target.files.length) handleFile(e.target.files[0]);
+        });
+
+        const uploadArea = document.getElementById('uploadArea');
+        uploadArea.addEventListener('click', () => document.getElementById('uploadInput').click());
+        uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+    </script>
+</body>
+</html>

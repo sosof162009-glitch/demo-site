@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Enlaces WhatsApp | 205 Herramientas</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tools.css">
+</head>
+<body>
+  <div class="lang-selector">
+    <select onchange="window.location.href=this.value">
+      <option value="../en/whatsapp-link-generator.html">English</option>
+      <option value="../ar/whatsapp-link-generator.html">العربية</option>
+      <option value="../fr/whatsapp-link-generator.html">Français</option>
+      <option value="whatsapp-link-generator.html" selected>Español</option>
+      <option value="../de/whatsapp-link-generator.html">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="tool-container">
+    <header class="tool-header">
+      <h1>Generador de Enlaces WhatsApp</h1>
+      <p>Crea enlaces de WhatsApp clickeables con mensajes prellenados</p>
+    </header>
+
+    <div class="tool-card">
+      <div class="input-group">
+        <label for="phone-input">Número de Teléfono (con código de país):</label>
+        <input type="text" id="phone-input" class="tool-input" placeholder="ej., +34612345678">
+        <small class="help-text">Incluye el código de país sin espacios ni guiones</small>
+      </div>
+
+      <div class="input-group">
+        <label for="message-input">Mensaje Prellenado (opcional):</label>
+        <textarea id="message-input" class="tool-textarea" placeholder="Ingresa tu mensaje..."></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateLink()">Generar Enlace</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Limpiar</button>
+      </div>
+
+      <div class="input-group" style="margin-top: 20px;">
+        <label for="link-output">Enlace Generado:</label>
+        <textarea id="link-output" class="tool-textarea" placeholder="Tu enlace de WhatsApp aparecerá aquí..." readonly></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="copyLink()">Copiar Enlace</button>
+        <button class="btn btn-primary" onclick="openLink()">Abrir Enlace</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span>¡Copiado!</span>
+  </div>
+
+  <script>
+    function generateLink() {
+      const phone = document.getElementById('phone-input').value.trim();
+      const message = document.getElementById('message-input').value.trim();
+      
+      if (!phone) {
+        alert('Por favor ingresa un número de teléfono');
+        return;
+      }
+      
+      // Remove non-digit characters from phone
+      const cleanPhone = phone.replace(/\D/g, '');
+      
+      let link = `https://wa.me/${cleanPhone}`;
+      if (message) {
+        link += `?text=${encodeURIComponent(message)}`;
+      }
+      
+      document.getElementById('link-output').value = link;
+    }
+
+    function copyLink() {
+      const output = document.getElementById('link-output');
+      if (!output.value) {
+        alert('No hay enlace para copiar. Genera un enlace primero.');
+        return;
+      }
+      output.select();
+      document.execCommand('copy');
+      showToast();
+    }
+
+    function openLink() {
+      const link = document.getElementById('link-output').value;
+      if (!link) {
+        alert('No hay enlace para abrir. Genera un enlace primero.');
+        return;
+      }
+      window.open(link, '_blank');
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function clearAll() {
+      document.getElementById('phone-input').value = '';
+      document.getElementById('message-input').value = '';
+      document.getElementById('link-output').value = '';
+    }
+  </script>
+</body>
+</html>
