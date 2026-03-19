@@ -1,62 +1,304 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>image-converter - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/tools.css">
-  <script src="../assets/tools.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertisseur d'Images Universel | 205-tools</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div class="container">
-    <a href="/" class="back-link">← Accueil</a>
-    
-    <header>
-      <h1>🖼️ image-converter</h1>
-      <p></p>
-    </header>
-    
-    <div class="tool-container">
-      <div class="tool-header">
-        <h2>Options</h2>
-        <div class="lang-selector">
-          <a href="../en/image-converter.html" class="lang-btn ">EN</a><a href="../es/image-converter.html" class="lang-btn ">ES</a><a href="../fr/image-converter.html" class="lang-btn active">FR</a><a href="../de/image-converter.html" class="lang-btn ">DE</a><a href="../ar/image-converter.html" class="lang-btn ">AR</a>
+<body lang="fr">
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">🛠️</div>
+                <span>205-tools</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/fr/">Accueil</a>
+                <a href="/fr/tools.html">Outils</a>
+                <a href="/fr/about.html">À propos</a>
+                <a href="/fr/contact.html">Contact</a>
+            </nav>
+            <div class="language-selector">
+                <select id="languageSelector">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="fr" selected>Français</option>
+                    <option value="es">Español</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
         </div>
-      </div>
-      
-      
-      <div class="form-group">
-        <label>Texte</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
-      </div>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convertir</button>
-        <button class="btn btn-secondary" onclick="resetText()">Réinitialiser</button>
-      </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Résultat</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
-      </div>
-      <button class="btn btn-success" data-success="Copié!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copier</button>
-    </div>
-    
-    <footer>
-      <p>205 Tools © 2025 - Outils</p>
+    </header>
+
+    <main class="main-container">
+        <section class="tool-header-section">
+            <div class="tool-icon">🖼️</div>
+            <h1 class="tool-title">Convertisseur d'Images Universel</h1>
+            <p class="tool-description">Convertissez des images entre les formats JPG, PNG, WebP, BMP et GIF.</p>
+        </section>
+
+        <div class="tool-container">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Glissez votre image ici ou cliquez pour parcourir</div>
+                <div class="upload-hint">Supporte JPG, PNG, WebP, BMP, GIF</div>
+                <input type="file" class="upload-input" id="uploadInput" accept="image/*">
+            </div>
+
+            <div class="file-info hidden" id="fileInfo">
+                <span class="file-info-icon">📄</span>
+                <div class="file-info-details">
+                    <div class="file-info-name"></div>
+                    <div class="file-info-size"></div>
+                </div>
+                <button class="file-remove" onclick="removeFile()" title="Supprimer le fichier">✕</button>
+            </div>
+
+            <div class="preview-area hidden" id="previewArea">
+                <div class="preview-title">Aperçu</div>
+            </div>
+
+            <div class="controls-section" id="controlsSection">
+                <div class="controls-title">Format de Sortie</div>
+                <div class="control-group">
+                    <label class="control-label">Convertir en</label>
+                    <select class="control-select" id="outputFormat">
+                        <option value="image/jpeg">JPG</option>
+                        <option value="image/png" selected>PNG</option>
+                        <option value="image/webp">WebP</option>
+                        <option value="image/bmp">BMP</option>
+                        <option value="image/gif">GIF</option>
+                    </select>
+                </div>
+                <div class="control-group" id="qualityGroup">
+                    <label class="control-label">Qualité</label>
+                    <input type="range" class="control-range" id="qualityRange" min="1" max="100" value="90">
+                    <span class="range-value" id="qualityValue">90%</span>
+                </div>
+            </div>
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" id="convertBtn" disabled onclick="processImage()">
+                    <span>Convertir</span>
+                </button>
+                <button class="btn btn-secondary" onclick="resetTool()">
+                    <span>Réinitialiser</span>
+                </button>
+            </div>
+
+            <div class="result-area" id="resultArea">
+                <div class="result-title">
+                    <span>✓</span> Conversion Terminée!
+                </div>
+                <div id="resultContent"></div>
+                <div class="btn-group">
+                    <button class="btn btn-success" id="downloadBtn" onclick="downloadResult()">
+                        <span>💾 Télécharger</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <section class="info-section">
+            <h2 class="info-title">À propos du Convertisseur</h2>
+            <div class="info-content">
+                <p>Convertissez n'importe quelle image au format souhaité. Supporte JPG, PNG, WebP, BMP et GIF.</p>
+                <p>Tout le traitement se fait localement dans votre navigateur - vos images ne quittent jamais votre appareil.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/fr/">Accueil</a>
+                <a href="/fr/tools.html">Outils</a>
+                <a href="/fr/privacy.html">Politique de Confidentialité</a>
+                <a href="/fr/terms.html">Conditions d'Utilisation</a>
+            </div>
+            <div class="footer-copyright">© 2025 205-tools. Tous droits réservés.</div>
+        </div>
     </footer>
-  </div>
-  
-  <script>
-    
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
-    
-  </script>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        let currentFile = null, originalImage = null, processedResult = null, processedFileName = null;
+        const formatExtensions = {'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/bmp': 'bmp', 'image/gif': 'gif'};
+
+        document.getElementById('qualityRange')?.addEventListener('input', function() {
+            document.getElementById('qualityValue').textContent = this.value + '%';
+        });
+
+        document.getElementById('outputFormat')?.addEventListener('change', function() {
+            const qualityGroup = document.getElementById('qualityGroup');
+            qualityGroup.style.opacity = (this.value === 'image/png' || this.value === 'image/gif' || this.value === 'image/bmp') ? '0.5' : '1';
+        });
+
+        const uploadArea = document.getElementById('uploadArea');
+        const uploadInput = document.getElementById('uploadInput');
+
+        uploadArea?.addEventListener('click', () => uploadInput?.click());
+        uploadArea?.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+        uploadArea?.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+        uploadArea?.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+        });
+
+        uploadInput?.addEventListener('change', (e) => { if (e.target.files.length > 0) handleFile(e.target.files[0]); });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showToast('Veuillez sélectionner un fichier image valide', 'error');
+                return;
+            }
+            currentFile = file;
+            document.getElementById('fileInfo').classList.remove('hidden');
+            document.querySelector('.file-info-name').textContent = file.name;
+            document.querySelector('.file-info-size').textContent = formatFileSize(file.size);
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalImage = new Image();
+                originalImage.onload = () => {
+                    showPreview(originalImage);
+                    document.getElementById('convertBtn').disabled = false;
+                };
+                originalImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showPreview(img) {
+            const previewArea = document.getElementById('previewArea');
+            previewArea.classList.remove('hidden');
+            previewArea.innerHTML = '<div class="preview-title">Aperçu</div>';
+            const imgEl = document.createElement('img');
+            imgEl.src = img.src;
+            imgEl.style.maxWidth = '100%';
+            imgEl.style.borderRadius = '8px';
+            previewArea.appendChild(imgEl);
+        }
+
+        function removeFile() {
+            currentFile = null; originalImage = null; processedResult = null;
+            document.getElementById('fileInfo').classList.add('hidden');
+            document.getElementById('previewArea').classList.add('hidden');
+            document.getElementById('uploadInput').value = '';
+            document.getElementById('convertBtn').disabled = true;
+            hideResult();
+        }
+
+        function showProgress() { document.getElementById('progressContainer').style.display = 'block'; }
+        function hideProgress() { document.getElementById('progressContainer').style.display = 'none'; }
+        function updateProgress(percent) {
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = percent + '%';
+        }
+        function showResult() { document.getElementById('resultArea').classList.add('show'); }
+        function hideResult() { document.getElementById('resultArea').classList.remove('show'); }
+
+        async function processImage() {
+            if (!currentFile || !originalImage) { showToast('Aucune image sélectionnée', 'error'); return; }
+            const convertBtn = document.getElementById('convertBtn');
+            convertBtn.disabled = true;
+            convertBtn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span> Conversion...';
+            showProgress();
+            updateProgress(30);
+
+            try {
+                const outputFormat = document.getElementById('outputFormat').value;
+                const quality = document.getElementById('qualityRange').value / 100;
+                updateProgress(60);
+                const canvas = document.createElement('canvas');
+                canvas.width = originalImage.width;
+                canvas.height = originalImage.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(originalImage, 0, 0);
+                updateProgress(80);
+                
+                let dataUrl;
+                if (outputFormat === 'image/png' || outputFormat === 'image/gif' || outputFormat === 'image/bmp') {
+                    dataUrl = canvas.toDataURL(outputFormat);
+                } else {
+                    dataUrl = canvas.toDataURL(outputFormat, quality);
+                }
+                
+                processedResult = dataUrl;
+                const ext = formatExtensions[outputFormat] || 'png';
+                processedFileName = currentFile.name.replace(/\.[^/.]+$/, '') + '.' + ext;
+                updateProgress(100);
+                
+                document.getElementById('resultContent').innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <img src="${dataUrl}" style="max-width: 200px; border-radius: 8px; margin-bottom: 10px;">
+                        <p>Converti en ${ext.toUpperCase()}</p>
+                    </div>
+                `;
+                showResult();
+                showToast('Image convertie avec succès!', 'success');
+            } catch (error) {
+                showToast('Erreur de conversion: ' + error.message, 'error');
+            } finally {
+                hideProgress();
+                convertBtn.disabled = false;
+                convertBtn.innerHTML = '<span>Convertir</span>';
+            }
+        }
+
+        function downloadResult() {
+            if (!processedResult) return;
+            const link = document.createElement('a');
+            link.href = processedResult;
+            link.download = processedFileName || 'image-convertie';
+            link.click();
+            showToast('Téléchargement démarré!', 'success');
+        }
+
+        function resetTool() {
+            removeFile();
+            hideResult();
+            hideProgress();
+            document.getElementById('convertBtn').innerHTML = '<span>Convertir</span>';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Octets';
+            const k = 1024;
+            const sizes = ['Octets', 'Ko', 'Mo', 'Go'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        document.getElementById('languageSelector')?.addEventListener('change', function() {
+            const lang = this.value;
+            const currentPath = window.location.pathname;
+            const newPath = currentPath.replace(/\/(en|ar|es|fr|de)\//, '/' + lang + '/');
+            if (newPath !== currentPath) window.location.href = newPath;
+        });
+    </script>
 </body>
 </html>
