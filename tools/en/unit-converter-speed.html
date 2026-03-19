@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Converter (Speed) - 205 Tools</title>
+  <meta name="description" content="Convert between speed units.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .converter-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 15px; align-items: end; }
+    .swap-btn { padding: 10px 15px; font-size: 20px; }
+    @media (max-width: 600px) { .converter-grid { grid-template-columns: 1fr; } .swap-btn { transform: rotate(90deg); } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Home</a>
+    
+    <header>
+      <h1>🚀 Speed Converter</h1>
+      <p>Convert between speed units</p>
+    </header>
+    
+    <div class="tool-container">
+      <div class="tool-header">
+        <h2>Converter</h2>
+        <div class="lang-selector">
+          <a href="./unit-converter-speed.html" class="lang-btn active">EN</a>
+          <a href="../es/unit-converter-speed.html" class="lang-btn">ES</a>
+          <a href="../fr/unit-converter-speed.html" class="lang-btn">FR</a>
+          <a href="../de/unit-converter-speed.html" class="lang-btn">DE</a>
+          <a href="../ar/unit-converter-speed.html" class="lang-btn">AR</a>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Value</label>
+        <input type="number" id="value" value="60" step="any" oninput="convert()">
+      </div>
+      
+      <div class="converter-grid">
+        <div class="form-group">
+          <label>From</label>
+          <select id="fromUnit" onchange="convert()">
+            <option value="kmh">km/h</option>
+            <option value="mph" selected>miles/h (mph)</option>
+            <option value="ms">m/s</option>
+            <option value="fts">ft/s</option>
+            <option value="kn">Knots</option>
+            <option value="mach">Mach</option>
+          </select>
+        </div>
+        
+        <button class="btn btn-secondary swap-btn" onclick="swap()">⇄</button>
+        
+        <div class="form-group">
+          <label>To</label>
+          <select id="toUnit" onchange="convert()">
+            <option value="kmh" selected>km/h</option>
+            <option value="mph">miles/h (mph)</option>
+            <option value="ms">m/s</option>
+            <option value="fts">ft/s</option>
+            <option value="kn">Knots</option>
+            <option value="mach">Mach</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="result-box" style="margin-top: 20px;">
+        <div class="result-label">Result</div>
+        <div class="result-value" id="result">96.5606</div>
+        <div class="result-formula" id="formula">60 mph = 96.5606 km/h</div>
+      </div>
+    </div>
+    
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
+  </div>
+  
+  <script>
+    const toKmh = {
+      kmh: 1,
+      mph: 1.60934,
+      ms: 3.6,
+      fts: 1.09728,
+      kn: 1.852,
+      mach: 1225.08
+    };
+    
+    function convert() {
+      const value = parseFloat(document.getElementById('value').value) || 0;
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      
+      const kmh = value * toKmh[from];
+      const result = kmh / toKmh[to];
+      
+      document.getElementById('result').textContent = result.toLocaleString(undefined, { maximumFractionDigits: 6 });
+      document.getElementById('formula').textContent = `${value} ${from} = ${result.toFixed(4)} ${to}`;
+    }
+    
+    function swap() {
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      document.getElementById('fromUnit').value = to;
+      document.getElementById('toUnit').value = from;
+      convert();
+    }
+    
+    convert();
+  </script>
+</body>
+</html>

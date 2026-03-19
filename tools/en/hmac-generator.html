@@ -4,104 +4,106 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HMAC Generator - 205 Tools</title>
-  <meta name="description" content="Generate HMAC (Hash-based Message Authentication Code) with various algorithms.">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <meta name="description" content="Generate HMAC hash with secret key.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .hash-output { background: var(--bg-secondary); padding: 20px; border-radius: 12px; font-family: 'Fira Code', monospace; font-size: 14px; word-break: break-all; text-align: center; margin: 20px 0; color: var(--primary); }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>🔑 HMAC Generator</h1>
-      <p>Generate HMAC with SHA256, SHA512, SHA1, or MD5.</p>
+      <h1>🔐 HMAC Generator</h1>
+      <p>Generate HMAC with secret key</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Generator</h2>
         <div class="lang-selector">
-          <a href="../en/hmac-generator.html" class="lang-btn active">EN</a><a href="../es/hmac-generator.html" class="lang-btn ">ES</a><a href="../fr/hmac-generator.html" class="lang-btn ">FR</a><a href="../de/hmac-generator.html" class="lang-btn ">DE</a><a href="../ar/hmac-generator.html" class="lang-btn ">AR</a>
+          <a href="./hmac-generator.html" class="lang-btn active">EN</a>
+          <a href="../es/hmac-generator.html" class="lang-btn">ES</a>
+          <a href="../fr/hmac-generator.html" class="lang-btn">FR</a>
+          <a href="../de/hmac-generator.html" class="lang-btn">DE</a>
+          <a href="../ar/hmac-generator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
       <div class="form-group">
-        <label>Algorithm</label>
-        <select id="algorithm">
-          <option value="SHA-256" selected>SHA-256</option>
-          <option value="SHA-512">SHA-512</option>
-          <option value="SHA-1">SHA-1</option>
-        </select>
+        <label>Message</label>
+        <textarea id="message" rows="4" placeholder="Enter message...">Hello World</textarea>
       </div>
+      
       <div class="form-group">
         <label>Secret Key</label>
-        <input type="text" id="secretKey" placeholder="Enter secret key...">
+        <input type="text" id="secretKey" value="mysecretkey" placeholder="Enter secret key">
       </div>
+      
       <div class="form-group">
-        <label>Message</label>
-        <textarea id="message" rows="6" placeholder="Enter your message here..."></textarea>
+        <label>Algorithm</label>
+        <select id="algorithm" onchange="generateHMAC()">
+          <option value="SHA-256">SHA-256</option>
+          <option value="SHA-1">SHA-1</option>
+          <option value="SHA-512">SHA-512</option>
+        </select>
       </div>
-      <div class="form-group">
-        <label><input type="checkbox" id="uppercase"> Output Uppercase</label>
-      </div>
+      
       <div class="btn-group">
         <button class="btn btn-primary" onclick="generateHMAC()">Generate HMAC</button>
-        <button class="btn btn-secondary" onclick="resetForm()">Reset</button>
+        <button class="btn btn-success" onclick="copyHash()">📋 Copy</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>HMAC Result</label>
-        <textarea id="outputText" rows="4" readonly></textarea>
-      </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
+      
+      <div class="hash-output" id="hashOutput"></div>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
     async function generateHMAC() {
-      const algorithm = document.getElementById('algorithm').value;
-      const key = document.getElementById('secretKey').value;
       const message = document.getElementById('message').value;
-      const uppercase = document.getElementById('uppercase').checked;
+      const key = document.getElementById('secretKey').value;
+      const algo = document.getElementById('algorithm').value;
       
-      if (!key) {
-        alert('Please enter a secret key');
-        return;
-      }
-      if (!message) {
-        alert('Please enter a message');
-        return;
-      }
+      if (!message || !key) return;
       
       try {
         const encoder = new TextEncoder();
-        const cryptoKey = await crypto.subtle.importKey(
-          'raw',
-          encoder.encode(key),
-          { name: 'HMAC', hash: algorithm },
-          false,
-          ['sign']
-        );
-        const signature = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(message));
-        const hashArray = Array.from(new Uint8Array(signature));
-        let hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        const keyData = encoder.encode(key);
+        const messageData = encoder.encode(message);
         
-        if (uppercase) hash = hash.toUpperCase();
-        document.getElementById('outputText').value = hash;
-      } catch (error) {
-        alert('Error generating HMAC: ' + error.message);
+        const cryptoKey = await crypto.subtle.importKey(
+          'raw', keyData, { name: 'HMAC', hash: algo }, false, ['sign']
+        );
+        
+        const signature = await crypto.subtle.sign('HMAC', cryptoKey, messageData);
+        const hashArray = Array.from(new Uint8Array(signature));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        
+        document.getElementById('hashOutput').textContent = hashHex;
+      } catch (e) {
+        document.getElementById('hashOutput').textContent = 'Error: ' + e.message;
       }
     }
     
-    function resetForm() {
-      document.getElementById('algorithm').value = 'SHA-256';
-      document.getElementById('secretKey').value = '';
-      document.getElementById('message').value = '';
-      document.getElementById('outputText').value = '';
+    function copyHash() {
+      const hash = document.getElementById('hashOutput').textContent;
+      if (hash) {
+        navigator.clipboard.writeText(hash);
+        alert('HMAC copied!');
+      }
     }
+    
+    function clearAll() {
+      document.getElementById('message').value = '';
+      document.getElementById('secretKey').value = '';
+      document.getElementById('hashOutput').textContent = '';
+    }
+    
+    generateHMAC();
   </script>
 </body>
 </html>
