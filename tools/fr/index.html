@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outils en Français - 205 Tools Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-card: #16161f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6b6b7b;
+            --border-color: #252532;
+            --primary: #4f8ef7;
+            --primary-hover: #3a7de6;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .lang-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .page-subtitle {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .category {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .tool-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(79, 142, 247, 0.2);
+        }
+        
+        .tool-icon {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+        
+        .tool-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .tool-desc {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/" class="logo">← 205 Tools Hub</a>
+        <div class="lang-selector">
+            <a href="../en/" class="lang-btn">EN</a>
+            <a href="../ar/" class="lang-btn">AR</a>
+            <a href="../es/" class="lang-btn">ES</a>
+            <a href="./" class="lang-btn active">FR</a>
+            <a href="../de/" class="lang-btn">DE</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1 class="page-title">Outils en Français</h1>
+        <p class="page-subtitle">Plus de 205 outils gratuits en français</p>
+        
+        <div class="category">
+            <h2 class="category-title">Calculateurs</h2>
+            <div class="tools-grid">
+                <a href="bmi-calculator.html" class="tool-card">
+                    <div class="tool-icon">⚖️</div>
+                    <div class="tool-title">Calculateur IMC</div>
+                    <div class="tool-desc">Calculer l'Indice de Masse Corporelle</div>
+                </a>
+                <a href="age-calculator.html" class="tool-card">
+                    <div class="tool-icon">🎂</div>
+                    <div class="tool-title">Calculateur d'Âge</div>
+                    <div class="tool-desc">Calculer l'âge exact</div>
+                </a>
+                <a href="calorie-calculator.html" class="tool-card">
+                    <div class="tool-icon">🔥</div>
+                    <div class="tool-title">Calculateur de Calories</div>
+                    <div class="tool-desc">Besoins caloriques quotidiens</div>
+                </a>
+                <a href="compound-interest-calculator.html" class="tool-card">
+                    <div class="tool-icon">📈</div>
+                    <div class="tool-title">Intérêts Composés</div>
+                    <div class="tool-desc">Calculer la croissance des investissements</div>
+                </a>
+                <a href="loan-calculator.html" class="tool-card">
+                    <div class="tool-icon">💰</div>
+                    <div class="tool-title">Calculateur de Prêt</div>
+                    <div class="tool-desc">Calculer les paiements de prêt</div>
+                </a>
+                <a href="mortgage-calculator.html" class="tool-card">
+                    <div class="tool-icon">🏠</div>
+                    <div class="tool-title">Calculateur Hypothécaire</div>
+                    <div class="tool-desc">Estimateur de paiements hypothécaires</div>
+                </a>
+                <a href="percentage-calculator.html" class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <div class="tool-title">Calculateur de Pourcentage</div>
+                    <div class="tool-desc">Calculer les pourcentages facilement</div>
+                </a>
+                <a href="tip-calculator.html" class="tool-card">
+                    <div class="tool-icon">💵</div>
+                    <div class="tool-title">Calculateur de Pourboire</div>
+                    <div class="tool-desc">Calculer les pourboires et divisions</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2 class="category-title">Convertisseurs</h2>
+            <div class="tools-grid">
+                <a href="unit-converter.html" class="tool-card">
+                    <div class="tool-icon">📐</div>
+                    <div class="tool-title">Convertisseur d'Unités</div>
+                    <div class="tool-desc">Convertir longueur, poids, température</div>
+                </a>
+                <a href="currency-converter.html" class="tool-card">
+                    <div class="tool-icon">💱</div>
+                    <div class="tool-title">Convertisseur de Devises</div>
+                    <div class="tool-desc">Convertir entre devises</div>
+                </a>
+                <a href="base64-encode-decode.html" class="tool-card">
+                    <div class="tool-icon">🔢</div>
+                    <div class="tool-title">Base64 Encoder/Décoder</div>
+                    <div class="tool-desc">Encoder et décoder Base64</div>
+                </a>
+                <a href="url-encode-decode.html" class="tool-card">
+                    <div class="tool-icon">🔗</div>
+                    <div class="tool-title">URL Encoder/Décoder</div>
+                    <div class="tool-desc">Encoder et décoder les URLs</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2 class="category-title">Sécurité et Hash</h2>
+            <div class="tools-grid">
+                <a href="password-generator.html" class="tool-card">
+                    <div class="tool-icon">🔒</div>
+                    <div class="tool-title">Générateur de Mot de Passe</div>
+                    <div class="tool-desc">Générer des mots de passe sécurisés</div>
+                </a>
+                <a href="md5-generator.html" class="tool-card">
+                    <div class="tool-icon">🔐</div>
+                    <div class="tool-title">Générateur MD5</div>
+                    <div class="tool-desc">Générer des hashes MD5</div>
+                </a>
+                <a href="sha256-generator.html" class="tool-card">
+                    <div class="tool-icon">🔑</div>
+                    <div class="tool-title">Générateur SHA256</div>
+                    <div class="tool-desc">Générer des hashes SHA256</div>
+                </a>
+                <a href="uuid-generator.html" class="tool-card">
+                    <div class="tool-icon">🆔</div>
+                    <div class="tool-title">Générateur UUID</div>
+                    <div class="tool-desc">Générer des identifiants uniques</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2 class="category-title">Outils de Texte et Code</h2>
+            <div class="tools-grid">
+                <a href="word-counter.html" class="tool-card">
+                    <div class="tool-icon">📝</div>
+                    <div class="tool-title">Compteur de Mots</div>
+                    <div class="tool-desc">Compter les mots et caractères</div>
+                </a>
+                <a href="json-formatter.html" class="tool-card">
+                    <div class="tool-icon">💻</div>
+                    <div class="tool-title">Formateur JSON</div>
+                    <div class="tool-desc">Formater et valider JSON</div>
+                </a>
+                <a href="case-converter.html" class="tool-card">
+                    <div class="tool-icon">Aa</div>
+                    <div class="tool-title">Convertisseur de Casse</div>
+                    <div class="tool-desc">Changer la casse du texte</div>
+                </a>
+                <a href="find-and-replace.html" class="tool-card">
+                    <div class="tool-icon">🔍</div>
+                    <div class="tool-title">Chercher et Remplacer</div>
+                    <div class="tool-desc">Rechercher et remplacer du texte</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2 class="category-title">Générateurs</h2>
+            <div class="tools-grid">
+                <a href="qr-code-generator.html" class="tool-card">
+                    <div class="tool-icon">📱</div>
+                    <div class="tool-title">Générateur QR Code</div>
+                    <div class="tool-desc">Créer des codes QR</div>
+                </a>
+                <a href="lorem-ipsum-generator.html" class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <div class="tool-title">Générateur Lorem Ipsum</div>
+                    <div class="tool-desc">Générer du texte factice</div>
+                </a>
+                <a href="random-number-generator.html" class="tool-card">
+                    <div class="tool-icon">🎲</div>
+                    <div class="tool-title">Générateur de Nombres</div>
+                    <div class="tool-desc">Générer des nombres aléatoires</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2 class="category-title">Outils d'Image</h2>
+            <div class="tools-grid">
+                <a href="image-converter.html" class="tool-card">
+                    <div class="tool-icon">🖼️</div>
+                    <div class="tool-title">Convertisseur d'Image</div>
+                    <div class="tool-desc">Convertir les formats d'image</div>
+                </a>
+                <a href="image-resizer.html" class="tool-card">
+                    <div class="tool-icon">📐</div>
+                    <div class="tool-title">Redimensionner Images</div>
+                    <div class="tool-desc">Modifier la taille des images</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2026 Tools Hub - 205 Outils Gratuits</p>
+    </footer>
+</body>
+</html>

@@ -3,60 +3,156 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>bmi-calculator - 205 Tools</title>
-  <meta name="description" content="">
+  <title>BMI Rechner - 205 Tools</title>
+  <meta name="description" content="Berechnen Sie Ihren Body-Mass-Index (BMI) und überprüfen Sie Ihren Gesundheitsstatus">
   <link rel="stylesheet" href="../assets/tools.css">
-  <script src="../assets/tools.js" defer></script>
+  <style>
+    .bmi-result { text-align: center; padding: 30px; background: var(--bg-secondary); border-radius: 12px; margin-top: 20px; }
+    .bmi-value { font-size: 48px; font-weight: 700; margin: 10px 0; }
+    .bmi-category { font-size: 24px; padding: 10px 20px; border-radius: 8px; display: inline-block; margin-top: 10px; }
+    .bmi-underweight { background: #3b82f6; color: white; }
+    .bmi-normal { background: #22c55e; color: white; }
+    .bmi-overweight { background: #f59e0b; color: white; }
+    .bmi-obese { background: #ef4444; color: white; }
+    .unit-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
+    .unit-toggle button { flex: 1; }
+    .unit-toggle button.active { background: var(--primary); color: white; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Startseite</a>
     
     <header>
-      <h1>⚖️ bmi-calculator</h1>
-      <p></p>
+      <h1>⚖️ BMI Rechner</h1>
+      <p>Berechnen Sie Ihren Body-Mass-Index und überprüfen Sie Ihren Gesundheitsstatus</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Optionen</h2>
+        <h2>Daten eingeben</h2>
         <div class="lang-selector">
-          <a href="../en/bmi-calculator.html" class="lang-btn ">EN</a><a href="../es/bmi-calculator.html" class="lang-btn ">ES</a><a href="../fr/bmi-calculator.html" class="lang-btn ">FR</a><a href="../de/bmi-calculator.html" class="lang-btn active">DE</a><a href="../ar/bmi-calculator.html" class="lang-btn ">AR</a>
+          <a href="../en/bmi-calculator.html" class="lang-btn">EN</a>
+          <a href="../es/bmi-calculator.html" class="lang-btn">ES</a>
+          <a href="../fr/bmi-calculator.html" class="lang-btn">FR</a>
+          <a href="./bmi-calculator.html" class="lang-btn active">DE</a>
+          <a href="../ar/bmi-calculator.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="unit-toggle">
+        <button class="btn btn-secondary active" id="metricBtn" onclick="setUnit('metric')">Metrisch (kg, cm)</button>
+        <button class="btn btn-secondary" id="imperialBtn" onclick="setUnit('imperial')">Imperial (lb, ft/in)</button>
+      </div>
       
-      <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
+      <div id="metricInputs">
+        <div class="form-group">
+          <label>Gewicht (kg)</label>
+          <input type="number" id="weightKg" placeholder="Gewicht in kg eingeben" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>Größe (cm)</label>
+          <input type="number" id="heightCm" placeholder="Größe in cm eingeben" step="0.1">
+        </div>
       </div>
+      
+      <div id="imperialInputs" style="display: none;">
+        <div class="form-group">
+          <label>Gewicht (lb)</label>
+          <input type="number" id="weightLbs" placeholder="Gewicht in Pfund eingeben" step="0.1">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Größe (ft)</label>
+            <input type="number" id="heightFt" placeholder="Fuß" min="0" max="10">
+          </div>
+          <div class="form-group">
+            <label>Größe (in)</label>
+            <input type="number" id="heightIn" placeholder="Zoll" min="0" max="11">
+          </div>
+        </div>
+      </div>
+      
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Umrechnen</button>
-        <button class="btn btn-secondary" onclick="resetText()">Zurücksetzen</button>
+        <button class="btn btn-primary" onclick="calculateBMI()">BMI berechnen</button>
+        <button class="btn btn-secondary" onclick="resetBMI()">Zurücksetzen</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Ergebnis</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="bmiResult" class="bmi-result" style="display: none;">
+        <div>Ihr BMI</div>
+        <div class="bmi-value" id="bmiValue">--</div>
+        <div class="bmi-category" id="bmiCategory">--</div>
+        <div style="margin-top: 15px; color: var(--text-secondary);">
+          <small>Kategorien: Untergewicht &lt; 18.5 | Normal 18.5-24.9 | Übergewicht 25-29.9 | Adipositas ≥ 30</small>
+        </div>
       </div>
-      <button class="btn btn-success" data-success="Kopiert!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Kopieren</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Kostenlose Online-Tools</p></footer>
   </div>
   
   <script>
+    let currentUnit = 'metric';
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
-      }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    function setUnit(unit) {
+      currentUnit = unit;
+      document.getElementById('metricBtn').classList.toggle('active', unit === 'metric');
+      document.getElementById('imperialBtn').classList.toggle('active', unit === 'imperial');
+      document.getElementById('metricInputs').style.display = unit === 'metric' ? 'block' : 'none';
+      document.getElementById('imperialInputs').style.display = unit === 'imperial' ? 'block' : 'none';
+      document.getElementById('bmiResult').style.display = 'none';
+    }
     
+    function calculateBMI() {
+      let bmi;
+      
+      if (currentUnit === 'metric') {
+        const weight = parseFloat(document.getElementById('weightKg').value);
+        const height = parseFloat(document.getElementById('heightCm').value) / 100;
+        
+        if (!weight || !height || weight <= 0 || height <= 0) {
+          alert('Bitte geben Sie ein gültiges Gewicht und Größe ein');
+          return;
+        }
+        
+        bmi = weight / (height * height);
+      } else {
+        const weight = parseFloat(document.getElementById('weightLbs').value);
+        const ft = parseFloat(document.getElementById('heightFt').value) || 0;
+        const inches = parseFloat(document.getElementById('heightIn').value) || 0;
+        const totalInches = (ft * 12) + inches;
+        
+        if (!weight || totalInches <= 0) {
+          alert('Bitte geben Sie ein gültiges Gewicht und Größe ein');
+          return;
+        }
+        
+        bmi = (weight / (totalInches * totalInches)) * 703;
+      }
+      
+      bmi = Math.round(bmi * 10) / 10;
+      
+      let category, className;
+      if (bmi < 18.5) { category = 'Untergewicht'; className = 'bmi-underweight'; }
+      else if (bmi < 25) { category = 'Normalgewicht'; className = 'bmi-normal'; }
+      else if (bmi < 30) { category = 'Übergewicht'; className = 'bmi-overweight'; }
+      else { category = 'Adipositas'; className = 'bmi-obese'; }
+      
+      document.getElementById('bmiValue').textContent = bmi;
+      const catEl = document.getElementById('bmiCategory');
+      catEl.textContent = category;
+      catEl.className = 'bmi-category ' + className;
+      document.getElementById('bmiResult').style.display = 'block';
+    }
+    
+    function resetBMI() {
+      document.getElementById('weightKg').value = '';
+      document.getElementById('heightCm').value = '';
+      document.getElementById('weightLbs').value = '';
+      document.getElementById('heightFt').value = '';
+      document.getElementById('heightIn').value = '';
+      document.getElementById('bmiResult').style.display = 'none';
+    }
   </script>
 </body>
 </html>
