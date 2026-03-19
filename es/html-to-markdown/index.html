@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML to Markdown - 205-Herramientas</title>
+    <meta name="description" content="Online tool for html to markdown. Fast, free, and works in your browser. Free online tool.">
+    <meta name="keywords" content="html to markdown converter, online tool, free tool">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="HTML to Markdown - 205-Herramientas">
+    <meta property="og:description" content="Online tool for html to markdown. Fast, free, and works in your browser.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yoursite.com/es/html-to-markdown/">
+    
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href="https://yoursite.com/en/html-to-markdown/">
+    <link rel="alternate" hreflang="ar" href="https://yoursite.com/ar/html-to-markdown/">
+    <link rel="alternate" hreflang="fr" href="https://yoursite.com/fr/html-to-markdown/">
+    <link rel="alternate" hreflang="es" href="https://yoursite.com/es/html-to-markdown/">
+    <link rel="alternate" hreflang="de" href="https://yoursite.com/de/html-to-markdown/">
+    <link rel="canonical" href="https://yoursite.com/es/html-to-markdown/">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { primary: '#6366f1', secondary: '#8b5cf6' } } }
+        }
+    </script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700&family=Noto+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: "Inter", sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/es/" class="flex items-center space-x-2">
+                    <span class="text-2xl font-bold gradient-text">205-Herramientas</span>
+                </a>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="relative group">
+                        <button class="flex items-center space-x-1 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                            <span>🌐</span>
+                            <span class="font-medium uppercase">es</span>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg border dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                            <a href="/en/html-to-markdown/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 ">English</a><a href="/ar/html-to-markdown/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 ">العربية</a><a href="/fr/html-to-markdown/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 ">Français</a><a href="/es/html-to-markdown/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium text-primary">Español</a><a href="/de/html-to-markdown/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 ">Deutsch</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Dark Mode -->
+                    <button id="darkToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                        <span id="darkIcon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-100 dark:bg-gray-800/50 border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center text-sm">
+                <a href="/es/" class="text-gray-500 hover:text-primary">Inicio</a>
+                <span class="mx-2 text-gray-400">/</span>
+                <a href="/category/SEO/" class="text-gray-500 hover:text-primary">SEO</a>
+                <span class="mx-2 text-gray-400">/</span>
+                <span class="text-gray-900 dark:text-gray-100">HTML to Markdown</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Tool Section -->
+    <main class="py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-2xl text-3xl mb-4">
+                    undefined
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold mb-3">HTML to Markdown</h1>
+                <p class="text-gray-600 dark:text-gray-400">Online tool for html to markdown. Fast, free, and works in your browser.</p>
+            </div>
+
+            <!-- Tool Interface -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border dark:border-gray-700 p-6 md:p-8">
+                <div id="toolContainer" class="text-center py-12">
+                    <div class="text-6xl mb-4">🔧</div>
+                    <p class="text-gray-500 dark:text-gray-400">Tool interface will be loaded here</p>
+                    <p class="text-sm text-gray-400 mt-2">JavaScript functionality to be implemented</p>
+                </div>
+            </div>
+
+            <!-- How to Use -->
+            <div class="mt-8 bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6">
+                <h2 class="text-xl font-semibold mb-4">Cómo usar</h2>
+                <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400">
+                    <li>Upload your file or enter your data</li>
+                    <li>Configure the options as needed</li>
+                    <li>Click the convert/process button</li>
+                    <li>Download your result</li>
+                </ol>
+            </div>
+
+            <!-- Related Tools -->
+            <div class="mt-8">
+                <h2 class="text-xl font-semibold mb-4">Herramientas relacionadas</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <a href="/es/meta-tags-generator/" class="flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md border dark:border-gray-700 transition">
+                        <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">undefined</div>
+                        <div>
+                            <h4 class="font-medium">Meta Tags Generator</h4>
+                        </div>
+                    </a>
+                    
+                    <a href="/es/robots-txt-generator/" class="flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md border dark:border-gray-700 transition">
+                        <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">undefined</div>
+                        <div>
+                            <h4 class="font-medium">Robots.txt Generator</h4>
+                        </div>
+                    </a>
+                    
+                    <a href="/es/sitemap-xml-generator/" class="flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md border dark:border-gray-700 transition">
+                        <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">undefined</div>
+                        <div>
+                            <h4 class="font-medium">Sitemap XML Generator</h4>
+                        </div>
+                    </a>
+                    
+                    <a href="/es/utm-link-builder/" class="flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md border dark:border-gray-700 transition">
+                        <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">undefined</div>
+                        <div>
+                            <h4 class="font-medium">UTM Link Builder</h4>
+                        </div>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-white font-bold text-lg mb-2">205-Herramientas</h3>
+                <p class="text-sm mb-4">Herramientas en línea gratuitas para todos.</p>
+                <div class="flex justify-center space-x-6 text-sm">
+                    <a href="/privacy.html" class="hover:text-white transition">Política de privacidad</a>
+                    <a href="/terms.html" class="hover:text-white transition">Términos de uso</a>
+                    <a href="/contact.html" class="hover:text-white transition">Contacto</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode
+        const darkToggle = document.getElementById('darkToggle');
+        const darkIcon = document.getElementById('darkIcon');
+        
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            darkIcon.textContent = '☀️';
+        }
+        
+        darkToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+            darkIcon.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+        });
+    </script>
+</body>
+</html>

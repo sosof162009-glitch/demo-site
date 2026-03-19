@@ -1,269 +1,566 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>205 Tools Hub - Free Online Tools</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>205-Tools | أدوات مجانية على الإنترنت</title>
+    <meta name="description" content="205 أداة مجانية على الإنترنت - تحويل الصور، PDF، النصوص، المطورين، والمزيد">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                        dark: '#0f172a',
+                        darkcard: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #111118;
-            --bg-card: #16161f;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --text-muted: #6b6b7b;
-            --border-color: #252532;
-            --primary: #4f8ef7;
-            --primary-hover: #3a7de6;
-            --success: #22c55e;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-        }
-        
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            background: linear-gradient(90deg, var(--primary), #8b5cf6);
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; }
+        .ltr { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+            background-clip: text;
         }
-        
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 1.3rem;
-            max-width: 600px;
-            margin: 0 auto 30px;
+        .card-hover {
+            transition: all 0.3s ease;
         }
-        
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
         }
-        
-        .stat {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        .lang-selector {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .lang-btn {
-            padding: 12px 24px;
-            border: 2px solid var(--border-color);
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .lang-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        
         .tool-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
         }
-        
         .tool-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 40px rgba(79, 142, 247, 0.2);
-        }
-        
-        .tool-icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-        
-        .tool-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .tool-desc {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-        
-        .tool-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .tool-link:hover {
-            color: var(--primary-hover);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-        }
-        
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .stats { gap: 20px; }
+            transform: scale(1.02);
         }
     </style>
 </head>
-<body>
-    <div class="hero">
-        <h1>205 Tools Hub</h1>
-        <p class="subtitle">Free online tools for developers, designers, and everyone. No ads, no registration required.</p>
-        
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-number">205+</div>
-                <div class="stat-label">Free Tools</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">5</div>
-                <div class="stat-label">Languages</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">12</div>
-                <div class="stat-label">Categories</div>
+<body class="bg-gray-50 dark:bg-dark text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Language Data -->
+    <script>
+        const translations = {
+            ar: {
+                siteName: "205-Tools",
+                tagline: "أدوات مجانية على الإنترنت",
+                searchPlaceholder: "ابحث عن أداة...",
+                categories: "التصنيفات",
+                allTools: "جميع الأدوات",
+                tools: "أداة",
+                categoriesCount: "تصنيف",
+                languages: "لغة",
+                darkMode: "الوضع المظلم",
+                lightMode: "الوضع الفاتح",
+                viewTool: "عرض الأداة",
+                category: "التصنيف:"
+            },
+            en: {
+                siteName: "205-Tools",
+                tagline: "Free Online Tools",
+                searchPlaceholder: "Search for a tool...",
+                categories: "Categories",
+                allTools: "All Tools",
+                tools: "tools",
+                categoriesCount: "categories",
+                languages: "languages",
+                darkMode: "Dark Mode",
+                lightMode: "Light Mode",
+                viewTool: "View Tool",
+                category: "Category:"
+            },
+            fr: {
+                siteName: "205-Tools",
+                tagline: "Outils en ligne gratuits",
+                searchPlaceholder: "Rechercher un outil...",
+                categories: "Catégories",
+                allTools: "Tous les outils",
+                tools: "outils",
+                categoriesCount: "catégories",
+                languages: "langues",
+                darkMode: "Mode sombre",
+                lightMode: "Mode clair",
+                viewTool: "Voir l'outil",
+                category: "Catégorie:"
+            },
+            es: {
+                siteName: "205-Tools",
+                tagline: "Herramientas gratuitas en línea",
+                searchPlaceholder: "Buscar una herramienta...",
+                categories: "Categorías",
+                allTools: "Todas las herramientas",
+                tools: "herramientas",
+                categoriesCount: "categorías",
+                languages: "idiomas",
+                darkMode: "Modo oscuro",
+                lightMode: "Modo claro",
+                viewTool: "Ver herramienta",
+                category: "Categoría:"
+            },
+            de: {
+                siteName: "205-Tools",
+                tagline: "Kostenlose Online-Tools",
+                searchPlaceholder: "Nach einem Tool suchen...",
+                categories: "Kategorien",
+                allTools: "Alle Tools",
+                tools: "Tools",
+                categoriesCount: "Kategorien",
+                languages: "Sprachen",
+                darkMode: "Dunkelmodus",
+                lightMode: "Hellmodus",
+                viewTool: "Tool anzeigen",
+                category: "Kategorie:"
+            }
+        };
+
+        const categoriesData = {
+            images: { ar: "الصور", en: "Images", fr: "Images", es: "Imágenes", de: "Bilder" },
+            pdf: { ar: "PDF", en: "PDF", fr: "PDF", es: "PDF", de: "PDF" },
+            text: { ar: "النصوص", en: "Text", fr: "Texte", es: "Texto", de: "Text" },
+            developer: { ar: "المطورين", en: "Developer", fr: "Développeur", es: "Desarrollador", de: "Entwickler" },
+            colors: { ar: "الألوان", en: "Colors", fr: "Couleurs", es: "Colores", de: "Farben" },
+            math: { ar: "الرياضيات", en: "Math", fr: "Maths", es: "Matemáticas", de: "Mathematik" },
+            time: { ar: "الوقت", en: "Time", fr: "Temps", es: "Tiempo", de: "Zeit" },
+            units: { ar: "الوحدات", en: "Units", fr: "Unités", es: "Unidades", de: "Einheiten" },
+            seo: { ar: "SEO", en: "SEO", fr: "SEO", es: "SEO", de: "SEO" },
+            security: { ar: "الأمان", en: "Security", fr: "Sécurité", es: "Seguridad", de: "Sicherheit" },
+            data: { ar: "البيانات", en: "Data", fr: "Données", es: "Datos", de: "Daten" },
+            special: { ar: "خاصة", en: "Special", fr: "Spécial", es: "Especial", de: "Spezial" }
+        };
+
+        const toolsData = [
+            {"id": 1, "name": "JPG to PNG Converter", "slug": "jpg-to-png", "category": "images"},
+            {"id": 2, "name": "PNG to JPG Converter", "slug": "png-to-jpg", "category": "images"},
+            {"id": 3, "name": "WebP to JPG Converter", "slug": "webp-to-jpg", "category": "images"},
+            {"id": 4, "name": "JPG to WebP Converter", "slug": "jpg-to-webp", "category": "images"},
+            {"id": 5, "name": "PNG to WebP Converter", "slug": "png-to-webp", "category": "images"},
+            {"id": 6, "name": "WebP to PNG Converter", "slug": "webp-to-png", "category": "images"},
+            {"id": 7, "name": "HEIC to JPG Converter", "slug": "heic-to-jpg", "category": "images"},
+            {"id": 8, "name": "HEIC to PNG Converter", "slug": "heic-to-png", "category": "images"},
+            {"id": 9, "name": "BMP to JPG Converter", "slug": "bmp-to-jpg", "category": "images"},
+            {"id": 10, "name": "BMP to PNG Converter", "slug": "bmp-to-png", "category": "images"},
+            {"id": 11, "name": "TIFF to JPG Converter", "slug": "tiff-to-jpg", "category": "images"},
+            {"id": 12, "name": "TIFF to PNG Converter", "slug": "tiff-to-png", "category": "images"},
+            {"id": 13, "name": "GIF to JPG Converter", "slug": "gif-to-jpg", "category": "images"},
+            {"id": 14, "name": "GIF to PNG Converter", "slug": "gif-to-png", "category": "images"},
+            {"id": 15, "name": "SVG to JPG Converter", "slug": "svg-to-jpg", "category": "images"},
+            {"id": 16, "name": "SVG to PNG Converter", "slug": "svg-to-png", "category": "images"},
+            {"id": 17, "name": "AVIF to JPG Converter", "slug": "avif-to-jpg", "category": "images"},
+            {"id": 18, "name": "AVIF to PNG Converter", "slug": "avif-to-png", "category": "images"},
+            {"id": 19, "name": "ICO to JPG Converter", "slug": "ico-to-jpg", "category": "images"},
+            {"id": 20, "name": "ICO to PNG Converter", "slug": "ico-to-png", "category": "images"},
+            {"id": 21, "name": "JPG to GIF Converter", "slug": "jpg-to-gif", "category": "images"},
+            {"id": 22, "name": "PNG to GIF Converter", "slug": "png-to-gif", "category": "images"},
+            {"id": 23, "name": "JPG to ICO Converter", "slug": "jpg-to-ico", "category": "images"},
+            {"id": 24, "name": "PNG to ICO Converter", "slug": "png-to-ico", "category": "images"},
+            {"id": 25, "name": "JPG to AVIF Converter", "slug": "jpg-to-avif", "category": "images"},
+            {"id": 26, "name": "PNG to AVIF Converter", "slug": "png-to-avif", "category": "images"},
+            {"id": 27, "name": "JPG to BMP Converter", "slug": "jpg-to-bmp", "category": "images"},
+            {"id": 28, "name": "PNG to BMP Converter", "slug": "png-to-bmp", "category": "images"},
+            {"id": 29, "name": "WebP to GIF Converter", "slug": "webp-to-gif", "category": "images"},
+            {"id": 30, "name": "WebP to AVIF Converter", "slug": "webp-to-avif", "category": "images"},
+            {"id": 31, "name": "GIF to WebP Converter", "slug": "gif-to-webp", "category": "images"},
+            {"id": 32, "name": "AVIF to WebP Converter", "slug": "avif-to-webp", "category": "images"},
+            {"id": 33, "name": "Image Resizer", "slug": "image-resizer", "category": "images"},
+            {"id": 34, "name": "Compress JPG", "slug": "compress-jpg", "category": "images"},
+            {"id": 35, "name": "Compress PNG", "slug": "compress-png", "category": "images"},
+            {"id": 36, "name": "Image Cropper", "slug": "image-cropper", "category": "images"},
+            {"id": 37, "name": "Image to Base64", "slug": "image-to-base64", "category": "images"},
+            {"id": 38, "name": "Base64 to Image", "slug": "base64-to-image", "category": "images"},
+            {"id": 39, "name": "EXIF Data Remover", "slug": "remove-exif", "category": "images"},
+            {"id": 40, "name": "Favicon Generator", "slug": "favicon-generator", "category": "images"},
+            {"id": 41, "name": "Color Palette Extractor", "slug": "color-palette-extractor", "category": "images"},
+            {"id": 42, "name": "Image to Grayscale", "slug": "image-to-grayscale", "category": "images"},
+            {"id": 43, "name": "PDF to JPG Converter", "slug": "pdf-to-jpg", "category": "pdf"},
+            {"id": 44, "name": "PDF to PNG Converter", "slug": "pdf-to-png", "category": "pdf"},
+            {"id": 45, "name": "PDF to WebP Converter", "slug": "pdf-to-webp", "category": "pdf"},
+            {"id": 46, "name": "PDF to Text Extractor", "slug": "pdf-to-text", "category": "pdf"},
+            {"id": 47, "name": "PDF Metadata Viewer", "slug": "pdf-metadata", "category": "pdf"},
+            {"id": 48, "name": "JPG to PDF Converter", "slug": "jpg-to-pdf", "category": "pdf"},
+            {"id": 49, "name": "PNG to PDF Converter", "slug": "png-to-pdf", "category": "pdf"},
+            {"id": 50, "name": "Images to PDF Converter", "slug": "images-to-pdf", "category": "pdf"},
+            {"id": 51, "name": "Word to PDF Converter", "slug": "word-to-pdf", "category": "pdf"},
+            {"id": 52, "name": "HTML to PDF Converter", "slug": "html-to-pdf", "category": "pdf"},
+            {"id": 53, "name": "Merge PDF Files", "slug": "merge-pdf", "category": "pdf"},
+            {"id": 54, "name": "Split PDF File", "slug": "split-pdf", "category": "pdf"},
+            {"id": 55, "name": "Compress PDF", "slug": "compress-pdf", "category": "pdf"},
+            {"id": 56, "name": "Rotate PDF Pages", "slug": "rotate-pdf", "category": "pdf"},
+            {"id": 57, "name": "Add Watermark to PDF", "slug": "pdf-watermark", "category": "pdf"},
+            {"id": 58, "name": "PDF Page Numbering", "slug": "pdf-page-numbers", "category": "pdf"},
+            {"id": 59, "name": "Reorder PDF Pages", "slug": "reorder-pdf-pages", "category": "pdf"},
+            {"id": 60, "name": "Remove PDF Password", "slug": "remove-pdf-password", "category": "pdf"},
+            {"id": 61, "name": "Word Counter", "slug": "word-counter", "category": "text"},
+            {"id": 62, "name": "Character Counter", "slug": "character-counter", "category": "text"},
+            {"id": 63, "name": "Line Counter", "slug": "line-counter", "category": "text"},
+            {"id": 64, "name": "Remove Duplicate Lines", "slug": "remove-duplicate-lines", "category": "text"},
+            {"id": 65, "name": "Sort Lines A-Z", "slug": "sort-lines", "category": "text"},
+            {"id": 66, "name": "Reverse Text Generator", "slug": "reverse-text", "category": "text"},
+            {"id": 67, "name": "Case Converter", "slug": "case-converter", "category": "text"},
+            {"id": 68, "name": "Remove Extra Spaces", "slug": "remove-extra-spaces", "category": "text"},
+            {"id": 69, "name": "Text to URL Slug", "slug": "text-to-slug", "category": "text"},
+            {"id": 70, "name": "Remove Line Breaks", "slug": "remove-line-breaks", "category": "text"},
+            {"id": 71, "name": "Add Line Numbers", "slug": "add-line-numbers", "category": "text"},
+            {"id": 72, "name": "Text Diff Checker", "slug": "text-diff-checker", "category": "text"},
+            {"id": 73, "name": "Find and Replace Text", "slug": "find-and-replace", "category": "text"},
+            {"id": 74, "name": "Lorem Ipsum Generator", "slug": "lorem-ipsum-generator", "category": "text"},
+            {"id": 75, "name": "Random Text Generator", "slug": "random-text-generator", "category": "text"},
+            {"id": 76, "name": "Text to ASCII Art", "slug": "text-to-ascii-art", "category": "text"},
+            {"id": 77, "name": "Fancy Text Generator", "slug": "fancy-text-generator", "category": "text"},
+            {"id": 78, "name": "Morse Code Translator", "slug": "morse-code-translator", "category": "text"},
+            {"id": 79, "name": "Reading Time Estimator", "slug": "reading-time-estimator", "category": "text"},
+            {"id": 80, "name": "Text Repeater", "slug": "text-repeater", "category": "text"},
+            {"id": 81, "name": "Upside Down Text", "slug": "upside-down-text", "category": "text"},
+            {"id": 82, "name": "Mirror Text Generator", "slug": "mirror-text", "category": "text"},
+            {"id": 83, "name": "JSON Formatter & Validator", "slug": "json-formatter", "category": "developer"},
+            {"id": 84, "name": "JSON Minifier", "slug": "json-minifier", "category": "developer"},
+            {"id": 85, "name": "JSON to CSV Converter", "slug": "json-to-csv", "category": "developer"},
+            {"id": 86, "name": "JSON to XML Converter", "slug": "json-to-xml", "category": "developer"},
+            {"id": 87, "name": "JSON to YAML Converter", "slug": "json-to-yaml", "category": "developer"},
+            {"id": 88, "name": "CSV to JSON Converter", "slug": "csv-to-json", "category": "developer"},
+            {"id": 89, "name": "XML to JSON Converter", "slug": "xml-to-json", "category": "developer"},
+            {"id": 90, "name": "YAML to JSON Converter", "slug": "yaml-to-json", "category": "developer"},
+            {"id": 91, "name": "JSON Schema Validator", "slug": "json-schema-validator", "category": "developer"},
+            {"id": 92, "name": "HTML Formatter", "slug": "html-formatter", "category": "developer"},
+            {"id": 93, "name": "HTML Minifier", "slug": "html-minifier", "category": "developer"},
+            {"id": 94, "name": "CSS Formatter", "slug": "css-formatter", "category": "developer"},
+            {"id": 95, "name": "CSS Minifier", "slug": "css-minifier", "category": "developer"},
+            {"id": 96, "name": "JavaScript Minifier", "slug": "js-minifier", "category": "developer"},
+            {"id": 97, "name": "SQL Formatter", "slug": "sql-formatter", "category": "developer"},
+            {"id": 98, "name": "HTML Entities Encoder", "slug": "html-entities-encoder", "category": "developer"},
+            {"id": 99, "name": "HTML Entities Decoder", "slug": "html-entities-decoder", "category": "developer"},
+            {"id": 100, "name": "Base64 Encoder", "slug": "base64-encoder", "category": "developer"},
+            {"id": 101, "name": "Base64 Decoder", "slug": "base64-decoder", "category": "developer"},
+            {"id": 102, "name": "URL Encoder", "slug": "url-encoder", "category": "developer"},
+            {"id": 103, "name": "URL Decoder", "slug": "url-decoder", "category": "developer"},
+            {"id": 104, "name": "MD5 Hash Generator", "slug": "md5-generator", "category": "developer"},
+            {"id": 105, "name": "SHA-256 Hash Generator", "slug": "sha256-generator", "category": "developer"},
+            {"id": 106, "name": "SHA-512 Hash Generator", "slug": "sha512-generator", "category": "developer"},
+            {"id": 107, "name": "JWT Decoder", "slug": "jwt-decoder", "category": "developer"},
+            {"id": 108, "name": "UUID / GUID Generator", "slug": "uuid-generator", "category": "developer"},
+            {"id": 109, "name": "Regex Tester", "slug": "regex-tester", "category": "developer"},
+            {"id": 110, "name": "Markdown to HTML", "slug": "markdown-to-html", "category": "developer"},
+            {"id": 111, "name": "HEX to RGB Converter", "slug": "hex-to-rgb", "category": "colors"},
+            {"id": 112, "name": "RGB to HEX Converter", "slug": "rgb-to-hex", "category": "colors"},
+            {"id": 113, "name": "HEX to HSL Converter", "slug": "hex-to-hsl", "category": "colors"},
+            {"id": 114, "name": "HSL to HEX Converter", "slug": "hsl-to-hex", "category": "colors"},
+            {"id": 115, "name": "CMYK to RGB Converter", "slug": "cmyk-to-rgb", "category": "colors"},
+            {"id": 116, "name": "RGB to CMYK Converter", "slug": "rgb-to-cmyk", "category": "colors"},
+            {"id": 117, "name": "Color Picker Tool", "slug": "color-picker", "category": "colors"},
+            {"id": 118, "name": "CSS Gradient Generator", "slug": "gradient-generator", "category": "colors"},
+            {"id": 119, "name": "Color Palette Generator", "slug": "color-palette-generator", "category": "colors"},
+            {"id": 120, "name": "Color Contrast Checker", "slug": "color-contrast-checker", "category": "colors"},
+            {"id": 121, "name": "Box Shadow Generator", "slug": "box-shadow-generator", "category": "colors"},
+            {"id": 122, "name": "Glassmorphism Generator", "slug": "glassmorphism-generator", "category": "colors"},
+            {"id": 123, "name": "Neumorphism Generator", "slug": "neumorphism-generator", "category": "colors"},
+            {"id": 124, "name": "Border Radius Generator", "slug": "border-radius-generator", "category": "colors"},
+            {"id": 125, "name": "Text Shadow Generator", "slug": "text-shadow-generator", "category": "colors"},
+            {"id": 126, "name": "Binary to Decimal", "slug": "binary-to-decimal", "category": "math"},
+            {"id": 127, "name": "Decimal to Binary", "slug": "decimal-to-binary", "category": "math"},
+            {"id": 128, "name": "Hex to Decimal", "slug": "hex-to-decimal", "category": "math"},
+            {"id": 129, "name": "Decimal to Hex", "slug": "decimal-to-hex", "category": "math"},
+            {"id": 130, "name": "Octal to Decimal", "slug": "octal-to-decimal", "category": "math"},
+            {"id": 131, "name": "Decimal to Octal", "slug": "decimal-to-octal", "category": "math"},
+            {"id": 132, "name": "Scientific Calculator", "slug": "scientific-calculator", "category": "math"},
+            {"id": 133, "name": "Percentage Calculator", "slug": "percentage-calculator", "category": "math"},
+            {"id": 134, "name": "BMI Calculator", "slug": "bmi-calculator", "category": "math"},
+            {"id": 135, "name": "Compound Interest Calc", "slug": "compound-interest-calculator", "category": "math"},
+            {"id": 136, "name": "Random Number Generator", "slug": "random-number-generator", "category": "math"},
+            {"id": 137, "name": "Average Calculator", "slug": "average-calculator", "category": "math"},
+            {"id": 138, "name": "Unix Timestamp Converter", "slug": "unix-timestamp-converter", "category": "time"},
+            {"id": 139, "name": "Time Zone Converter", "slug": "time-zone-converter", "category": "time"},
+            {"id": 140, "name": "Date Difference Calculator", "slug": "date-difference-calculator", "category": "time"},
+            {"id": 141, "name": "Age Calculator", "slug": "age-calculator", "category": "time"},
+            {"id": 142, "name": "Days Until Date Counter", "slug": "days-until-date", "category": "time"},
+            {"id": 143, "name": "Countdown Timer", "slug": "countdown-timer", "category": "time"},
+            {"id": 144, "name": "Calendar Generator", "slug": "calendar-generator", "category": "time"},
+            {"id": 145, "name": "Week Number Calculator", "slug": "week-number-calculator", "category": "time"},
+            {"id": 146, "name": "Working Days Calculator", "slug": "working-days-calculator", "category": "time"},
+            {"id": 147, "name": "Pomodoro Timer", "slug": "pomodoro-timer", "category": "time"},
+            {"id": 148, "name": "Length Converter", "slug": "length-converter", "category": "units"},
+            {"id": 149, "name": "Weight Converter", "slug": "weight-converter", "category": "units"},
+            {"id": 150, "name": "Temperature Converter", "slug": "temperature-converter", "category": "units"},
+            {"id": 151, "name": "Area Converter", "slug": "area-converter", "category": "units"},
+            {"id": 152, "name": "Volume Converter", "slug": "volume-converter", "category": "units"},
+            {"id": 153, "name": "Speed Converter", "slug": "speed-converter", "category": "units"},
+            {"id": 154, "name": "Data Storage Converter", "slug": "data-storage-converter", "category": "units"},
+            {"id": 155, "name": "Currency Converter", "slug": "currency-converter", "category": "units"},
+            {"id": 156, "name": "Fuel Efficiency Converter", "slug": "fuel-efficiency-converter", "category": "units"},
+            {"id": 157, "name": "Pressure Converter", "slug": "pressure-converter", "category": "units"},
+            {"id": 158, "name": "Energy Converter", "slug": "energy-converter", "category": "units"},
+            {"id": 159, "name": "Angle Converter", "slug": "angle-converter", "category": "units"},
+            {"id": 160, "name": "Shoe Size Converter", "slug": "shoe-size-converter", "category": "units"},
+            {"id": 161, "name": "Clothing Size Converter", "slug": "clothing-size-converter", "category": "units"},
+            {"id": 162, "name": "Screen Resolution Calc", "slug": "screen-resolution-calculator", "category": "units"},
+            {"id": 163, "name": "Aspect Ratio Calculator", "slug": "aspect-ratio-calculator", "category": "units"},
+            {"id": 164, "name": "Meta Tags Generator", "slug": "meta-tags-generator", "category": "seo"},
+            {"id": 165, "name": "Robots.txt Generator", "slug": "robots-txt-generator", "category": "seo"},
+            {"id": 166, "name": "Sitemap XML Generator", "slug": "sitemap-xml-generator", "category": "seo"},
+            {"id": 167, "name": "UTM Link Builder", "slug": "utm-link-builder", "category": "seo"},
+            {"id": 168, "name": "URL Slug Generator", "slug": "url-slug-generator", "category": "seo"},
+            {"id": 169, "name": "Open Graph Generator", "slug": "open-graph-generator", "category": "seo"},
+            {"id": 170, "name": "Twitter Card Generator", "slug": "twitter-card-generator", "category": "seo"},
+            {"id": 171, "name": "Canonical URL Generator", "slug": "canonical-url-generator", "category": "seo"},
+            {"id": 172, "name": "Keyword Density Checker", "slug": "keyword-density-checker", "category": "seo"},
+            {"id": 173, "name": "Word Count for SEO", "slug": "word-count-seo", "category": "seo"},
+            {"id": 174, "name": "HTML to Markdown", "slug": "html-to-markdown", "category": "seo"},
+            {"id": 175, "name": "HTTP Status Codes", "slug": "http-status-codes", "category": "seo"},
+            {"id": 176, "name": "hreflang Generator", "slug": "hreflang-generator", "category": "seo"},
+            {"id": 177, "name": "Schema Markup Generator", "slug": "schema-markup-generator", "category": "seo"},
+            {"id": 178, "name": "Password Generator", "slug": "password-generator", "category": "security"},
+            {"id": 179, "name": "Password Strength Checker", "slug": "password-strength-checker", "category": "security"},
+            {"id": 180, "name": "Random PIN Generator", "slug": "random-pin-generator", "category": "security"},
+            {"id": 181, "name": "Privacy Policy Generator", "slug": "privacy-policy-generator", "category": "security"},
+            {"id": 182, "name": "Terms & Conditions Gen", "slug": "terms-conditions-generator", "category": "security"},
+            {"id": 183, "name": "Cookie Policy Generator", "slug": "cookie-policy-generator", "category": "security"},
+            {"id": 184, "name": "Hash Type Identifier", "slug": "hash-identifier", "category": "security"},
+            {"id": 185, "name": "IP Address Lookup", "slug": "ip-address-lookup", "category": "security"},
+            {"id": 186, "name": "CSV Viewer & Editor", "slug": "csv-viewer", "category": "data"},
+            {"id": 187, "name": "Markdown Table Generator", "slug": "markdown-table-generator", "category": "data"},
+            {"id": 188, "name": "HTML Table to CSV", "slug": "html-table-to-csv", "category": "data"},
+            {"id": 189, "name": "CSV to HTML Table", "slug": "csv-to-html-table", "category": "data"},
+            {"id": 190, "name": "JSON Tree Viewer", "slug": "json-viewer", "category": "data"},
+            {"id": 191, "name": "Fake Data Generator", "slug": "fake-data-generator", "category": "data"},
+            {"id": 192, "name": "QR Code Generator", "slug": "qr-code-generator", "category": "data"},
+            {"id": 193, "name": "QR Code Reader", "slug": "qr-code-reader", "category": "data"},
+            {"id": 194, "name": "Barcode Generator", "slug": "barcode-generator", "category": "data"},
+            {"id": 195, "name": "vCard Generator", "slug": "vcard-generator", "category": "data"},
+            {"id": 196, "name": "WhatsApp Link Generator", "slug": "whatsapp-link-generator", "category": "special"},
+            {"id": 197, "name": "Emoji to Unicode", "slug": "emoji-to-unicode", "category": "special"},
+            {"id": 198, "name": "Unicode to Emoji", "slug": "unicode-to-emoji", "category": "special"},
+            {"id": 199, "name": "Text to Binary", "slug": "text-to-binary", "category": "special"},
+            {"id": 200, "name": "Binary to Text", "slug": "binary-to-text", "category": "special"},
+            {"id": 201, "name": "Number to Words", "slug": "number-to-words", "category": "special"},
+            {"id": 202, "name": "Roman Numeral Converter", "slug": "roman-numeral-converter", "category": "special"},
+            {"id": 203, "name": "Screen Resolution Detector", "slug": "screen-resolution-detector", "category": "special"},
+            {"id": 204, "name": "Browser Info Detector", "slug": "browser-info-detector", "category": "special"},
+            {"id": 205, "name": "Internet Speed Test", "slug": "internet-speed-test", "category": "special"}
+        ];
+
+        const categoryIcons = {
+            images: "🖼️", pdf: "📄", text: "✍️", developer: "💻",
+            colors: "🎨", math: "🔢", time: "⏱️", units: "📐",
+            seo: "🌐", security: "🔐", data: "📊", special: "🎯"
+        };
+
+        const categoryCounts = {
+            images: 42, pdf: 18, text: 22, developer: 28,
+            colors: 15, math: 12, time: 10, units: 16,
+            seo: 14, security: 8, data: 10, special: 10
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'ar';
+        let isDark = localStorage.getItem('darkMode') === 'true';
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update text content
+            const t = translations[lang];
+            document.getElementById('siteTagline').textContent = t.tagline;
+            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+            document.getElementById('categoriesTitle').textContent = t.categories;
+            document.getElementById('allToolsTitle').textContent = t.allTools;
+            document.getElementById('statTools').textContent = `205 ${t.tools}`;
+            document.getElementById('statCategories').textContent = `12 ${t.categoriesCount}`;
+            document.getElementById('statLanguages').textContent = `5 ${t.languages}`;
+            document.getElementById('darkModeText').textContent = isDark ? t.lightMode : t.darkMode;
+            
+            renderCategories();
+            renderTools();
+        }
+
+        function toggleDarkMode() {
+            isDark = !isDark;
+            localStorage.setItem('darkMode', isDark);
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            document.getElementById('darkModeText').textContent = isDark ? 
+                translations[currentLang].lightMode : translations[currentLang].darkMode;
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoriesGrid');
+            const cats = Object.keys(categoriesData);
+            container.innerHTML = cats.map(cat => `
+                <a href="category/${cat}/index.html" class="card-hover bg-white dark:bg-darkcard rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 text-center group">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">${categoryIcons[cat]}</div>
+                    <h3 class="font-bold text-lg text-gray-800 dark:text-white mb-2">${categoriesData[cat][currentLang]}</h3>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">${categoryCounts[cat]} ${translations[currentLang].tools}</span>
+                </a>
+            `).join('');
+        }
+
+        function renderTools(searchTerm = '') {
+            const container = document.getElementById('toolsGrid');
+            let filtered = toolsData;
+            
+            if (searchTerm) {
+                filtered = toolsData.filter(t => 
+                    t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    categoriesData[t.category][currentLang].toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            
+            container.innerHTML = filtered.map(tool => `
+                <a href="tool/${tool.slug}/index.html" class="tool-card bg-white dark:bg-darkcard rounded-lg p-4 shadow-md border border-gray-200 dark:border-gray-700 flex items-center gap-4 hover:border-primary dark:hover:border-primary">
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white text-xl font-bold shrink-0">
+                        ${tool.name.charAt(0)}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-semibold text-gray-800 dark:text-white truncate">${tool.name}</h4>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">${categoriesData[tool.category][currentLang]}</span>
+                    </div>
+                    <span class="text-primary dark:text-secondary opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                </a>
+            `).join('');
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">${currentLang === 'ar' ? 'لا توجد نتائج' : 'No results found'}</div>`;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isDark) document.documentElement.classList.add('dark');
+            updateLanguage(currentLang);
+            
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                renderTools(e.target.value);
+            });
+        });
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-dark text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold text-xl">T</div>
+                    <span class="font-bold text-xl gradient-text">205-Tools</span>
+                </a>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Home</a>
+                    <a href="#categories" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Categories</a>
+                    <a href="#tools" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">All Tools</a>
+                </nav>
+                
+                <!-- Controls -->
+                <div class="flex items-center gap-3">
+                    <!-- Language Switcher -->
+                    <div class="relative">
+                        <select id="langSwitcher" onchange="updateLanguage(this.value)" class="bg-gray-100 dark:bg-darkcard border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="ar">🇸🇦 العربية</option>
+                            <option value="en">🇬🇧 English</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-gray-100 dark:bg-darkcard hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" title="Toggle Dark Mode">
+                        <span id="darkModeIcon" class="text-xl">${isDark ? '☀️' : '🌙'}</span>
+                    </button>
+                </div>
             </div>
         </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden py-20 px-4">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-pink-500/10 dark:from-primary/5 dark:via-secondary/5 dark:to-pink-500/5"></div>
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/20 rounded-full blur-3xl"></div>
         
-        <div class="lang-selector">
-            <a href="/tools/en/" class="lang-btn">🇺🇸 English</a>
-            <a href="/tools/ar/" class="lang-btn">🇸🇦 العربية</a>
-            <a href="/tools/fr/" class="lang-btn">🇫🇷 Français</a>
-            <a href="/tools/es/" class="lang-btn">🇪🇸 Español</a>
-            <a href="/tools/de/" class="lang-btn">🇩🇪 Deutsch</a>
-        </div>
-    </div>
-    
-    <div class="container">
-        <h2 class="section-title">Popular Tools</h2>
-        
-        <div class="tools-grid">
-            <div class="tool-card">
-                <div class="tool-icon">🖼️</div>
-                <div class="tool-title">Image Converter</div>
-                <div class="tool-desc">Convert between JPG, PNG, WebP, AVIF formats</div>
-                <a href="/tools/en/image-converter.html" class="tool-link">Open Tool →</a>
+        <div class="relative max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                <span class="gradient-text">205-Tools</span>
+            </h1>
+            <p id="siteTagline" class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">أدوات مجانية على الإنترنت</p>
+            
+            <!-- Search Bar -->
+            <div class="max-w-2xl mx-auto relative">
+                <input type="text" id="searchInput" placeholder="ابحث عن أداة..." 
+                    class="w-full px-6 py-4 rounded-full border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-darkcard text-gray-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-primary shadow-lg text-lg">
+                <button class="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
             </div>
             
-            <div class="tool-card">
-                <div class="tool-icon">📄</div>
-                <div class="tool-title">PDF Tools</div>
-                <div class="tool-desc">Merge, split, compress, convert PDF files</div>
-                <a href="/tools/en/pdf-merge.html" class="tool-link">Open Tool →</a>
-            </div>
-            
-            <div class="tool-card">
-                <div class="tool-icon">🎨</div>
-                <div class="tool-title">Color Picker</div>
-                <div class="tool-desc">HEX, RGB, HSL converter and palette generator</div>
-                <a href="/tools/color/en/color-picker.html" class="tool-link">Open Tool →</a>
-            </div>
-            
-            <div class="tool-card">
-                <div class="tool-icon">💻</div>
-                <div class="tool-title">JSON Formatter</div>
-                <div class="tool-desc">Format, validate, and convert JSON data</div>
-                <a href="/tools/en/json-formatter.html" class="tool-link">Open Tool →</a>
-            </div>
-            
-            <div class="tool-card">
-                <div class="tool-icon">🔒</div>
-                <div class="tool-title">Password Generator</div>
-                <div class="tool-desc">Generate secure random passwords</div>
-                <a href="/tools/en/password-generator.html" class="tool-link">Open Tool →</a>
-            </div>
-            
-            <div class="tool-card">
-                <div class="tool-icon">📊</div>
-                <div class="tool-title">Unit Converter</div>
-                <div class="tool-desc">Length, weight, temperature, and more</div>
-                <a href="/tools/en/age-calculator.html" class="tool-link">Open Tool →</a>
-            </div>
-            
-            <div class="tool-card">
-                <div class="tool-icon">🔍</div>
-                <div class="tool-title">SEO Tools</div>
-                <div class="tool-desc">Meta tags, sitemap, robots.txt generators</div>
-                <a href="/tools/en/meta-tag-generator.html" class="tool-link">Open Tool →</a>
-            </div>
-            
-            <div class="tool-card">
-                <div class="tool-icon">📝</div>
-                <div class="tool-title">Text Tools</div>
-                <div class="tool-desc">Word count, case converter, diff checker</div>
-                <a href="/tools/en/find-and-replace.html" class="tool-link">Open Tool →</a>
+            <!-- Stats -->
+            <div class="flex justify-center gap-8 mt-12">
+                <div class="text-center">
+                    <div id="statTools" class="text-3xl font-bold gradient-text">205 أداة</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Available Tools</div>
+                </div>
+                <div class="text-center">
+                    <div id="statCategories" class="text-3xl font-bold gradient-text">12 تصنيف</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Categories</div>
+                </div>
+                <div class="text-center">
+                    <div id="statLanguages" class="text-3xl font-bold gradient-text">5 لغة</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Languages</div>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <footer>
-        <p>© 2026 Tools Hub - 205 Free Online Tools | Built with ❤️</p>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="py-16 px-4 max-w-7xl mx-auto">
+        <h2 id="categoriesTitle" class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">التصنيفات</h2>
+        <div id="categoriesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Categories rendered by JS -->
+        </div>
+    </section>
+
+    <!-- All Tools Section -->
+    <section id="tools" class="py-16 px-4 max-w-7xl mx-auto">
+        <h2 id="allToolsTitle" class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">جميع الأدوات</h2>
+        <div id="toolsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <!-- Tools rendered by JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-darkcard border-t border-gray-200 dark:border-gray-800 py-12 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold">T</div>
+                    <span class="font-bold gradient-text">205-Tools</span>
+                </div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">© 2026 205-Tools. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-gray-500 hover:text-primary transition-colors">Privacy</a>
+                    <a href="#" class="text-gray-500 hover:text-primary transition-colors">Terms</a>
+                    <a href="#" class="text-gray-500 hover:text-primary transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        // Set initial language selector value
+        document.getElementById('langSwitcher').value = currentLang;
+    </script>
 </body>
 </html>

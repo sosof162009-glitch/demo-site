@@ -1,0 +1,2146 @@
+{
+  "metadata": {
+    "total_tools": 205,
+    "total_categories": 12,
+    "source": "https://altibbih.blogspot.com/2026/03/to_19.html",
+    "extracted_at": "2026-03-20"
+  },
+  "categories": [
+    {
+      "name_en": "Colors",
+      "name_ar": "الألوان",
+      "count": 15,
+      "tool_ids": [
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125
+      ]
+    },
+    {
+      "name_en": "Data",
+      "name_ar": "البيانات",
+      "count": 10,
+      "tool_ids": [
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195
+      ]
+    },
+    {
+      "name_en": "Developers",
+      "name_ar": "المطورين",
+      "count": 28,
+      "tool_ids": [
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110
+      ]
+    },
+    {
+      "name_en": "Images",
+      "name_ar": "الصور",
+      "count": 42,
+      "tool_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ]
+    },
+    {
+      "name_en": "Math",
+      "name_ar": "الرياضيات",
+      "count": 12,
+      "tool_ids": [
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137
+      ]
+    },
+    {
+      "name_en": "PDF",
+      "name_ar": "PDF",
+      "count": 18,
+      "tool_ids": [
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60
+      ]
+    },
+    {
+      "name_en": "SEO",
+      "name_ar": "SEO",
+      "count": 14,
+      "tool_ids": [
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177
+      ]
+    },
+    {
+      "name_en": "Security",
+      "name_ar": "الأمان",
+      "count": 8,
+      "tool_ids": [
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185
+      ]
+    },
+    {
+      "name_en": "Special",
+      "name_ar": "خاصة",
+      "count": 10,
+      "tool_ids": [
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205
+      ]
+    },
+    {
+      "name_en": "Text",
+      "name_ar": "النصوص",
+      "count": 22,
+      "tool_ids": [
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82
+      ]
+    },
+    {
+      "name_en": "Time",
+      "name_ar": "الوقت",
+      "count": 10,
+      "tool_ids": [
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147
+      ]
+    },
+    {
+      "name_en": "Units",
+      "name_ar": "الوحدات",
+      "count": 16,
+      "tool_ids": [
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": 1,
+      "name": "JPG to PNG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts JPG/JPEG images to PNG format using browser Canvas API. Supports transparency output.",
+      "keyword": "jpg to png",
+      "slug": "jpg-to-png"
+    },
+    {
+      "id": 2,
+      "name": "PNG to JPG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts PNG images to JPG/JPEG format with adjustable quality using Canvas API.",
+      "keyword": "png to jpg",
+      "slug": "png-to-jpg"
+    },
+    {
+      "id": 3,
+      "name": "WebP to JPG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts WebP images to JPG format entirely in the browser using Canvas.",
+      "keyword": "webp to jpg",
+      "slug": "webp-to-jpg"
+    },
+    {
+      "id": 4,
+      "name": "JPG to WebP Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts JPG images to WebP format for better web compression and performance.",
+      "keyword": "jpg to webp",
+      "slug": "jpg-to-webp"
+    },
+    {
+      "id": 5,
+      "name": "PNG to WebP Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts PNG images to WebP format using browser Canvas API.",
+      "keyword": "png to webp",
+      "slug": "png-to-webp"
+    },
+    {
+      "id": 6,
+      "name": "WebP to PNG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts WebP images to lossless PNG format in browser.",
+      "keyword": "webp to png",
+      "slug": "webp-to-png"
+    },
+    {
+      "id": 7,
+      "name": "HEIC to JPG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts HEIC/HEIF iPhone photos to JPG format using heic2any library.",
+      "keyword": "heic to jpg",
+      "slug": "heic-to-jpg"
+    },
+    {
+      "id": 8,
+      "name": "HEIC to PNG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts HEIC/HEIF images to PNG format in browser.",
+      "keyword": "heic to png",
+      "slug": "heic-to-png"
+    },
+    {
+      "id": 9,
+      "name": "BMP to JPG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts BMP bitmap images to compressed JPG format using Canvas.",
+      "keyword": "bmp to jpg",
+      "slug": "bmp-to-jpg"
+    },
+    {
+      "id": 10,
+      "name": "BMP to PNG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts BMP images to PNG format in the browser.",
+      "keyword": "bmp to png",
+      "slug": "bmp-to-png"
+    },
+    {
+      "id": 11,
+      "name": "TIFF to JPG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts TIFF images to JPG format using browser rendering.",
+      "keyword": "tiff to jpg",
+      "slug": "tiff-to-jpg"
+    },
+    {
+      "id": 12,
+      "name": "TIFF to PNG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts TIFF images to PNG lossless format.",
+      "keyword": "tiff to png",
+      "slug": "tiff-to-png"
+    },
+    {
+      "id": 13,
+      "name": "GIF to JPG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Extracts first frame of GIF and converts to JPG format.",
+      "keyword": "gif to jpg",
+      "slug": "gif-to-jpg"
+    },
+    {
+      "id": 14,
+      "name": "GIF to PNG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts GIF images to PNG format with transparency support.",
+      "keyword": "gif to png",
+      "slug": "gif-to-png"
+    },
+    {
+      "id": 15,
+      "name": "SVG to JPG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Renders SVG vector graphics and exports to JPG format in browser.",
+      "keyword": "svg to jpg",
+      "slug": "svg-to-jpg"
+    },
+    {
+      "id": 16,
+      "name": "SVG to PNG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Renders SVG vector graphics and exports to PNG format.",
+      "keyword": "svg to png",
+      "slug": "svg-to-png"
+    },
+    {
+      "id": 17,
+      "name": "AVIF to JPG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts AVIF images to JPG format in modern browsers.",
+      "keyword": "avif to jpg",
+      "slug": "avif-to-jpg"
+    },
+    {
+      "id": 18,
+      "name": "AVIF to PNG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts AVIF images to PNG format in browser.",
+      "keyword": "avif to png",
+      "slug": "avif-to-png"
+    },
+    {
+      "id": 19,
+      "name": "ICO to JPG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts ICO icon files to JPG image format.",
+      "keyword": "ico to jpg",
+      "slug": "ico-to-jpg"
+    },
+    {
+      "id": 20,
+      "name": "ICO to PNG Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts ICO icon files to PNG format preserving transparency.",
+      "keyword": "ico to png",
+      "slug": "ico-to-png"
+    },
+    {
+      "id": 21,
+      "name": "JPG to GIF Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts JPG images to GIF format in browser.",
+      "keyword": "jpg to gif",
+      "slug": "jpg-to-gif"
+    },
+    {
+      "id": 22,
+      "name": "PNG to GIF Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts PNG images to GIF format.",
+      "keyword": "png to gif",
+      "slug": "png-to-gif"
+    },
+    {
+      "id": 23,
+      "name": "JPG to ICO Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts JPG images to ICO favicon format (16/32/64px) in browser.",
+      "keyword": "jpg to ico",
+      "slug": "jpg-to-ico"
+    },
+    {
+      "id": 24,
+      "name": "PNG to ICO Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts PNG images to ICO favicon format with multiple sizes.",
+      "keyword": "png to ico",
+      "slug": "png-to-ico"
+    },
+    {
+      "id": 25,
+      "name": "JPG to AVIF Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts JPG images to modern AVIF format for web optimization.",
+      "keyword": "jpg to avif",
+      "slug": "jpg-to-avif"
+    },
+    {
+      "id": 26,
+      "name": "PNG to AVIF Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts PNG images to AVIF format for smaller file sizes.",
+      "keyword": "png to avif",
+      "slug": "png-to-avif"
+    },
+    {
+      "id": 27,
+      "name": "JPG to BMP Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts JPG images to uncompressed BMP bitmap format.",
+      "keyword": "jpg to bmp",
+      "slug": "jpg-to-bmp"
+    },
+    {
+      "id": 28,
+      "name": "PNG to BMP Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts PNG images to BMP format.",
+      "keyword": "png to bmp",
+      "slug": "png-to-bmp"
+    },
+    {
+      "id": 29,
+      "name": "WebP to GIF Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts WebP images to GIF format in browser.",
+      "keyword": "webp to gif",
+      "slug": "webp-to-gif"
+    },
+    {
+      "id": 30,
+      "name": "WebP to AVIF Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts WebP images to AVIF format.",
+      "keyword": "webp to avif",
+      "slug": "webp-to-avif"
+    },
+    {
+      "id": 31,
+      "name": "GIF to WebP Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts animated or static GIF to WebP format.",
+      "keyword": "gif to webp",
+      "slug": "gif-to-webp"
+    },
+    {
+      "id": 32,
+      "name": "AVIF to WebP Converter",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts AVIF images to WebP format for broader compatibility.",
+      "keyword": "avif to webp",
+      "slug": "avif-to-webp"
+    },
+    {
+      "id": 33,
+      "name": "Image Resizer",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Resizes any image to custom dimensions using browser Canvas API. Supports aspect ratio lock.",
+      "keyword": "image resizer online",
+      "slug": "image-resizer"
+    },
+    {
+      "id": 34,
+      "name": "Compress JPG",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Reduces JPG file size using canvas quality settings in browser.",
+      "keyword": "compress jpg online",
+      "slug": "compress-jpg"
+    },
+    {
+      "id": 35,
+      "name": "Compress PNG",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Reduces PNG file size using browser-based compression techniques.",
+      "keyword": "compress png online",
+      "slug": "compress-png"
+    },
+    {
+      "id": 36,
+      "name": "Image Cropper",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Crops images to custom dimensions or aspect ratios in browser.",
+      "keyword": "crop image online",
+      "slug": "image-cropper"
+    },
+    {
+      "id": 37,
+      "name": "Image to Base64",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts any image file to Base64 encoded string in browser.",
+      "keyword": "image to base64",
+      "slug": "image-to-base64"
+    },
+    {
+      "id": 38,
+      "name": "Base64 to Image",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts Base64 encoded string back to downloadable image file.",
+      "keyword": "base64 to image",
+      "slug": "base64-to-image"
+    },
+    {
+      "id": 39,
+      "name": "EXIF Data Remover",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Strips all EXIF metadata from JPG images for privacy using Canvas redraw.",
+      "keyword": "remove exif data online",
+      "slug": "remove-exif"
+    },
+    {
+      "id": 40,
+      "name": "Favicon Generator",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Generates ICO favicon from any image at 16/32/64px sizes in browser.",
+      "keyword": "favicon generator online",
+      "slug": "favicon-generator"
+    },
+    {
+      "id": 41,
+      "name": "Color Palette Extractor",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Extracts dominant color palette from uploaded image using Canvas pixel analysis.",
+      "keyword": "extract color palette from image",
+      "slug": "color-palette-extractor"
+    },
+    {
+      "id": 42,
+      "name": "Image to Grayscale",
+      "category": "Images",
+      "category_ar": "الصور",
+      "description": "Converts any color image to grayscale using Canvas desaturation filter.",
+      "keyword": "convert image to grayscale",
+      "slug": "image-to-grayscale"
+    },
+    {
+      "id": 43,
+      "name": "PDF to JPG Converter",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Converts PDF pages to JPG images using PDF.js library in browser.",
+      "keyword": "pdf to jpg",
+      "slug": "pdf-to-jpg"
+    },
+    {
+      "id": 44,
+      "name": "PDF to PNG Converter",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Converts PDF pages to PNG images using PDF.js in browser.",
+      "keyword": "pdf to png",
+      "slug": "pdf-to-png"
+    },
+    {
+      "id": 45,
+      "name": "PDF to WebP Converter",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Converts PDF pages to WebP format using browser canvas rendering.",
+      "keyword": "pdf to webp",
+      "slug": "pdf-to-webp"
+    },
+    {
+      "id": 46,
+      "name": "PDF to Text Extractor",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Extracts plain text content from PDF files using PDF.js text layer.",
+      "keyword": "pdf to text online",
+      "slug": "pdf-to-text"
+    },
+    {
+      "id": 47,
+      "name": "PDF Metadata Viewer",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Displays PDF metadata including author, creation date, title, subject.",
+      "keyword": "view pdf metadata online",
+      "slug": "pdf-metadata"
+    },
+    {
+      "id": 48,
+      "name": "JPG to PDF Converter",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Converts one or multiple JPG images to a PDF file using pdf-lib.js.",
+      "keyword": "jpg to pdf",
+      "slug": "jpg-to-pdf"
+    },
+    {
+      "id": 49,
+      "name": "PNG to PDF Converter",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Converts PNG images to PDF format using browser PDF libraries.",
+      "keyword": "png to pdf",
+      "slug": "png-to-pdf"
+    },
+    {
+      "id": 50,
+      "name": "Images to PDF Converter",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Combines multiple images into a single multi-page PDF using pdf-lib.js.",
+      "keyword": "images to pdf online",
+      "slug": "images-to-pdf"
+    },
+    {
+      "id": 51,
+      "name": "Word to PDF Converter",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Converts Word DOCX files to PDF format using browser rendering.",
+      "keyword": "word to pdf online",
+      "slug": "word-to-pdf"
+    },
+    {
+      "id": 52,
+      "name": "HTML to PDF Converter",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Converts HTML content to PDF using browser print API.",
+      "keyword": "html to pdf online",
+      "slug": "html-to-pdf"
+    },
+    {
+      "id": 53,
+      "name": "Merge PDF Files",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Combines multiple PDF files into one document using pdf-lib.js.",
+      "keyword": "merge pdf online",
+      "slug": "merge-pdf"
+    },
+    {
+      "id": 54,
+      "name": "Split PDF File",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Splits a PDF into individual pages or page ranges in browser.",
+      "keyword": "split pdf online",
+      "slug": "split-pdf"
+    },
+    {
+      "id": 55,
+      "name": "Compress PDF",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Reduces PDF file size using browser-based PDF compression techniques.",
+      "keyword": "compress pdf online",
+      "slug": "compress-pdf"
+    },
+    {
+      "id": 56,
+      "name": "Rotate PDF Pages",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Rotates individual or all pages in a PDF file using pdf-lib.js.",
+      "keyword": "rotate pdf pages online",
+      "slug": "rotate-pdf"
+    },
+    {
+      "id": 57,
+      "name": "Add Watermark to PDF",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Adds text or image watermark to PDF pages using pdf-lib.js.",
+      "keyword": "add watermark to pdf",
+      "slug": "pdf-watermark"
+    },
+    {
+      "id": 58,
+      "name": "PDF Page Numbering",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Adds page numbers to PDF documents using pdf-lib.js.",
+      "keyword": "add page numbers to pdf",
+      "slug": "pdf-page-numbers"
+    },
+    {
+      "id": 59,
+      "name": "Reorder PDF Pages",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Drag-and-drop PDF page reordering using pdf-lib.js entirely in browser.",
+      "keyword": "reorder pdf pages online",
+      "slug": "reorder-pdf-pages"
+    },
+    {
+      "id": 60,
+      "name": "Remove PDF Password",
+      "category": "PDF",
+      "category_ar": "PDF",
+      "description": "Removes password protection from PDF files in browser using PDF.js.",
+      "keyword": "remove pdf password",
+      "slug": "remove-pdf-password"
+    },
+    {
+      "id": 61,
+      "name": "Word Counter",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Counts words, characters, sentences, and paragraphs in real-time.",
+      "keyword": "word counter online",
+      "slug": "word-counter"
+    },
+    {
+      "id": 62,
+      "name": "Character Counter",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Counts characters with and without spaces in real-time as you type.",
+      "keyword": "character counter online",
+      "slug": "character-counter"
+    },
+    {
+      "id": 63,
+      "name": "Line Counter",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Counts total number of lines in pasted or typed text instantly.",
+      "keyword": "line counter online",
+      "slug": "line-counter"
+    },
+    {
+      "id": 64,
+      "name": "Remove Duplicate Lines",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Removes repeated lines from text keeping only unique entries.",
+      "keyword": "remove duplicate lines",
+      "slug": "remove-duplicate-lines"
+    },
+    {
+      "id": 65,
+      "name": "Sort Lines A-Z",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Sorts lines of text alphabetically, reverse, or randomly.",
+      "keyword": "sort lines alphabetically",
+      "slug": "sort-lines"
+    },
+    {
+      "id": 66,
+      "name": "Reverse Text Generator",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Reverses characters or words in any text string instantly.",
+      "keyword": "reverse text online",
+      "slug": "reverse-text"
+    },
+    {
+      "id": 67,
+      "name": "Case Converter",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Converts text to UPPERCASE, lowercase, Title Case, camelCase, snake_case.",
+      "keyword": "text case converter online",
+      "slug": "case-converter"
+    },
+    {
+      "id": 68,
+      "name": "Remove Extra Spaces",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Removes extra whitespace and leading/trailing spaces from text.",
+      "keyword": "remove extra spaces online",
+      "slug": "remove-extra-spaces"
+    },
+    {
+      "id": 69,
+      "name": "Text to URL Slug",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Converts any text to a clean URL-friendly slug automatically.",
+      "keyword": "text to slug generator",
+      "slug": "text-to-slug"
+    },
+    {
+      "id": 70,
+      "name": "Remove Line Breaks",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Removes all line breaks from text for single paragraph output.",
+      "keyword": "remove line breaks online",
+      "slug": "remove-line-breaks"
+    },
+    {
+      "id": 71,
+      "name": "Add Line Numbers",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Prepends sequential line numbers to each line of text.",
+      "keyword": "add line numbers to text",
+      "slug": "add-line-numbers"
+    },
+    {
+      "id": 72,
+      "name": "Text Diff Checker",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Compares two texts and highlights differences side-by-side.",
+      "keyword": "text diff checker online",
+      "slug": "text-diff-checker"
+    },
+    {
+      "id": 73,
+      "name": "Find and Replace Text",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Finds specific text and replaces with new content, supports regex.",
+      "keyword": "find and replace text online",
+      "slug": "find-and-replace"
+    },
+    {
+      "id": 74,
+      "name": "Lorem Ipsum Generator",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Generates Lorem Ipsum placeholder text in words, sentences, or paragraphs.",
+      "keyword": "lorem ipsum generator",
+      "slug": "lorem-ipsum-generator"
+    },
+    {
+      "id": 75,
+      "name": "Random Text Generator",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Generates random sentences and paragraphs for testing purposes.",
+      "keyword": "random text generator online",
+      "slug": "random-text-generator"
+    },
+    {
+      "id": 76,
+      "name": "Text to ASCII Art",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Converts text to large ASCII art characters using figlet-style fonts.",
+      "keyword": "text to ascii art generator",
+      "slug": "text-to-ascii-art"
+    },
+    {
+      "id": 77,
+      "name": "Fancy Text Generator",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Generates stylish Unicode text fonts from normal input text.",
+      "keyword": "fancy text generator online",
+      "slug": "fancy-text-generator"
+    },
+    {
+      "id": 78,
+      "name": "Morse Code Translator",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Translates text to Morse code and Morse code back to text.",
+      "keyword": "morse code translator online",
+      "slug": "morse-code-translator"
+    },
+    {
+      "id": 79,
+      "name": "Reading Time Estimator",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Estimates reading time for any text based on average reading speed.",
+      "keyword": "reading time estimator",
+      "slug": "reading-time-estimator"
+    },
+    {
+      "id": 80,
+      "name": "Text Repeater",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Repeats any text a specified number of times with custom separator.",
+      "keyword": "text repeater online",
+      "slug": "text-repeater"
+    },
+    {
+      "id": 81,
+      "name": "Upside Down Text",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Flips text upside down using special Unicode characters.",
+      "keyword": "upside down text generator",
+      "slug": "upside-down-text"
+    },
+    {
+      "id": 82,
+      "name": "Mirror Text Generator",
+      "category": "Text",
+      "category_ar": "النصوص",
+      "description": "Creates mirrored text using Unicode flip characters.",
+      "keyword": "mirror text generator online",
+      "slug": "mirror-text"
+    },
+    {
+      "id": 83,
+      "name": "JSON Formatter & Validator",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Formats, validates and beautifies JSON with syntax highlighting and error detection.",
+      "keyword": "json formatter online",
+      "slug": "json-formatter"
+    },
+    {
+      "id": 84,
+      "name": "JSON Minifier",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Minifies JSON by removing all whitespace and formatting.",
+      "keyword": "json minifier online",
+      "slug": "json-minifier"
+    },
+    {
+      "id": 85,
+      "name": "JSON to CSV Converter",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Converts JSON arrays to CSV format with downloadable file output.",
+      "keyword": "json to csv online",
+      "slug": "json-to-csv"
+    },
+    {
+      "id": 86,
+      "name": "JSON to XML Converter",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Converts JSON data structures to XML format in browser.",
+      "keyword": "json to xml online",
+      "slug": "json-to-xml"
+    },
+    {
+      "id": 87,
+      "name": "JSON to YAML Converter",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Converts JSON to YAML format for configuration files.",
+      "keyword": "json to yaml online",
+      "slug": "json-to-yaml"
+    },
+    {
+      "id": 88,
+      "name": "CSV to JSON Converter",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Converts CSV data to JSON array format in browser.",
+      "keyword": "csv to json online",
+      "slug": "csv-to-json"
+    },
+    {
+      "id": 89,
+      "name": "XML to JSON Converter",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Converts XML data to JSON format using browser XML parser.",
+      "keyword": "xml to json online",
+      "slug": "xml-to-json"
+    },
+    {
+      "id": 90,
+      "name": "YAML to JSON Converter",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Converts YAML configuration files to JSON format.",
+      "keyword": "yaml to json online",
+      "slug": "yaml-to-json"
+    },
+    {
+      "id": 91,
+      "name": "JSON Schema Validator",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Validates JSON data against a JSON Schema definition in browser.",
+      "keyword": "json schema validator online",
+      "slug": "json-schema-validator"
+    },
+    {
+      "id": 92,
+      "name": "HTML Formatter",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Formats and beautifies minified HTML with proper indentation.",
+      "keyword": "html formatter online",
+      "slug": "html-formatter"
+    },
+    {
+      "id": 93,
+      "name": "HTML Minifier",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Minifies HTML by removing whitespace and comments.",
+      "keyword": "html minifier online",
+      "slug": "html-minifier"
+    },
+    {
+      "id": 94,
+      "name": "CSS Formatter",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Formats and beautifies CSS code with proper indentation.",
+      "keyword": "css formatter online",
+      "slug": "css-formatter"
+    },
+    {
+      "id": 95,
+      "name": "CSS Minifier",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Minifies CSS code by removing spaces and comments.",
+      "keyword": "css minifier online",
+      "slug": "css-minifier"
+    },
+    {
+      "id": 96,
+      "name": "JavaScript Minifier",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Minifies JavaScript code to reduce file size.",
+      "keyword": "javascript minifier online",
+      "slug": "js-minifier"
+    },
+    {
+      "id": 97,
+      "name": "SQL Formatter",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Formats SQL queries with proper indentation and keyword capitalization.",
+      "keyword": "sql formatter online",
+      "slug": "sql-formatter"
+    },
+    {
+      "id": 98,
+      "name": "HTML Entities Encoder",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Encodes special characters to HTML entities.",
+      "keyword": "html entities encoder",
+      "slug": "html-entities-encoder"
+    },
+    {
+      "id": 99,
+      "name": "HTML Entities Decoder",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Decodes HTML entities back to readable characters.",
+      "keyword": "html entities decoder",
+      "slug": "html-entities-decoder"
+    },
+    {
+      "id": 100,
+      "name": "Base64 Encoder",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Encodes text or files to Base64 string using browser atob/btoa.",
+      "keyword": "base64 encoder online",
+      "slug": "base64-encoder"
+    },
+    {
+      "id": 101,
+      "name": "Base64 Decoder",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Decodes Base64 encoded strings back to original text.",
+      "keyword": "base64 decoder online",
+      "slug": "base64-decoder"
+    },
+    {
+      "id": 102,
+      "name": "URL Encoder",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Encodes strings to URL-safe percent-encoded format.",
+      "keyword": "url encoder online",
+      "slug": "url-encoder"
+    },
+    {
+      "id": 103,
+      "name": "URL Decoder",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Decodes URL-encoded percent-encoded strings to readable text.",
+      "keyword": "url decoder online",
+      "slug": "url-decoder"
+    },
+    {
+      "id": 104,
+      "name": "MD5 Hash Generator",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Generates MD5 hash from any text string using browser JS library.",
+      "keyword": "md5 hash generator online",
+      "slug": "md5-generator"
+    },
+    {
+      "id": 105,
+      "name": "SHA-256 Hash Generator",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Generates SHA-256 hash from text using SubtleCrypto browser API.",
+      "keyword": "sha256 generator online",
+      "slug": "sha256-generator"
+    },
+    {
+      "id": 106,
+      "name": "SHA-512 Hash Generator",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Generates SHA-512 hash using native browser SubtleCrypto API.",
+      "keyword": "sha512 hash generator online",
+      "slug": "sha512-generator"
+    },
+    {
+      "id": 107,
+      "name": "JWT Decoder",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Decodes and displays JWT token header, payload and signature info.",
+      "keyword": "jwt decoder online",
+      "slug": "jwt-decoder"
+    },
+    {
+      "id": 108,
+      "name": "UUID / GUID Generator",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Generates random UUIDs v4 using browser crypto.randomUUID() API.",
+      "keyword": "uuid generator online",
+      "slug": "uuid-generator"
+    },
+    {
+      "id": 109,
+      "name": "Regex Tester",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Tests regular expressions against text with real-time match highlighting.",
+      "keyword": "regex tester online",
+      "slug": "regex-tester"
+    },
+    {
+      "id": 110,
+      "name": "Markdown to HTML",
+      "category": "Developers",
+      "category_ar": "المطورين",
+      "description": "Converts Markdown text to HTML using marked.js browser-side parser.",
+      "keyword": "markdown to html online",
+      "slug": "markdown-to-html"
+    },
+    {
+      "id": 111,
+      "name": "HEX to RGB Converter",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Converts HEX color codes to RGB values instantly with live preview.",
+      "keyword": "hex to rgb converter",
+      "slug": "hex-to-rgb"
+    },
+    {
+      "id": 112,
+      "name": "RGB to HEX Converter",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Converts RGB color values to HEX color codes.",
+      "keyword": "rgb to hex converter",
+      "slug": "rgb-to-hex"
+    },
+    {
+      "id": 113,
+      "name": "HEX to HSL Converter",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Converts HEX color codes to HSL (Hue Saturation Lightness).",
+      "keyword": "hex to hsl converter",
+      "slug": "hex-to-hsl"
+    },
+    {
+      "id": 114,
+      "name": "HSL to HEX Converter",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Converts HSL color values to HEX color code format.",
+      "keyword": "hsl to hex converter",
+      "slug": "hsl-to-hex"
+    },
+    {
+      "id": 115,
+      "name": "CMYK to RGB Converter",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Converts CMYK print color values to RGB screen values.",
+      "keyword": "cmyk to rgb converter",
+      "slug": "cmyk-to-rgb"
+    },
+    {
+      "id": 116,
+      "name": "RGB to CMYK Converter",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Converts RGB screen colors to CMYK print color format.",
+      "keyword": "rgb to cmyk converter",
+      "slug": "rgb-to-cmyk"
+    },
+    {
+      "id": 117,
+      "name": "Color Picker Tool",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Visual color picker to select and copy HEX/RGB/HSL values.",
+      "keyword": "color picker online",
+      "slug": "color-picker"
+    },
+    {
+      "id": 118,
+      "name": "CSS Gradient Generator",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Generates CSS linear and radial gradient code visually with live preview.",
+      "keyword": "css gradient generator",
+      "slug": "gradient-generator"
+    },
+    {
+      "id": 119,
+      "name": "Color Palette Generator",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Generates harmonious color palettes from a base color using color theory.",
+      "keyword": "color palette generator",
+      "slug": "color-palette-generator"
+    },
+    {
+      "id": 120,
+      "name": "Color Contrast Checker",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Checks WCAG AA/AAA accessibility contrast ratio between two colors.",
+      "keyword": "color contrast checker",
+      "slug": "color-contrast-checker"
+    },
+    {
+      "id": 121,
+      "name": "Box Shadow Generator",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Generates CSS box-shadow code with live visual preview.",
+      "keyword": "css box shadow generator",
+      "slug": "box-shadow-generator"
+    },
+    {
+      "id": 122,
+      "name": "Glassmorphism Generator",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Generates CSS glassmorphism effect code with backdrop-filter live preview.",
+      "keyword": "glassmorphism generator",
+      "slug": "glassmorphism-generator"
+    },
+    {
+      "id": 123,
+      "name": "Neumorphism Generator",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Generates CSS neumorphism soft UI shadow code with live preview.",
+      "keyword": "neumorphism generator online",
+      "slug": "neumorphism-generator"
+    },
+    {
+      "id": 124,
+      "name": "Border Radius Generator",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Visual CSS border-radius generator with individual corner control.",
+      "keyword": "css border radius generator",
+      "slug": "border-radius-generator"
+    },
+    {
+      "id": 125,
+      "name": "Text Shadow Generator",
+      "category": "Colors",
+      "category_ar": "الألوان",
+      "description": "Generates CSS text-shadow code with multi-layer shadow support.",
+      "keyword": "css text shadow generator",
+      "slug": "text-shadow-generator"
+    },
+    {
+      "id": 126,
+      "name": "Binary to Decimal",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Converts binary (base 2) numbers to decimal with step-by-step explanation.",
+      "keyword": "binary to decimal converter",
+      "slug": "binary-to-decimal"
+    },
+    {
+      "id": 127,
+      "name": "Decimal to Binary",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Converts decimal numbers to binary (base 2) format.",
+      "keyword": "decimal to binary converter",
+      "slug": "decimal-to-binary"
+    },
+    {
+      "id": 128,
+      "name": "Hex to Decimal",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Converts hexadecimal numbers to decimal format instantly.",
+      "keyword": "hex to decimal converter",
+      "slug": "hex-to-decimal"
+    },
+    {
+      "id": 129,
+      "name": "Decimal to Hex",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Converts decimal numbers to hexadecimal format.",
+      "keyword": "decimal to hex converter",
+      "slug": "decimal-to-hex"
+    },
+    {
+      "id": 130,
+      "name": "Octal to Decimal",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Converts octal (base 8) numbers to decimal.",
+      "keyword": "octal to decimal converter",
+      "slug": "octal-to-decimal"
+    },
+    {
+      "id": 131,
+      "name": "Decimal to Octal",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Converts decimal numbers to octal (base 8) format.",
+      "keyword": "decimal to octal converter",
+      "slug": "decimal-to-octal"
+    },
+    {
+      "id": 132,
+      "name": "Scientific Calculator",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Full browser-based scientific calculator with trig, log, and algebra functions.",
+      "keyword": "scientific calculator online",
+      "slug": "scientific-calculator"
+    },
+    {
+      "id": 133,
+      "name": "Percentage Calculator",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Calculates percentages, percentage increases, decreases and differences.",
+      "keyword": "percentage calculator online",
+      "slug": "percentage-calculator"
+    },
+    {
+      "id": 134,
+      "name": "BMI Calculator",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Calculates Body Mass Index from height and weight with BMI category display.",
+      "keyword": "bmi calculator online",
+      "slug": "bmi-calculator"
+    },
+    {
+      "id": 135,
+      "name": "Compound Interest Calc",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Calculates compound interest with principal, rate, time, and frequency inputs.",
+      "keyword": "compound interest calculator",
+      "slug": "compound-interest-calculator"
+    },
+    {
+      "id": 136,
+      "name": "Random Number Generator",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Generates random numbers within custom min/max range using crypto.",
+      "keyword": "random number generator",
+      "slug": "random-number-generator"
+    },
+    {
+      "id": 137,
+      "name": "Average Calculator",
+      "category": "Math",
+      "category_ar": "الرياضيات",
+      "description": "Calculates mean, median, mode, and range from a set of numbers.",
+      "keyword": "average calculator online",
+      "slug": "average-calculator"
+    },
+    {
+      "id": 138,
+      "name": "Unix Timestamp Converter",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Converts Unix timestamps to human-readable dates and vice versa.",
+      "keyword": "unix timestamp converter",
+      "slug": "unix-timestamp-converter"
+    },
+    {
+      "id": 139,
+      "name": "Time Zone Converter",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Converts times between any two world time zones with DST support.",
+      "keyword": "time zone converter online",
+      "slug": "time-zone-converter"
+    },
+    {
+      "id": 140,
+      "name": "Date Difference Calculator",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Calculates exact days, months, and years between two dates.",
+      "keyword": "date difference calculator",
+      "slug": "date-difference-calculator"
+    },
+    {
+      "id": 141,
+      "name": "Age Calculator",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Calculates exact age in years, months, and days from birthdate.",
+      "keyword": "age calculator online",
+      "slug": "age-calculator"
+    },
+    {
+      "id": 142,
+      "name": "Days Until Date Counter",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Counts exact days, hours, minutes until any future date or event.",
+      "keyword": "days until date counter",
+      "slug": "days-until-date"
+    },
+    {
+      "id": 143,
+      "name": "Countdown Timer",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Creates a visual countdown timer to any target date and time.",
+      "keyword": "countdown timer online",
+      "slug": "countdown-timer"
+    },
+    {
+      "id": 144,
+      "name": "Calendar Generator",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Generates a printable monthly calendar for any year and month.",
+      "keyword": "calendar generator online",
+      "slug": "calendar-generator"
+    },
+    {
+      "id": 145,
+      "name": "Week Number Calculator",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Finds the ISO 8601 week number for any given date.",
+      "keyword": "week number calculator",
+      "slug": "week-number-calculator"
+    },
+    {
+      "id": 146,
+      "name": "Working Days Calculator",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Calculates working days between two dates excluding weekends and holidays.",
+      "keyword": "working days calculator",
+      "slug": "working-days-calculator"
+    },
+    {
+      "id": 147,
+      "name": "Pomodoro Timer",
+      "category": "Time",
+      "category_ar": "الوقت",
+      "description": "Browser-based Pomodoro productivity timer with work/break cycles and notifications.",
+      "keyword": "pomodoro timer online",
+      "slug": "pomodoro-timer"
+    },
+    {
+      "id": 148,
+      "name": "Length Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between km, miles, meters, feet, inches, cm, mm, nautical miles.",
+      "keyword": "length converter online",
+      "slug": "length-converter"
+    },
+    {
+      "id": 149,
+      "name": "Weight Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between kg, pounds, ounces, grams, stones, tons.",
+      "keyword": "weight converter online",
+      "slug": "weight-converter"
+    },
+    {
+      "id": 150,
+      "name": "Temperature Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between Celsius, Fahrenheit, and Kelvin temperature scales.",
+      "keyword": "temperature converter online",
+      "slug": "temperature-converter"
+    },
+    {
+      "id": 151,
+      "name": "Area Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between square meters, acres, hectares, square feet, sq miles.",
+      "keyword": "area converter online",
+      "slug": "area-converter"
+    },
+    {
+      "id": 152,
+      "name": "Volume Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between liters, gallons, cups, fluid ounces, ml, cubic meters.",
+      "keyword": "volume converter online",
+      "slug": "volume-converter"
+    },
+    {
+      "id": 153,
+      "name": "Speed Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between mph, km/h, m/s, knots, Mach number.",
+      "keyword": "speed converter online",
+      "slug": "speed-converter"
+    },
+    {
+      "id": 154,
+      "name": "Data Storage Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between bits, bytes, KB, MB, GB, TB, PB instantly.",
+      "keyword": "data storage converter",
+      "slug": "data-storage-converter"
+    },
+    {
+      "id": 155,
+      "name": "Currency Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between major world currencies using built-in static exchange rates.",
+      "keyword": "currency converter online",
+      "slug": "currency-converter"
+    },
+    {
+      "id": 156,
+      "name": "Fuel Efficiency Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between MPG, L/100km, km/L fuel efficiency units.",
+      "keyword": "fuel efficiency converter",
+      "slug": "fuel-efficiency-converter"
+    },
+    {
+      "id": 157,
+      "name": "Pressure Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between PSI, bar, Pascal, atm, mmHg, kPa.",
+      "keyword": "pressure converter online",
+      "slug": "pressure-converter"
+    },
+    {
+      "id": 158,
+      "name": "Energy Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between Joules, kWh, calories, BTU, eV.",
+      "keyword": "energy converter online",
+      "slug": "energy-converter"
+    },
+    {
+      "id": 159,
+      "name": "Angle Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts between degrees, radians, and gradians.",
+      "keyword": "angle converter online",
+      "slug": "angle-converter"
+    },
+    {
+      "id": 160,
+      "name": "Shoe Size Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts shoe sizes between US, UK, EU, and CM measurements.",
+      "keyword": "shoe size converter online",
+      "slug": "shoe-size-converter"
+    },
+    {
+      "id": 161,
+      "name": "Clothing Size Converter",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Converts clothing sizes between US, UK, EU, and Asian sizing systems.",
+      "keyword": "clothing size converter",
+      "slug": "clothing-size-converter"
+    },
+    {
+      "id": 162,
+      "name": "Screen Resolution Calc",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Calculates PPI and screen resolution from display dimensions.",
+      "keyword": "screen resolution calculator",
+      "slug": "screen-resolution-calculator"
+    },
+    {
+      "id": 163,
+      "name": "Aspect Ratio Calculator",
+      "category": "Units",
+      "category_ar": "الوحدات",
+      "description": "Calculates and converts image/screen aspect ratios with scaling.",
+      "keyword": "aspect ratio calculator",
+      "slug": "aspect-ratio-calculator"
+    },
+    {
+      "id": 164,
+      "name": "Meta Tags Generator",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Generates SEO-optimized HTML meta title, description, OG and Twitter tags.",
+      "keyword": "meta tags generator online",
+      "slug": "meta-tags-generator"
+    },
+    {
+      "id": 165,
+      "name": "Robots.txt Generator",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Generates robots.txt file with custom user-agent and crawl rules.",
+      "keyword": "robots txt generator online",
+      "slug": "robots-txt-generator"
+    },
+    {
+      "id": 166,
+      "name": "Sitemap XML Generator",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Generates XML sitemap from a list of URLs with priority and changefreq.",
+      "keyword": "sitemap xml generator online",
+      "slug": "sitemap-xml-generator"
+    },
+    {
+      "id": 167,
+      "name": "UTM Link Builder",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Builds UTM-tagged URLs for Google Analytics campaign tracking.",
+      "keyword": "utm link builder online",
+      "slug": "utm-link-builder"
+    },
+    {
+      "id": 168,
+      "name": "URL Slug Generator",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Converts any title or phrase to SEO-friendly URL slug automatically.",
+      "keyword": "url slug generator online",
+      "slug": "url-slug-generator"
+    },
+    {
+      "id": 169,
+      "name": "Open Graph Generator",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Generates Open Graph meta tags for social media preview cards.",
+      "keyword": "open graph generator online",
+      "slug": "open-graph-generator"
+    },
+    {
+      "id": 170,
+      "name": "Twitter Card Generator",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Generates Twitter Card meta tags for optimized social sharing.",
+      "keyword": "twitter card generator online",
+      "slug": "twitter-card-generator"
+    },
+    {
+      "id": 171,
+      "name": "Canonical URL Generator",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Generates canonical link tag for duplicate content control.",
+      "keyword": "canonical url generator",
+      "slug": "canonical-url-generator"
+    },
+    {
+      "id": 172,
+      "name": "Keyword Density Checker",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Analyzes keyword frequency and density percentage in any text.",
+      "keyword": "keyword density checker",
+      "slug": "keyword-density-checker"
+    },
+    {
+      "id": 173,
+      "name": "Word Count for SEO",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Counts words with SEO readability score and Flesch reading ease.",
+      "keyword": "word count for seo",
+      "slug": "word-count-seo"
+    },
+    {
+      "id": 174,
+      "name": "HTML to Markdown",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Converts HTML code to clean Markdown format in browser.",
+      "keyword": "html to markdown converter",
+      "slug": "html-to-markdown"
+    },
+    {
+      "id": 175,
+      "name": "HTTP Status Codes",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Complete searchable reference for all HTTP status codes with explanations.",
+      "keyword": "http status codes list",
+      "slug": "http-status-codes"
+    },
+    {
+      "id": 176,
+      "name": "hreflang Generator",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Generates hreflang link tags for multilingual SEO implementation.",
+      "keyword": "hreflang tag generator",
+      "slug": "hreflang-generator"
+    },
+    {
+      "id": 177,
+      "name": "Schema Markup Generator",
+      "category": "SEO",
+      "category_ar": "SEO",
+      "description": "Generates JSON-LD schema markup for WebApplication, FAQ, HowTo types.",
+      "keyword": "schema markup generator",
+      "slug": "schema-markup-generator"
+    },
+    {
+      "id": 178,
+      "name": "Password Generator",
+      "category": "Security",
+      "category_ar": "الأمان",
+      "description": "Generates secure random passwords with custom length and character rules.",
+      "keyword": "password generator online",
+      "slug": "password-generator"
+    },
+    {
+      "id": 179,
+      "name": "Password Strength Checker",
+      "category": "Security",
+      "category_ar": "الأمان",
+      "description": "Analyzes password strength with entropy calculation and security tips.",
+      "keyword": "password strength checker",
+      "slug": "password-strength-checker"
+    },
+    {
+      "id": 180,
+      "name": "Random PIN Generator",
+      "category": "Security",
+      "category_ar": "الأمان",
+      "description": "Generates secure random PIN numbers of any length using crypto.",
+      "keyword": "random pin generator online",
+      "slug": "random-pin-generator"
+    },
+    {
+      "id": 181,
+      "name": "Privacy Policy Generator",
+      "category": "Security",
+      "category_ar": "الأمان",
+      "description": "Generates a customizable basic privacy policy for websites and apps.",
+      "keyword": "privacy policy generator",
+      "slug": "privacy-policy-generator"
+    },
+    {
+      "id": 182,
+      "name": "Terms & Conditions Gen",
+      "category": "Security",
+      "category_ar": "الأمان",
+      "description": "Generates basic terms and conditions text for websites and apps.",
+      "keyword": "terms and conditions generator",
+      "slug": "terms-conditions-generator"
+    },
+    {
+      "id": 183,
+      "name": "Cookie Policy Generator",
+      "category": "Security",
+      "category_ar": "الأمان",
+      "description": "Generates GDPR-compliant cookie policy text for websites.",
+      "keyword": "cookie policy generator",
+      "slug": "cookie-policy-generator"
+    },
+    {
+      "id": 184,
+      "name": "Hash Type Identifier",
+      "category": "Security",
+      "category_ar": "الأمان",
+      "description": "Identifies the type of a hash string (MD5, SHA1, SHA256, bcrypt, etc.).",
+      "keyword": "hash type identifier online",
+      "slug": "hash-identifier"
+    },
+    {
+      "id": 185,
+      "name": "IP Address Lookup",
+      "category": "Security",
+      "category_ar": "الأمان",
+      "description": "Shows visitor's IP address and basic geo info using client-side detection.",
+      "keyword": "ip address lookup online",
+      "slug": "ip-address-lookup"
+    },
+    {
+      "id": 186,
+      "name": "CSV Viewer & Editor",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Views and edits CSV files in an interactive table format in browser.",
+      "keyword": "csv viewer online",
+      "slug": "csv-viewer"
+    },
+    {
+      "id": 187,
+      "name": "Markdown Table Generator",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Creates Markdown tables from pasted data or manual row/column input.",
+      "keyword": "markdown table generator",
+      "slug": "markdown-table-generator"
+    },
+    {
+      "id": 188,
+      "name": "HTML Table to CSV",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Extracts HTML table data and exports as downloadable CSV file.",
+      "keyword": "html table to csv",
+      "slug": "html-table-to-csv"
+    },
+    {
+      "id": 189,
+      "name": "CSV to HTML Table",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Converts CSV data to formatted, styled HTML table code.",
+      "keyword": "csv to html table converter",
+      "slug": "csv-to-html-table"
+    },
+    {
+      "id": 190,
+      "name": "JSON Tree Viewer",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Displays JSON data as interactive expandable/collapsible tree view.",
+      "keyword": "json viewer online",
+      "slug": "json-viewer"
+    },
+    {
+      "id": 191,
+      "name": "Fake Data Generator",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Generates random fake user data (names, emails, addresses) for testing.",
+      "keyword": "fake data generator online",
+      "slug": "fake-data-generator"
+    },
+    {
+      "id": 192,
+      "name": "QR Code Generator",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Generates QR codes from text, URLs, or contact info using qrcode.js.",
+      "keyword": "qr code generator online",
+      "slug": "qr-code-generator"
+    },
+    {
+      "id": 193,
+      "name": "QR Code Reader",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Reads and decodes QR codes from uploaded images using ZXing.js.",
+      "keyword": "qr code reader online",
+      "slug": "qr-code-reader"
+    },
+    {
+      "id": 194,
+      "name": "Barcode Generator",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Generates Code128, EAN-13, QR barcodes using JsBarcode in browser.",
+      "keyword": "barcode generator online",
+      "slug": "barcode-generator"
+    },
+    {
+      "id": 195,
+      "name": "vCard Generator",
+      "category": "Data",
+      "category_ar": "البيانات",
+      "description": "Creates a downloadable vCard (.vcf) digital contact card file.",
+      "keyword": "vcard generator online",
+      "slug": "vcard-generator"
+    },
+    {
+      "id": 196,
+      "name": "WhatsApp Link Generator",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Creates direct WhatsApp chat links without needing to save contacts.",
+      "keyword": "whatsapp link generator",
+      "slug": "whatsapp-link-generator"
+    },
+    {
+      "id": 197,
+      "name": "Emoji to Unicode",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Converts emoji characters to their Unicode code points and HTML entities.",
+      "keyword": "emoji to unicode converter",
+      "slug": "emoji-to-unicode"
+    },
+    {
+      "id": 198,
+      "name": "Unicode to Emoji",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Converts Unicode code points back to emoji characters.",
+      "keyword": "unicode to emoji converter",
+      "slug": "unicode-to-emoji"
+    },
+    {
+      "id": 199,
+      "name": "Text to Binary",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Converts plain text to binary (0s and 1s) representation of ASCII values.",
+      "keyword": "text to binary converter",
+      "slug": "text-to-binary"
+    },
+    {
+      "id": 200,
+      "name": "Binary to Text",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Converts binary code back to readable plain text characters.",
+      "keyword": "binary to text converter",
+      "slug": "binary-to-text"
+    },
+    {
+      "id": 201,
+      "name": "Number to Words",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Converts numbers to their written word form in English.",
+      "keyword": "number to words converter",
+      "slug": "number-to-words"
+    },
+    {
+      "id": 202,
+      "name": "Roman Numeral Converter",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Converts between Roman numerals and decimal numbers bidirectionally.",
+      "keyword": "roman numeral converter",
+      "slug": "roman-numeral-converter"
+    },
+    {
+      "id": 203,
+      "name": "Screen Resolution Detector",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Detects and displays device screen resolution, PPI, and device pixel ratio.",
+      "keyword": "screen resolution detector",
+      "slug": "screen-resolution-detector"
+    },
+    {
+      "id": 204,
+      "name": "Browser Info Detector",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Displays browser name, version, OS, device type, and user agent string.",
+      "keyword": "browser info detector online",
+      "slug": "browser-info-detector"
+    },
+    {
+      "id": 205,
+      "name": "Internet Speed Test",
+      "category": "Special",
+      "category_ar": "خاصة",
+      "description": "Tests download and upload internet connection speed in browser.",
+      "keyword": "internet speed test online",
+      "slug": "internet-speed-test"
+    }
+  ]
+}
