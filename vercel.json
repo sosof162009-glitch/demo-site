@@ -1,28 +1,66 @@
 {
   "version": 2,
   "name": "205-tools-hub",
-  "builds": [
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "installCommand": null,
+  "framework": null,
+  "routes": [
     {
-      "src": "**/*",
-      "use": "@vercel/static"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/admin",
-      "destination": "/admin/login.html"
+      "src": "/admin",
+      "dest": "/admin/login.html"
     },
     {
-      "source": "/admin/:path*",
-      "destination": "/admin/:path*.html"
+      "src": "/admin/dashboard",
+      "dest": "/admin/dashboard.html"
     },
     {
-      "source": "/tools/:path*",
-      "destination": "/tools/:path*.html"
+      "src": "/admin/tools",
+      "dest": "/admin/tools.html"
     },
     {
-      "source": "/:path*",
-      "destination": "/:path*.html"
+      "src": "/admin/categories",
+      "dest": "/admin/categories.html"
+    },
+    {
+      "src": "/admin/seo",
+      "dest": "/admin/seo.html"
+    },
+    {
+      "src": "/admin/languages",
+      "dest": "/admin/languages.html"
+    },
+    {
+      "src": "/admin/ads",
+      "dest": "/admin/ads.html"
+    },
+    {
+      "src": "/admin/performance",
+      "dest": "/admin/performance.html"
+    },
+    {
+      "src": "/admin/notifications",
+      "dest": "/admin/notifications.html"
+    },
+    {
+      "src": "/admin/settings",
+      "dest": "/admin/settings.html"
+    },
+    {
+      "src": "/tools/assets/(.*)",
+      "dest": "/tools/assets/$1"
+    },
+    {
+      "src": "/admin/css/(.*)",
+      "dest": "/admin/css/$1"
+    },
+    {
+      "src": "/(.+)",
+      "dest": "/$1.html"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
     }
   ]
 }
