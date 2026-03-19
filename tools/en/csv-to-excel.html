@@ -3,60 +3,155 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>csv-to-excel - 205 Tools</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="../assets/css/tools.css">
-  <script src="../assets/js/utils.js" defer></script>
+  <title>CSV to Excel - 205 Tools</title>
+  <meta name="description" content="Convert CSV data to Excel format.">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <style>
+    .editor-box { margin: 20px 0; }
+    .editor-box label { display: block; margin-bottom: 8px; }
+    .editor-box textarea { width: 100%; min-height: 200px; }
+    .preview-table { width: 100%; border-collapse: collapse; margin-top: 20px; overflow-x: auto; }
+    .preview-table th, .preview-table td { border: 1px solid var(--border); padding: 8px; text-align: left; }
+    .preview-table th { background: var(--bg-secondary); }
+    .preview-table tr:nth-child(even) { background: var(--bg-secondary); }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="/" class="back-link">← Home</a>
     
     <header>
-      <h1>⇄ csv-to-excel</h1>
-      <p></p>
+      <h1>📊 CSV to Excel</h1>
+      <p>Convert CSV to Excel-compatible format</p>
     </header>
     
     <div class="tool-container">
       <div class="tool-header">
-        <h2>Options</h2>
+        <h2>Converter</h2>
         <div class="lang-selector">
-          <a href="../en/csv-to-excel.html" class="lang-btn active">EN</a><a href="../es/csv-to-excel.html" class="lang-btn ">ES</a><a href="../fr/csv-to-excel.html" class="lang-btn ">FR</a><a href="../de/csv-to-excel.html" class="lang-btn ">DE</a><a href="../ar/csv-to-excel.html" class="lang-btn ">AR</a>
+          <a href="./csv-to-excel.html" class="lang-btn active">EN</a>
+          <a href="../es/csv-to-excel.html" class="lang-btn">ES</a>
+          <a href="../fr/csv-to-excel.html" class="lang-btn">FR</a>
+          <a href="../de/csv-to-excel.html" class="lang-btn">DE</a>
+          <a href="../ar/csv-to-excel.html" class="lang-btn">AR</a>
         </div>
       </div>
       
+      <div class="editor-box">
+        <label>CSV Input</label>
+        <textarea id="csvInput" placeholder="Name,Age,City&#10;John,30,NYC&#10;Jane,25,LA">Name,Age,City,Country
+John Doe,30,New York,USA
+Jane Smith,25,Los Angeles,USA
+Bob Johnson,35,Chicago,USA
+Alice Brown,28,Miami,USA</textarea>
+      </div>
       
-      <div class="form-group">
-        <label>Text</label>
-        <textarea id="inputText" rows="10" placeholder="Enter your text here..."></textarea>
-      </div>
       <div class="btn-group">
-        <button class="btn btn-primary" onclick="processText()">Convert</button>
-        <button class="btn btn-secondary" onclick="resetText()">Reset</button>
+        <button class="btn btn-primary" onclick="convert()">👁️ Preview</button>
+        <button class="btn btn-success" onclick="downloadCSV()">💾 Download CSV</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
       </div>
-      <div class="form-group" style="margin-top: 20px;">
-        <label>Result</label>
-        <textarea id="outputText" rows="10" readonly></textarea>
+      
+      <div id="errorMsg" style="color: #ef4444; margin-top: 10px;"></div>
+      
+      <div id="previewSection" style="margin-top: 20px; display: none;">
+        <h3>Preview</h3>
+        <div style="overflow-x: auto;">
+          <table class="preview-table" id="previewTable"></table>
+        </div>
       </div>
-      <button class="btn btn-success" data-success="Copied!" onclick="copyToClipboard(document.getElementById('outputText').value, this)">Copy</button>
     </div>
     
-    <footer>
-      <p>205 Tools © 2025 - Tools</p>
-    </footer>
+    <footer><p>205 Tools © 2025 - Free Online Tools</p></footer>
   </div>
   
   <script>
+    function parseCSV(csv) {
+      const lines = csv.trim().split('\n');
+      return lines.map(line => {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+        
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === ',' && !inQuotes) {
+            result.push(current.trim());
+            current = '';
+          } else {
+            current += char;
+          }
+        }
+        result.push(current.trim());
+        return result;
+      });
+    }
     
-      function processText() {
-        const text = document.getElementById('inputText').value;
-        document.getElementById('outputText').value = text;
+    function convert() {
+      const csv = document.getElementById('csvInput').value;
+      if (!csv) return;
+      
+      try {
+        const data = parseCSV(csv);
+        if (data.length === 0) throw new Error('Empty CSV');
+        
+        const table = document.getElementById('previewTable');
+        table.innerHTML = '';
+        
+        // Header
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        data[0].forEach(cell => {
+          const th = document.createElement('th');
+          th.textContent = cell;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        
+        // Body
+        const tbody = document.createElement('tbody');
+        for (let i = 1; i < data.length; i++) {
+          const row = document.createElement('tr');
+          data[i].forEach(cell => {
+            const td = document.createElement('td');
+            td.textContent = cell;
+            row.appendChild(td);
+          });
+          tbody.appendChild(row);
+        }
+        table.appendChild(tbody);
+        
+        document.getElementById('previewSection').style.display = 'block';
+        document.getElementById('errorMsg').textContent = '';
+      } catch (e) {
+        document.getElementById('errorMsg').textContent = 'Error: ' + e.message;
       }
-      function resetText() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-      }
+    }
     
+    function downloadCSV() {
+      const csv = document.getElementById('csvInput').value;
+      if (!csv) return;
+      
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function clearAll() {
+      document.getElementById('csvInput').value = '';
+      document.getElementById('previewTable').innerHTML = '';
+      document.getElementById('previewSection').style.display = 'none';
+      document.getElementById('errorMsg').textContent = '';
+    }
+    
+    convert();
   </script>
 </body>
 </html>
