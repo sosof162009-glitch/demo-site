@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "205-tools-hub",
   "buildCommand": null,
   "outputDirectory": ".",
   "installCommand": null,
