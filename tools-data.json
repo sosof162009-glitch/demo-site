@@ -304,7 +304,8 @@
       "category_ar": "الصور",
       "description": "Converts JPG/JPEG images to PNG format using browser Canvas API. Supports transparency output.",
       "keyword": "jpg to png",
-      "slug": "jpg-to-png"
+      "slug": "jpg-to-png",
+      "icon": "📷"
     },
     {
       "id": 2,
@@ -313,7 +314,8 @@
       "category_ar": "الصور",
       "description": "Converts PNG images to JPG/JPEG format with adjustable quality using Canvas API.",
       "keyword": "png to jpg",
-      "slug": "png-to-jpg"
+      "slug": "png-to-jpg",
+      "icon": "🖼️"
     },
     {
       "id": 3,
@@ -322,7 +324,8 @@
       "category_ar": "الصور",
       "description": "Converts WebP images to JPG format entirely in the browser using Canvas.",
       "keyword": "webp to jpg",
-      "slug": "webp-to-jpg"
+      "slug": "webp-to-jpg",
+      "icon": "🌐"
     },
     {
       "id": 4,
@@ -331,7 +334,8 @@
       "category_ar": "الصور",
       "description": "Converts JPG images to WebP format for better web compression and performance.",
       "keyword": "jpg to webp",
-      "slug": "jpg-to-webp"
+      "slug": "jpg-to-webp",
+      "icon": "🌐"
     },
     {
       "id": 5,
@@ -340,7 +344,8 @@
       "category_ar": "الصور",
       "description": "Converts PNG images to WebP format using browser Canvas API.",
       "keyword": "png to webp",
-      "slug": "png-to-webp"
+      "slug": "png-to-webp",
+      "icon": "🌐"
     },
     {
       "id": 6,
@@ -349,7 +354,8 @@
       "category_ar": "الصور",
       "description": "Converts WebP images to lossless PNG format in browser.",
       "keyword": "webp to png",
-      "slug": "webp-to-png"
+      "slug": "webp-to-png",
+      "icon": "🌐"
     },
     {
       "id": 7,
@@ -358,7 +364,8 @@
       "category_ar": "الصور",
       "description": "Converts HEIC/HEIF iPhone photos to JPG format using heic2any library.",
       "keyword": "heic to jpg",
-      "slug": "heic-to-jpg"
+      "slug": "heic-to-jpg",
+      "icon": "📱"
     },
     {
       "id": 8,
@@ -367,7 +374,8 @@
       "category_ar": "الصور",
       "description": "Converts HEIC/HEIF images to PNG format in browser.",
       "keyword": "heic to png",
-      "slug": "heic-to-png"
+      "slug": "heic-to-png",
+      "icon": "📱"
     },
     {
       "id": 9,
@@ -376,7 +384,8 @@
       "category_ar": "الصور",
       "description": "Converts BMP bitmap images to compressed JPG format using Canvas.",
       "keyword": "bmp to jpg",
-      "slug": "bmp-to-jpg"
+      "slug": "bmp-to-jpg",
+      "icon": "🎨"
     },
     {
       "id": 10,
@@ -385,7 +394,8 @@
       "category_ar": "الصور",
       "description": "Converts BMP images to PNG format in the browser.",
       "keyword": "bmp to png",
-      "slug": "bmp-to-png"
+      "slug": "bmp-to-png",
+      "icon": "🎨"
     },
     {
       "id": 11,
@@ -394,7 +404,8 @@
       "category_ar": "الصور",
       "description": "Converts TIFF images to JPG format using browser rendering.",
       "keyword": "tiff to jpg",
-      "slug": "tiff-to-jpg"
+      "slug": "tiff-to-jpg",
+      "icon": "📄"
     },
     {
       "id": 12,
@@ -403,7 +414,8 @@
       "category_ar": "الصور",
       "description": "Converts TIFF images to PNG lossless format.",
       "keyword": "tiff to png",
-      "slug": "tiff-to-png"
+      "slug": "tiff-to-png",
+      "icon": "📄"
     },
     {
       "id": 13,
@@ -412,7 +424,8 @@
       "category_ar": "الصور",
       "description": "Extracts first frame of GIF and converts to JPG format.",
       "keyword": "gif to jpg",
-      "slug": "gif-to-jpg"
+      "slug": "gif-to-jpg",
+      "icon": "🎬"
     },
     {
       "id": 14,
@@ -421,7 +434,8 @@
       "category_ar": "الصور",
       "description": "Converts GIF images to PNG format with transparency support.",
       "keyword": "gif to png",
-      "slug": "gif-to-png"
+      "slug": "gif-to-png",
+      "icon": "🎬"
     },
     {
       "id": 15,
@@ -430,7 +444,8 @@
       "category_ar": "الصور",
       "description": "Renders SVG vector graphics and exports to JPG format in browser.",
       "keyword": "svg to jpg",
-      "slug": "svg-to-jpg"
+      "slug": "svg-to-jpg",
+      "icon": "🎨"
     },
     {
       "id": 16,
@@ -439,7 +454,8 @@
       "category_ar": "الصور",
       "description": "Renders SVG vector graphics and exports to PNG format.",
       "keyword": "svg to png",
-      "slug": "svg-to-png"
+      "slug": "svg-to-png",
+      "icon": "🎨"
     },
     {
       "id": 17,
@@ -448,7 +464,8 @@
       "category_ar": "الصور",
       "description": "Converts AVIF images to JPG format in modern browsers.",
       "keyword": "avif to jpg",
-      "slug": "avif-to-jpg"
+      "slug": "avif-to-jpg",
+      "icon": "🆕"
     },
     {
       "id": 18,
@@ -457,7 +474,8 @@
       "category_ar": "الصور",
       "description": "Converts AVIF images to PNG format in browser.",
       "keyword": "avif to png",
-      "slug": "avif-to-png"
+      "slug": "avif-to-png",
+      "icon": "🆕"
     },
     {
       "id": 19,
@@ -466,7 +484,8 @@
       "category_ar": "الصور",
       "description": "Converts ICO icon files to JPG image format.",
       "keyword": "ico to jpg",
-      "slug": "ico-to-jpg"
+      "slug": "ico-to-jpg",
+      "icon": "🎯"
     },
     {
       "id": 20,
@@ -475,7 +494,8 @@
       "category_ar": "الصور",
       "description": "Converts ICO icon files to PNG format preserving transparency.",
       "keyword": "ico to png",
-      "slug": "ico-to-png"
+      "slug": "ico-to-png",
+      "icon": "🎯"
     },
     {
       "id": 21,
@@ -484,7 +504,8 @@
       "category_ar": "الصور",
       "description": "Converts JPG images to GIF format in browser.",
       "keyword": "jpg to gif",
-      "slug": "jpg-to-gif"
+      "slug": "jpg-to-gif",
+      "icon": "🎬"
     },
     {
       "id": 22,
@@ -493,7 +514,8 @@
       "category_ar": "الصور",
       "description": "Converts PNG images to GIF format.",
       "keyword": "png to gif",
-      "slug": "png-to-gif"
+      "slug": "png-to-gif",
+      "icon": "🎬"
     },
     {
       "id": 23,
@@ -502,7 +524,8 @@
       "category_ar": "الصور",
       "description": "Converts JPG images to ICO favicon format (16/32/64px) in browser.",
       "keyword": "jpg to ico",
-      "slug": "jpg-to-ico"
+      "slug": "jpg-to-ico",
+      "icon": "🎯"
     },
     {
       "id": 24,
@@ -511,7 +534,8 @@
       "category_ar": "الصور",
       "description": "Converts PNG images to ICO favicon format with multiple sizes.",
       "keyword": "png to ico",
-      "slug": "png-to-ico"
+      "slug": "png-to-ico",
+      "icon": "🎯"
     },
     {
       "id": 25,
@@ -520,7 +544,8 @@
       "category_ar": "الصور",
       "description": "Converts JPG images to modern AVIF format for web optimization.",
       "keyword": "jpg to avif",
-      "slug": "jpg-to-avif"
+      "slug": "jpg-to-avif",
+      "icon": "🆕"
     },
     {
       "id": 26,
@@ -529,7 +554,8 @@
       "category_ar": "الصور",
       "description": "Converts PNG images to AVIF format for smaller file sizes.",
       "keyword": "png to avif",
-      "slug": "png-to-avif"
+      "slug": "png-to-avif",
+      "icon": "🆕"
     },
     {
       "id": 27,
@@ -538,7 +564,8 @@
       "category_ar": "الصور",
       "description": "Converts JPG images to uncompressed BMP bitmap format.",
       "keyword": "jpg to bmp",
-      "slug": "jpg-to-bmp"
+      "slug": "jpg-to-bmp",
+      "icon": "🎨"
     },
     {
       "id": 28,
@@ -547,7 +574,8 @@
       "category_ar": "الصور",
       "description": "Converts PNG images to BMP format.",
       "keyword": "png to bmp",
-      "slug": "png-to-bmp"
+      "slug": "png-to-bmp",
+      "icon": "🎨"
     },
     {
       "id": 29,
@@ -556,7 +584,8 @@
       "category_ar": "الصور",
       "description": "Converts WebP images to GIF format in browser.",
       "keyword": "webp to gif",
-      "slug": "webp-to-gif"
+      "slug": "webp-to-gif",
+      "icon": "🎬"
     },
     {
       "id": 30,
@@ -565,7 +594,8 @@
       "category_ar": "الصور",
       "description": "Converts WebP images to AVIF format.",
       "keyword": "webp to avif",
-      "slug": "webp-to-avif"
+      "slug": "webp-to-avif",
+      "icon": "🆕"
     },
     {
       "id": 31,
@@ -574,7 +604,8 @@
       "category_ar": "الصور",
       "description": "Converts animated or static GIF to WebP format.",
       "keyword": "gif to webp",
-      "slug": "gif-to-webp"
+      "slug": "gif-to-webp",
+      "icon": "🌐"
     },
     {
       "id": 32,
@@ -583,7 +614,8 @@
       "category_ar": "الصور",
       "description": "Converts AVIF images to WebP format for broader compatibility.",
       "keyword": "avif to webp",
-      "slug": "avif-to-webp"
+      "slug": "avif-to-webp",
+      "icon": "🌐"
     },
     {
       "id": 33,
@@ -592,7 +624,8 @@
       "category_ar": "الصور",
       "description": "Resizes any image to custom dimensions using browser Canvas API. Supports aspect ratio lock.",
       "keyword": "image resizer online",
-      "slug": "image-resizer"
+      "slug": "image-resizer",
+      "icon": "📐"
     },
     {
       "id": 34,
@@ -601,7 +634,8 @@
       "category_ar": "الصور",
       "description": "Reduces JPG file size using canvas quality settings in browser.",
       "keyword": "compress jpg online",
-      "slug": "compress-jpg"
+      "slug": "compress-jpg",
+      "icon": "🗜️"
     },
     {
       "id": 35,
@@ -610,7 +644,8 @@
       "category_ar": "الصور",
       "description": "Reduces PNG file size using browser-based compression techniques.",
       "keyword": "compress png online",
-      "slug": "compress-png"
+      "slug": "compress-png",
+      "icon": "🗜️"
     },
     {
       "id": 36,
@@ -619,7 +654,8 @@
       "category_ar": "الصور",
       "description": "Crops images to custom dimensions or aspect ratios in browser.",
       "keyword": "crop image online",
-      "slug": "image-cropper"
+      "slug": "image-cropper",
+      "icon": "✂️"
     },
     {
       "id": 37,
@@ -628,7 +664,8 @@
       "category_ar": "الصور",
       "description": "Converts any image file to Base64 encoded string in browser.",
       "keyword": "image to base64",
-      "slug": "image-to-base64"
+      "slug": "image-to-base64",
+      "icon": "🔢"
     },
     {
       "id": 38,
@@ -637,7 +674,8 @@
       "category_ar": "الصور",
       "description": "Converts Base64 encoded string back to downloadable image file.",
       "keyword": "base64 to image",
-      "slug": "base64-to-image"
+      "slug": "base64-to-image",
+      "icon": "🖼️"
     },
     {
       "id": 39,
@@ -646,7 +684,8 @@
       "category_ar": "الصور",
       "description": "Strips all EXIF metadata from JPG images for privacy using Canvas redraw.",
       "keyword": "remove exif data online",
-      "slug": "remove-exif"
+      "slug": "remove-exif",
+      "icon": "🛡️"
     },
     {
       "id": 40,
@@ -655,7 +694,8 @@
       "category_ar": "الصور",
       "description": "Generates ICO favicon from any image at 16/32/64px sizes in browser.",
       "keyword": "favicon generator online",
-      "slug": "favicon-generator"
+      "slug": "favicon-generator",
+      "icon": "🎯"
     },
     {
       "id": 41,
@@ -664,7 +704,8 @@
       "category_ar": "الصور",
       "description": "Extracts dominant color palette from uploaded image using Canvas pixel analysis.",
       "keyword": "extract color palette from image",
-      "slug": "color-palette-extractor"
+      "slug": "color-palette-extractor",
+      "icon": "🎨"
     },
     {
       "id": 42,
@@ -673,7 +714,8 @@
       "category_ar": "الصور",
       "description": "Converts any color image to grayscale using Canvas desaturation filter.",
       "keyword": "convert image to grayscale",
-      "slug": "image-to-grayscale"
+      "slug": "image-to-grayscale",
+      "icon": "⚫"
     },
     {
       "id": 43,
@@ -682,7 +724,8 @@
       "category_ar": "PDF",
       "description": "Converts PDF pages to JPG images using PDF.js library in browser.",
       "keyword": "pdf to jpg",
-      "slug": "pdf-to-jpg"
+      "slug": "pdf-to-jpg",
+      "icon": "📄"
     },
     {
       "id": 44,
@@ -691,7 +734,8 @@
       "category_ar": "PDF",
       "description": "Converts PDF pages to PNG images using PDF.js in browser.",
       "keyword": "pdf to png",
-      "slug": "pdf-to-png"
+      "slug": "pdf-to-png",
+      "icon": "📄"
     },
     {
       "id": 45,
@@ -700,7 +744,8 @@
       "category_ar": "PDF",
       "description": "Converts PDF pages to WebP format using browser canvas rendering.",
       "keyword": "pdf to webp",
-      "slug": "pdf-to-webp"
+      "slug": "pdf-to-webp",
+      "icon": "📄"
     },
     {
       "id": 46,
@@ -709,7 +754,8 @@
       "category_ar": "PDF",
       "description": "Extracts plain text content from PDF files using PDF.js text layer.",
       "keyword": "pdf to text online",
-      "slug": "pdf-to-text"
+      "slug": "pdf-to-text",
+      "icon": "📝"
     },
     {
       "id": 47,
@@ -718,7 +764,8 @@
       "category_ar": "PDF",
       "description": "Displays PDF metadata including author, creation date, title, subject.",
       "keyword": "view pdf metadata online",
-      "slug": "pdf-metadata"
+      "slug": "pdf-metadata",
+      "icon": "📋"
     },
     {
       "id": 48,
@@ -727,7 +774,8 @@
       "category_ar": "PDF",
       "description": "Converts one or multiple JPG images to a PDF file using pdf-lib.js.",
       "keyword": "jpg to pdf",
-      "slug": "jpg-to-pdf"
+      "slug": "jpg-to-pdf",
+      "icon": "📷"
     },
     {
       "id": 49,
@@ -736,7 +784,8 @@
       "category_ar": "PDF",
       "description": "Converts PNG images to PDF format using browser PDF libraries.",
       "keyword": "png to pdf",
-      "slug": "png-to-pdf"
+      "slug": "png-to-pdf",
+      "icon": "🖼️"
     },
     {
       "id": 50,
@@ -745,7 +794,8 @@
       "category_ar": "PDF",
       "description": "Combines multiple images into a single multi-page PDF using pdf-lib.js.",
       "keyword": "images to pdf online",
-      "slug": "images-to-pdf"
+      "slug": "images-to-pdf",
+      "icon": "📑"
     },
     {
       "id": 51,
@@ -754,7 +804,8 @@
       "category_ar": "PDF",
       "description": "Converts Word DOCX files to PDF format using browser rendering.",
       "keyword": "word to pdf online",
-      "slug": "word-to-pdf"
+      "slug": "word-to-pdf",
+      "icon": "📝"
     },
     {
       "id": 52,
@@ -763,7 +814,8 @@
       "category_ar": "PDF",
       "description": "Converts HTML content to PDF using browser print API.",
       "keyword": "html to pdf online",
-      "slug": "html-to-pdf"
+      "slug": "html-to-pdf",
+      "icon": "🌐"
     },
     {
       "id": 53,
@@ -772,7 +824,8 @@
       "category_ar": "PDF",
       "description": "Combines multiple PDF files into one document using pdf-lib.js.",
       "keyword": "merge pdf online",
-      "slug": "merge-pdf"
+      "slug": "merge-pdf",
+      "icon": "🔗"
     },
     {
       "id": 54,
@@ -781,7 +834,8 @@
       "category_ar": "PDF",
       "description": "Splits a PDF into individual pages or page ranges in browser.",
       "keyword": "split pdf online",
-      "slug": "split-pdf"
+      "slug": "split-pdf",
+      "icon": "✂️"
     },
     {
       "id": 55,
@@ -790,7 +844,8 @@
       "category_ar": "PDF",
       "description": "Reduces PDF file size using browser-based PDF compression techniques.",
       "keyword": "compress pdf online",
-      "slug": "compress-pdf"
+      "slug": "compress-pdf",
+      "icon": "🗜️"
     },
     {
       "id": 56,
@@ -799,7 +854,8 @@
       "category_ar": "PDF",
       "description": "Rotates individual or all pages in a PDF file using pdf-lib.js.",
       "keyword": "rotate pdf pages online",
-      "slug": "rotate-pdf"
+      "slug": "rotate-pdf",
+      "icon": "🔄"
     },
     {
       "id": 57,
@@ -808,7 +864,8 @@
       "category_ar": "PDF",
       "description": "Adds text or image watermark to PDF pages using pdf-lib.js.",
       "keyword": "add watermark to pdf",
-      "slug": "pdf-watermark"
+      "slug": "pdf-watermark",
+      "icon": "💧"
     },
     {
       "id": 58,
@@ -817,7 +874,8 @@
       "category_ar": "PDF",
       "description": "Adds page numbers to PDF documents using pdf-lib.js.",
       "keyword": "add page numbers to pdf",
-      "slug": "pdf-page-numbers"
+      "slug": "pdf-page-numbers",
+      "icon": "🔢"
     },
     {
       "id": 59,
@@ -826,7 +884,8 @@
       "category_ar": "PDF",
       "description": "Drag-and-drop PDF page reordering using pdf-lib.js entirely in browser.",
       "keyword": "reorder pdf pages online",
-      "slug": "reorder-pdf-pages"
+      "slug": "reorder-pdf-pages",
+      "icon": "📋"
     },
     {
       "id": 60,
@@ -835,7 +894,8 @@
       "category_ar": "PDF",
       "description": "Removes password protection from PDF files in browser using PDF.js.",
       "keyword": "remove pdf password",
-      "slug": "remove-pdf-password"
+      "slug": "remove-pdf-password",
+      "icon": "🔓"
     },
     {
       "id": 61,
@@ -844,7 +904,8 @@
       "category_ar": "النصوص",
       "description": "Counts words, characters, sentences, and paragraphs in real-time.",
       "keyword": "word counter online",
-      "slug": "word-counter"
+      "slug": "word-counter",
+      "icon": "🔢"
     },
     {
       "id": 62,
@@ -853,7 +914,8 @@
       "category_ar": "النصوص",
       "description": "Counts characters with and without spaces in real-time as you type.",
       "keyword": "character counter online",
-      "slug": "character-counter"
+      "slug": "character-counter",
+      "icon": "🔡"
     },
     {
       "id": 63,
@@ -862,7 +924,8 @@
       "category_ar": "النصوص",
       "description": "Counts total number of lines in pasted or typed text instantly.",
       "keyword": "line counter online",
-      "slug": "line-counter"
+      "slug": "line-counter",
+      "icon": "📏"
     },
     {
       "id": 64,
@@ -871,7 +934,8 @@
       "category_ar": "النصوص",
       "description": "Removes repeated lines from text keeping only unique entries.",
       "keyword": "remove duplicate lines",
-      "slug": "remove-duplicate-lines"
+      "slug": "remove-duplicate-lines",
+      "icon": "🗑️"
     },
     {
       "id": 65,
@@ -880,7 +944,8 @@
       "category_ar": "النصوص",
       "description": "Sorts lines of text alphabetically, reverse, or randomly.",
       "keyword": "sort lines alphabetically",
-      "slug": "sort-lines"
+      "slug": "sort-lines",
+      "icon": "📊"
     },
     {
       "id": 66,
@@ -889,7 +954,8 @@
       "category_ar": "النصوص",
       "description": "Reverses characters or words in any text string instantly.",
       "keyword": "reverse text online",
-      "slug": "reverse-text"
+      "slug": "reverse-text",
+      "icon": "🔄"
     },
     {
       "id": 67,
@@ -898,7 +964,8 @@
       "category_ar": "النصوص",
       "description": "Converts text to UPPERCASE, lowercase, Title Case, camelCase, snake_case.",
       "keyword": "text case converter online",
-      "slug": "case-converter"
+      "slug": "case-converter",
+      "icon": "🔠"
     },
     {
       "id": 68,
@@ -907,7 +974,8 @@
       "category_ar": "النصوص",
       "description": "Removes extra whitespace and leading/trailing spaces from text.",
       "keyword": "remove extra spaces online",
-      "slug": "remove-extra-spaces"
+      "slug": "remove-extra-spaces",
+      "icon": "⬜"
     },
     {
       "id": 69,
@@ -916,7 +984,8 @@
       "category_ar": "النصوص",
       "description": "Converts any text to a clean URL-friendly slug automatically.",
       "keyword": "text to slug generator",
-      "slug": "text-to-slug"
+      "slug": "text-to-slug",
+      "icon": "🔗"
     },
     {
       "id": 70,
@@ -925,7 +994,8 @@
       "category_ar": "النصوص",
       "description": "Removes all line breaks from text for single paragraph output.",
       "keyword": "remove line breaks online",
-      "slug": "remove-line-breaks"
+      "slug": "remove-line-breaks",
+      "icon": "➖"
     },
     {
       "id": 71,
@@ -934,7 +1004,8 @@
       "category_ar": "النصوص",
       "description": "Prepends sequential line numbers to each line of text.",
       "keyword": "add line numbers to text",
-      "slug": "add-line-numbers"
+      "slug": "add-line-numbers",
+      "icon": "🔢"
     },
     {
       "id": 72,
@@ -943,7 +1014,8 @@
       "category_ar": "النصوص",
       "description": "Compares two texts and highlights differences side-by-side.",
       "keyword": "text diff checker online",
-      "slug": "text-diff-checker"
+      "slug": "text-diff-checker",
+      "icon": "👁️"
     },
     {
       "id": 73,
@@ -952,7 +1024,8 @@
       "category_ar": "النصوص",
       "description": "Finds specific text and replaces with new content, supports regex.",
       "keyword": "find and replace text online",
-      "slug": "find-and-replace"
+      "slug": "find-and-replace",
+      "icon": "🔍"
     },
     {
       "id": 74,
@@ -961,7 +1034,8 @@
       "category_ar": "النصوص",
       "description": "Generates Lorem Ipsum placeholder text in words, sentences, or paragraphs.",
       "keyword": "lorem ipsum generator",
-      "slug": "lorem-ipsum-generator"
+      "slug": "lorem-ipsum-generator",
+      "icon": "📝"
     },
     {
       "id": 75,
@@ -970,7 +1044,8 @@
       "category_ar": "النصوص",
       "description": "Generates random sentences and paragraphs for testing purposes.",
       "keyword": "random text generator online",
-      "slug": "random-text-generator"
+      "slug": "random-text-generator",
+      "icon": "🎲"
     },
     {
       "id": 76,
@@ -979,7 +1054,8 @@
       "category_ar": "النصوص",
       "description": "Converts text to large ASCII art characters using figlet-style fonts.",
       "keyword": "text to ascii art generator",
-      "slug": "text-to-ascii-art"
+      "slug": "text-to-ascii-art",
+      "icon": "🎨"
     },
     {
       "id": 77,
@@ -988,7 +1064,8 @@
       "category_ar": "النصوص",
       "description": "Generates stylish Unicode text fonts from normal input text.",
       "keyword": "fancy text generator online",
-      "slug": "fancy-text-generator"
+      "slug": "fancy-text-generator",
+      "icon": "✨"
     },
     {
       "id": 78,
@@ -997,7 +1074,8 @@
       "category_ar": "النصوص",
       "description": "Translates text to Morse code and Morse code back to text.",
       "keyword": "morse code translator online",
-      "slug": "morse-code-translator"
+      "slug": "morse-code-translator",
+      "icon": "📻"
     },
     {
       "id": 79,
@@ -1006,7 +1084,8 @@
       "category_ar": "النصوص",
       "description": "Estimates reading time for any text based on average reading speed.",
       "keyword": "reading time estimator",
-      "slug": "reading-time-estimator"
+      "slug": "reading-time-estimator",
+      "icon": "⏱️"
     },
     {
       "id": 80,
@@ -1015,7 +1094,8 @@
       "category_ar": "النصوص",
       "description": "Repeats any text a specified number of times with custom separator.",
       "keyword": "text repeater online",
-      "slug": "text-repeater"
+      "slug": "text-repeater",
+      "icon": "🔁"
     },
     {
       "id": 81,
@@ -1024,7 +1104,8 @@
       "category_ar": "النصوص",
       "description": "Flips text upside down using special Unicode characters.",
       "keyword": "upside down text generator",
-      "slug": "upside-down-text"
+      "slug": "upside-down-text",
+      "icon": "🙃"
     },
     {
       "id": 82,
@@ -1033,7 +1114,8 @@
       "category_ar": "النصوص",
       "description": "Creates mirrored text using Unicode flip characters.",
       "keyword": "mirror text generator online",
-      "slug": "mirror-text"
+      "slug": "mirror-text",
+      "icon": "🪞"
     },
     {
       "id": 83,
@@ -1042,7 +1124,8 @@
       "category_ar": "المطورين",
       "description": "Formats, validates and beautifies JSON with syntax highlighting and error detection.",
       "keyword": "json formatter online",
-      "slug": "json-formatter"
+      "slug": "json-formatter",
+      "icon": "📋"
     },
     {
       "id": 84,
@@ -1051,7 +1134,8 @@
       "category_ar": "المطورين",
       "description": "Minifies JSON by removing all whitespace and formatting.",
       "keyword": "json minifier online",
-      "slug": "json-minifier"
+      "slug": "json-minifier",
+      "icon": "🗜️"
     },
     {
       "id": 85,
@@ -1060,7 +1144,8 @@
       "category_ar": "المطورين",
       "description": "Converts JSON arrays to CSV format with downloadable file output.",
       "keyword": "json to csv online",
-      "slug": "json-to-csv"
+      "slug": "json-to-csv",
+      "icon": "📊"
     },
     {
       "id": 86,
@@ -1069,7 +1154,8 @@
       "category_ar": "المطورين",
       "description": "Converts JSON data structures to XML format in browser.",
       "keyword": "json to xml online",
-      "slug": "json-to-xml"
+      "slug": "json-to-xml",
+      "icon": "📄"
     },
     {
       "id": 87,
@@ -1078,7 +1164,8 @@
       "category_ar": "المطورين",
       "description": "Converts JSON to YAML format for configuration files.",
       "keyword": "json to yaml online",
-      "slug": "json-to-yaml"
+      "slug": "json-to-yaml",
+      "icon": "📄"
     },
     {
       "id": 88,
@@ -1087,7 +1174,8 @@
       "category_ar": "المطورين",
       "description": "Converts CSV data to JSON array format in browser.",
       "keyword": "csv to json online",
-      "slug": "csv-to-json"
+      "slug": "csv-to-json",
+      "icon": "📊"
     },
     {
       "id": 89,
@@ -1096,7 +1184,8 @@
       "category_ar": "المطورين",
       "description": "Converts XML data to JSON format using browser XML parser.",
       "keyword": "xml to json online",
-      "slug": "xml-to-json"
+      "slug": "xml-to-json",
+      "icon": "📄"
     },
     {
       "id": 90,
@@ -1105,7 +1194,8 @@
       "category_ar": "المطورين",
       "description": "Converts YAML configuration files to JSON format.",
       "keyword": "yaml to json online",
-      "slug": "yaml-to-json"
+      "slug": "yaml-to-json",
+      "icon": "📄"
     },
     {
       "id": 91,
@@ -1114,7 +1204,8 @@
       "category_ar": "المطورين",
       "description": "Validates JSON data against a JSON Schema definition in browser.",
       "keyword": "json schema validator online",
-      "slug": "json-schema-validator"
+      "slug": "json-schema-validator",
+      "icon": "✅"
     },
     {
       "id": 92,
@@ -1123,7 +1214,8 @@
       "category_ar": "المطورين",
       "description": "Formats and beautifies minified HTML with proper indentation.",
       "keyword": "html formatter online",
-      "slug": "html-formatter"
+      "slug": "html-formatter",
+      "icon": "🌐"
     },
     {
       "id": 93,
@@ -1132,7 +1224,8 @@
       "category_ar": "المطورين",
       "description": "Minifies HTML by removing whitespace and comments.",
       "keyword": "html minifier online",
-      "slug": "html-minifier"
+      "slug": "html-minifier",
+      "icon": "🗜️"
     },
     {
       "id": 94,
@@ -1141,7 +1234,8 @@
       "category_ar": "المطورين",
       "description": "Formats and beautifies CSS code with proper indentation.",
       "keyword": "css formatter online",
-      "slug": "css-formatter"
+      "slug": "css-formatter",
+      "icon": "🎨"
     },
     {
       "id": 95,
@@ -1150,7 +1244,8 @@
       "category_ar": "المطورين",
       "description": "Minifies CSS code by removing spaces and comments.",
       "keyword": "css minifier online",
-      "slug": "css-minifier"
+      "slug": "css-minifier",
+      "icon": "🗜️"
     },
     {
       "id": 96,
@@ -1159,7 +1254,8 @@
       "category_ar": "المطورين",
       "description": "Minifies JavaScript code to reduce file size.",
       "keyword": "javascript minifier online",
-      "slug": "js-minifier"
+      "slug": "js-minifier",
+      "icon": "🗜️"
     },
     {
       "id": 97,
@@ -1168,7 +1264,8 @@
       "category_ar": "المطورين",
       "description": "Formats SQL queries with proper indentation and keyword capitalization.",
       "keyword": "sql formatter online",
-      "slug": "sql-formatter"
+      "slug": "sql-formatter",
+      "icon": "🗄️"
     },
     {
       "id": 98,
@@ -1177,7 +1274,8 @@
       "category_ar": "المطورين",
       "description": "Encodes special characters to HTML entities.",
       "keyword": "html entities encoder",
-      "slug": "html-entities-encoder"
+      "slug": "html-entities-encoder",
+      "icon": "🔢"
     },
     {
       "id": 99,
@@ -1186,7 +1284,8 @@
       "category_ar": "المطورين",
       "description": "Decodes HTML entities back to readable characters.",
       "keyword": "html entities decoder",
-      "slug": "html-entities-decoder"
+      "slug": "html-entities-decoder",
+      "icon": "🔡"
     },
     {
       "id": 100,
@@ -1195,7 +1294,8 @@
       "category_ar": "المطورين",
       "description": "Encodes text or files to Base64 string using browser atob/btoa.",
       "keyword": "base64 encoder online",
-      "slug": "base64-encoder"
+      "slug": "base64-encoder",
+      "icon": "🔢"
     },
     {
       "id": 101,
@@ -1204,7 +1304,8 @@
       "category_ar": "المطورين",
       "description": "Decodes Base64 encoded strings back to original text.",
       "keyword": "base64 decoder online",
-      "slug": "base64-decoder"
+      "slug": "base64-decoder",
+      "icon": "🔡"
     },
     {
       "id": 102,
@@ -1213,7 +1314,8 @@
       "category_ar": "المطورين",
       "description": "Encodes strings to URL-safe percent-encoded format.",
       "keyword": "url encoder online",
-      "slug": "url-encoder"
+      "slug": "url-encoder",
+      "icon": "🔗"
     },
     {
       "id": 103,
@@ -1222,7 +1324,8 @@
       "category_ar": "المطورين",
       "description": "Decodes URL-encoded percent-encoded strings to readable text.",
       "keyword": "url decoder online",
-      "slug": "url-decoder"
+      "slug": "url-decoder",
+      "icon": "🔗"
     },
     {
       "id": 104,
@@ -1231,7 +1334,8 @@
       "category_ar": "المطورين",
       "description": "Generates MD5 hash from any text string using browser JS library.",
       "keyword": "md5 hash generator online",
-      "slug": "md5-generator"
+      "slug": "md5-generator",
+      "icon": "🔐"
     },
     {
       "id": 105,
@@ -1240,7 +1344,8 @@
       "category_ar": "المطورين",
       "description": "Generates SHA-256 hash from text using SubtleCrypto browser API.",
       "keyword": "sha256 generator online",
-      "slug": "sha256-generator"
+      "slug": "sha256-generator",
+      "icon": "🔐"
     },
     {
       "id": 106,
@@ -1249,7 +1354,8 @@
       "category_ar": "المطورين",
       "description": "Generates SHA-512 hash using native browser SubtleCrypto API.",
       "keyword": "sha512 hash generator online",
-      "slug": "sha512-generator"
+      "slug": "sha512-generator",
+      "icon": "🔐"
     },
     {
       "id": 107,
@@ -1258,7 +1364,8 @@
       "category_ar": "المطورين",
       "description": "Decodes and displays JWT token header, payload and signature info.",
       "keyword": "jwt decoder online",
-      "slug": "jwt-decoder"
+      "slug": "jwt-decoder",
+      "icon": "🔑"
     },
     {
       "id": 108,
@@ -1267,7 +1374,8 @@
       "category_ar": "المطورين",
       "description": "Generates random UUIDs v4 using browser crypto.randomUUID() API.",
       "keyword": "uuid generator online",
-      "slug": "uuid-generator"
+      "slug": "uuid-generator",
+      "icon": "🆔"
     },
     {
       "id": 109,
@@ -1276,7 +1384,8 @@
       "category_ar": "المطورين",
       "description": "Tests regular expressions against text with real-time match highlighting.",
       "keyword": "regex tester online",
-      "slug": "regex-tester"
+      "slug": "regex-tester",
+      "icon": "🧪"
     },
     {
       "id": 110,
@@ -1285,7 +1394,8 @@
       "category_ar": "المطورين",
       "description": "Converts Markdown text to HTML using marked.js browser-side parser.",
       "keyword": "markdown to html online",
-      "slug": "markdown-to-html"
+      "slug": "markdown-to-html",
+      "icon": "📝"
     },
     {
       "id": 111,
@@ -1294,7 +1404,8 @@
       "category_ar": "الألوان",
       "description": "Converts HEX color codes to RGB values instantly with live preview.",
       "keyword": "hex to rgb converter",
-      "slug": "hex-to-rgb"
+      "slug": "hex-to-rgb",
+      "icon": "🎨"
     },
     {
       "id": 112,
@@ -1303,7 +1414,8 @@
       "category_ar": "الألوان",
       "description": "Converts RGB color values to HEX color codes.",
       "keyword": "rgb to hex converter",
-      "slug": "rgb-to-hex"
+      "slug": "rgb-to-hex",
+      "icon": "🎨"
     },
     {
       "id": 113,
@@ -1312,7 +1424,8 @@
       "category_ar": "الألوان",
       "description": "Converts HEX color codes to HSL (Hue Saturation Lightness).",
       "keyword": "hex to hsl converter",
-      "slug": "hex-to-hsl"
+      "slug": "hex-to-hsl",
+      "icon": "🌈"
     },
     {
       "id": 114,
@@ -1321,7 +1434,8 @@
       "category_ar": "الألوان",
       "description": "Converts HSL color values to HEX color code format.",
       "keyword": "hsl to hex converter",
-      "slug": "hsl-to-hex"
+      "slug": "hsl-to-hex",
+      "icon": "🌈"
     },
     {
       "id": 115,
@@ -1330,7 +1444,8 @@
       "category_ar": "الألوان",
       "description": "Converts CMYK print color values to RGB screen values.",
       "keyword": "cmyk to rgb converter",
-      "slug": "cmyk-to-rgb"
+      "slug": "cmyk-to-rgb",
+      "icon": "🖨️"
     },
     {
       "id": 116,
@@ -1339,7 +1454,8 @@
       "category_ar": "الألوان",
       "description": "Converts RGB screen colors to CMYK print color format.",
       "keyword": "rgb to cmyk converter",
-      "slug": "rgb-to-cmyk"
+      "slug": "rgb-to-cmyk",
+      "icon": "🖨️"
     },
     {
       "id": 117,
@@ -1348,7 +1464,8 @@
       "category_ar": "الألوان",
       "description": "Visual color picker to select and copy HEX/RGB/HSL values.",
       "keyword": "color picker online",
-      "slug": "color-picker"
+      "slug": "color-picker",
+      "icon": "👁️"
     },
     {
       "id": 118,
@@ -1357,7 +1474,8 @@
       "category_ar": "الألوان",
       "description": "Generates CSS linear and radial gradient code visually with live preview.",
       "keyword": "css gradient generator",
-      "slug": "gradient-generator"
+      "slug": "gradient-generator",
+      "icon": "🌈"
     },
     {
       "id": 119,
@@ -1366,7 +1484,8 @@
       "category_ar": "الألوان",
       "description": "Generates harmonious color palettes from a base color using color theory.",
       "keyword": "color palette generator",
-      "slug": "color-palette-generator"
+      "slug": "color-palette-generator",
+      "icon": "🎨"
     },
     {
       "id": 120,
@@ -1375,7 +1494,8 @@
       "category_ar": "الألوان",
       "description": "Checks WCAG AA/AAA accessibility contrast ratio between two colors.",
       "keyword": "color contrast checker",
-      "slug": "color-contrast-checker"
+      "slug": "color-contrast-checker",
+      "icon": "👁️"
     },
     {
       "id": 121,
@@ -1384,7 +1504,8 @@
       "category_ar": "الألوان",
       "description": "Generates CSS box-shadow code with live visual preview.",
       "keyword": "css box shadow generator",
-      "slug": "box-shadow-generator"
+      "slug": "box-shadow-generator",
+      "icon": "📦"
     },
     {
       "id": 122,
@@ -1393,7 +1514,8 @@
       "category_ar": "الألوان",
       "description": "Generates CSS glassmorphism effect code with backdrop-filter live preview.",
       "keyword": "glassmorphism generator",
-      "slug": "glassmorphism-generator"
+      "slug": "glassmorphism-generator",
+      "icon": "🔮"
     },
     {
       "id": 123,
@@ -1402,7 +1524,8 @@
       "category_ar": "الألوان",
       "description": "Generates CSS neumorphism soft UI shadow code with live preview.",
       "keyword": "neumorphism generator online",
-      "slug": "neumorphism-generator"
+      "slug": "neumorphism-generator",
+      "icon": "⬜"
     },
     {
       "id": 124,
@@ -1411,7 +1534,8 @@
       "category_ar": "الألوان",
       "description": "Visual CSS border-radius generator with individual corner control.",
       "keyword": "css border radius generator",
-      "slug": "border-radius-generator"
+      "slug": "border-radius-generator",
+      "icon": "⭕"
     },
     {
       "id": 125,
@@ -1420,7 +1544,8 @@
       "category_ar": "الألوان",
       "description": "Generates CSS text-shadow code with multi-layer shadow support.",
       "keyword": "css text shadow generator",
-      "slug": "text-shadow-generator"
+      "slug": "text-shadow-generator",
+      "icon": "📝"
     },
     {
       "id": 126,
@@ -1429,7 +1554,8 @@
       "category_ar": "الرياضيات",
       "description": "Converts binary (base 2) numbers to decimal with step-by-step explanation.",
       "keyword": "binary to decimal converter",
-      "slug": "binary-to-decimal"
+      "slug": "binary-to-decimal",
+      "icon": "🔢"
     },
     {
       "id": 127,
@@ -1438,7 +1564,8 @@
       "category_ar": "الرياضيات",
       "description": "Converts decimal numbers to binary (base 2) format.",
       "keyword": "decimal to binary converter",
-      "slug": "decimal-to-binary"
+      "slug": "decimal-to-binary",
+      "icon": "🔢"
     },
     {
       "id": 128,
@@ -1447,7 +1574,8 @@
       "category_ar": "الرياضيات",
       "description": "Converts hexadecimal numbers to decimal format instantly.",
       "keyword": "hex to decimal converter",
-      "slug": "hex-to-decimal"
+      "slug": "hex-to-decimal",
+      "icon": "🔢"
     },
     {
       "id": 129,
@@ -1456,7 +1584,8 @@
       "category_ar": "الرياضيات",
       "description": "Converts decimal numbers to hexadecimal format.",
       "keyword": "decimal to hex converter",
-      "slug": "decimal-to-hex"
+      "slug": "decimal-to-hex",
+      "icon": "🔢"
     },
     {
       "id": 130,
@@ -1465,7 +1594,8 @@
       "category_ar": "الرياضيات",
       "description": "Converts octal (base 8) numbers to decimal.",
       "keyword": "octal to decimal converter",
-      "slug": "octal-to-decimal"
+      "slug": "octal-to-decimal",
+      "icon": "🔢"
     },
     {
       "id": 131,
@@ -1474,7 +1604,8 @@
       "category_ar": "الرياضيات",
       "description": "Converts decimal numbers to octal (base 8) format.",
       "keyword": "decimal to octal converter",
-      "slug": "decimal-to-octal"
+      "slug": "decimal-to-octal",
+      "icon": "🔢"
     },
     {
       "id": 132,
@@ -1483,7 +1614,8 @@
       "category_ar": "الرياضيات",
       "description": "Full browser-based scientific calculator with trig, log, and algebra functions.",
       "keyword": "scientific calculator online",
-      "slug": "scientific-calculator"
+      "slug": "scientific-calculator",
+      "icon": "🧮"
     },
     {
       "id": 133,
@@ -1492,7 +1624,8 @@
       "category_ar": "الرياضيات",
       "description": "Calculates percentages, percentage increases, decreases and differences.",
       "keyword": "percentage calculator online",
-      "slug": "percentage-calculator"
+      "slug": "percentage-calculator",
+      "icon": "%️"
     },
     {
       "id": 134,
@@ -1501,7 +1634,8 @@
       "category_ar": "الرياضيات",
       "description": "Calculates Body Mass Index from height and weight with BMI category display.",
       "keyword": "bmi calculator online",
-      "slug": "bmi-calculator"
+      "slug": "bmi-calculator",
+      "icon": "⚖️"
     },
     {
       "id": 135,
@@ -1510,7 +1644,8 @@
       "category_ar": "الرياضيات",
       "description": "Calculates compound interest with principal, rate, time, and frequency inputs.",
       "keyword": "compound interest calculator",
-      "slug": "compound-interest-calculator"
+      "slug": "compound-interest-calculator",
+      "icon": "💰"
     },
     {
       "id": 136,
@@ -1519,7 +1654,8 @@
       "category_ar": "الرياضيات",
       "description": "Generates random numbers within custom min/max range using crypto.",
       "keyword": "random number generator",
-      "slug": "random-number-generator"
+      "slug": "random-number-generator",
+      "icon": "🎲"
     },
     {
       "id": 137,
@@ -1528,7 +1664,8 @@
       "category_ar": "الرياضيات",
       "description": "Calculates mean, median, mode, and range from a set of numbers.",
       "keyword": "average calculator online",
-      "slug": "average-calculator"
+      "slug": "average-calculator",
+      "icon": "📊"
     },
     {
       "id": 138,
@@ -1537,7 +1674,8 @@
       "category_ar": "الوقت",
       "description": "Converts Unix timestamps to human-readable dates and vice versa.",
       "keyword": "unix timestamp converter",
-      "slug": "unix-timestamp-converter"
+      "slug": "unix-timestamp-converter",
+      "icon": "⏰"
     },
     {
       "id": 139,
@@ -1546,7 +1684,8 @@
       "category_ar": "الوقت",
       "description": "Converts times between any two world time zones with DST support.",
       "keyword": "time zone converter online",
-      "slug": "time-zone-converter"
+      "slug": "time-zone-converter",
+      "icon": "🌍"
     },
     {
       "id": 140,
@@ -1555,7 +1694,8 @@
       "category_ar": "الوقت",
       "description": "Calculates exact days, months, and years between two dates.",
       "keyword": "date difference calculator",
-      "slug": "date-difference-calculator"
+      "slug": "date-difference-calculator",
+      "icon": "📅"
     },
     {
       "id": 141,
@@ -1564,7 +1704,8 @@
       "category_ar": "الوقت",
       "description": "Calculates exact age in years, months, and days from birthdate.",
       "keyword": "age calculator online",
-      "slug": "age-calculator"
+      "slug": "age-calculator",
+      "icon": "🎂"
     },
     {
       "id": 142,
@@ -1573,7 +1714,8 @@
       "category_ar": "الوقت",
       "description": "Counts exact days, hours, minutes until any future date or event.",
       "keyword": "days until date counter",
-      "slug": "days-until-date"
+      "slug": "days-until-date",
+      "icon": "📆"
     },
     {
       "id": 143,
@@ -1582,7 +1724,8 @@
       "category_ar": "الوقت",
       "description": "Creates a visual countdown timer to any target date and time.",
       "keyword": "countdown timer online",
-      "slug": "countdown-timer"
+      "slug": "countdown-timer",
+      "icon": "⏱️"
     },
     {
       "id": 144,
@@ -1591,7 +1734,8 @@
       "category_ar": "الوقت",
       "description": "Generates a printable monthly calendar for any year and month.",
       "keyword": "calendar generator online",
-      "slug": "calendar-generator"
+      "slug": "calendar-generator",
+      "icon": "📅"
     },
     {
       "id": 145,
@@ -1600,7 +1744,8 @@
       "category_ar": "الوقت",
       "description": "Finds the ISO 8601 week number for any given date.",
       "keyword": "week number calculator",
-      "slug": "week-number-calculator"
+      "slug": "week-number-calculator",
+      "icon": "📊"
     },
     {
       "id": 146,
@@ -1609,7 +1754,8 @@
       "category_ar": "الوقت",
       "description": "Calculates working days between two dates excluding weekends and holidays.",
       "keyword": "working days calculator",
-      "slug": "working-days-calculator"
+      "slug": "working-days-calculator",
+      "icon": "💼"
     },
     {
       "id": 147,
@@ -1618,7 +1764,8 @@
       "category_ar": "الوقت",
       "description": "Browser-based Pomodoro productivity timer with work/break cycles and notifications.",
       "keyword": "pomodoro timer online",
-      "slug": "pomodoro-timer"
+      "slug": "pomodoro-timer",
+      "icon": "🍅"
     },
     {
       "id": 148,
@@ -1627,7 +1774,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between km, miles, meters, feet, inches, cm, mm, nautical miles.",
       "keyword": "length converter online",
-      "slug": "length-converter"
+      "slug": "length-converter",
+      "icon": "📏"
     },
     {
       "id": 149,
@@ -1636,7 +1784,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between kg, pounds, ounces, grams, stones, tons.",
       "keyword": "weight converter online",
-      "slug": "weight-converter"
+      "slug": "weight-converter",
+      "icon": "⚖️"
     },
     {
       "id": 150,
@@ -1645,7 +1794,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between Celsius, Fahrenheit, and Kelvin temperature scales.",
       "keyword": "temperature converter online",
-      "slug": "temperature-converter"
+      "slug": "temperature-converter",
+      "icon": "🌡️"
     },
     {
       "id": 151,
@@ -1654,7 +1804,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between square meters, acres, hectares, square feet, sq miles.",
       "keyword": "area converter online",
-      "slug": "area-converter"
+      "slug": "area-converter",
+      "icon": "📐"
     },
     {
       "id": 152,
@@ -1663,7 +1814,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between liters, gallons, cups, fluid ounces, ml, cubic meters.",
       "keyword": "volume converter online",
-      "slug": "volume-converter"
+      "slug": "volume-converter",
+      "icon": "💧"
     },
     {
       "id": 153,
@@ -1672,7 +1824,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between mph, km/h, m/s, knots, Mach number.",
       "keyword": "speed converter online",
-      "slug": "speed-converter"
+      "slug": "speed-converter",
+      "icon": "⚡"
     },
     {
       "id": 154,
@@ -1681,7 +1834,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between bits, bytes, KB, MB, GB, TB, PB instantly.",
       "keyword": "data storage converter",
-      "slug": "data-storage-converter"
+      "slug": "data-storage-converter",
+      "icon": "💾"
     },
     {
       "id": 155,
@@ -1690,7 +1844,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between major world currencies using built-in static exchange rates.",
       "keyword": "currency converter online",
-      "slug": "currency-converter"
+      "slug": "currency-converter",
+      "icon": "💱"
     },
     {
       "id": 156,
@@ -1699,7 +1854,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between MPG, L/100km, km/L fuel efficiency units.",
       "keyword": "fuel efficiency converter",
-      "slug": "fuel-efficiency-converter"
+      "slug": "fuel-efficiency-converter",
+      "icon": "⛽"
     },
     {
       "id": 157,
@@ -1708,7 +1864,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between PSI, bar, Pascal, atm, mmHg, kPa.",
       "keyword": "pressure converter online",
-      "slug": "pressure-converter"
+      "slug": "pressure-converter",
+      "icon": "🌡️"
     },
     {
       "id": 158,
@@ -1717,7 +1874,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between Joules, kWh, calories, BTU, eV.",
       "keyword": "energy converter online",
-      "slug": "energy-converter"
+      "slug": "energy-converter",
+      "icon": "⚡"
     },
     {
       "id": 159,
@@ -1726,7 +1884,8 @@
       "category_ar": "الوحدات",
       "description": "Converts between degrees, radians, and gradians.",
       "keyword": "angle converter online",
-      "slug": "angle-converter"
+      "slug": "angle-converter",
+      "icon": "📐"
     },
     {
       "id": 160,
@@ -1735,7 +1894,8 @@
       "category_ar": "الوحدات",
       "description": "Converts shoe sizes between US, UK, EU, and CM measurements.",
       "keyword": "shoe size converter online",
-      "slug": "shoe-size-converter"
+      "slug": "shoe-size-converter",
+      "icon": "👟"
     },
     {
       "id": 161,
@@ -1744,7 +1904,8 @@
       "category_ar": "الوحدات",
       "description": "Converts clothing sizes between US, UK, EU, and Asian sizing systems.",
       "keyword": "clothing size converter",
-      "slug": "clothing-size-converter"
+      "slug": "clothing-size-converter",
+      "icon": "👕"
     },
     {
       "id": 162,
@@ -1753,7 +1914,8 @@
       "category_ar": "الوحدات",
       "description": "Calculates PPI and screen resolution from display dimensions.",
       "keyword": "screen resolution calculator",
-      "slug": "screen-resolution-calculator"
+      "slug": "screen-resolution-calculator",
+      "icon": "🖥️"
     },
     {
       "id": 163,
@@ -1762,7 +1924,8 @@
       "category_ar": "الوحدات",
       "description": "Calculates and converts image/screen aspect ratios with scaling.",
       "keyword": "aspect ratio calculator",
-      "slug": "aspect-ratio-calculator"
+      "slug": "aspect-ratio-calculator",
+      "icon": "📺"
     },
     {
       "id": 164,
@@ -1771,7 +1934,8 @@
       "category_ar": "SEO",
       "description": "Generates SEO-optimized HTML meta title, description, OG and Twitter tags.",
       "keyword": "meta tags generator online",
-      "slug": "meta-tags-generator"
+      "slug": "meta-tags-generator",
+      "icon": "🏷️"
     },
     {
       "id": 165,
@@ -1780,7 +1944,8 @@
       "category_ar": "SEO",
       "description": "Generates robots.txt file with custom user-agent and crawl rules.",
       "keyword": "robots txt generator online",
-      "slug": "robots-txt-generator"
+      "slug": "robots-txt-generator",
+      "icon": "🤖"
     },
     {
       "id": 166,
@@ -1789,7 +1954,8 @@
       "category_ar": "SEO",
       "description": "Generates XML sitemap from a list of URLs with priority and changefreq.",
       "keyword": "sitemap xml generator online",
-      "slug": "sitemap-xml-generator"
+      "slug": "sitemap-xml-generator",
+      "icon": "🗺️"
     },
     {
       "id": 167,
@@ -1798,7 +1964,8 @@
       "category_ar": "SEO",
       "description": "Builds UTM-tagged URLs for Google Analytics campaign tracking.",
       "keyword": "utm link builder online",
-      "slug": "utm-link-builder"
+      "slug": "utm-link-builder",
+      "icon": "🔗"
     },
     {
       "id": 168,
@@ -1807,7 +1974,8 @@
       "category_ar": "SEO",
       "description": "Converts any title or phrase to SEO-friendly URL slug automatically.",
       "keyword": "url slug generator online",
-      "slug": "url-slug-generator"
+      "slug": "url-slug-generator",
+      "icon": "🔗"
     },
     {
       "id": 169,
@@ -1816,7 +1984,8 @@
       "category_ar": "SEO",
       "description": "Generates Open Graph meta tags for social media preview cards.",
       "keyword": "open graph generator online",
-      "slug": "open-graph-generator"
+      "slug": "open-graph-generator",
+      "icon": "📱"
     },
     {
       "id": 170,
@@ -1825,7 +1994,8 @@
       "category_ar": "SEO",
       "description": "Generates Twitter Card meta tags for optimized social sharing.",
       "keyword": "twitter card generator online",
-      "slug": "twitter-card-generator"
+      "slug": "twitter-card-generator",
+      "icon": "🐦"
     },
     {
       "id": 171,
@@ -1834,7 +2004,8 @@
       "category_ar": "SEO",
       "description": "Generates canonical link tag for duplicate content control.",
       "keyword": "canonical url generator",
-      "slug": "canonical-url-generator"
+      "slug": "canonical-url-generator",
+      "icon": "🔗"
     },
     {
       "id": 172,
@@ -1843,7 +2014,8 @@
       "category_ar": "SEO",
       "description": "Analyzes keyword frequency and density percentage in any text.",
       "keyword": "keyword density checker",
-      "slug": "keyword-density-checker"
+      "slug": "keyword-density-checker",
+      "icon": "🔍"
     },
     {
       "id": 173,
@@ -1852,7 +2024,8 @@
       "category_ar": "SEO",
       "description": "Counts words with SEO readability score and Flesch reading ease.",
       "keyword": "word count for seo",
-      "slug": "word-count-seo"
+      "slug": "word-count-seo",
+      "icon": "🔢"
     },
     {
       "id": 174,
@@ -1861,7 +2034,8 @@
       "category_ar": "SEO",
       "description": "Converts HTML code to clean Markdown format in browser.",
       "keyword": "html to markdown converter",
-      "slug": "html-to-markdown"
+      "slug": "html-to-markdown",
+      "icon": "📝"
     },
     {
       "id": 175,
@@ -1870,7 +2044,8 @@
       "category_ar": "SEO",
       "description": "Complete searchable reference for all HTTP status codes with explanations.",
       "keyword": "http status codes list",
-      "slug": "http-status-codes"
+      "slug": "http-status-codes",
+      "icon": "📡"
     },
     {
       "id": 176,
@@ -1879,7 +2054,8 @@
       "category_ar": "SEO",
       "description": "Generates hreflang link tags for multilingual SEO implementation.",
       "keyword": "hreflang tag generator",
-      "slug": "hreflang-generator"
+      "slug": "hreflang-generator",
+      "icon": "🌍"
     },
     {
       "id": 177,
@@ -1888,7 +2064,8 @@
       "category_ar": "SEO",
       "description": "Generates JSON-LD schema markup for WebApplication, FAQ, HowTo types.",
       "keyword": "schema markup generator",
-      "slug": "schema-markup-generator"
+      "slug": "schema-markup-generator",
+      "icon": "📋"
     },
     {
       "id": 178,
@@ -1897,7 +2074,8 @@
       "category_ar": "الأمان",
       "description": "Generates secure random passwords with custom length and character rules.",
       "keyword": "password generator online",
-      "slug": "password-generator"
+      "slug": "password-generator",
+      "icon": "🔐"
     },
     {
       "id": 179,
@@ -1906,7 +2084,8 @@
       "category_ar": "الأمان",
       "description": "Analyzes password strength with entropy calculation and security tips.",
       "keyword": "password strength checker",
-      "slug": "password-strength-checker"
+      "slug": "password-strength-checker",
+      "icon": "💪"
     },
     {
       "id": 180,
@@ -1915,7 +2094,8 @@
       "category_ar": "الأمان",
       "description": "Generates secure random PIN numbers of any length using crypto.",
       "keyword": "random pin generator online",
-      "slug": "random-pin-generator"
+      "slug": "random-pin-generator",
+      "icon": "🔢"
     },
     {
       "id": 181,
@@ -1924,7 +2104,8 @@
       "category_ar": "الأمان",
       "description": "Generates a customizable basic privacy policy for websites and apps.",
       "keyword": "privacy policy generator",
-      "slug": "privacy-policy-generator"
+      "slug": "privacy-policy-generator",
+      "icon": "📄"
     },
     {
       "id": 182,
@@ -1933,7 +2114,8 @@
       "category_ar": "الأمان",
       "description": "Generates basic terms and conditions text for websites and apps.",
       "keyword": "terms and conditions generator",
-      "slug": "terms-conditions-generator"
+      "slug": "terms-conditions-generator",
+      "icon": "📜"
     },
     {
       "id": 183,
@@ -1942,7 +2124,8 @@
       "category_ar": "الأمان",
       "description": "Generates GDPR-compliant cookie policy text for websites.",
       "keyword": "cookie policy generator",
-      "slug": "cookie-policy-generator"
+      "slug": "cookie-policy-generator",
+      "icon": "🍪"
     },
     {
       "id": 184,
@@ -1951,7 +2134,8 @@
       "category_ar": "الأمان",
       "description": "Identifies the type of a hash string (MD5, SHA1, SHA256, bcrypt, etc.).",
       "keyword": "hash type identifier online",
-      "slug": "hash-identifier"
+      "slug": "hash-identifier",
+      "icon": "🔍"
     },
     {
       "id": 185,
@@ -1960,7 +2144,8 @@
       "category_ar": "الأمان",
       "description": "Shows visitor's IP address and basic geo info using client-side detection.",
       "keyword": "ip address lookup online",
-      "slug": "ip-address-lookup"
+      "slug": "ip-address-lookup",
+      "icon": "🌐"
     },
     {
       "id": 186,
@@ -1969,7 +2154,8 @@
       "category_ar": "البيانات",
       "description": "Views and edits CSV files in an interactive table format in browser.",
       "keyword": "csv viewer online",
-      "slug": "csv-viewer"
+      "slug": "csv-viewer",
+      "icon": "📊"
     },
     {
       "id": 187,
@@ -1978,7 +2164,8 @@
       "category_ar": "البيانات",
       "description": "Creates Markdown tables from pasted data or manual row/column input.",
       "keyword": "markdown table generator",
-      "slug": "markdown-table-generator"
+      "slug": "markdown-table-generator",
+      "icon": "📝"
     },
     {
       "id": 188,
@@ -1987,7 +2174,8 @@
       "category_ar": "البيانات",
       "description": "Extracts HTML table data and exports as downloadable CSV file.",
       "keyword": "html table to csv",
-      "slug": "html-table-to-csv"
+      "slug": "html-table-to-csv",
+      "icon": "📊"
     },
     {
       "id": 189,
@@ -1996,7 +2184,8 @@
       "category_ar": "البيانات",
       "description": "Converts CSV data to formatted, styled HTML table code.",
       "keyword": "csv to html table converter",
-      "slug": "csv-to-html-table"
+      "slug": "csv-to-html-table",
+      "icon": "📋"
     },
     {
       "id": 190,
@@ -2005,7 +2194,8 @@
       "category_ar": "البيانات",
       "description": "Displays JSON data as interactive expandable/collapsible tree view.",
       "keyword": "json viewer online",
-      "slug": "json-viewer"
+      "slug": "json-viewer",
+      "icon": "👁️"
     },
     {
       "id": 191,
@@ -2014,7 +2204,8 @@
       "category_ar": "البيانات",
       "description": "Generates random fake user data (names, emails, addresses) for testing.",
       "keyword": "fake data generator online",
-      "slug": "fake-data-generator"
+      "slug": "fake-data-generator",
+      "icon": "🎭"
     },
     {
       "id": 192,
@@ -2023,7 +2214,8 @@
       "category_ar": "البيانات",
       "description": "Generates QR codes from text, URLs, or contact info using qrcode.js.",
       "keyword": "qr code generator online",
-      "slug": "qr-code-generator"
+      "slug": "qr-code-generator",
+      "icon": "📱"
     },
     {
       "id": 193,
@@ -2032,7 +2224,8 @@
       "category_ar": "البيانات",
       "description": "Reads and decodes QR codes from uploaded images using ZXing.js.",
       "keyword": "qr code reader online",
-      "slug": "qr-code-reader"
+      "slug": "qr-code-reader",
+      "icon": "📷"
     },
     {
       "id": 194,
@@ -2041,7 +2234,8 @@
       "category_ar": "البيانات",
       "description": "Generates Code128, EAN-13, QR barcodes using JsBarcode in browser.",
       "keyword": "barcode generator online",
-      "slug": "barcode-generator"
+      "slug": "barcode-generator",
+      "icon": "📊"
     },
     {
       "id": 195,
@@ -2050,7 +2244,8 @@
       "category_ar": "البيانات",
       "description": "Creates a downloadable vCard (.vcf) digital contact card file.",
       "keyword": "vcard generator online",
-      "slug": "vcard-generator"
+      "slug": "vcard-generator",
+      "icon": "📇"
     },
     {
       "id": 196,
@@ -2059,7 +2254,8 @@
       "category_ar": "خاصة",
       "description": "Creates direct WhatsApp chat links without needing to save contacts.",
       "keyword": "whatsapp link generator",
-      "slug": "whatsapp-link-generator"
+      "slug": "whatsapp-link-generator",
+      "icon": "💬"
     },
     {
       "id": 197,
@@ -2068,7 +2264,8 @@
       "category_ar": "خاصة",
       "description": "Converts emoji characters to their Unicode code points and HTML entities.",
       "keyword": "emoji to unicode converter",
-      "slug": "emoji-to-unicode"
+      "slug": "emoji-to-unicode",
+      "icon": "😀"
     },
     {
       "id": 198,
@@ -2077,7 +2274,8 @@
       "category_ar": "خاصة",
       "description": "Converts Unicode code points back to emoji characters.",
       "keyword": "unicode to emoji converter",
-      "slug": "unicode-to-emoji"
+      "slug": "unicode-to-emoji",
+      "icon": "😀"
     },
     {
       "id": 199,
@@ -2086,7 +2284,8 @@
       "category_ar": "خاصة",
       "description": "Converts plain text to binary (0s and 1s) representation of ASCII values.",
       "keyword": "text to binary converter",
-      "slug": "text-to-binary"
+      "slug": "text-to-binary",
+      "icon": "0️⃣"
     },
     {
       "id": 200,
@@ -2095,7 +2294,8 @@
       "category_ar": "خاصة",
       "description": "Converts binary code back to readable plain text characters.",
       "keyword": "binary to text converter",
-      "slug": "binary-to-text"
+      "slug": "binary-to-text",
+      "icon": "1️⃣"
     },
     {
       "id": 201,
@@ -2104,7 +2304,8 @@
       "category_ar": "خاصة",
       "description": "Converts numbers to their written word form in English.",
       "keyword": "number to words converter",
-      "slug": "number-to-words"
+      "slug": "number-to-words",
+      "icon": "🔤"
     },
     {
       "id": 202,
@@ -2113,7 +2314,8 @@
       "category_ar": "خاصة",
       "description": "Converts between Roman numerals and decimal numbers bidirectionally.",
       "keyword": "roman numeral converter",
-      "slug": "roman-numeral-converter"
+      "slug": "roman-numeral-converter",
+      "icon": "🏛️"
     },
     {
       "id": 203,
@@ -2122,7 +2324,8 @@
       "category_ar": "خاصة",
       "description": "Detects and displays device screen resolution, PPI, and device pixel ratio.",
       "keyword": "screen resolution detector",
-      "slug": "screen-resolution-detector"
+      "slug": "screen-resolution-detector",
+      "icon": "🖥️"
     },
     {
       "id": 204,
@@ -2131,7 +2334,8 @@
       "category_ar": "خاصة",
       "description": "Displays browser name, version, OS, device type, and user agent string.",
       "keyword": "browser info detector online",
-      "slug": "browser-info-detector"
+      "slug": "browser-info-detector",
+      "icon": "🌐"
     },
     {
       "id": 205,
@@ -2140,7 +2344,8 @@
       "category_ar": "خاصة",
       "description": "Tests download and upload internet connection speed in browser.",
       "keyword": "internet speed test online",
-      "slug": "internet-speed-test"
+      "slug": "internet-speed-test",
+      "icon": "⚡"
     }
   ]
 }
