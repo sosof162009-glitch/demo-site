@@ -47,19 +47,36 @@
                     <p class="text-gray-600 dark:text-gray-400">Tests regular expressions against text with real-time match highlighting.</p>
                 </div>
                 
-                <!-- Code Input -->
+                <!-- Regex Pattern -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Input</label>
-                    <textarea id="input" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Paste your code here..."></textarea>
+                    <label class="block text-sm font-medium mb-2">Regex Pattern</label>
+                    <input type="text" id="pattern" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="[a-z]+">
+                    <div class="flex gap-4 mt-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="flag-g" class="mr-2" checked>
+                            <span class="text-sm">g (global)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="flag-i" class="mr-2">
+                            <span class="text-sm">i (ignore case)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="flag-m" class="mr-2">
+                            <span class="text-sm">m (multiline)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Test Text -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Test Text</label>
+                    <textarea id="testText" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter text to test against the regex..."></textarea>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="flex gap-4 mb-6">
-                    <button onclick="formatCode()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="formatBtn">
-                        Format
-                    </button>
-                    <button onclick="minifyCode()" class="flex-1 py-4 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
-                        Minify
+                    <button onclick="testRegex()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="testBtn">
+                        Test Regex
                     </button>
                     <button onclick="clearCode()" class="px-6 py-4 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl font-medium hover:bg-red-200 dark:hover:bg-red-900/50 transition-all">
                         Clear
@@ -68,34 +85,63 @@
 
                 <!-- Output -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Result</label>
-                    <textarea id="output" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
+                    <label class="block text-sm font-medium mb-2">Results</label>
+                    <div id="output" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800 min-h-[150px] whitespace-pre-wrap"></div>
                 </div>
 
     <script>
-        function formatCode() {
-            const input = document.getElementById('input').value;
-            try {
-                const obj = JSON.parse(input);
-                document.getElementById('output').value = JSON.stringify(obj, null, 2);
-            } catch(e) {
-                document.getElementById('output').value = 'Error: ' + e.message;
+        function testRegex() {
+            const pattern = document.getElementById('pattern').value;
+            const text = document.getElementById('testText').value;
+            const output = document.getElementById('output');
+            
+            if (!pattern || !text) {
+                output.textContent = 'Please enter both a pattern and test text.';
+                return;
             }
-        }
-        
-        function minifyCode() {
-            const input = document.getElementById('input').value;
+            
             try {
-                const obj = JSON.parse(input);
-                document.getElementById('output').value = JSON.stringify(obj);
+                // Build flags
+                let flags = '';
+                if (document.getElementById('flag-g').checked) flags += 'g';
+                if (document.getElementById('flag-i').checked) flags += 'i';
+                if (document.getElementById('flag-m').checked) flags += 'm';
+                
+                const regex = new RegExp(pattern, flags);
+                
+                if (flags.includes('g')) {
+                    const matches = text.match(regex);
+                    if (matches) {
+                        output.innerHTML = `<span class="text-green-600">✓ Matched ${matches.length} time(s)</span>\n\n` +
+                            matches.map((m, i) => `Match ${i + 1}: "${m}"`).join('\n');
+                    } else {
+                        output.innerHTML = '<span class="text-red-600">✗ No matches found</span>';
+                    }
+                } else {
+                    const match = text.match(regex);
+                    if (match) {
+                        let result = `<span class="text-green-600">✓ Match found!</span>\n\n`;
+                        result += `Full match: "${match[0]}"\n`;
+                        if (match.length > 1) {
+                            result += '\nGroups:\n';
+                            for (let i = 1; i < match.length; i++) {
+                                result += `  Group ${i}: ${match[i] !== undefined ? `"${match[i]}"` : 'undefined'}\n`;
+                            }
+                        }
+                        output.innerHTML = result;
+                    } else {
+                        output.innerHTML = '<span class="text-red-600">✗ No match found</span>';
+                    }
+                }
             } catch(e) {
-                document.getElementById('output').value = input.replace(/\s+/g, ' ').trim();
+                output.innerHTML = `<span class="text-red-600">Error: ${e.message}</span>`;
             }
         }
         
         function clearCode() {
-            document.getElementById('input').value = '';
-            document.getElementById('output').value = '';
+            document.getElementById('pattern').value = '';
+            document.getElementById('testText').value = '';
+            document.getElementById('output').innerHTML = '';
         }
     </script>
             </div>

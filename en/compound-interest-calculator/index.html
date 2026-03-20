@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compound Interest Calculator - 205-Tools</title>
-    <meta name="description" content="Calculates compound interest with principal, rate, time, and frequency inputs.">
+    <meta name="description" content="Calculate compound interest with different compounding frequencies and visualize growth.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
@@ -31,7 +31,7 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">💰 Math</span>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔢 Math</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Compound Interest Calculator</h1>
             <p class="text-xl text-white/90">Free • Fast • Secure</p>
         </div>
@@ -40,21 +40,25 @@
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <!-- Input Fields -->
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4">💰</div>
+                    <p class="text-gray-600 dark:text-gray-400">Calculate compound interest with different compounding frequencies and visualize growth.</p>
+                </div>
+
                 <div class="grid md:grid-cols-2 gap-6 mb-8">
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Initial Investment (Principal)</label>
-                        <input type="number" id="principal" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="10000">
+                        <label class="block text-sm font-medium mb-2">Initial Principal ($)</label>
+                        <input type="number" id="principal" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="e.g. 10000" min="0" step="100">
                     </div>
                     
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                         <label class="block text-sm font-medium mb-2">Annual Interest Rate (%)</label>
-                        <input type="number" id="rate" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="5" step="0.01">
+                        <input type="number" id="rate" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="e.g. 5" min="0" max="100" step="0.01">
                     </div>
                     
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Time Period (Years)</label>
-                        <input type="number" id="years" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="10">
+                        <label class="block text-sm font-medium mb-2">Time Period (years)</label>
+                        <input type="number" id="years" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="e.g. 10" min="1" max="100">
                     </div>
                     
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
@@ -64,39 +68,43 @@
                             <option value="2">Semi-annually</option>
                             <option value="4">Quarterly</option>
                             <option value="12" selected>Monthly</option>
+                            <option value="52">Weekly</option>
                             <option value="365">Daily</option>
                         </select>
                     </div>
                     
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 md:col-span-2">
-                        <label class="block text-sm font-medium mb-2">Monthly Contribution (Optional)</label>
-                        <input type="number" id="contribution" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="0">
+                        <label class="block text-sm font-medium mb-2">Monthly Contribution ($) - Optional</label>
+                        <input type="number" id="contribution" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="e.g. 100" min="0" step="10">
                     </div>
                 </div>
 
                 <button onclick="calculate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Calculate Compound Interest
+                    Calculate
                 </button>
 
-                <!-- Result -->
                 <div id="result" class="hidden mt-8">
-                    <div class="grid md:grid-cols-3 gap-4">
-                        <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl text-center">
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Final Amount</p>
-                            <p class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="finalAmount">-</p>
+                    <div class="grid md:grid-cols-4 gap-4 mb-6">
+                        <div class="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl text-center">
+                            <p class="text-xs text-gray-500 uppercase">Final Amount</p>
+                            <p class="text-2xl font-bold text-indigo-600 dark:text-indigo-400" id="finalAmount">-</p>
                         </div>
-                        <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Total Interest</p>
+                        <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
+                            <p class="text-xs text-gray-500 uppercase">Total Interest</p>
                             <p class="text-2xl font-bold text-green-600 dark:text-green-400" id="totalInterest">-</p>
                         </div>
-                        <div class="p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl text-center">
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Total Contributions</p>
-                            <p class="text-2xl font-bold text-purple-600 dark:text-purple-400" id="totalContributions">-</p>
+                        <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl text-center">
+                            <p class="text-xs text-gray-500 uppercase">Total Principal</p>
+                            <p class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="totalPrincipal">-</p>
+                        </div>
+                        <div class="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl text-center">
+                            <p class="text-xs text-gray-500 uppercase">Total Growth</p>
+                            <p class="text-2xl font-bold text-purple-600 dark:text-purple-400" id="totalGrowth">-</p>
                         </div>
                     </div>
-                    
-                    <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                        <h3 class="font-semibold mb-3">Year-by-Year Breakdown</h3>
+
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <h3 class="font-semibold mb-4">Year-by-Year Breakdown</h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm">
                                 <thead>
@@ -104,11 +112,11 @@
                                         <th class="text-left py-2">Year</th>
                                         <th class="text-right py-2">Start Balance</th>
                                         <th class="text-right py-2">Interest</th>
+                                        <th class="text-right py-2">Contributions</th>
                                         <th class="text-right py-2">End Balance</th>
                                     </tr>
                                 </thead>
-                                <tbody id="breakdown">
-                                </tbody>
+                                <tbody id="breakdownTable"></tbody>
                             </table>
                         </div>
                     </div>
@@ -121,22 +129,15 @@
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
             <div class="grid md:grid-cols-2 gap-4">
-            <a href="/en/scientific-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🧮</span>
-                <span class="font-medium">Scientific Calculator</span>
-            </a>
-            <a href="/en/percentage-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📊</span>
-                <span class="font-medium">Percentage Calculator</span>
-            </a>
-            <a href="/en/average-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📈</span>
-                <span class="font-medium">Average Calculator</span>
-            </a>
-            <a href="/en/random-number-generator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🎲</span>
-                <span class="font-medium">Random Number Generator</span>
-            </a></div>
+                <a href="/en/percentage-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">📊</span>
+                    <span class="font-medium">Percentage Calculator</span>
+                </a>
+                <a href="/en/scientific-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">🔬</span>
+                    <span class="font-medium">Scientific Calculator</span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -147,19 +148,23 @@
     </footer>
 
     <script>
-        function formatCurrency(num) {
-            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 2
+            }).format(amount);
         }
-        
+
         function calculate() {
-            const principal = parseFloat(document.getElementById('principal').value);
-            const rate = parseFloat(document.getElementById('rate').value);
-            const years = parseFloat(document.getElementById('years').value);
+            const principal = parseFloat(document.getElementById('principal').value) || 0;
+            const rate = parseFloat(document.getElementById('rate').value) || 0;
+            const years = parseInt(document.getElementById('years').value) || 0;
             const frequency = parseInt(document.getElementById('frequency').value);
-            const contribution = parseFloat(document.getElementById('contribution').value) || 0;
+            const monthlyContribution = parseFloat(document.getElementById('contribution').value) || 0;
             
-            if (isNaN(principal) || isNaN(rate) || isNaN(years)) {
-                alert('Please fill in all required fields');
+            if (principal < 0 || rate < 0 || years <= 0) {
+                alert('Please enter valid positive values');
                 return;
             }
             
@@ -171,53 +176,66 @@
                 const r = rate / 100;
                 const n = frequency;
                 const t = years;
+                const monthlyRate = r / 12;
                 
-                // Compound interest formula with contributions
-                let amount = principal * Math.pow(1 + r/n, n*t);
-                let totalContrib = 0;
-                
-                // Add contributions
-                if (contribution > 0) {
-                    for (let i = 1; i <= t * 12; i++) {
-                        const periodsLeft = (t * 12 - i) / 12 * n;
-                        amount += contribution * Math.pow(1 + r/n, periodsLeft);
-                        totalContrib += contribution;
-                    }
-                }
-                
-                const interest = amount - principal - totalContrib;
-                
-                document.getElementById('finalAmount').textContent = formatCurrency(amount);
-                document.getElementById('totalInterest').textContent = formatCurrency(interest);
-                document.getElementById('totalContributions').textContent = formatCurrency(totalContrib);
-                
-                // Generate breakdown
+                // Calculate year by year
                 let balance = principal;
-                let breakdownHTML = '';
+                let totalContributions = principal;
+                let totalInterestEarned = 0;
+                let breakdown = [];
+                
                 for (let year = 1; year <= t; year++) {
                     const startBalance = balance;
-                    for (let m = 0; m < 12; m++) {
-                        balance += contribution;
-                    }
-                    balance = balance * Math.pow(1 + r/n, n);
-                    const yearInterest = balance - startBalance - (contribution * 12);
                     
-                    breakdownHTML += `
-                        <tr class="border-b dark:border-gray-600">
-                            <td class="py-2">${year}</td>
-                            <td class="text-right">${formatCurrency(startBalance)}</td>
-                            <td class="text-right text-green-600">${formatCurrency(yearInterest)}</td>
-                            <td class="text-right font-semibold">${formatCurrency(balance)}</td>
-                        </tr>
-                    `;
+                    // Compound for this year with monthly contributions
+                    for (let month = 0; month < 12; month++) {
+                        balance = balance * (1 + monthlyRate) + monthlyContribution;
+                        totalContributions += monthlyContribution;
+                    }
+                    
+                    const yearInterest = balance - startBalance - (monthlyContribution * 12);
+                    totalInterestEarned += yearInterest;
+                    
+                    breakdown.push({
+                        year: year,
+                        startBalance: startBalance,
+                        interest: yearInterest,
+                        contributions: monthlyContribution * 12,
+                        endBalance: balance
+                    });
                 }
-                document.getElementById('breakdown').innerHTML = breakdownHTML;
+                
+                const finalAmount = balance;
+                
+                document.getElementById('finalAmount').textContent = formatCurrency(finalAmount);
+                document.getElementById('totalInterest').textContent = formatCurrency(totalInterestEarned);
+                document.getElementById('totalPrincipal').textContent = formatCurrency(totalContributions);
+                document.getElementById('totalGrowth').textContent = ((finalAmount / principal - 1) * 100).toFixed(1) + '%';
+                
+                // Build table
+                const tbody = document.getElementById('breakdownTable');
+                tbody.innerHTML = breakdown.map(row => `
+                    <tr class="border-b dark:border-gray-600">
+                        <td class="py-2">${row.year}</td>
+                        <td class="text-right py-2">${formatCurrency(row.startBalance)}</td>
+                        <td class="text-right py-2 text-green-600">+${formatCurrency(row.interest)}</td>
+                        <td class="text-right py-2 text-blue-600">+${formatCurrency(row.contributions)}</td>
+                        <td class="text-right py-2 font-medium">${formatCurrency(row.endBalance)}</td>
+                    </tr>
+                `).join('');
                 
                 document.getElementById('result').classList.remove('hidden');
-                btn.textContent = 'Calculate Compound Interest';
+                btn.textContent = 'Calculate';
                 btn.disabled = false;
             }, 300);
         }
+
+        // Enter key support
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') calculate();
+            });
+        });
     </script>
 </body>
 </html>

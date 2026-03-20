@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Number Generator - 205-Tools</title>
-    <meta name="description" content="Generates random numbers within custom min/max range using crypto.">
+    <meta name="description" content="Generate random numbers with custom ranges, quantities, and options.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
@@ -12,6 +12,11 @@
     <style>
         .tool-card { transition: all 0.2s; }
         .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
+        @keyframes pulse-number {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .animating { animation: pulse-number 0.3s ease; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
@@ -31,7 +36,7 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🎲 Math</span>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔢 Math</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Random Number Generator</h1>
             <p class="text-xl text-white/90">Free • Fast • Secure</p>
         </div>
@@ -42,60 +47,72 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4">🎲</div>
-                    <p class="text-gray-600 dark:text-gray-400">Generate random numbers with customizable range and quantity.</p>
+                    <p class="text-gray-600 dark:text-gray-400">Generate random numbers with custom ranges, quantities, and options.</p>
                 </div>
-                
-                <!-- Inputs -->
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Minimum</label>
-                        <input type="number" id="minVal" value="1" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        <label class="block text-sm font-medium mb-2">Minimum Value</label>
+                        <input type="number" id="minVal" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" value="1">
                     </div>
                     
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Maximum</label>
-                        <input type="number" id="maxVal" value="100" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        <label class="block text-sm font-medium mb-2">Maximum Value</label>
+                        <input type="number" id="maxVal" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" value="100">
                     </div>
                     
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Quantity</label>
-                        <input type="number" id="quantity" value="1" min="1" max="100" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        <label class="block text-sm font-medium mb-2">How many numbers?</label>
+                        <input type="number" id="quantity" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" value="1" min="1" max="1000">
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <label class="block text-sm font-medium mb-2">Number Type</label>
+                        <select id="numType" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                            <option value="integer">Integer (whole numbers)</option>
+                            <option value="decimal">Decimal (with fractions)</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="flex flex-wrap gap-4 justify-center mb-8">
-                    <label class="flex items-center space-x-2 cursor-pointer">
-                        <input type="checkbox" id="allowDuplicates" checked class="w-5 h-5 rounded">
-                        <span>Allow Duplicates</span>
+                <div class="flex gap-4 mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="allowDuplicates" class="mr-2" checked>
+                        <span class="text-sm">Allow duplicates</span>
                     </label>
-                    
-                    <label class="flex items-center space-x-2 cursor-pointer">
-                        <input type="checkbox" id="sortResults" class="w-5 h-5 rounded">
-                        <span>Sort Results</span>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="sortResults" class="mr-2">
+                        <span class="text-sm">Sort results</span>
                     </label>
                 </div>
 
                 <button onclick="generate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Generate Random Numbers
+                    Generate Numbers
                 </button>
 
-                <!-- Result -->
-                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">Your Random Numbers</p>
-                    <div id="resultNumbers" class="flex flex-wrap justify-center gap-3 mb-6">
-                        <!-- Numbers will be inserted here -->
+                <div id="result" class="hidden mt-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold">Results:</h3>
+                        <button onclick="copyResults()" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg text-sm hover:bg-gray-300 dark:hover:bg-gray-600">Copy All</button>
                     </div>
-                    <button onclick="copyResults()" class="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600">Copy All</button>
-                </div>
-
-                <!-- History -->
-                <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="font-semibold">History</h3>
-                        <button onclick="clearHistory()" class="text-sm text-red-500 hover:text-red-600">Clear</button>
+                    
+                    <div id="resultsContainer" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 min-h-24 max-h-64 overflow-y-auto">
+                        <div id="numbersList" class="flex flex-wrap gap-2"></div>
                     </div>
-                    <div id="history" class="text-sm text-gray-600 dark:text-gray-400 max-h-32 overflow-y-auto">
-                        <p class="italic">No numbers generated yet</p>
+                    
+                    <div class="grid grid-cols-3 gap-4 mt-4 text-center">
+                        <div class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                            <p class="text-xs text-gray-500">Sum</p>
+                            <p id="statSum" class="font-bold">-</p>
+                        </div>
+                        <div class="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                            <p class="text-xs text-gray-500">Average</p>
+                            <p id="statAvg" class="font-bold">-</p>
+                        </div>
+                        <div class="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                            <p class="text-xs text-gray-500">Range</p>
+                            <p id="statRange" class="font-bold">-</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,22 +123,15 @@
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
             <div class="grid md:grid-cols-2 gap-4">
-            <a href="/en/scientific-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🧮</span>
-                <span class="font-medium">Scientific Calculator</span>
-            </a>
-            <a href="/en/percentage-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📊</span>
-                <span class="font-medium">Percentage Calculator</span>
-            </a>
-            <a href="/en/average-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📈</span>
-                <span class="font-medium">Average Calculator</span>
-            </a>
-            <a href="/en/compound-interest-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">💰</span>
-                <span class="font-medium">Compound Interest</span>
-            </a></div>
+                <a href="/en/random-pin-generator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">🔢</span>
+                    <span class="font-medium">Random PIN Generator</span>
+                </a>
+                <a href="/en/uuid-generator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">🆔</span>
+                    <span class="font-medium">UUID Generator</span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -132,20 +142,13 @@
     </footer>
 
     <script>
-        let history = [];
-        let lastResults = [];
-        
-        function getSecureRandom(min, max) {
-            const range = max - min + 1;
-            const bytes = new Uint32Array(1);
-            crypto.getRandomValues(bytes);
-            return min + (bytes[0] % range);
-        }
-        
+        let generatedNumbers = [];
+
         function generate() {
-            const min = parseInt(document.getElementById('minVal').value);
-            const max = parseInt(document.getElementById('maxVal').value);
+            const min = parseFloat(document.getElementById('minVal').value);
+            const max = parseFloat(document.getElementById('maxVal').value);
             const quantity = parseInt(document.getElementById('quantity').value);
+            const type = document.getElementById('numType').value;
             const allowDuplicates = document.getElementById('allowDuplicates').checked;
             const sortResults = document.getElementById('sortResults').checked;
             
@@ -155,17 +158,17 @@
             }
             
             if (min >= max) {
-                alert('Maximum must be greater than minimum');
+                alert('Minimum must be less than maximum');
                 return;
             }
             
-            if (quantity < 1 || quantity > 100) {
-                alert('Quantity must be between 1 and 100');
+            if (quantity < 1 || quantity > 1000) {
+                alert('Quantity must be between 1 and 1000');
                 return;
             }
             
-            if (!allowDuplicates && quantity > (max - min + 1)) {
-                alert('Quantity exceeds available unique numbers in range');
+            if (!allowDuplicates && quantity > (max - min + 1) && type === 'integer') {
+                alert(`Cannot generate ${quantity} unique integers in range ${min} to ${max}`);
                 return;
             }
             
@@ -174,78 +177,70 @@
             btn.disabled = true;
             
             setTimeout(() => {
-                let numbers = [];
+                generatedNumbers = [];
+                const used = new Set();
                 
-                if (allowDuplicates) {
-                    for (let i = 0; i < quantity; i++) {
-                        numbers.push(getSecureRandom(min, max));
+                while (generatedNumbers.length < quantity) {
+                    let num;
+                    if (type === 'integer') {
+                        num = Math.floor(Math.random() * (max - min + 1)) + min;
+                    } else {
+                        num = Math.random() * (max - min) + min;
+                        num = parseFloat(num.toFixed(4));
                     }
-                } else {
-                    const available = [];
-                    for (let i = min; i <= max; i++) {
-                        available.push(i);
+                    
+                    if (!allowDuplicates) {
+                        if (used.has(num)) continue;
+                        used.add(num);
                     }
-                    // Fisher-Yates shuffle
-                    for (let i = available.length - 1; i > 0; i--) {
-                        const j = getSecureRandom(0, i);
-                        [available[i], available[j]] = [available[j], available[i]];
-                    }
-                    numbers = available.slice(0, quantity);
+                    
+                    generatedNumbers.push(num);
                 }
                 
                 if (sortResults) {
-                    numbers.sort((a, b) => a - b);
+                    generatedNumbers.sort((a, b) => a - b);
                 }
                 
-                lastResults = numbers;
-                displayResults(numbers);
-                addToHistory(numbers, min, max);
+                displayResults();
+                updateStats();
                 
                 document.getElementById('result').classList.remove('hidden');
-                btn.textContent = 'Generate Random Numbers';
+                btn.textContent = 'Generate Numbers';
                 btn.disabled = false;
             }, 300);
         }
-        
-        function displayResults(numbers) {
-            const container = document.getElementById('resultNumbers');
-            container.innerHTML = numbers.map(n => 
-                `<span class="inline-block px-4 py-2 bg-white dark:bg-gray-700 rounded-lg text-xl font-bold shadow">${n}</span>`
+
+        function displayResults() {
+            const container = document.getElementById('numbersList');
+            container.innerHTML = generatedNumbers.map((num, i) => 
+                `<span class="inline-block px-3 py-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg font-mono text-lg animating" style="animation-delay: ${i * 0.05}s">${num}</span>`
             ).join('');
         }
-        
-        function addToHistory(numbers, min, max) {
-            const timestamp = new Date().toLocaleTimeString();
-            history.unshift({ numbers, min, max, time: timestamp });
-            if (history.length > 10) history.pop();
-            updateHistoryDisplay();
+
+        function updateStats() {
+            const sum = generatedNumbers.reduce((a, b) => a + b, 0);
+            const avg = sum / generatedNumbers.length;
+            const min = Math.min(...generatedNumbers);
+            const max = Math.max(...generatedNumbers);
+            
+            document.getElementById('statSum').textContent = sum.toFixed(2);
+            document.getElementById('statAvg').textContent = avg.toFixed(2);
+            document.getElementById('statRange').textContent = `${min} - ${max}`;
         }
-        
-        function updateHistoryDisplay() {
-            const historyDiv = document.getElementById('history');
-            if (history.length === 0) {
-                historyDiv.innerHTML = '<p class="italic">No numbers generated yet</p>';
-            } else {
-                historyDiv.innerHTML = history.map(h => 
-                    `<p class="mb-1 border-b dark:border-gray-600 pb-1">
-                        <span class="text-xs text-gray-500">${h.time}</span> 
-                        [${h.min}-${h.max}]: ${h.numbers.join(', ')}
-                    </p>`
-                ).join('');
-            }
-        }
-        
-        function clearHistory() {
-            history = [];
-            updateHistoryDisplay();
-        }
-        
+
         function copyResults() {
-            if (lastResults.length === 0) return;
-            navigator.clipboard.writeText(lastResults.join(', ')).then(() => {
-                alert('Copied to clipboard!');
+            const text = generatedNumbers.join('\n');
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Results copied to clipboard!');
             });
         }
+
+        // Enter key support
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') generate();
+            });
+        });
     </script>
 </body>
 </html>

@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MD5 Hash Generator - 205-Tools</title>
-    <meta name="description" content="Generates MD5 hash from any text string using browser JS library.">
+    <meta name="description" content="Generates MD5 hash from any text string using browser crypto.subtle API.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <!-- SparkMD5 library for MD5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spark-md5/3.0.2/spark-md5.min.js"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
     <style>
-        .drop-zone { border: 2px dashed #6366f1; transition: all 0.3s; }
-        .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
         .tool-card { transition: all 0.2s; }
         .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
+        .hash-display { font-family: monospace; word-break: break-all; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
@@ -45,66 +45,115 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4">🔐</div>
-                    <p class="text-gray-600 dark:text-gray-400">Generates MD5 hash from any text string using browser JS library.</p>
+                    <p class="text-gray-600 dark:text-gray-400">Generates MD5 hash from any text string using SparkMD5 library.</p>
                 </div>
                 
-                <!-- Code Input -->
+                <!-- Text Input -->
                 <div class="mb-6">
                     <label class="block text-sm font-medium mb-2">Text to Hash</label>
-                    <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter text to generate MD5 hash..."></textarea>
+                    <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter text to generate MD5 hash..." oninput="generateHash()"></textarea>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="flex gap-4 mb-6">
-                    <button onclick="generateMD5()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="formatBtn">
+                    <button onclick="generateHash()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="hashBtn">
                         Generate MD5
                     </button>
-                    <button onclick="copyResult()" id="copyBtn" class="flex-1 py-4 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
-                        Copy
+                    <button onclick="copyHash()" id="copyBtn" class="px-6 py-4 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                        Copy Hash
                     </button>
-                    <button onclick="clearCode()" class="px-6 py-4 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl font-medium hover:bg-red-200 dark:hover:bg-red-900/50 transition-all">
+                    <button onclick="clearAll()" class="px-6 py-4 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl font-medium hover:bg-red-200 dark:hover:bg-red-900/50 transition-all">
                         Clear
                     </button>
                 </div>
 
                 <!-- Output -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">MD5 Hash</label>
-                    <input type="text" id="output" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly>
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-xl p-6 mb-6">
+                    <p class="text-sm text-gray-500 mb-2">MD5 Hash (32 characters)</p>
+                    <p class="text-xl hash-display text-indigo-600 dark:text-indigo-400 font-bold" id="output">-</p>
                 </div>
 
+                <!-- Multiple Hashes -->
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <p class="text-xs text-gray-500 mb-1">Uppercase</p>
+                        <p class="font-mono text-sm break-all" id="uppercaseHash">-</p>
+                        <button onclick="copyVariant('uppercaseHash')" class="mt-2 text-xs text-indigo-500 hover:text-indigo-600">Copy</button>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <p class="text-xs text-gray-500 mb-1">With Prefix 'md5:'</p>
+                        <p class="font-mono text-sm break-all" id="prefixedHash">-</p>
+                        <button onclick="copyVariant('prefixedHash')" class="mt-2 text-xs text-indigo-500 hover:text-indigo-600">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script>
-        function generateMD5() {
+        function generateHash() {
             const input = document.getElementById('input').value;
+            const output = document.getElementById('output');
+            const uppercaseHash = document.getElementById('uppercaseHash');
+            const prefixedHash = document.getElementById('prefixedHash');
+            
+            if (!input) {
+                output.textContent = '-';
+                uppercaseHash.textContent = '-';
+                prefixedHash.textContent = '-';
+                return;
+            }
+            
             try {
-                const hash = CryptoJS.MD5(input).toString();
-                document.getElementById('output').value = hash;
+                // Use SparkMD5 for MD5 hashing
+                const hash = SparkMD5.hash(input);
+                output.textContent = hash;
+                uppercaseHash.textContent = hash.toUpperCase();
+                prefixedHash.textContent = 'md5:' + hash;
             } catch(e) {
-                document.getElementById('output').value = 'Error: ' + e.message;
+                output.textContent = 'Error: ' + e.message;
+                uppercaseHash.textContent = '-';
+                prefixedHash.textContent = '-';
             }
         }
 
-        function copyResult() {
-            const output = document.getElementById('output');
-            output.select();
-            document.execCommand('copy');
+        function copyHash() {
+            const hash = document.getElementById('output').textContent;
+            if (hash === '-') return;
+            
+            navigator.clipboard.writeText(hash);
+            
             const btn = document.getElementById('copyBtn');
             const originalText = btn.textContent;
             btn.textContent = 'Copied!';
             setTimeout(() => btn.textContent = originalText, 2000);
         }
-        
-        function clearCode() {
-            document.getElementById('input').value = '';
-            document.getElementById('output').value = '';
+
+        function copyVariant(elementId) {
+            const hash = document.getElementById(elementId).textContent;
+            if (hash === '-') return;
+            
+            navigator.clipboard.writeText(hash);
+            
+            // Temporarily show feedback
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = originalText, 1500);
         }
 
-        // Auto-generate on input
-        document.getElementById('input').addEventListener('input', generateMD5);
+        function clearAll() {
+            document.getElementById('input').value = '';
+            document.getElementById('output').textContent = '-';
+            document.getElementById('uppercaseHash').textContent = '-';
+            document.getElementById('prefixedHash').textContent = '-';
+        }
+
+        // Generate on load if there's data
+        if (document.getElementById('input').value) {
+            generateHash();
+        }
     </script>
-            </div>
-        </div>
-    </section>
 
     <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
         <div class="max-w-5xl mx-auto px-4">
@@ -112,18 +161,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Enter Text</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Type or paste any text</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Generate Hash</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Hash generates automatically</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Copy Result</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Copy the MD5 hash</p>
                 </div>
             </div>
         </div>
@@ -131,36 +180,25 @@
 
     <section class="py-12">
         <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">Why use our tools</h2>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center p-6"><div class="text-3xl mb-3">🔒</div><h3 class="font-semibold mb-2">Secure</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">⚡</div><h3 class="font-semibold mb-2">Fast</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">🆓</div><h3 class="font-semibold mb-2">Free</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">✨</div><h3 class="font-semibold mb-2">Quality</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
             <div class="grid md:grid-cols-2 gap-4">
-            <a href="/en/json-formatter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📋</span>
-                <span class="font-medium">JSON Formatter & Validator</span>
-            </a>
-            <a href="/en/json-minifier/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🗜️</span>
-                <span class="font-medium">JSON Minifier</span>
-            </a>
-            <a href="/en/json-to-csv/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📊</span>
-                <span class="font-medium">JSON to CSV Converter</span>
-            </a>
-            <a href="/en/json-to-xml/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📄</span>
-                <span class="font-medium">JSON to XML Converter</span>
-            </a></div>
+                <a href="/en/sha256-generator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">🔐</span>
+                    <span class="font-medium">SHA-256 Hash Generator</span>
+                </a>
+                <a href="/en/hash-identifier/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">🔍</span>
+                    <span class="font-medium">Hash Type Identifier</span>
+                </a>
+                <a href="/en/base64-encoder/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">🔢</span>
+                    <span class="font-medium">Base64 Encoder</span>
+                </a>
+                <a href="/en/base64-decoder/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">🔡</span>
+                    <span class="font-medium">Base64 Decoder</span>
+                </a>
+            </div>
         </div>
     </section>
 
