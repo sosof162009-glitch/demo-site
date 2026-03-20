@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>205-Tools | أدوات مجانية على الإنترنت</title>
+    <title>205-Tools | 205 أدوات مجانية على الإنترنت</title>
     <meta name="description" content="205 أداة مجانية على الإنترنت - تحويل الصور، PDF، النصوص، المطورين، والمزيد">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tools-translations.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -44,6 +45,9 @@
         .tool-card:hover {
             transform: scale(1.02);
         }
+        .category-section {
+            scroll-margin-top: 100px;
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-dark text-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -52,7 +56,7 @@
         const translations = {
             ar: {
                 siteName: "205-Tools",
-                tagline: "أدوات مجانية على الإنترنت",
+                tagline: "205 أدوات مجانية على الإنترنت",
                 searchPlaceholder: "ابحث عن أداة...",
                 categories: "التصنيفات",
                 allTools: "جميع الأدوات",
@@ -61,12 +65,12 @@
                 languages: "لغة",
                 darkMode: "الوضع المظلم",
                 lightMode: "الوضع الفاتح",
-                viewTool: "عرض الأداة",
+                viewTool: "فتح الأداة",
                 category: "التصنيف:"
             },
             en: {
                 siteName: "205-Tools",
-                tagline: "Free Online Tools",
+                tagline: "205 Free Online Tools",
                 searchPlaceholder: "Search for a tool...",
                 categories: "Categories",
                 allTools: "All Tools",
@@ -75,12 +79,12 @@
                 languages: "languages",
                 darkMode: "Dark Mode",
                 lightMode: "Light Mode",
-                viewTool: "View Tool",
+                viewTool: "Open Tool",
                 category: "Category:"
             },
             fr: {
                 siteName: "205-Tools",
-                tagline: "Outils en ligne gratuits",
+                tagline: "205 Outils en ligne gratuits",
                 searchPlaceholder: "Rechercher un outil...",
                 categories: "Catégories",
                 allTools: "Tous les outils",
@@ -89,12 +93,12 @@
                 languages: "langues",
                 darkMode: "Mode sombre",
                 lightMode: "Mode clair",
-                viewTool: "Voir l'outil",
+                viewTool: "Ouvrir l'outil",
                 category: "Catégorie:"
             },
             es: {
                 siteName: "205-Tools",
-                tagline: "Herramientas gratuitas en línea",
+                tagline: "205 Herramientas gratuitas en línea",
                 searchPlaceholder: "Buscar una herramienta...",
                 categories: "Categorías",
                 allTools: "Todas las herramientas",
@@ -103,12 +107,12 @@
                 languages: "idiomas",
                 darkMode: "Modo oscuro",
                 lightMode: "Modo claro",
-                viewTool: "Ver herramienta",
+                viewTool: "Abrir herramienta",
                 category: "Categoría:"
             },
             de: {
                 siteName: "205-Tools",
-                tagline: "Kostenlose Online-Tools",
+                tagline: "205 Kostenlose Online-Tools",
                 searchPlaceholder: "Nach einem Tool suchen...",
                 categories: "Kategorien",
                 allTools: "Alle Tools",
@@ -117,2093 +121,361 @@
                 languages: "Sprachen",
                 darkMode: "Dunkelmodus",
                 lightMode: "Hellmodus",
-                viewTool: "Tool anzeigen",
+                viewTool: "Tool öffnen",
                 category: "Kategorie:"
             }
         };
 
         const categoriesData = {
-            images: { ar: "الصور", en: "Images", fr: "Images", es: "Imágenes", de: "Bilder" },
-            pdf: { ar: "PDF", en: "PDF", fr: "PDF", es: "PDF", de: "PDF" },
-            text: { ar: "النصوص", en: "Text", fr: "Texte", es: "Texto", de: "Text" },
-            developer: { ar: "المطورين", en: "Developer", fr: "Développeur", es: "Desarrollador", de: "Entwickler" },
-            colors: { ar: "الألوان", en: "Colors", fr: "Couleurs", es: "Colores", de: "Farben" },
-            math: { ar: "الرياضيات", en: "Math", fr: "Maths", es: "Matemáticas", de: "Mathematik" },
-            time: { ar: "الوقت", en: "Time", fr: "Temps", es: "Tiempo", de: "Zeit" },
-            units: { ar: "الوحدات", en: "Units", fr: "Unités", es: "Unidades", de: "Einheiten" },
-            seo: { ar: "SEO", en: "SEO", fr: "SEO", es: "SEO", de: "SEO" },
-            security: { ar: "الأمان", en: "Security", fr: "Sécurité", es: "Seguridad", de: "Sicherheit" },
-            data: { ar: "البيانات", en: "Data", fr: "Données", es: "Datos", de: "Daten" },
-            special: { ar: "خاصة", en: "Special", fr: "Spécial", es: "Especial", de: "Spezial" }
+            images: { 
+                ar: "أدوات الصور", 
+                en: "Image Tools", 
+                fr: "Outils d'images", 
+                es: "Herramientas de imágenes", 
+                de: "Bildwerkzeuge",
+                icon: "🖼️",
+                count: 42
+            },
+            pdf: { 
+                ar: "أدوات PDF", 
+                en: "PDF Tools", 
+                fr: "Outils PDF", 
+                es: "Herramientas PDF", 
+                de: "PDF-Tools",
+                icon: "📄",
+                count: 18
+            },
+            text: { 
+                ar: "أدوات النصوص", 
+                en: "Text Tools", 
+                fr: "Outils de texte", 
+                es: "Herramientas de texto", 
+                de: "Textwerkzeuge",
+                icon: "✍️",
+                count: 22
+            },
+            developer: { 
+                ar: "أدوات المطورين", 
+                en: "Developer Tools", 
+                fr: "Outils de développement", 
+                es: "Herramientas para desarrolladores", 
+                de: "Entwicklertools",
+                icon: "💻",
+                count: 28
+            },
+            colors: { 
+                ar: "أدوات الألوان", 
+                en: "Color Tools", 
+                fr: "Outils de couleurs", 
+                es: "Herramientas de colores", 
+                de: "Farbwerkzeuge",
+                icon: "🎨",
+                count: 15
+            },
+            math: { 
+                ar: "أدوات الرياضيات", 
+                en: "Math Tools", 
+                fr: "Outils mathématiques", 
+                es: "Herramientas matemáticas", 
+                de: "Mathe-Tools",
+                icon: "🔢",
+                count: 12
+            },
+            time: { 
+                ar: "أدوات الوقت", 
+                en: "Time Tools", 
+                fr: "Outils de temps", 
+                es: "Herramientas de tiempo", 
+                de: "Zeitwerkzeuge",
+                icon: "⏱️",
+                count: 10
+            },
+            units: { 
+                ar: "أدوات الوحدات", 
+                en: "Unit Tools", 
+                fr: "Outils d'unités", 
+                es: "Herramientas de unidades", 
+                de: "Einheitentools",
+                icon: "📐",
+                count: 16
+            },
+            seo: { 
+                ar: "أدوات SEO", 
+                en: "SEO Tools", 
+                fr: "Outils SEO", 
+                es: "Herramientas SEO", 
+                de: "SEO-Tools",
+                icon: "🌐",
+                count: 14
+            },
+            security: { 
+                ar: "أدوات الأمان", 
+                en: "Security Tools", 
+                fr: "Outils de sécurité", 
+                es: "Herramientas de seguridad", 
+                de: "Sicherheitstools",
+                icon: "🔐",
+                count: 8
+            },
+            data: { 
+                ar: "أدوات البيانات", 
+                en: "Data Tools", 
+                fr: "Outils de données", 
+                es: "Herramientas de datos", 
+                de: "Daten-Tools",
+                icon: "📊",
+                count: 10
+            },
+            special: { 
+                ar: "أدوات خاصة", 
+                en: "Special Tools", 
+                fr: "Outils spéciaux", 
+                es: "Herramientas especiales", 
+                de: "Spezial-Tools",
+                icon: "🎯",
+                count: 10
+            }
         };
 
+        // Tools data with descriptions
         const toolsData = [
-          {
-                    "id": 1,
-                    "name": "JPG to PNG Converter",
-                    "slug": "jpg-to-png",
-                    "category": "images",
-                    "nameAr": "محول JPG إلى PNG",
-                    "nameFr": "Convertisseur JPG vers PNG",
-                    "nameEs": "Convertidor JPG a PNG",
-                    "nameDe": "JPG zu PNG Konverter"
-          },
-          {
-                    "id": 2,
-                    "name": "PNG to JPG Converter",
-                    "slug": "png-to-jpg",
-                    "category": "images",
-                    "nameAr": "محول PNG إلى JPG",
-                    "nameFr": "Convertisseur PNG vers JPG",
-                    "nameEs": "Convertidor PNG a JPG",
-                    "nameDe": "PNG zu JPG Konverter"
-          },
-          {
-                    "id": 3,
-                    "name": "WebP to JPG Converter",
-                    "slug": "webp-to-jpg",
-                    "category": "images",
-                    "nameAr": "محول WebP إلى JPG",
-                    "nameFr": "Convertisseur WebP vers JPG",
-                    "nameEs": "Convertidor WebP a JPG",
-                    "nameDe": "WebP zu JPG Konverter"
-          },
-          {
-                    "id": 4,
-                    "name": "JPG to WebP Converter",
-                    "slug": "jpg-to-webp",
-                    "category": "images",
-                    "nameAr": "محول JPG إلى WebP",
-                    "nameFr": "Convertisseur JPG vers WebP",
-                    "nameEs": "Convertidor JPG a WebP",
-                    "nameDe": "JPG zu WebP Konverter"
-          },
-          {
-                    "id": 5,
-                    "name": "PNG to WebP Converter",
-                    "slug": "png-to-webp",
-                    "category": "images",
-                    "nameAr": "محول PNG إلى WebP",
-                    "nameFr": "Convertisseur PNG vers WebP",
-                    "nameEs": "Convertidor PNG a WebP",
-                    "nameDe": "PNG zu WebP Konverter"
-          },
-          {
-                    "id": 6,
-                    "name": "WebP to PNG Converter",
-                    "slug": "webp-to-png",
-                    "category": "images",
-                    "nameAr": "محول WebP إلى PNG",
-                    "nameFr": "Convertisseur WebP vers PNG",
-                    "nameEs": "Convertidor WebP a PNG",
-                    "nameDe": "WebP zu PNG Konverter"
-          },
-          {
-                    "id": 7,
-                    "name": "HEIC to JPG Converter",
-                    "slug": "heic-to-jpg",
-                    "category": "images",
-                    "nameAr": "محول HEIC إلى JPG",
-                    "nameFr": "Convertisseur HEIC vers JPG",
-                    "nameEs": "Convertidor HEIC a JPG",
-                    "nameDe": "HEIC zu JPG Konverter"
-          },
-          {
-                    "id": 8,
-                    "name": "HEIC to PNG Converter",
-                    "slug": "heic-to-png",
-                    "category": "images",
-                    "nameAr": "محول HEIC إلى PNG",
-                    "nameFr": "Convertisseur HEIC vers PNG",
-                    "nameEs": "Convertidor HEIC a PNG",
-                    "nameDe": "HEIC zu PNG Konverter"
-          },
-          {
-                    "id": 9,
-                    "name": "BMP to JPG Converter",
-                    "slug": "bmp-to-jpg",
-                    "category": "images",
-                    "nameAr": "محول BMP إلى JPG",
-                    "nameFr": "Convertisseur BMP vers JPG",
-                    "nameEs": "Convertidor BMP a JPG",
-                    "nameDe": "BMP zu JPG Konverter"
-          },
-          {
-                    "id": 10,
-                    "name": "BMP to PNG Converter",
-                    "slug": "bmp-to-png",
-                    "category": "images",
-                    "nameAr": "محول BMP إلى PNG",
-                    "nameFr": "Convertisseur BMP vers PNG",
-                    "nameEs": "Convertidor BMP a PNG",
-                    "nameDe": "BMP zu PNG Konverter"
-          },
-          {
-                    "id": 11,
-                    "name": "TIFF to JPG Converter",
-                    "slug": "tiff-to-jpg",
-                    "category": "images",
-                    "nameAr": "محول TIFF إلى JPG",
-                    "nameFr": "Convertisseur TIFF vers JPG",
-                    "nameEs": "Convertidor TIFF a JPG",
-                    "nameDe": "TIFF zu JPG Konverter"
-          },
-          {
-                    "id": 12,
-                    "name": "TIFF to PNG Converter",
-                    "slug": "tiff-to-png",
-                    "category": "images",
-                    "nameAr": "محول TIFF إلى PNG",
-                    "nameFr": "Convertisseur TIFF vers PNG",
-                    "nameEs": "Convertidor TIFF a PNG",
-                    "nameDe": "TIFF zu PNG Konverter"
-          },
-          {
-                    "id": 13,
-                    "name": "GIF to JPG Converter",
-                    "slug": "gif-to-jpg",
-                    "category": "images",
-                    "nameAr": "محول GIF إلى JPG",
-                    "nameFr": "Convertisseur GIF vers JPG",
-                    "nameEs": "Convertidor GIF a JPG",
-                    "nameDe": "GIF zu JPG Konverter"
-          },
-          {
-                    "id": 14,
-                    "name": "GIF to PNG Converter",
-                    "slug": "gif-to-png",
-                    "category": "images",
-                    "nameAr": "محول GIF إلى PNG",
-                    "nameFr": "Convertisseur GIF vers PNG",
-                    "nameEs": "Convertidor GIF a PNG",
-                    "nameDe": "GIF zu PNG Konverter"
-          },
-          {
-                    "id": 15,
-                    "name": "SVG to JPG Converter",
-                    "slug": "svg-to-jpg",
-                    "category": "images",
-                    "nameAr": "محول SVG إلى JPG",
-                    "nameFr": "Convertisseur SVG vers JPG",
-                    "nameEs": "Convertidor SVG a JPG",
-                    "nameDe": "SVG zu JPG Konverter"
-          },
-          {
-                    "id": 16,
-                    "name": "SVG to PNG Converter",
-                    "slug": "svg-to-png",
-                    "category": "images",
-                    "nameAr": "محول SVG إلى PNG",
-                    "nameFr": "Convertisseur SVG vers PNG",
-                    "nameEs": "Convertidor SVG a PNG",
-                    "nameDe": "SVG zu PNG Konverter"
-          },
-          {
-                    "id": 17,
-                    "name": "AVIF to JPG Converter",
-                    "slug": "avif-to-jpg",
-                    "category": "images",
-                    "nameAr": "محول AVIF إلى JPG",
-                    "nameFr": "Convertisseur AVIF vers JPG",
-                    "nameEs": "Convertidor AVIF a JPG",
-                    "nameDe": "AVIF zu JPG Konverter"
-          },
-          {
-                    "id": 18,
-                    "name": "AVIF to PNG Converter",
-                    "slug": "avif-to-png",
-                    "category": "images",
-                    "nameAr": "محول AVIF إلى PNG",
-                    "nameFr": "Convertisseur AVIF vers PNG",
-                    "nameEs": "Convertidor AVIF a PNG",
-                    "nameDe": "AVIF zu PNG Konverter"
-          },
-          {
-                    "id": 19,
-                    "name": "ICO to JPG Converter",
-                    "slug": "ico-to-jpg",
-                    "category": "images",
-                    "nameAr": "محول ICO إلى JPG",
-                    "nameFr": "Convertisseur ICO vers JPG",
-                    "nameEs": "Convertidor ICO a JPG",
-                    "nameDe": "ICO zu JPG Konverter"
-          },
-          {
-                    "id": 20,
-                    "name": "ICO to PNG Converter",
-                    "slug": "ico-to-png",
-                    "category": "images",
-                    "nameAr": "محول ICO إلى PNG",
-                    "nameFr": "Convertisseur ICO vers PNG",
-                    "nameEs": "Convertidor ICO a PNG",
-                    "nameDe": "ICO zu PNG Konverter"
-          },
-          {
-                    "id": 21,
-                    "name": "JPG to GIF Converter",
-                    "slug": "jpg-to-gif",
-                    "category": "images",
-                    "nameAr": "محول JPG إلى GIF",
-                    "nameFr": "Convertisseur JPG vers GIF",
-                    "nameEs": "Convertidor JPG a GIF",
-                    "nameDe": "JPG zu GIF Konverter"
-          },
-          {
-                    "id": 22,
-                    "name": "PNG to GIF Converter",
-                    "slug": "png-to-gif",
-                    "category": "images",
-                    "nameAr": "محول PNG إلى GIF",
-                    "nameFr": "Convertisseur PNG vers GIF",
-                    "nameEs": "Convertidor PNG a GIF",
-                    "nameDe": "PNG zu GIF Konverter"
-          },
-          {
-                    "id": 23,
-                    "name": "JPG to ICO Converter",
-                    "slug": "jpg-to-ico",
-                    "category": "images",
-                    "nameAr": "محول JPG إلى ICO",
-                    "nameFr": "Convertisseur JPG vers ICO",
-                    "nameEs": "Convertidor JPG a ICO",
-                    "nameDe": "JPG zu ICO Konverter"
-          },
-          {
-                    "id": 24,
-                    "name": "PNG to ICO Converter",
-                    "slug": "png-to-ico",
-                    "category": "images",
-                    "nameAr": "محول PNG إلى ICO",
-                    "nameFr": "Convertisseur PNG vers ICO",
-                    "nameEs": "Convertidor PNG a ICO",
-                    "nameDe": "PNG zu ICO Konverter"
-          },
-          {
-                    "id": 25,
-                    "name": "JPG to AVIF Converter",
-                    "slug": "jpg-to-avif",
-                    "category": "images",
-                    "nameAr": "محول JPG إلى AVIF",
-                    "nameFr": "Convertisseur JPG vers AVIF",
-                    "nameEs": "Convertidor JPG a AVIF",
-                    "nameDe": "JPG zu AVIF Konverter"
-          },
-          {
-                    "id": 26,
-                    "name": "PNG to AVIF Converter",
-                    "slug": "png-to-avif",
-                    "category": "images",
-                    "nameAr": "محول PNG إلى AVIF",
-                    "nameFr": "Convertisseur PNG vers AVIF",
-                    "nameEs": "Convertidor PNG a AVIF",
-                    "nameDe": "PNG zu AVIF Konverter"
-          },
-          {
-                    "id": 27,
-                    "name": "JPG to BMP Converter",
-                    "slug": "jpg-to-bmp",
-                    "category": "images",
-                    "nameAr": "محول JPG إلى BMP",
-                    "nameFr": "Convertisseur JPG vers BMP",
-                    "nameEs": "Convertidor JPG a BMP",
-                    "nameDe": "JPG zu BMP Konverter"
-          },
-          {
-                    "id": 28,
-                    "name": "PNG to BMP Converter",
-                    "slug": "png-to-bmp",
-                    "category": "images",
-                    "nameAr": "محول PNG إلى BMP",
-                    "nameFr": "Convertisseur PNG vers BMP",
-                    "nameEs": "Convertidor PNG a BMP",
-                    "nameDe": "PNG zu BMP Konverter"
-          },
-          {
-                    "id": 29,
-                    "name": "WebP to GIF Converter",
-                    "slug": "webp-to-gif",
-                    "category": "images",
-                    "nameAr": "محول WebP إلى GIF",
-                    "nameFr": "Convertisseur WebP vers GIF",
-                    "nameEs": "Convertidor WebP a GIF",
-                    "nameDe": "WebP zu GIF Konverter"
-          },
-          {
-                    "id": 30,
-                    "name": "WebP to AVIF Converter",
-                    "slug": "webp-to-avif",
-                    "category": "images",
-                    "nameAr": "محول WebP إلى AVIF",
-                    "nameFr": "Convertisseur WebP vers AVIF",
-                    "nameEs": "Convertidor WebP a AVIF",
-                    "nameDe": "WebP zu AVIF Konverter"
-          },
-          {
-                    "id": 31,
-                    "name": "GIF to WebP Converter",
-                    "slug": "gif-to-webp",
-                    "category": "images",
-                    "nameAr": "محول GIF إلى WebP",
-                    "nameFr": "Convertisseur GIF vers WebP",
-                    "nameEs": "Convertidor GIF a WebP",
-                    "nameDe": "GIF zu WebP Konverter"
-          },
-          {
-                    "id": 32,
-                    "name": "AVIF to WebP Converter",
-                    "slug": "avif-to-webp",
-                    "category": "images",
-                    "nameAr": "محول AVIF إلى WebP",
-                    "nameFr": "Convertisseur AVIF vers WebP",
-                    "nameEs": "Convertidor AVIF a WebP",
-                    "nameDe": "AVIF zu WebP Konverter"
-          },
-          {
-                    "id": 33,
-                    "name": "Image Resizer",
-                    "slug": "image-resizer",
-                    "category": "images",
-                    "nameAr": "محول GIF إلى PNG المتحرك",
-                    "nameFr": "Convertisseur GIF vers APNG",
-                    "nameEs": "Convertidor GIF a APNG",
-                    "nameDe": "GIF zu APNG Konverter"
-          },
-          {
-                    "id": 34,
-                    "name": "Compress JPG",
-                    "slug": "compress-jpg",
-                    "category": "images",
-                    "nameAr": "محول PNG المتحرك إلى GIF",
-                    "nameFr": "Convertisseur APNG vers GIF",
-                    "nameEs": "Convertidor APNG a GIF",
-                    "nameDe": "APNG zu GIF Konverter"
-          },
-          {
-                    "id": 35,
-                    "name": "Compress PNG",
-                    "slug": "compress-png",
-                    "category": "images",
-                    "nameAr": "محول WebP إلى MP4",
-                    "nameFr": "Convertisseur WebP vers MP4",
-                    "nameEs": "Convertidor WebP a MP4",
-                    "nameDe": "WebP zu MP4 Konverter"
-          },
-          {
-                    "id": 36,
-                    "name": "Image Cropper",
-                    "slug": "image-cropper",
-                    "category": "images",
-                    "nameAr": "محول MP4 إلى WebP",
-                    "nameFr": "Convertisseur MP4 vers WebP",
-                    "nameEs": "Convertidor MP4 a WebP",
-                    "nameDe": "MP4 zu WebP Konverter"
-          },
-          {
-                    "id": 37,
-                    "name": "Image to Base64",
-                    "slug": "image-to-base64",
-                    "category": "images",
-                    "nameAr": "محول GIF إلى MP4",
-                    "nameFr": "Convertisseur GIF vers MP4",
-                    "nameEs": "Convertidor GIF a MP4",
-                    "nameDe": "GIF zu MP4 Konverter"
-          },
-          {
-                    "id": 38,
-                    "name": "Base64 to Image",
-                    "slug": "base64-to-image",
-                    "category": "images",
-                    "nameAr": "محول MP4 إلى GIF",
-                    "nameFr": "Convertisseur MP4 vers GIF",
-                    "nameEs": "Convertidor MP4 a GIF",
-                    "nameDe": "MP4 zu GIF Konverter"
-          },
-          {
-                    "id": 39,
-                    "name": "EXIF Data Remover",
-                    "slug": "remove-exif",
-                    "category": "images",
-                    "nameAr": "محول GIF إلى WebP المتحرك",
-                    "nameFr": "Convertisseur GIF vers WebP animé",
-                    "nameEs": "Convertidor GIF a WebP animado",
-                    "nameDe": "GIF zu animiertem WebP Konverter"
-          },
-          {
-                    "id": 40,
-                    "name": "Favicon Generator",
-                    "slug": "favicon-generator",
-                    "category": "images",
-                    "nameAr": "محول WebP المتحرك إلى GIF",
-                    "nameFr": "Convertisseur WebP animé vers GIF",
-                    "nameEs": "Convertidor WebP animado a GIF",
-                    "nameDe": "Animiertes WebP zu GIF Konverter"
-          },
-          {
-                    "id": 41,
-                    "name": "Color Palette Extractor",
-                    "slug": "color-palette-extractor",
-                    "category": "images",
-                    "nameAr": "محول APNG إلى GIF",
-                    "nameFr": "Convertisseur APNG vers GIF",
-                    "nameEs": "Convertidor APNG a GIF",
-                    "nameDe": "APNG zu GIF Konverter"
-          },
-          {
-                    "id": 42,
-                    "name": "Image to Grayscale",
-                    "slug": "image-to-grayscale",
-                    "category": "images",
-                    "nameAr": "محول GIF إلى APNG",
-                    "nameFr": "Convertisseur GIF vers APNG",
-                    "nameEs": "Convertidor GIF a APNG",
-                    "nameDe": "GIF zu APNG Konverter"
-          },
-          {
-                    "id": 43,
-                    "name": "PDF to JPG Converter",
-                    "slug": "pdf-to-jpg",
-                    "category": "pdf",
-                    "nameAr": "دمج ملفات PDF",
-                    "nameFr": "Fusionner PDF",
-                    "nameEs": "Fusionar PDF",
-                    "nameDe": "PDF zusammenführen"
-          },
-          {
-                    "id": 44,
-                    "name": "PDF to PNG Converter",
-                    "slug": "pdf-to-png",
-                    "category": "pdf",
-                    "nameAr": "تقسيم PDF",
-                    "nameFr": "Diviser PDF",
-                    "nameEs": "Dividir PDF",
-                    "nameDe": "PDF teilen"
-          },
-          {
-                    "id": 45,
-                    "name": "PDF to WebP Converter",
-                    "slug": "pdf-to-webp",
-                    "category": "pdf",
-                    "nameAr": "ضغط PDF",
-                    "nameFr": "Compresser PDF",
-                    "nameEs": "Comprimir PDF",
-                    "nameDe": "PDF komprimieren"
-          },
-          {
-                    "id": 46,
-                    "name": "PDF to Text Extractor",
-                    "slug": "pdf-to-text",
-                    "category": "pdf",
-                    "nameAr": "PDF إلى Word",
-                    "nameFr": "PDF vers Word",
-                    "nameEs": "PDF a Word",
-                    "nameDe": "PDF zu Word"
-          },
-          {
-                    "id": 47,
-                    "name": "PDF Metadata Viewer",
-                    "slug": "pdf-metadata",
-                    "category": "pdf",
-                    "nameAr": "PDF إلى Excel",
-                    "nameFr": "PDF vers Excel",
-                    "nameEs": "PDF a Excel",
-                    "nameDe": "PDF zu Excel"
-          },
-          {
-                    "id": 48,
-                    "name": "JPG to PDF Converter",
-                    "slug": "jpg-to-pdf",
-                    "category": "pdf",
-                    "nameAr": "PDF إلى PowerPoint",
-                    "nameFr": "PDF vers PowerPoint",
-                    "nameEs": "PDF a PowerPoint",
-                    "nameDe": "PDF zu PowerPoint"
-          },
-          {
-                    "id": 49,
-                    "name": "PNG to PDF Converter",
-                    "slug": "png-to-pdf",
-                    "category": "pdf",
-                    "nameAr": "PDF إلى JPG",
-                    "nameFr": "PDF vers JPG",
-                    "nameEs": "PDF a JPG",
-                    "nameDe": "PDF zu JPG"
-          },
-          {
-                    "id": 50,
-                    "name": "Images to PDF Converter",
-                    "slug": "images-to-pdf",
-                    "category": "pdf",
-                    "nameAr": "PDF إلى PNG",
-                    "nameFr": "PDF vers PNG",
-                    "nameEs": "PDF a PNG",
-                    "nameDe": "PDF zu PNG"
-          },
-          {
-                    "id": 51,
-                    "name": "Word to PDF Converter",
-                    "slug": "word-to-pdf",
-                    "category": "pdf",
-                    "nameAr": "PDF إلى PDF/A",
-                    "nameFr": "PDF vers PDF/A",
-                    "nameEs": "PDF a PDF/A",
-                    "nameDe": "PDF zu PDF/A"
-          },
-          {
-                    "id": 52,
-                    "name": "HTML to PDF Converter",
-                    "slug": "html-to-pdf",
-                    "category": "pdf",
-                    "nameAr": "Word إلى PDF",
-                    "nameFr": "Word vers PDF",
-                    "nameEs": "Word a PDF",
-                    "nameDe": "Word zu PDF"
-          },
-          {
-                    "id": 53,
-                    "name": "Merge PDF Files",
-                    "slug": "merge-pdf",
-                    "category": "pdf",
-                    "nameAr": "Excel إلى PDF",
-                    "nameFr": "Excel vers PDF",
-                    "nameEs": "Excel a PDF",
-                    "nameDe": "Excel zu PDF"
-          },
-          {
-                    "id": 54,
-                    "name": "Split PDF File",
-                    "slug": "split-pdf",
-                    "category": "pdf",
-                    "nameAr": "PowerPoint إلى PDF",
-                    "nameFr": "PowerPoint vers PDF",
-                    "nameEs": "PowerPoint a PDF",
-                    "nameDe": "PowerPoint zu PDF"
-          },
-          {
-                    "id": 55,
-                    "name": "Compress PDF",
-                    "slug": "compress-pdf",
-                    "category": "pdf",
-                    "nameAr": "JPG إلى PDF",
-                    "nameFr": "JPG vers PDF",
-                    "nameEs": "JPG a PDF",
-                    "nameDe": "JPG zu PDF"
-          },
-          {
-                    "id": 56,
-                    "name": "Rotate PDF Pages",
-                    "slug": "rotate-pdf",
-                    "category": "pdf",
-                    "nameAr": "PNG إلى PDF",
-                    "nameFr": "PNG vers PDF",
-                    "nameEs": "PNG a PDF",
-                    "nameDe": "PNG zu PDF"
-          },
-          {
-                    "id": 57,
-                    "name": "Add Watermark to PDF",
-                    "slug": "pdf-watermark",
-                    "category": "pdf",
-                    "nameAr": "حماية PDF بكلمة مرور",
-                    "nameFr": "Protéger PDF par mot de passe",
-                    "nameEs": "Proteger PDF con contraseña",
-                    "nameDe": "PDF mit Passwort schützen"
-          },
-          {
-                    "id": 58,
-                    "name": "PDF Page Numbering",
-                    "slug": "pdf-page-numbers",
-                    "category": "pdf",
-                    "nameAr": "فتح حماية PDF",
-                    "nameFr": "Déverrouiller PDF",
-                    "nameEs": "Desbloquear PDF",
-                    "nameDe": "PDF entsperren"
-          },
-          {
-                    "id": 59,
-                    "name": "Reorder PDF Pages",
-                    "slug": "reorder-pdf-pages",
-                    "category": "pdf",
-                    "nameAr": "تدوير صفحات PDF",
-                    "nameFr": "Pivoter pages PDF",
-                    "nameEs": "Rotar páginas PDF",
-                    "nameDe": "PDF-Seiten drehen"
-          },
-          {
-                    "id": 60,
-                    "name": "Remove PDF Password",
-                    "slug": "remove-pdf-password",
-                    "category": "pdf",
-                    "nameAr": "إزالة كلمة مرور PDF",
-                    "nameFr": "Supprimer mot de passe PDF",
-                    "nameEs": "Eliminar contraseña PDF",
-                    "nameDe": "PDF-Passwort entfernen"
-          },
-          {
-                    "id": 61,
-                    "name": "Word Counter",
-                    "slug": "word-counter",
-                    "category": "text",
-                    "nameAr": "عداد الكلمات",
-                    "nameFr": "Compteur de mots",
-                    "nameEs": "Contador de palabras",
-                    "nameDe": "Wörter zählen"
-          },
-          {
-                    "id": 62,
-                    "name": "Character Counter",
-                    "slug": "character-counter",
-                    "category": "text",
-                    "nameAr": "عداد الأحرف",
-                    "nameFr": "Compteur de caractères",
-                    "nameEs": "Contador de caracteres",
-                    "nameDe": "Zeichen zählen"
-          },
-          {
-                    "id": 63,
-                    "name": "Line Counter",
-                    "slug": "line-counter",
-                    "category": "text",
-                    "nameAr": "عداد الأسطر",
-                    "nameFr": "Compteur de lignes",
-                    "nameEs": "Contador de líneas",
-                    "nameDe": "Zeilen zählen"
-          },
-          {
-                    "id": 64,
-                    "name": "Remove Duplicate Lines",
-                    "slug": "remove-duplicate-lines",
-                    "category": "text",
-                    "nameAr": "إزالة الأسطر المكررة",
-                    "nameFr": "Supprimer lignes dupliquées",
-                    "nameEs": "Eliminar líneas duplicadas",
-                    "nameDe": "Doppelte Zeilen entfernen"
-          },
-          {
-                    "id": 65,
-                    "name": "Sort Lines A-Z",
-                    "slug": "sort-lines",
-                    "category": "text",
-                    "nameAr": "ترتيب الأسطر من أ إلى ي",
-                    "nameFr": "Trier lignes A-Z",
-                    "nameEs": "Ordenar líneas A-Z",
-                    "nameDe": "Zeilen A-Z sortieren"
-          },
-          {
-                    "id": 66,
-                    "name": "Reverse Text Generator",
-                    "slug": "reverse-text",
-                    "category": "text",
-                    "nameAr": "عكس النص",
-                    "nameFr": "Générateur de texte inversé",
-                    "nameEs": "Generador de texto invertido",
-                    "nameDe": "Textumkehrungsgenerator"
-          },
-          {
-                    "id": 67,
-                    "name": "Case Converter",
-                    "slug": "case-converter",
-                    "category": "text",
-                    "nameAr": "محول حروف الكتابة",
-                    "nameFr": "Convertisseur de casse",
-                    "nameEs": "Convertidor de mayúsculas/minúsculas",
-                    "nameDe": "Groß-/Kleinschreibung konvertieren"
-          },
-          {
-                    "id": 68,
-                    "name": "Remove Extra Spaces",
-                    "slug": "remove-extra-spaces",
-                    "category": "text",
-                    "nameAr": "إزالة المسافات الزائدة",
-                    "nameFr": "Supprimer espaces extra",
-                    "nameEs": "Eliminar espacios extra",
-                    "nameDe": "Zusätzliche Leerzeichen entfernen"
-          },
-          {
-                    "id": 69,
-                    "name": "Text to URL Slug",
-                    "slug": "text-to-slug",
-                    "category": "text",
-                    "nameAr": "نص إلى رابط URL",
-                    "nameFr": "Texte vers URL Slug",
-                    "nameEs": "Texto a URL Slug",
-                    "nameDe": "Text zu URL Slug"
-          },
-          {
-                    "id": 70,
-                    "name": "Remove Line Breaks",
-                    "slug": "remove-line-breaks",
-                    "category": "text",
-                    "nameAr": "إزالة فواصل الأسطر",
-                    "nameFr": "Supprimer sauts de ligne",
-                    "nameEs": "Eliminar saltos de línea",
-                    "nameDe": "Zeilenumbrüche entfernen"
-          },
-          {
-                    "id": 71,
-                    "name": "Add Line Numbers",
-                    "slug": "add-line-numbers",
-                    "category": "text",
-                    "nameAr": "إضافة أرقام للأسطر",
-                    "nameFr": "Ajouter numéros de ligne",
-                    "nameEs": "Agregar números de línea",
-                    "nameDe": "Zeilennummern hinzufügen"
-          },
-          {
-                    "id": 72,
-                    "name": "Text Diff Checker",
-                    "slug": "text-diff-checker",
-                    "category": "text",
-                    "nameAr": "مقارنة النصوص",
-                    "nameFr": "Comparateur de texte",
-                    "nameEs": "Comparador de texto",
-                    "nameDe": "Textvergleicher"
-          },
-          {
-                    "id": 73,
-                    "name": "Find and Replace Text",
-                    "slug": "find-and-replace",
-                    "category": "text",
-                    "nameAr": "بحث واستبدال",
-                    "nameFr": "Rechercher et remplacer",
-                    "nameEs": "Buscar y reemplazar",
-                    "nameDe": "Suchen und Ersetzen"
-          },
-          {
-                    "id": 74,
-                    "name": "Lorem Ipsum Generator",
-                    "slug": "lorem-ipsum-generator",
-                    "category": "text",
-                    "nameAr": "مولد Lorem Ipsum",
-                    "nameFr": "Générateur Lorem Ipsum",
-                    "nameEs": "Generador Lorem Ipsum",
-                    "nameDe": "Lorem Ipsum Generator"
-          },
-          {
-                    "id": 75,
-                    "name": "Random Text Generator",
-                    "slug": "random-text-generator",
-                    "category": "text",
-                    "nameAr": "مولد نص عشوائي",
-                    "nameFr": "Générateur de texte aléatoire",
-                    "nameEs": "Generador de texto aleatorio",
-                    "nameDe": "Zufälliger Textgenerator"
-          },
-          {
-                    "id": 76,
-                    "name": "Text to ASCII Art",
-                    "slug": "text-to-ascii-art",
-                    "category": "text",
-                    "nameAr": "نص إلى ASCII Art",
-                    "nameFr": "Texte vers ASCII Art",
-                    "nameEs": "Texto a ASCII Art",
-                    "nameDe": "Text zu ASCII Art"
-          },
-          {
-                    "id": 77,
-                    "name": "Fancy Text Generator",
-                    "slug": "fancy-text-generator",
-                    "category": "text",
-                    "nameAr": "مولد نص مزخرف",
-                    "nameFr": "Générateur de texte fantaisie",
-                    "nameEs": "Generador de texto decorativo",
-                    "nameDe": "Fantasietextgenerator"
-          },
-          {
-                    "id": 78,
-                    "name": "Morse Code Translator",
-                    "slug": "morse-code-translator",
-                    "category": "text",
-                    "nameAr": "مترجم شفرة مورس",
-                    "nameFr": "Traducteur Morse",
-                    "nameEs": "Traductor de código Morse",
-                    "nameDe": "Morsecode-Übersetzer"
-          },
-          {
-                    "id": 79,
-                    "name": "Reading Time Estimator",
-                    "slug": "reading-time-estimator",
-                    "category": "text",
-                    "nameAr": "تقدير وقت القراءة",
-                    "nameFr": "Estimateur de temps de lecture",
-                    "nameEs": "Estimador de tiempo de lectura",
-                    "nameDe": "Lesezeitschätzer"
-          },
-          {
-                    "id": 80,
-                    "name": "Text Repeater",
-                    "slug": "text-repeater",
-                    "category": "text",
-                    "nameAr": "مكرر النص",
-                    "nameFr": "Répéteur de texte",
-                    "nameEs": "Repetidor de texto",
-                    "nameDe": "Textwiederholer"
-          },
-          {
-                    "id": 81,
-                    "name": "Upside Down Text",
-                    "slug": "upside-down-text",
-                    "category": "text",
-                    "nameAr": "نص مقلوب رأسياً",
-                    "nameFr": "Texte à l'envers",
-                    "nameEs": "Texto al revés",
-                    "nameDe": "Auf den Kopf gestellter Text"
-          },
-          {
-                    "id": 82,
-                    "name": "Mirror Text Generator",
-                    "slug": "mirror-text",
-                    "category": "text",
-                    "nameAr": "مولد نص معكوس",
-                    "nameFr": "Générateur de texte miroir",
-                    "nameEs": "Generador de texto espejo",
-                    "nameDe": "Spiegeltextgenerator"
-          },
-          {
-                    "id": 83,
-                    "name": "JSON Formatter & Validator",
-                    "slug": "json-formatter",
-                    "category": "developer",
-                    "nameAr": "منسق ومدقق JSON",
-                    "nameFr": "Formateur et validateur JSON",
-                    "nameEs": "Formateador y validador JSON",
-                    "nameDe": "JSON-Formatierer & Validator"
-          },
-          {
-                    "id": 84,
-                    "name": "JSON Minifier",
-                    "slug": "json-minifier",
-                    "category": "developer",
-                    "nameAr": "ضاغط JSON",
-                    "nameFr": "Minifieur JSON",
-                    "nameEs": "Minificador JSON",
-                    "nameDe": "JSON-Minifier"
-          },
-          {
-                    "id": 85,
-                    "name": "JSON to CSV Converter",
-                    "slug": "json-to-csv",
-                    "category": "developer",
-                    "nameAr": "JSON إلى CSV",
-                    "nameFr": "JSON vers CSV",
-                    "nameEs": "JSON a CSV",
-                    "nameDe": "JSON zu CSV"
-          },
-          {
-                    "id": 86,
-                    "name": "JSON to XML Converter",
-                    "slug": "json-to-xml",
-                    "category": "developer",
-                    "nameAr": "JSON إلى XML",
-                    "nameFr": "JSON vers XML",
-                    "nameEs": "JSON a XML",
-                    "nameDe": "JSON zu XML"
-          },
-          {
-                    "id": 87,
-                    "name": "JSON to YAML Converter",
-                    "slug": "json-to-yaml",
-                    "category": "developer",
-                    "nameAr": "JSON إلى YAML",
-                    "nameFr": "JSON vers YAML",
-                    "nameEs": "JSON a YAML",
-                    "nameDe": "JSON zu YAML"
-          },
-          {
-                    "id": 88,
-                    "name": "CSV to JSON Converter",
-                    "slug": "csv-to-json",
-                    "category": "developer",
-                    "nameAr": "CSV إلى JSON",
-                    "nameFr": "CSV vers JSON",
-                    "nameEs": "CSV a JSON",
-                    "nameDe": "CSV zu JSON"
-          },
-          {
-                    "id": 89,
-                    "name": "XML to JSON Converter",
-                    "slug": "xml-to-json",
-                    "category": "developer",
-                    "nameAr": "XML إلى JSON",
-                    "nameFr": "XML vers JSON",
-                    "nameEs": "XML a JSON",
-                    "nameDe": "XML zu JSON"
-          },
-          {
-                    "id": 90,
-                    "name": "YAML to JSON Converter",
-                    "slug": "yaml-to-json",
-                    "category": "developer",
-                    "nameAr": "YAML إلى JSON",
-                    "nameFr": "YAML vers JSON",
-                    "nameEs": "YAML a JSON",
-                    "nameDe": "YAML zu JSON"
-          },
-          {
-                    "id": 91,
-                    "name": "JSON Schema Validator",
-                    "slug": "json-schema-validator",
-                    "category": "developer",
-                    "nameAr": "مدقق مخطط JSON",
-                    "nameFr": "Validateur de schéma JSON",
-                    "nameEs": "Validador de esquema JSON",
-                    "nameDe": "JSON-Schema-Validator"
-          },
-          {
-                    "id": 92,
-                    "name": "HTML Formatter",
-                    "slug": "html-formatter",
-                    "category": "developer",
-                    "nameAr": "منسق HTML",
-                    "nameFr": "Formateur HTML",
-                    "nameEs": "Formateador HTML",
-                    "nameDe": "HTML-Formatierer"
-          },
-          {
-                    "id": 93,
-                    "name": "HTML Minifier",
-                    "slug": "html-minifier",
-                    "category": "developer",
-                    "nameAr": "ضاغط HTML",
-                    "nameFr": "Minifieur HTML",
-                    "nameEs": "Minificador HTML",
-                    "nameDe": "HTML-Minifier"
-          },
-          {
-                    "id": 94,
-                    "name": "CSS Formatter",
-                    "slug": "css-formatter",
-                    "category": "developer",
-                    "nameAr": "منسق CSS",
-                    "nameFr": "Formateur CSS",
-                    "nameEs": "Formateador CSS",
-                    "nameDe": "CSS-Formatierer"
-          },
-          {
-                    "id": 95,
-                    "name": "CSS Minifier",
-                    "slug": "css-minifier",
-                    "category": "developer",
-                    "nameAr": "ضاغط CSS",
-                    "nameFr": "Minifieur CSS",
-                    "nameEs": "Minificador CSS",
-                    "nameDe": "CSS-Minifier"
-          },
-          {
-                    "id": 96,
-                    "name": "JavaScript Minifier",
-                    "slug": "js-minifier",
-                    "category": "developer",
-                    "nameAr": "ضاغط JavaScript",
-                    "nameFr": "Minifieur JavaScript",
-                    "nameEs": "Minificador JavaScript",
-                    "nameDe": "JavaScript-Minifier"
-          },
-          {
-                    "id": 97,
-                    "name": "SQL Formatter",
-                    "slug": "sql-formatter",
-                    "category": "developer",
-                    "nameAr": "منسق SQL",
-                    "nameFr": "Formateur SQL",
-                    "nameEs": "Formateador SQL",
-                    "nameDe": "SQL-Formatierer"
-          },
-          {
-                    "id": 98,
-                    "name": "HTML Entities Encoder",
-                    "slug": "html-entities-encoder",
-                    "category": "developer",
-                    "nameAr": "ترميز كيانات HTML",
-                    "nameFr": "Encodeur d'entités HTML",
-                    "nameEs": "Codificador de entidades HTML",
-                    "nameDe": "HTML-Entitäten-Encoder"
-          },
-          {
-                    "id": 99,
-                    "name": "HTML Entities Decoder",
-                    "slug": "html-entities-decoder",
-                    "category": "developer",
-                    "nameAr": "فك ترميز كيانات HTML",
-                    "nameFr": "Décodeur d'entités HTML",
-                    "nameEs": "Decodificador de entidades HTML",
-                    "nameDe": "HTML-Entitäten-Decoder"
-          },
-          {
-                    "id": 100,
-                    "name": "Base64 Encoder",
-                    "slug": "base64-encoder",
-                    "category": "developer",
-                    "nameAr": "ترميز Base64",
-                    "nameFr": "Encodeur Base64",
-                    "nameEs": "Codificador Base64",
-                    "nameDe": "Base64-Encoder"
-          },
-          {
-                    "id": 101,
-                    "name": "Base64 Decoder",
-                    "slug": "base64-decoder",
-                    "category": "developer",
-                    "nameAr": "فك ترميز Base64",
-                    "nameFr": "Décodeur Base64",
-                    "nameEs": "Decodificador Base64",
-                    "nameDe": "Base64-Decoder"
-          },
-          {
-                    "id": 102,
-                    "name": "URL Encoder",
-                    "slug": "url-encoder",
-                    "category": "developer",
-                    "nameAr": "ترميز URL",
-                    "nameFr": "Encodeur URL",
-                    "nameEs": "Codificador URL",
-                    "nameDe": "URL-Encoder"
-          },
-          {
-                    "id": 103,
-                    "name": "URL Decoder",
-                    "slug": "url-decoder",
-                    "category": "developer",
-                    "nameAr": "فك ترميز URL",
-                    "nameFr": "Décodeur URL",
-                    "nameEs": "Decodificador URL",
-                    "nameDe": "URL-Decoder"
-          },
-          {
-                    "id": 104,
-                    "name": "MD5 Hash Generator",
-                    "slug": "md5-generator",
-                    "category": "developer",
-                    "nameAr": "مولد تجزئة MD5",
-                    "nameFr": "Générateur de hachage MD5",
-                    "nameEs": "Generador de hash MD5",
-                    "nameDe": "MD5-Hash-Generator"
-          },
-          {
-                    "id": 105,
-                    "name": "SHA-256 Hash Generator",
-                    "slug": "sha256-generator",
-                    "category": "developer",
-                    "nameAr": "مولد تجزئة SHA-256",
-                    "nameFr": "Générateur de hachage SHA-256",
-                    "nameEs": "Generador de hash SHA-256",
-                    "nameDe": "SHA-256-Hash-Generator"
-          },
-          {
-                    "id": 106,
-                    "name": "SHA-512 Hash Generator",
-                    "slug": "sha512-generator",
-                    "category": "developer",
-                    "nameAr": "مولد تجزئة SHA-512",
-                    "nameFr": "Générateur de hachage SHA-512",
-                    "nameEs": "Generador de hash SHA-512",
-                    "nameDe": "SHA-512-Hash-Generator"
-          },
-          {
-                    "id": 107,
-                    "name": "JWT Decoder",
-                    "slug": "jwt-decoder",
-                    "category": "developer",
-                    "nameAr": "فك تشفير JWT",
-                    "nameFr": "Décodeur JWT",
-                    "nameEs": "Decodificador JWT",
-                    "nameDe": "JWT-Decoder"
-          },
-          {
-                    "id": 108,
-                    "name": "UUID / GUID Generator",
-                    "slug": "uuid-generator",
-                    "category": "developer",
-                    "nameAr": "مولد UUID/GUID",
-                    "nameFr": "Générateur UUID/GUID",
-                    "nameEs": "Generador UUID/GUID",
-                    "nameDe": "UUID/GUID-Generator"
-          },
-          {
-                    "id": 109,
-                    "name": "Regex Tester",
-                    "slug": "regex-tester",
-                    "category": "developer",
-                    "nameAr": "اختبار التعبيرات النمطية",
-                    "nameFr": "Testeur d'expressions régulières",
-                    "nameEs": "Probador de expresiones regulares",
-                    "nameDe": "Regex-Tester"
-          },
-          {
-                    "id": 110,
-                    "name": "Markdown to HTML",
-                    "slug": "markdown-to-html",
-                    "category": "developer",
-                    "nameAr": "Markdown إلى HTML",
-                    "nameFr": "Markdown vers HTML",
-                    "nameEs": "Markdown a HTML",
-                    "nameDe": "Markdown zu HTML"
-          },
-          {
-                    "id": 111,
-                    "name": "HEX to RGB Converter",
-                    "slug": "hex-to-rgb",
-                    "category": "colors",
-                    "nameAr": "HEX إلى RGB",
-                    "nameFr": "HEX vers RGB",
-                    "nameEs": "HEX a RGB",
-                    "nameDe": "HEX zu RGB"
-          },
-          {
-                    "id": 112,
-                    "name": "RGB to HEX Converter",
-                    "slug": "rgb-to-hex",
-                    "category": "colors",
-                    "nameAr": "RGB إلى HEX",
-                    "nameFr": "RGB vers HEX",
-                    "nameEs": "RGB a HEX",
-                    "nameDe": "RGB zu HEX"
-          },
-          {
-                    "id": 113,
-                    "name": "HEX to HSL Converter",
-                    "slug": "hex-to-hsl",
-                    "category": "colors",
-                    "nameAr": "HEX إلى HSL",
-                    "nameFr": "HEX vers HSL",
-                    "nameEs": "HEX a HSL",
-                    "nameDe": "HEX zu HSL"
-          },
-          {
-                    "id": 114,
-                    "name": "HSL to HEX Converter",
-                    "slug": "hsl-to-hex",
-                    "category": "colors",
-                    "nameAr": "HSL إلى HEX",
-                    "nameFr": "HSL vers HEX",
-                    "nameEs": "HSL a HEX",
-                    "nameDe": "HSL zu HEX"
-          },
-          {
-                    "id": 115,
-                    "name": "CMYK to RGB Converter",
-                    "slug": "cmyk-to-rgb",
-                    "category": "colors",
-                    "nameAr": "CMYK إلى RGB",
-                    "nameFr": "CMYK vers RGB",
-                    "nameEs": "CMYK a RGB",
-                    "nameDe": "CMYK zu RGB"
-          },
-          {
-                    "id": 116,
-                    "name": "RGB to CMYK Converter",
-                    "slug": "rgb-to-cmyk",
-                    "category": "colors",
-                    "nameAr": "RGB إلى CMYK",
-                    "nameFr": "RGB vers CMYK",
-                    "nameEs": "RGB a CMYK",
-                    "nameDe": "RGB zu CMYK"
-          },
-          {
-                    "id": 117,
-                    "name": "Color Picker Tool",
-                    "slug": "color-picker",
-                    "category": "colors",
-                    "nameAr": "منتقي الألوان",
-                    "nameFr": "Sélecteur de couleur",
-                    "nameEs": "Selector de color",
-                    "nameDe": "Farbwähler"
-          },
-          {
-                    "id": 118,
-                    "name": "CSS Gradient Generator",
-                    "slug": "gradient-generator",
-                    "category": "colors",
-                    "nameAr": "مولد تدرج CSS",
-                    "nameFr": "Générateur de dégradé CSS",
-                    "nameEs": "Generador de degradados CSS",
-                    "nameDe": "CSS-Verlaufsgenerator"
-          },
-          {
-                    "id": 119,
-                    "name": "Color Palette Generator",
-                    "slug": "color-palette-generator",
-                    "category": "colors",
-                    "nameAr": "مولد لوحة ألوان",
-                    "nameFr": "Générateur de palette de couleurs",
-                    "nameEs": "Generador de paleta de colores",
-                    "nameDe": "Farbpalettengenerator"
-          },
-          {
-                    "id": 120,
-                    "name": "Color Contrast Checker",
-                    "slug": "color-contrast-checker",
-                    "category": "colors",
-                    "nameAr": "فاحص تباين الألوان",
-                    "nameFr": "Vérificateur de contraste",
-                    "nameEs": "Comprobador de contraste",
-                    "nameDe": "Farbkontrastprüfer"
-          },
-          {
-                    "id": 121,
-                    "name": "Box Shadow Generator",
-                    "slug": "box-shadow-generator",
-                    "category": "colors",
-                    "nameAr": "مولد ظل الصندوق",
-                    "nameFr": "Générateur d'ombre de boîte",
-                    "nameEs": "Generador de sombra de caja",
-                    "nameDe": "Box-Schatten-Generator"
-          },
-          {
-                    "id": 122,
-                    "name": "Glassmorphism Generator",
-                    "slug": "glassmorphism-generator",
-                    "category": "colors",
-                    "nameAr": "مولد تأثير الزجاج",
-                    "nameFr": "Générateur de glassmorphisme",
-                    "nameEs": "Generador de glassmorfismo",
-                    "nameDe": "Glassmorphismus-Generator"
-          },
-          {
-                    "id": 123,
-                    "name": "Neumorphism Generator",
-                    "slug": "neumorphism-generator",
-                    "category": "colors",
-                    "nameAr": "مولد تأثير النيومورفيزم",
-                    "nameFr": "Générateur de neumorphisme",
-                    "nameEs": "Generador de neumorfismo",
-                    "nameDe": "Neumorphismus-Generator"
-          },
-          {
-                    "id": 124,
-                    "name": "Border Radius Generator",
-                    "slug": "border-radius-generator",
-                    "category": "colors",
-                    "nameAr": "مولد نصف قطر الحدود",
-                    "nameFr": "Générateur de rayon de bordure",
-                    "nameEs": "Generador de radio de borde",
-                    "nameDe": "Border-Radius-Generator"
-          },
-          {
-                    "id": 125,
-                    "name": "Text Shadow Generator",
-                    "slug": "text-shadow-generator",
-                    "category": "colors",
-                    "nameAr": "مولد ظل النص",
-                    "nameFr": "Générateur d'ombre de texte",
-                    "nameEs": "Generador de sombra de texto",
-                    "nameDe": "Text-Schatten-Generator"
-          },
-          {
-                    "id": 126,
-                    "name": "Binary to Decimal",
-                    "slug": "binary-to-decimal",
-                    "category": "math",
-                    "nameAr": "ثنائي إلى عشري",
-                    "nameFr": "Binaire vers Décimal",
-                    "nameEs": "Binario a Decimal",
-                    "nameDe": "Binär zu Dezimal"
-          },
-          {
-                    "id": 127,
-                    "name": "Decimal to Binary",
-                    "slug": "decimal-to-binary",
-                    "category": "math",
-                    "nameAr": "عشري إلى ثنائي",
-                    "nameFr": "Décimal vers Binaire",
-                    "nameEs": "Decimal a Binario",
-                    "nameDe": "Dezimal zu Binär"
-          },
-          {
-                    "id": 128,
-                    "name": "Hex to Decimal",
-                    "slug": "hex-to-decimal",
-                    "category": "math",
-                    "nameAr": "سداسي عشر إلى عشري",
-                    "nameFr": "Hexadécimal vers Décimal",
-                    "nameEs": "Hexadecimal a Decimal",
-                    "nameDe": "Hexadezimal zu Dezimal"
-          },
-          {
-                    "id": 129,
-                    "name": "Decimal to Hex",
-                    "slug": "decimal-to-hex",
-                    "category": "math",
-                    "nameAr": "عشري إلى سداسي عشر",
-                    "nameFr": "Décimal vers Hexadécimal",
-                    "nameEs": "Decimal a Hexadecimal",
-                    "nameDe": "Dezimal zu Hexadezimal"
-          },
-          {
-                    "id": 130,
-                    "name": "Octal to Decimal",
-                    "slug": "octal-to-decimal",
-                    "category": "math",
-                    "nameAr": "ثماني إلى عشري",
-                    "nameFr": "Octal vers Décimal",
-                    "nameEs": "Octal a Decimal",
-                    "nameDe": "Oktal zu Dezimal"
-          },
-          {
-                    "id": 131,
-                    "name": "Decimal to Octal",
-                    "slug": "decimal-to-octal",
-                    "category": "math",
-                    "nameAr": "عشري إلى ثماني",
-                    "nameFr": "Décimal vers Octal",
-                    "nameEs": "Decimal a Octal",
-                    "nameDe": "Dezimal zu Oktal"
-          },
-          {
-                    "id": 132,
-                    "name": "Scientific Calculator",
-                    "slug": "scientific-calculator",
-                    "category": "math",
-                    "nameAr": "الآلة الحاسبة العلمية",
-                    "nameFr": "Calculatrice scientifique",
-                    "nameEs": "Calculadora científica",
-                    "nameDe": "Wissenschaftlicher Taschenrechner"
-          },
-          {
-                    "id": 133,
-                    "name": "Percentage Calculator",
-                    "slug": "percentage-calculator",
-                    "category": "math",
-                    "nameAr": "حاسبة النسبة المئوية",
-                    "nameFr": "Calculatrice de pourcentage",
-                    "nameEs": "Calculadora de porcentaje",
-                    "nameDe": "Prozentrechner"
-          },
-          {
-                    "id": 134,
-                    "name": "BMI Calculator",
-                    "slug": "bmi-calculator",
-                    "category": "math",
-                    "nameAr": "حاسبة مؤشر كتلة الجسم",
-                    "nameFr": "Calculateur d'IMC",
-                    "nameEs": "Calculadora de IMC",
-                    "nameDe": "BMI-Rechner"
-          },
-          {
-                    "id": 135,
-                    "name": "Compound Interest Calc",
-                    "slug": "compound-interest-calculator",
-                    "category": "math",
-                    "nameAr": "حاسبة الفائدة المركبة",
-                    "nameFr": "Calculateur d'intérêts composés",
-                    "nameEs": "Calculadora de interés compuesto",
-                    "nameDe": "Zinseszinsrechner"
-          },
-          {
-                    "id": 136,
-                    "name": "Random Number Generator",
-                    "slug": "random-number-generator",
-                    "category": "math",
-                    "nameAr": "مولد أرقام عشوائية",
-                    "nameFr": "Générateur de nombres aléatoires",
-                    "nameEs": "Generador de números aleatorios",
-                    "nameDe": "Zufallszahlengenerator"
-          },
-          {
-                    "id": 137,
-                    "name": "Average Calculator",
-                    "slug": "average-calculator",
-                    "category": "math",
-                    "nameAr": "حاسبة المتوسط",
-                    "nameFr": "Calculateur de moyenne",
-                    "nameEs": "Calculadora de promedio",
-                    "nameDe": "Durchschnittsrechner"
-          },
-          {
-                    "id": 138,
-                    "name": "Unix Timestamp Converter",
-                    "slug": "unix-timestamp-converter",
-                    "category": "time",
-                    "nameAr": "محول Unix Timestamp",
-                    "nameFr": "Convertisseur Unix Timestamp",
-                    "nameEs": "Convertidor de Unix Timestamp",
-                    "nameDe": "Unix-Timestamp-Konverter"
-          },
-          {
-                    "id": 139,
-                    "name": "Time Zone Converter",
-                    "slug": "time-zone-converter",
-                    "category": "time",
-                    "nameAr": "محول المناطق الزمنية",
-                    "nameFr": "Convertisseur de fuseaux horaires",
-                    "nameEs": "Convertidor de zonas horarias",
-                    "nameDe": "Zeitzonen-Konverter"
-          },
-          {
-                    "id": 140,
-                    "name": "Date Difference Calculator",
-                    "slug": "date-difference-calculator",
-                    "category": "time",
-                    "nameAr": "حاسبة الفرق بين التواريخ",
-                    "nameFr": "Calculateur de différence de dates",
-                    "nameEs": "Calculadora de diferencia de fechas",
-                    "nameDe": "Datumsdifferenz-Rechner"
-          },
-          {
-                    "id": 141,
-                    "name": "Age Calculator",
-                    "slug": "age-calculator",
-                    "category": "time",
-                    "nameAr": "حاسبة العمر",
-                    "nameFr": "Calculateur d'âge",
-                    "nameEs": "Calculadora de edad",
-                    "nameDe": "Altersrechner"
-          },
-          {
-                    "id": 142,
-                    "name": "Days Until Date Counter",
-                    "slug": "days-until-date",
-                    "category": "time",
-                    "nameAr": "عداد الأيام حتى تاريخ",
-                    "nameFr": "Compteur de jours jusqu'à",
-                    "nameEs": "Contador de días hasta",
-                    "nameDe": "Tage bis Datum Zähler"
-          },
-          {
-                    "id": 143,
-                    "name": "Countdown Timer",
-                    "slug": "countdown-timer",
-                    "category": "time",
-                    "nameAr": "مؤقت العد التنازلي",
-                    "nameFr": "Compte à rebours",
-                    "nameEs": "Cuenta regresiva",
-                    "nameDe": "Countdown-Timer"
-          },
-          {
-                    "id": 144,
-                    "name": "Calendar Generator",
-                    "slug": "calendar-generator",
-                    "category": "time",
-                    "nameAr": "مولد التقويم",
-                    "nameFr": "Générateur de calendrier",
-                    "nameEs": "Generador de calendario",
-                    "nameDe": "Kalendergenerator"
-          },
-          {
-                    "id": 145,
-                    "name": "Week Number Calculator",
-                    "slug": "week-number-calculator",
-                    "category": "time",
-                    "nameAr": "حاسبة رقم الأسبوع",
-                    "nameFr": "Calculateur de numéro de semaine",
-                    "nameEs": "Calculadora de número de semana",
-                    "nameDe": "Wochennummer-Rechner"
-          },
-          {
-                    "id": 146,
-                    "name": "Working Days Calculator",
-                    "slug": "working-days-calculator",
-                    "category": "time",
-                    "nameAr": "حاسبة أيام العمل",
-                    "nameFr": "Calculateur de jours ouvrables",
-                    "nameEs": "Calculadora de días laborables",
-                    "nameDe": "Arbeitstage-Rechner"
-          },
-          {
-                    "id": 147,
-                    "name": "Pomodoro Timer",
-                    "slug": "pomodoro-timer",
-                    "category": "time",
-                    "nameAr": "مؤقت بومودورو",
-                    "nameFr": "Minuteur Pomodoro",
-                    "nameEs": "Temporizador Pomodoro",
-                    "nameDe": "Pomodoro-Timer"
-          },
-          {
-                    "id": 148,
-                    "name": "Length Converter",
-                    "slug": "length-converter",
-                    "category": "units",
-                    "nameAr": "محول الطول",
-                    "nameFr": "Convertisseur de longueur",
-                    "nameEs": "Convertidor de longitud",
-                    "nameDe": "Längenkonverter"
-          },
-          {
-                    "id": 149,
-                    "name": "Weight Converter",
-                    "slug": "weight-converter",
-                    "category": "units",
-                    "nameAr": "محول الوزن",
-                    "nameFr": "Convertisseur de poids",
-                    "nameEs": "Convertidor de peso",
-                    "nameDe": "Gewichtskonverter"
-          },
-          {
-                    "id": 150,
-                    "name": "Temperature Converter",
-                    "slug": "temperature-converter",
-                    "category": "units",
-                    "nameAr": "محول درجة الحرارة",
-                    "nameFr": "Convertisseur de température",
-                    "nameEs": "Convertidor de temperatura",
-                    "nameDe": "Temperaturkonverter"
-          },
-          {
-                    "id": 151,
-                    "name": "Area Converter",
-                    "slug": "area-converter",
-                    "category": "units",
-                    "nameAr": "محول المساحة",
-                    "nameFr": "Convertisseur de surface",
-                    "nameEs": "Convertidor de área",
-                    "nameDe": "Flächenkonverter"
-          },
-          {
-                    "id": 152,
-                    "name": "Volume Converter",
-                    "slug": "volume-converter",
-                    "category": "units",
-                    "nameAr": "محول الحجم",
-                    "nameFr": "Convertisseur de volume",
-                    "nameEs": "Convertidor de volumen",
-                    "nameDe": "Volumenkonverter"
-          },
-          {
-                    "id": 153,
-                    "name": "Speed Converter",
-                    "slug": "speed-converter",
-                    "category": "units",
-                    "nameAr": "محول السرعة",
-                    "nameFr": "Convertisseur de vitesse",
-                    "nameEs": "Convertidor de velocidad",
-                    "nameDe": "Geschwindigkeitskonverter"
-          },
-          {
-                    "id": 154,
-                    "name": "Data Storage Converter",
-                    "slug": "data-storage-converter",
-                    "category": "units",
-                    "nameAr": "محول تخزين البيانات",
-                    "nameFr": "Convertisseur de stockage",
-                    "nameEs": "Convertidor de almacenamiento",
-                    "nameDe": "Speicherkonverter"
-          },
-          {
-                    "id": 155,
-                    "name": "Currency Converter",
-                    "slug": "currency-converter",
-                    "category": "units",
-                    "nameAr": "محول العملات",
-                    "nameFr": "Convertisseur de devises",
-                    "nameEs": "Convertidor de moneda",
-                    "nameDe": "Währungskonverter"
-          },
-          {
-                    "id": 156,
-                    "name": "Fuel Efficiency Converter",
-                    "slug": "fuel-efficiency-converter",
-                    "category": "units",
-                    "nameAr": "محول كفاءة الوقود",
-                    "nameFr": "Convertisseur d'efficacité énergétique",
-                    "nameEs": "Convertidor de eficiencia de combustible",
-                    "nameDe": "Kraftstoffeffizienz-Konverter"
-          },
-          {
-                    "id": 157,
-                    "name": "Pressure Converter",
-                    "slug": "pressure-converter",
-                    "category": "units",
-                    "nameAr": "محول الضغط",
-                    "nameFr": "Convertisseur de pression",
-                    "nameEs": "Convertidor de presión",
-                    "nameDe": "Druckkonverter"
-          },
-          {
-                    "id": 158,
-                    "name": "Energy Converter",
-                    "slug": "energy-converter",
-                    "category": "units",
-                    "nameAr": "محول الطاقة",
-                    "nameFr": "Convertisseur d'énergie",
-                    "nameEs": "Convertidor de energía",
-                    "nameDe": "Energiekonverter"
-          },
-          {
-                    "id": 159,
-                    "name": "Angle Converter",
-                    "slug": "angle-converter",
-                    "category": "units",
-                    "nameAr": "محول الزوايا",
-                    "nameFr": "Convertisseur d'angles",
-                    "nameEs": "Convertidor de ángulos",
-                    "nameDe": "Winkelkonverter"
-          },
-          {
-                    "id": 160,
-                    "name": "Shoe Size Converter",
-                    "slug": "shoe-size-converter",
-                    "category": "units",
-                    "nameAr": "محول مقاسات الأحذية",
-                    "nameFr": "Convertisseur de pointures",
-                    "nameEs": "Convertidor de tallas de zapatos",
-                    "nameDe": "Schuhgrößen-Konverter"
-          },
-          {
-                    "id": 161,
-                    "name": "Clothing Size Converter",
-                    "slug": "clothing-size-converter",
-                    "category": "units",
-                    "nameAr": "محول مقاسات الملابس",
-                    "nameFr": "Convertisseur de tailles de vêtements",
-                    "nameEs": "Convertidor de tallas de ropa",
-                    "nameDe": "Kleidergrößen-Konverter"
-          },
-          {
-                    "id": 162,
-                    "name": "Screen Resolution Calc",
-                    "slug": "screen-resolution-calculator",
-                    "category": "units",
-                    "nameAr": "حاسبة دقة الشاشة",
-                    "nameFr": "Calculateur de résolution d'écran",
-                    "nameEs": "Calculadora de resolución de pantalla",
-                    "nameDe": "Bildschirmauflösungs-Rechner"
-          },
-          {
-                    "id": 163,
-                    "name": "Aspect Ratio Calculator",
-                    "slug": "aspect-ratio-calculator",
-                    "category": "units",
-                    "nameAr": "حاسبة نسبة العرض للارتفاع",
-                    "nameFr": "Calculateur de ratio d'aspect",
-                    "nameEs": "Calculadora de relación de aspecto",
-                    "nameDe": "Seitenverhältnis-Rechner"
-          },
-          {
-                    "id": 164,
-                    "name": "Meta Tags Generator",
-                    "slug": "meta-tags-generator",
-                    "category": "seo",
-                    "nameAr": "مولد وسوم Meta",
-                    "nameFr": "Générateur de balises Meta",
-                    "nameEs": "Generador de metaetiquetas",
-                    "nameDe": "Meta-Tags-Generator"
-          },
-          {
-                    "id": 165,
-                    "name": "Robots.txt Generator",
-                    "slug": "robots-txt-generator",
-                    "category": "seo",
-                    "nameAr": "مولد robots.txt",
-                    "nameFr": "Générateur de robots.txt",
-                    "nameEs": "Generador de robots.txt",
-                    "nameDe": "robots.txt-Generator"
-          },
-          {
-                    "id": 166,
-                    "name": "Sitemap XML Generator",
-                    "slug": "sitemap-xml-generator",
-                    "category": "seo",
-                    "nameAr": "مولد Sitemap XML",
-                    "nameFr": "Générateur de Sitemap XML",
-                    "nameEs": "Generador de Sitemap XML",
-                    "nameDe": "Sitemap XML-Generator"
-          },
-          {
-                    "id": 167,
-                    "name": "UTM Link Builder",
-                    "slug": "utm-link-builder",
-                    "category": "seo",
-                    "nameAr": "منشئ روابط UTM",
-                    "nameFr": "Créateur de liens UTM",
-                    "nameEs": "Creador de enlaces UTM",
-                    "nameDe": "UTM-Link-Ersteller"
-          },
-          {
-                    "id": 168,
-                    "name": "URL Slug Generator",
-                    "slug": "url-slug-generator",
-                    "category": "seo",
-                    "nameAr": "مولد Slug للروابط",
-                    "nameFr": "Générateur de Slug URL",
-                    "nameEs": "Generador de URL Slug",
-                    "nameDe": "URL-Slug-Generator"
-          },
-          {
-                    "id": 169,
-                    "name": "Open Graph Generator",
-                    "slug": "open-graph-generator",
-                    "category": "seo",
-                    "nameAr": "مولد Open Graph",
-                    "nameFr": "Générateur Open Graph",
-                    "nameEs": "Generador de Open Graph",
-                    "nameDe": "Open-Graph-Generator"
-          },
-          {
-                    "id": 170,
-                    "name": "Twitter Card Generator",
-                    "slug": "twitter-card-generator",
-                    "category": "seo",
-                    "nameAr": "مولد Twitter Card",
-                    "nameFr": "Générateur de Twitter Card",
-                    "nameEs": "Generador de Twitter Card",
-                    "nameDe": "Twitter-Card-Generator"
-          },
-          {
-                    "id": 171,
-                    "name": "Canonical URL Generator",
-                    "slug": "canonical-url-generator",
-                    "category": "seo",
-                    "nameAr": "مولد الرابط الأساسي",
-                    "nameFr": "Générateur d'URL canonique",
-                    "nameEs": "Generador de URL canónica",
-                    "nameDe": "Kanonischer URL-Generator"
-          },
-          {
-                    "id": 172,
-                    "name": "Keyword Density Checker",
-                    "slug": "keyword-density-checker",
-                    "category": "seo",
-                    "nameAr": "فاحص كثافة الكلمات المفتاحية",
-                    "nameFr": "Vérificateur de densité de mots-clés",
-                    "nameEs": "Verificador de densidad de palabras clave",
-                    "nameDe": "Keyword-Dichte-Prüfer"
-          },
-          {
-                    "id": 173,
-                    "name": "Word Count for SEO",
-                    "slug": "word-count-seo",
-                    "category": "seo",
-                    "nameAr": "عداد الكلمات للـ SEO",
-                    "nameFr": "Compteur de mots pour SEO",
-                    "nameEs": "Contador de palabras para SEO",
-                    "nameDe": "Wortzähler für SEO"
-          },
-          {
-                    "id": 174,
-                    "name": "HTML to Markdown",
-                    "slug": "html-to-markdown",
-                    "category": "seo",
-                    "nameAr": "HTML إلى Markdown",
-                    "nameFr": "HTML vers Markdown",
-                    "nameEs": "HTML a Markdown",
-                    "nameDe": "HTML zu Markdown"
-          },
-          {
-                    "id": 175,
-                    "name": "HTTP Status Codes",
-                    "slug": "http-status-codes",
-                    "category": "seo",
-                    "nameAr": "أكواد حالة HTTP",
-                    "nameFr": "Codes de statut HTTP",
-                    "nameEs": "Códigos de estado HTTP",
-                    "nameDe": "HTTP-Statuscodes"
-          },
-          {
-                    "id": 176,
-                    "name": "hreflang Generator",
-                    "slug": "hreflang-generator",
-                    "category": "seo",
-                    "nameAr": "مولد hreflang",
-                    "nameFr": "Générateur de hreflang",
-                    "nameEs": "Generador de hreflang",
-                    "nameDe": "Hreflang-Generator"
-          },
-          {
-                    "id": 177,
-                    "name": "Schema Markup Generator",
-                    "slug": "schema-markup-generator",
-                    "category": "seo",
-                    "nameAr": "مولد Schema Markup",
-                    "nameFr": "Générateur de Schema Markup",
-                    "nameEs": "Generador de Schema Markup",
-                    "nameDe": "Schema-Markup-Generator"
-          },
-          {
-                    "id": 178,
-                    "name": "Password Generator",
-                    "slug": "password-generator",
-                    "category": "security",
-                    "nameAr": "مولد كلمات المرور",
-                    "nameFr": "Générateur de mots de passe",
-                    "nameEs": "Generador de contraseñas",
-                    "nameDe": "Passwortgenerator"
-          },
-          {
-                    "id": 179,
-                    "name": "Password Strength Checker",
-                    "slug": "password-strength-checker",
-                    "category": "security",
-                    "nameAr": "فاحص قوة كلمة المرور",
-                    "nameFr": "Vérificateur de force de mot de passe",
-                    "nameEs": "Verificador de fortaleza de contraseña",
-                    "nameDe": "Passwortstärke-Prüfer"
-          },
-          {
-                    "id": 180,
-                    "name": "Random PIN Generator",
-                    "slug": "random-pin-generator",
-                    "category": "security",
-                    "nameAr": "مولد PIN عشوائي",
-                    "nameFr": "Générateur de PIN aléatoire",
-                    "nameEs": "Generador de PIN aleatorio",
-                    "nameDe": "Zufälliger PIN-Generator"
-          },
-          {
-                    "id": 181,
-                    "name": "Privacy Policy Generator",
-                    "slug": "privacy-policy-generator",
-                    "category": "security",
-                    "nameAr": "مولد سياسة الخصوصية",
-                    "nameFr": "Générateur de politique de confidentialité",
-                    "nameEs": "Generador de política de privacidad",
-                    "nameDe": "Datenschutzrichtlinien-Generator"
-          },
-          {
-                    "id": 182,
-                    "name": "Terms & Conditions Gen",
-                    "slug": "terms-conditions-generator",
-                    "category": "security",
-                    "nameAr": "مولد الشروط والأحكام",
-                    "nameFr": "Générateur de conditions d'utilisation",
-                    "nameEs": "Generador de términos y condiciones",
-                    "nameDe": "Nutzungsbedingungen-Generator"
-          },
-          {
-                    "id": 183,
-                    "name": "Cookie Policy Generator",
-                    "slug": "cookie-policy-generator",
-                    "category": "security",
-                    "nameAr": "مولد سياسة ملفات الارتباط",
-                    "nameFr": "Générateur de politique de cookies",
-                    "nameEs": "Generador de política de cookies",
-                    "nameDe": "Cookie-Richtlinien-Generator"
-          },
-          {
-                    "id": 184,
-                    "name": "Hash Type Identifier",
-                    "slug": "hash-identifier",
-                    "category": "security",
-                    "nameAr": "محدد نوع التجزئة",
-                    "nameFr": "Identificateur de type de hachage",
-                    "nameEs": "Identificador de tipo de hash",
-                    "nameDe": "Hash-Typ-Identifikator"
-          },
-          {
-                    "id": 185,
-                    "name": "IP Address Lookup",
-                    "slug": "ip-address-lookup",
-                    "category": "security",
-                    "nameAr": "البحث عن عنوان IP",
-                    "nameFr": "Recherche d'adresse IP",
-                    "nameEs": "Búsqueda de dirección IP",
-                    "nameDe": "IP-Adressen-Lookup"
-          },
-          {
-                    "id": 186,
-                    "name": "CSV Viewer & Editor",
-                    "slug": "csv-viewer",
-                    "category": "data",
-                    "nameAr": "عارض ومحرر CSV",
-                    "nameFr": "Visionneuse et éditeur CSV",
-                    "nameEs": "Visor y editor de CSV",
-                    "nameDe": "CSV-Betrachter & Editor"
-          },
-          {
-                    "id": 187,
-                    "name": "Markdown Table Generator",
-                    "slug": "markdown-table-generator",
-                    "category": "data",
-                    "nameAr": "مولد جداول Markdown",
-                    "nameFr": "Générateur de tableaux Markdown",
-                    "nameEs": "Generador de tablas Markdown",
-                    "nameDe": "Markdown-Tabellengenerator"
-          },
-          {
-                    "id": 188,
-                    "name": "HTML Table to CSV",
-                    "slug": "html-table-to-csv",
-                    "category": "data",
-                    "nameAr": "جدول HTML إلى CSV",
-                    "nameFr": "Tableau HTML vers CSV",
-                    "nameEs": "Tabla HTML a CSV",
-                    "nameDe": "HTML-Tabelle zu CSV"
-          },
-          {
-                    "id": 189,
-                    "name": "CSV to HTML Table",
-                    "slug": "csv-to-html-table",
-                    "category": "data",
-                    "nameAr": "CSV إلى جدول HTML",
-                    "nameFr": "CSV vers tableau HTML",
-                    "nameEs": "CSV a tabla HTML",
-                    "nameDe": "CSV zu HTML-Tabelle"
-          },
-          {
-                    "id": 190,
-                    "name": "JSON Tree Viewer",
-                    "slug": "json-viewer",
-                    "category": "data",
-                    "nameAr": "عارض شجرة JSON",
-                    "nameFr": "Visionneuse d'arbre JSON",
-                    "nameEs": "Visor de árbol JSON",
-                    "nameDe": "JSON-Baum-Betrachter"
-          },
-          {
-                    "id": 191,
-                    "name": "Fake Data Generator",
-                    "slug": "fake-data-generator",
-                    "category": "data",
-                    "nameAr": "مولد بيانات وهمية",
-                    "nameFr": "Générateur de fausses données",
-                    "nameEs": "Generador de datos falsos",
-                    "nameDe": "Falsches Daten-Generator"
-          },
-          {
-                    "id": 192,
-                    "name": "QR Code Generator",
-                    "slug": "qr-code-generator",
-                    "category": "data",
-                    "nameAr": "مولد رمز QR",
-                    "nameFr": "Générateur de code QR",
-                    "nameEs": "Generador de código QR",
-                    "nameDe": "QR-Code-Generator"
-          },
-          {
-                    "id": 193,
-                    "name": "QR Code Reader",
-                    "slug": "qr-code-reader",
-                    "category": "data",
-                    "nameAr": "قارئ رمز QR",
-                    "nameFr": "Lecteur de code QR",
-                    "nameEs": "Lector de código QR",
-                    "nameDe": "QR-Code-Leser"
-          },
-          {
-                    "id": 194,
-                    "name": "Barcode Generator",
-                    "slug": "barcode-generator",
-                    "category": "data",
-                    "nameAr": "مولد الباركود",
-                    "nameFr": "Générateur de code-barres",
-                    "nameEs": "Generador de código de barras",
-                    "nameDe": "Strichcode-Generator"
-          },
-          {
-                    "id": 195,
-                    "name": "vCard Generator",
-                    "slug": "vcard-generator",
-                    "category": "data",
-                    "nameAr": "مولد vCard",
-                    "nameFr": "Générateur de vCard",
-                    "nameEs": "Generador de vCard",
-                    "nameDe": "vCard-Generator"
-          },
-          {
-                    "id": 196,
-                    "name": "WhatsApp Link Generator",
-                    "slug": "whatsapp-link-generator",
-                    "category": "special",
-                    "nameAr": "مولد رابط واتساب",
-                    "nameFr": "Générateur de lien WhatsApp",
-                    "nameEs": "Generador de enlace de WhatsApp",
-                    "nameDe": "WhatsApp-Link-Generator"
-          },
-          {
-                    "id": 197,
-                    "name": "Emoji to Unicode",
-                    "slug": "emoji-to-unicode",
-                    "category": "special",
-                    "nameAr": "Emoji إلى Unicode",
-                    "nameFr": "Emoji vers Unicode",
-                    "nameEs": "Emoji a Unicode",
-                    "nameDe": "Emoji zu Unicode"
-          },
-          {
-                    "id": 198,
-                    "name": "Unicode to Emoji",
-                    "slug": "unicode-to-emoji",
-                    "category": "special",
-                    "nameAr": "Unicode إلى Emoji",
-                    "nameFr": "Unicode vers Emoji",
-                    "nameEs": "Unicode a Emoji",
-                    "nameDe": "Unicode zu Emoji"
-          },
-          {
-                    "id": 199,
-                    "name": "Text to Binary",
-                    "slug": "text-to-binary",
-                    "category": "special",
-                    "nameAr": "نص إلى ثنائي",
-                    "nameFr": "Texte vers Binaire",
-                    "nameEs": "Texto a Binario",
-                    "nameDe": "Text zu Binär"
-          },
-          {
-                    "id": 200,
-                    "name": "Binary to Text",
-                    "slug": "binary-to-text",
-                    "category": "special",
-                    "nameAr": "ثنائي إلى نص",
-                    "nameFr": "Binaire vers Texte",
-                    "nameEs": "Binario a Texto",
-                    "nameDe": "Binär zu Text"
-          },
-          {
-                    "id": 201,
-                    "name": "Number to Words",
-                    "slug": "number-to-words",
-                    "category": "special",
-                    "nameAr": "رقم إلى كلمات",
-                    "nameFr": "Nombre vers Mots",
-                    "nameEs": "Número a Palabras",
-                    "nameDe": "Zahl zu Wörtern"
-          },
-          {
-                    "id": 202,
-                    "name": "Roman Numeral Converter",
-                    "slug": "roman-numeral-converter",
-                    "category": "special",
-                    "nameAr": "محول الأرقام الرومانية",
-                    "nameFr": "Convertisseur de chiffres romains",
-                    "nameEs": "Convertidor de números romanos",
-                    "nameDe": "Römische Zahlen Konverter"
-          },
-          {
-                    "id": 203,
-                    "name": "Screen Resolution Detector",
-                    "slug": "screen-resolution-detector",
-                    "category": "special",
-                    "nameAr": "كاشف دقة الشاشة",
-                    "nameFr": "Détecteur de résolution d'écran",
-                    "nameEs": "Detector de resolución de pantalla",
-                    "nameDe": "Bildschirmauflösungsdetektor"
-          },
-          {
-                    "id": 204,
-                    "name": "Browser Info Detector",
-                    "slug": "browser-info-detector",
-                    "category": "special",
-                    "nameAr": "كاشف معلومات المتصفح",
-                    "nameFr": "Détecteur d'informations de navigateur",
-                    "nameEs": "Detector de información del navegador",
-                    "nameDe": "Browser-Info-Detektor"
-          },
-          {
-                    "id": 205,
-                    "name": "Internet Speed Test",
-                    "slug": "internet-speed-test",
-                    "category": "special",
-                    "nameAr": "اختبار سرعة الإنترنت",
-                    "nameFr": "Test de vitesse Internet",
-                    "nameEs": "Prueba de velocidad de Internet",
-                    "nameDe": "Internetgeschwindigkeitstest"
-          }
-];
-
-        const categoryIcons = {
-            images: "🖼️", pdf: "📄", text: "✍️", developer: "💻",
-            colors: "🎨", math: "🔢", time: "⏱️", units: "📐",
-            seo: "🌐", security: "🔐", data: "📊", special: "🎯"
-        };
-
-        const categoryCounts = {
-            images: 42, pdf: 18, text: 22, developer: 28,
-            colors: 15, math: 12, time: 10, units: 16,
-            seo: 14, security: 8, data: 10, special: 10
-        };
+            // Images - 42 tools (IDs 1-42)
+            { id: 1, slug: "jpg-to-png", category: "images", desc: { ar: "تحويل صور JPG إلى PNG", en: "Convert JPG images to PNG", fr: "Convertir JPG en PNG", es: "Convertir JPG a PNG", de: "JPG zu PNG konvertieren" } },
+            { id: 2, slug: "png-to-jpg", category: "images", desc: { ar: "تحويل صور PNG إلى JPG", en: "Convert PNG images to JPG", fr: "Convertir PNG en JPG", es: "Convertir PNG a JPG", de: "PNG zu JPG konvertieren" } },
+            { id: 3, slug: "webp-to-jpg", category: "images", desc: { ar: "تحويل WebP إلى JPG", en: "Convert WebP to JPG", fr: "Convertir WebP en JPG", es: "Convertir WebP a JPG", de: "WebP zu JPG konvertieren" } },
+            { id: 4, slug: "jpg-to-webp", category: "images", desc: { ar: "تحويل JPG إلى WebP", en: "Convert JPG to WebP", fr: "Convertir JPG en WebP", es: "Convertir JPG a WebP", de: "JPG zu WebP konvertieren" } },
+            { id: 5, slug: "png-to-webp", category: "images", desc: { ar: "تحويل PNG إلى WebP", en: "Convert PNG to WebP", fr: "Convertir PNG en WebP", es: "Convertir PNG a WebP", de: "PNG zu WebP konvertieren" } },
+            { id: 6, slug: "webp-to-png", category: "images", desc: { ar: "تحويل WebP إلى PNG", en: "Convert WebP to PNG", fr: "Convertir WebP en PNG", es: "Convertir WebP a PNG", de: "WebP zu PNG konvertieren" } },
+            { id: 7, slug: "heic-to-jpg", category: "images", desc: { ar: "تحويل HEIC إلى JPG", en: "Convert HEIC to JPG", fr: "Convertir HEIC en JPG", es: "Convertir HEIC a JPG", de: "HEIC zu JPG konvertieren" } },
+            { id: 8, slug: "heic-to-png", category: "images", desc: { ar: "تحويل HEIC إلى PNG", en: "Convert HEIC to PNG", fr: "Convertir HEIC en PNG", es: "Convertir HEIC a PNG", de: "HEIC zu PNG konvertieren" } },
+            { id: 9, slug: "bmp-to-jpg", category: "images", desc: { ar: "تحويل BMP إلى JPG", en: "Convert BMP to JPG", fr: "Convertir BMP en JPG", es: "Convertir BMP a JPG", de: "BMP zu JPG konvertieren" } },
+            { id: 10, slug: "bmp-to-png", category: "images", desc: { ar: "تحويل BMP إلى PNG", en: "Convert BMP to PNG", fr: "Convertir BMP en PNG", es: "Convertir BMP a PNG", de: "BMP zu PNG konvertieren" } },
+            { id: 11, slug: "tiff-to-jpg", category: "images", desc: { ar: "تحويل TIFF إلى JPG", en: "Convert TIFF to JPG", fr: "Convertir TIFF en JPG", es: "Convertir TIFF a JPG", de: "TIFF zu JPG konvertieren" } },
+            { id: 12, slug: "tiff-to-png", category: "images", desc: { ar: "تحويل TIFF إلى PNG", en: "Convert TIFF to PNG", fr: "Convertir TIFF en PNG", es: "Convertir TIFF a PNG", de: "TIFF zu PNG konvertieren" } },
+            { id: 13, slug: "gif-to-jpg", category: "images", desc: { ar: "تحويل GIF إلى JPG", en: "Convert GIF to JPG", fr: "Convertir GIF en JPG", es: "Convertir GIF a JPG", de: "GIF zu JPG konvertieren" } },
+            { id: 14, slug: "gif-to-png", category: "images", desc: { ar: "تحويل GIF إلى PNG", en: "Convert GIF to PNG", fr: "Convertir GIF en PNG", es: "Convertir GIF a PNG", de: "GIF zu PNG konvertieren" } },
+            { id: 15, slug: "svg-to-jpg", category: "images", desc: { ar: "تحويل SVG إلى JPG", en: "Convert SVG to JPG", fr: "Convertir SVG en JPG", es: "Convertir SVG a JPG", de: "SVG zu JPG konvertieren" } },
+            { id: 16, slug: "svg-to-png", category: "images", desc: { ar: "تحويل SVG إلى PNG", en: "Convert SVG to PNG", fr: "Convertir SVG en PNG", es: "Convertir SVG a PNG", de: "SVG zu PNG konvertieren" } },
+            { id: 17, slug: "avif-to-jpg", category: "images", desc: { ar: "تحويل AVIF إلى JPG", en: "Convert AVIF to JPG", fr: "Convertir AVIF en JPG", es: "Convertir AVIF a JPG", de: "AVIF zu JPG konvertieren" } },
+            { id: 18, slug: "avif-to-png", category: "images", desc: { ar: "تحويل AVIF إلى PNG", en: "Convert AVIF to PNG", fr: "Convertir AVIF en PNG", es: "Convertir AVIF a PNG", de: "AVIF zu PNG konvertieren" } },
+            { id: 19, slug: "ico-to-jpg", category: "images", desc: { ar: "تحويل ICO إلى JPG", en: "Convert ICO to JPG", fr: "Convertir ICO en JPG", es: "Convertir ICO a JPG", de: "ICO zu JPG konvertieren" } },
+            { id: 20, slug: "ico-to-png", category: "images", desc: { ar: "تحويل ICO إلى PNG", en: "Convert ICO to PNG", fr: "Convertir ICO en PNG", es: "Convertir ICO a PNG", de: "ICO zu PNG konvertieren" } },
+            { id: 21, slug: "jpg-to-gif", category: "images", desc: { ar: "تحويل JPG إلى GIF", en: "Convert JPG to GIF", fr: "Convertir JPG en GIF", es: "Convertir JPG a GIF", de: "JPG zu GIF konvertieren" } },
+            { id: 22, slug: "png-to-gif", category: "images", desc: { ar: "تحويل PNG إلى GIF", en: "Convert PNG to GIF", fr: "Convertir PNG en GIF", es: "Convertir PNG a GIF", de: "PNG zu GIF konvertieren" } },
+            { id: 23, slug: "jpg-to-ico", category: "images", desc: { ar: "تحويل JPG إلى ICO", en: "Convert JPG to ICO", fr: "Convertir JPG en ICO", es: "Convertir JPG a ICO", de: "JPG zu ICO konvertieren" } },
+            { id: 24, slug: "png-to-ico", category: "images", desc: { ar: "تحويل PNG إلى ICO", en: "Convert PNG to ICO", fr: "Convertir PNG en ICO", es: "Convertir PNG a ICO", de: "PNG zu ICO konvertieren" } },
+            { id: 25, slug: "jpg-to-avif", category: "images", desc: { ar: "تحويل JPG إلى AVIF", en: "Convert JPG to AVIF", fr: "Convertir JPG en AVIF", es: "Convertir JPG a AVIF", de: "JPG zu AVIF konvertieren" } },
+            { id: 26, slug: "png-to-avif", category: "images", desc: { ar: "تحويل PNG إلى AVIF", en: "Convert PNG to AVIF", fr: "Convertir PNG en AVIF", es: "Convertir PNG a AVIF", de: "PNG zu AVIF konvertieren" } },
+            { id: 27, slug: "jpg-to-bmp", category: "images", desc: { ar: "تحويل JPG إلى BMP", en: "Convert JPG to BMP", fr: "Convertir JPG en BMP", es: "Convertir JPG a BMP", de: "JPG zu BMP konvertieren" } },
+            { id: 28, slug: "png-to-bmp", category: "images", desc: { ar: "تحويل PNG إلى BMP", en: "Convert PNG to BMP", fr: "Convertir PNG en BMP", es: "Convertir PNG a BMP", de: "PNG zu BMP konvertieren" } },
+            { id: 29, slug: "webp-to-gif", category: "images", desc: { ar: "تحويل WebP إلى GIF", en: "Convert WebP to GIF", fr: "Convertir WebP en GIF", es: "Convertir WebP a GIF", de: "WebP zu GIF konvertieren" } },
+            { id: 30, slug: "webp-to-avif", category: "images", desc: { ar: "تحويل WebP إلى AVIF", en: "Convert WebP to AVIF", fr: "Convertir WebP en AVIF", es: "Convertir WebP a AVIF", de: "WebP zu AVIF konvertieren" } },
+            { id: 31, slug: "gif-to-webp", category: "images", desc: { ar: "تحويل GIF إلى WebP", en: "Convert GIF to WebP", fr: "Convertir GIF en WebP", es: "Convertir GIF a WebP", de: "GIF zu WebP konvertieren" } },
+            { id: 32, slug: "avif-to-webp", category: "images", desc: { ar: "تحويل AVIF إلى WebP", en: "Convert AVIF to WebP", fr: "Convertir AVIF en WebP", es: "Convertir AVIF a WebP", de: "AVIF zu WebP konvertieren" } },
+            { id: 33, slug: "gif-to-apng", category: "images", desc: { ar: "تحويل GIF إلى APNG", en: "Convert GIF to APNG", fr: "Convertir GIF en APNG", es: "Convertir GIF a APNG", de: "GIF zu APNG konvertieren" } },
+            { id: 34, slug: "apng-to-gif", category: "images", desc: { ar: "تحويل APNG إلى GIF", en: "Convert APNG to GIF", fr: "Convertir APNG en GIF", es: "Convertir APNG a GIF", de: "APNG zu GIF konvertieren" } },
+            { id: 35, slug: "webp-to-mp4", category: "images", desc: { ar: "تحويل WebP إلى MP4", en: "Convert WebP to MP4", fr: "Convertir WebP en MP4", es: "Convertir WebP a MP4", de: "WebP zu MP4 konvertieren" } },
+            { id: 36, slug: "mp4-to-webp", category: "images", desc: { ar: "تحويل MP4 إلى WebP", en: "Convert MP4 to WebP", fr: "Convertir MP4 en WebP", es: "Convertir MP4 a WebP", de: "MP4 zu WebP konvertieren" } },
+            { id: 37, slug: "gif-to-mp4", category: "images", desc: { ar: "تحويل GIF إلى MP4", en: "Convert GIF to MP4", fr: "Convertir GIF en MP4", es: "Convertir GIF a MP4", de: "GIF zu MP4 konvertieren" } },
+            { id: 38, slug: "mp4-to-gif", category: "images", desc: { ar: "تحويل MP4 إلى GIF", en: "Convert MP4 to GIF", fr: "Convertir MP4 en GIF", es: "Convertir MP4 a GIF", de: "MP4 zu GIF konvertieren" } },
+            { id: 39, slug: "gif-to-animated-webp", category: "images", desc: { ar: "تحويل GIF إلى WebP متحرك", en: "Convert GIF to Animated WebP", fr: "Convertir GIF en WebP animé", es: "Convertir GIF a WebP animado", de: "GIF zu animiertem WebP konvertieren" } },
+            { id: 40, slug: "animated-webp-to-gif", category: "images", desc: { ar: "تحويل WebP المتحرك إلى GIF", en: "Convert Animated WebP to GIF", fr: "Convertir WebP animé en GIF", es: "Convertir WebP animado a GIF", de: "Animiertes WebP zu GIF konvertieren" } },
+            { id: 41, slug: "apng-to-gif", category: "images", desc: { ar: "تحويل APNG إلى GIF", en: "Convert APNG to GIF", fr: "Convertir APNG en GIF", es: "Convertir APNG a GIF", de: "APNG zu GIF konvertieren" } },
+            { id: 42, slug: "gif-to-apng", category: "images", desc: { ar: "تحويل GIF إلى APNG", en: "Convert GIF to APNG", fr: "Convertir GIF en APNG", es: "Convertir GIF a APNG", de: "GIF zu APNG konvertieren" } },
+            
+            // PDF - 18 tools (IDs 43-60)
+            { id: 43, slug: "merge-pdf", category: "pdf", desc: { ar: "دمج ملفات PDF", en: "Merge PDF Files", fr: "Fusionner PDF", es: "Fusionar PDF", de: "PDF zusammenführen" } },
+            { id: 44, slug: "split-pdf", category: "pdf", desc: { ar: "تقسيم PDF", en: "Split PDF", fr: "Diviser PDF", es: "Dividir PDF", de: "PDF teilen" } },
+            { id: 45, slug: "compress-pdf", category: "pdf", desc: { ar: "ضغط PDF", en: "Compress PDF", fr: "Compresser PDF", es: "Comprimir PDF", de: "PDF komprimieren" } },
+            { id: 46, slug: "pdf-to-word", category: "pdf", desc: { ar: "PDF إلى Word", en: "PDF to Word", fr: "PDF vers Word", es: "PDF a Word", de: "PDF zu Word" } },
+            { id: 47, slug: "pdf-to-excel", category: "pdf", desc: { ar: "PDF إلى Excel", en: "PDF to Excel", fr: "PDF vers Excel", es: "PDF a Excel", de: "PDF zu Excel" } },
+            { id: 48, slug: "pdf-to-powerpoint", category: "pdf", desc: { ar: "PDF إلى PowerPoint", en: "PDF to PowerPoint", fr: "PDF vers PowerPoint", es: "PDF a PowerPoint", de: "PDF zu PowerPoint" } },
+            { id: 49, slug: "pdf-to-jpg", category: "pdf", desc: { ar: "PDF إلى JPG", en: "PDF to JPG", fr: "PDF vers JPG", es: "PDF a JPG", de: "PDF zu JPG" } },
+            { id: 50, slug: "pdf-to-png", category: "pdf", desc: { ar: "PDF إلى PNG", en: "PDF to PNG", fr: "PDF vers PNG", es: "PDF a PNG", de: "PDF zu PNG" } },
+            { id: 51, slug: "pdf-to-pdfa", category: "pdf", desc: { ar: "PDF إلى PDF/A", en: "PDF to PDF/A", fr: "PDF vers PDF/A", es: "PDF a PDF/A", de: "PDF zu PDF/A" } },
+            { id: 52, slug: "word-to-pdf", category: "pdf", desc: { ar: "Word إلى PDF", en: "Word to PDF", fr: "Word vers PDF", es: "Word a PDF", de: "Word zu PDF" } },
+            { id: 53, slug: "excel-to-pdf", category: "pdf", desc: { ar: "Excel إلى PDF", en: "Excel to PDF", fr: "Excel vers PDF", es: "Excel a PDF", de: "Excel zu PDF" } },
+            { id: 54, slug: "powerpoint-to-pdf", category: "pdf", desc: { ar: "PowerPoint إلى PDF", en: "PowerPoint to PDF", fr: "PowerPoint vers PDF", es: "PowerPoint a PDF", de: "PowerPoint zu PDF" } },
+            { id: 55, slug: "jpg-to-pdf", category: "pdf", desc: { ar: "JPG إلى PDF", en: "JPG to PDF", fr: "JPG vers PDF", es: "JPG a PDF", de: "JPG zu PDF" } },
+            { id: 56, slug: "png-to-pdf", category: "pdf", desc: { ar: "PNG إلى PDF", en: "PNG to PDF", fr: "PNG vers PDF", es: "PNG a PDF", de: "PNG zu PDF" } },
+            { id: 57, slug: "protect-pdf", category: "pdf", desc: { ar: "حماية PDF بكلمة مرور", en: "Protect PDF with Password", fr: "Protéger PDF par mot de passe", es: "Proteger PDF con contraseña", de: "PDF mit Passwort schützen" } },
+            { id: 58, slug: "unlock-pdf", category: "pdf", desc: { ar: "فتح حماية PDF", en: "Unlock PDF", fr: "Déverrouiller PDF", es: "Desbloquear PDF", de: "PDF entsperren" } },
+            { id: 59, slug: "rotate-pdf", category: "pdf", desc: { ar: "تدوير صفحات PDF", en: "Rotate PDF Pages", fr: "Pivoter pages PDF", es: "Rotar páginas PDF", de: "PDF-Seiten drehen" } },
+            { id: 60, slug: "remove-pdf-password", category: "pdf", desc: { ar: "إزالة كلمة مرور PDF", en: "Remove PDF Password", fr: "Supprimer mot de passe PDF", es: "Eliminar contraseña PDF", de: "PDF-Passwort entfernen" } },
+            
+            // Text - 22 tools (IDs 61-82)
+            { id: 61, slug: "word-counter", category: "text", desc: { ar: "عداد الكلمات", en: "Word Counter", fr: "Compteur de mots", es: "Contador de palabras", de: "Wörter zählen" } },
+            { id: 62, slug: "character-counter", category: "text", desc: { ar: "عداد الأحرف", en: "Character Counter", fr: "Compteur de caractères", es: "Contador de caracteres", de: "Zeichen zählen" } },
+            { id: 63, slug: "line-counter", category: "text", desc: { ar: "عداد الأسطر", en: "Line Counter", fr: "Compteur de lignes", es: "Contador de líneas", de: "Zeilen zählen" } },
+            { id: 64, slug: "remove-duplicate-lines", category: "text", desc: { ar: "إزالة الأسطر المكررة", en: "Remove Duplicate Lines", fr: "Supprimer lignes dupliquées", es: "Eliminar líneas duplicadas", de: "Doppelte Zeilen entfernen" } },
+            { id: 65, slug: "sort-lines", category: "text", desc: { ar: "ترتيب الأسطر من أ إلى ي", en: "Sort Lines A-Z", fr: "Trier lignes A-Z", es: "Ordenar líneas A-Z", de: "Zeilen A-Z sortieren" } },
+            { id: 66, slug: "reverse-text", category: "text", desc: { ar: "عكس النص", en: "Reverse Text", fr: "Texte inversé", es: "Texto invertido", de: "Text umkehren" } },
+            { id: 67, slug: "case-converter", category: "text", desc: { ar: "محول حروف الكتابة", en: "Case Converter", fr: "Convertisseur de casse", es: "Convertidor de mayúsculas/minúsculas", de: "Groß-/Kleinschreibung konvertieren" } },
+            { id: 68, slug: "remove-extra-spaces", category: "text", desc: { ar: "إزالة المسافات الزائدة", en: "Remove Extra Spaces", fr: "Supprimer espaces extra", es: "Eliminar espacios extra", de: "Zusätzliche Leerzeichen entfernen" } },
+            { id: 69, slug: "text-to-slug", category: "text", desc: { ar: "نص إلى رابط URL", en: "Text to URL Slug", fr: "Texte vers URL Slug", es: "Texto a URL Slug", de: "Text zu URL Slug" } },
+            { id: 70, slug: "remove-line-breaks", category: "text", desc: { ar: "إزالة فواصل الأسطر", en: "Remove Line Breaks", fr: "Supprimer sauts de ligne", es: "Eliminar saltos de línea", de: "Zeilenumbrüche entfernen" } },
+            { id: 71, slug: "add-line-numbers", category: "text", desc: { ar: "إضافة أرقام للأسطر", en: "Add Line Numbers", fr: "Ajouter numéros de ligne", es: "Agregar números de línea", de: "Zeilennummern hinzufügen" } },
+            { id: 72, slug: "text-diff-checker", category: "text", desc: { ar: "مقارنة النصوص", en: "Text Diff Checker", fr: "Comparateur de texte", es: "Comparador de texto", de: "Textvergleicher" } },
+            { id: 73, slug: "find-and-replace", category: "text", desc: { ar: "بحث واستبدال", en: "Find and Replace", fr: "Rechercher et remplacer", es: "Buscar y reemplazar", de: "Suchen und Ersetzen" } },
+            { id: 74, slug: "lorem-ipsum-generator", category: "text", desc: { ar: "مولد Lorem Ipsum", en: "Lorem Ipsum Generator", fr: "Générateur Lorem Ipsum", es: "Generador Lorem Ipsum", de: "Lorem Ipsum Generator" } },
+            { id: 75, slug: "random-text-generator", category: "text", desc: { ar: "مولد نص عشوائي", en: "Random Text Generator", fr: "Générateur de texte aléatoire", es: "Generador de texto aleatorio", de: "Zufälliger Textgenerator" } },
+            { id: 76, slug: "text-to-ascii-art", category: "text", desc: { ar: "نص إلى ASCII Art", en: "Text to ASCII Art", fr: "Texte vers ASCII Art", es: "Texto a ASCII Art", de: "Text zu ASCII Art" } },
+            { id: 77, slug: "fancy-text-generator", category: "text", desc: { ar: "مولد نص مزخرف", en: "Fancy Text Generator", fr: "Générateur de texte fantaisie", es: "Generador de texto decorativo", de: "Fantasietextgenerator" } },
+            { id: 78, slug: "morse-code-translator", category: "text", desc: { ar: "مترجم شفرة مورس", en: "Morse Code Translator", fr: "Traducteur Morse", es: "Traductor de código Morse", de: "Morsecode-Übersetzer" } },
+            { id: 79, slug: "reading-time-estimator", category: "text", desc: { ar: "تقدير وقت القراءة", en: "Reading Time Estimator", fr: "Estimateur de temps de lecture", es: "Estimador de tiempo de lectura", de: "Lesezeitschätzer" } },
+            { id: 80, slug: "text-repeater", category: "text", desc: { ar: "مكرر النص", en: "Text Repeater", fr: "Répéteur de texte", es: "Repetidor de texto", de: "Textwiederholer" } },
+            { id: 81, slug: "upside-down-text", category: "text", desc: { ar: "نص مقلوب رأسياً", en: "Upside Down Text", fr: "Texte à l'envers", es: "Texto al revés", de: "Auf den Kopf gestellter Text" } },
+            { id: 82, slug: "mirror-text", category: "text", desc: { ar: "مولد نص معكوس", en: "Mirror Text Generator", fr: "Générateur de texte miroir", es: "Generador de texto espejo", de: "Spiegeltextgenerator" } },
+            
+            // Developer - 28 tools (IDs 83-110)
+            { id: 83, slug: "json-formatter", category: "developer", desc: { ar: "منسق ومدقق JSON", en: "JSON Formatter & Validator", fr: "Formateur et validateur JSON", es: "Formateador y validador JSON", de: "JSON-Formatierer & Validator" } },
+            { id: 84, slug: "json-minifier", category: "developer", desc: { ar: "ضاغط JSON", en: "JSON Minifier", fr: "Minifieur JSON", es: "Minificador JSON", de: "JSON-Minifier" } },
+            { id: 85, slug: "json-to-csv", category: "developer", desc: { ar: "JSON إلى CSV", en: "JSON to CSV", fr: "JSON vers CSV", es: "JSON a CSV", de: "JSON zu CSV" } },
+            { id: 86, slug: "json-to-xml", category: "developer", desc: { ar: "JSON إلى XML", en: "JSON to XML", fr: "JSON vers XML", es: "JSON a XML", de: "JSON zu XML" } },
+            { id: 87, slug: "json-to-yaml", category: "developer", desc: { ar: "JSON إلى YAML", en: "JSON to YAML", fr: "JSON vers YAML", es: "JSON a YAML", de: "JSON zu YAML" } },
+            { id: 88, slug: "csv-to-json", category: "developer", desc: { ar: "CSV إلى JSON", en: "CSV to JSON", fr: "CSV vers JSON", es: "CSV a JSON", de: "CSV zu JSON" } },
+            { id: 89, slug: "xml-to-json", category: "developer", desc: { ar: "XML إلى JSON", en: "XML to JSON", fr: "XML vers JSON", es: "XML a JSON", de: "XML zu JSON" } },
+            { id: 90, slug: "yaml-to-json", category: "developer", desc: { ar: "YAML إلى JSON", en: "YAML to JSON", fr: "YAML vers JSON", es: "YAML a JSON", de: "YAML zu JSON" } },
+            { id: 91, slug: "json-schema-validator", category: "developer", desc: { ar: "مدقق مخطط JSON", en: "JSON Schema Validator", fr: "Validateur de schéma JSON", es: "Validador de esquema JSON", de: "JSON-Schema-Validator" } },
+            { id: 92, slug: "html-formatter", category: "developer", desc: { ar: "منسق HTML", en: "HTML Formatter", fr: "Formateur HTML", es: "Formateador HTML", de: "HTML-Formatierer" } },
+            { id: 93, slug: "html-minifier", category: "developer", desc: { ar: "ضاغط HTML", en: "HTML Minifier", fr: "Minifieur HTML", es: "Minificador HTML", de: "HTML-Minifier" } },
+            { id: 94, slug: "css-formatter", category: "developer", desc: { ar: "منسق CSS", en: "CSS Formatter", fr: "Formateur CSS", es: "Formateador CSS", de: "CSS-Formatierer" } },
+            { id: 95, slug: "css-minifier", category: "developer", desc: { ar: "ضاغط CSS", en: "CSS Minifier", fr: "Minifieur CSS", es: "Minificador CSS", de: "CSS-Minifier" } },
+            { id: 96, slug: "js-minifier", category: "developer", desc: { ar: "ضاغط JavaScript", en: "JavaScript Minifier", fr: "Minifieur JavaScript", es: "Minificador JavaScript", de: "JavaScript-Minifier" } },
+            { id: 97, slug: "sql-formatter", category: "developer", desc: { ar: "منسق SQL", en: "SQL Formatter", fr: "Formateur SQL", es: "Formateador SQL", de: "SQL-Formatierer" } },
+            { id: 98, slug: "html-entities-encoder", category: "developer", desc: { ar: "ترميز كيانات HTML", en: "HTML Entities Encoder", fr: "Encodeur d'entités HTML", es: "Codificador de entidades HTML", de: "HTML-Entitäten-Encoder" } },
+            { id: 99, slug: "html-entities-decoder", category: "developer", desc: { ar: "فك ترميز كيانات HTML", en: "HTML Entities Decoder", fr: "Décodeur d'entités HTML", es: "Decodificador de entidades HTML", de: "HTML-Entitäten-Decoder" } },
+            { id: 100, slug: "base64-encoder", category: "developer", desc: { ar: "ترميز Base64", en: "Base64 Encoder", fr: "Encodeur Base64", es: "Codificador Base64", de: "Base64-Encoder" } },
+            { id: 101, slug: "base64-decoder", category: "developer", desc: { ar: "فك ترميز Base64", en: "Base64 Decoder", fr: "Décodeur Base64", es: "Decodificador Base64", de: "Base64-Decoder" } },
+            { id: 102, slug: "url-encoder", category: "developer", desc: { ar: "ترميز URL", en: "URL Encoder", fr: "Encodeur URL", es: "Codificador URL", de: "URL-Encoder" } },
+            { id: 103, slug: "url-decoder", category: "developer", desc: { ar: "فك ترميز URL", en: "URL Decoder", fr: "Décodeur URL", es: "Decodificador URL", de: "URL-Decoder" } },
+            { id: 104, slug: "md5-generator", category: "developer", desc: { ar: "مولد تجزئة MD5", en: "MD5 Hash Generator", fr: "Générateur de hachage MD5", es: "Generador de hash MD5", de: "MD5-Hash-Generator" } },
+            { id: 105, slug: "sha256-generator", category: "developer", desc: { ar: "مولد تجزئة SHA-256", en: "SHA-256 Hash Generator", fr: "Générateur de hachage SHA-256", es: "Generador de hash SHA-256", de: "SHA-256-Hash-Generator" } },
+            { id: 106, slug: "sha512-generator", category: "developer", desc: { ar: "مولد تجزئة SHA-512", en: "SHA-512 Hash Generator", fr: "Générateur de hachage SHA-512", es: "Generador de hash SHA-512", de: "SHA-512-Hash-Generator" } },
+            { id: 107, slug: "jwt-decoder", category: "developer", desc: { ar: "فك تشفير JWT", en: "JWT Decoder", fr: "Décodeur JWT", es: "Decodificador JWT", de: "JWT-Decoder" } },
+            { id: 108, slug: "uuid-generator", category: "developer", desc: { ar: "مولد UUID/GUID", en: "UUID/GUID Generator", fr: "Générateur UUID/GUID", es: "Generador UUID/GUID", de: "UUID/GUID-Generator" } },
+            { id: 109, slug: "regex-tester", category: "developer", desc: { ar: "اختبار التعبيرات النمطية", en: "Regex Tester", fr: "Testeur d'expressions régulières", es: "Probador de expresiones regulares", de: "Regex-Tester" } },
+            { id: 110, slug: "markdown-to-html", category: "developer", desc: { ar: "Markdown إلى HTML", en: "Markdown to HTML", fr: "Markdown vers HTML", es: "Markdown a HTML", de: "Markdown zu HTML" } },
+            
+            // Colors - 15 tools (IDs 111-125)
+            { id: 111, slug: "hex-to-rgb", category: "colors", desc: { ar: "HEX إلى RGB", en: "HEX to RGB", fr: "HEX vers RGB", es: "HEX a RGB", de: "HEX zu RGB" } },
+            { id: 112, slug: "rgb-to-hex", category: "colors", desc: { ar: "RGB إلى HEX", en: "RGB to HEX", fr: "RGB vers HEX", es: "RGB a HEX", de: "RGB zu HEX" } },
+            { id: 113, slug: "hex-to-hsl", category: "colors", desc: { ar: "HEX إلى HSL", en: "HEX to HSL", fr: "HEX vers HSL", es: "HEX a HSL", de: "HEX zu HSL" } },
+            { id: 114, slug: "hsl-to-hex", category: "colors", desc: { ar: "HSL إلى HEX", en: "HSL to HEX", fr: "HSL vers HEX", es: "HSL a HEX", de: "HSL zu HEX" } },
+            { id: 115, slug: "cmyk-to-rgb", category: "colors", desc: { ar: "CMYK إلى RGB", en: "CMYK to RGB", fr: "CMYK vers RGB", es: "CMYK a RGB", de: "CMYK zu RGB" } },
+            { id: 116, slug: "rgb-to-cmyk", category: "colors", desc: { ar: "RGB إلى CMYK", en: "RGB to CMYK", fr: "RGB vers CMYK", es: "RGB a CMYK", de: "RGB zu CMYK" } },
+            { id: 117, slug: "color-picker", category: "colors", desc: { ar: "منتقي الألوان", en: "Color Picker", fr: "Sélecteur de couleur", es: "Selector de color", de: "Farbwähler" } },
+            { id: 118, slug: "gradient-generator", category: "colors", desc: { ar: "مولد تدرج CSS", en: "CSS Gradient Generator", fr: "Générateur de dégradé CSS", es: "Generador de degradados CSS", de: "CSS-Verlaufsgenerator" } },
+            { id: 119, slug: "color-palette-generator", category: "colors", desc: { ar: "مولد لوحة ألوان", en: "Color Palette Generator", fr: "Générateur de palette de couleurs", es: "Generador de paleta de colores", de: "Farbpalettengenerator" } },
+            { id: 120, slug: "color-contrast-checker", category: "colors", desc: { ar: "فاحص تباين الألوان", en: "Color Contrast Checker", fr: "Vérificateur de contraste", es: "Comprobador de contraste", de: "Farbkontrastprüfer" } },
+            { id: 121, slug: "box-shadow-generator", category: "colors", desc: { ar: "مولد ظل الصندوق", en: "Box Shadow Generator", fr: "Générateur d'ombre de boîte", es: "Generador de sombra de caja", de: "Box-Schatten-Generator" } },
+            { id: 122, slug: "glassmorphism-generator", category: "colors", desc: { ar: "مولد تأثير الزجاج", en: "Glassmorphism Generator", fr: "Générateur de glassmorphisme", es: "Generador de glassmorfismo", de: "Glassmorphismus-Generator" } },
+            { id: 123, slug: "neumorphism-generator", category: "colors", desc: { ar: "مولد تأثير النيومورفيزم", en: "Neumorphism Generator", fr: "Générateur de neumorphisme", es: "Generador de neumorfismo", de: "Neumorphismus-Generator" } },
+            { id: 124, slug: "border-radius-generator", category: "colors", desc: { ar: "مولد نصف قطر الحدود", en: "Border Radius Generator", fr: "Générateur de rayon de bordure", es: "Generador de radio de borde", de: "Border-Radius-Generator" } },
+            { id: 125, slug: "text-shadow-generator", category: "colors", desc: { ar: "مولد ظل النص", en: "Text Shadow Generator", fr: "Générateur d'ombre de texte", es: "Generador de sombra de texto", de: "Text-Schatten-Generator" } },
+            
+            // Math - 12 tools (IDs 126-137)
+            { id: 126, slug: "binary-to-decimal", category: "math", desc: { ar: "ثنائي إلى عشري", en: "Binary to Decimal", fr: "Binaire vers Décimal", es: "Binario a Decimal", de: "Binär zu Dezimal" } },
+            { id: 127, slug: "decimal-to-binary", category: "math", desc: { ar: "عشري إلى ثنائي", en: "Decimal to Binary", fr: "Décimal vers Binaire", es: "Decimal a Binario", de: "Dezimal zu Binär" } },
+            { id: 128, slug: "hex-to-decimal", category: "math", desc: { ar: "سداسي عشر إلى عشري", en: "Hex to Decimal", fr: "Hexadécimal vers Décimal", es: "Hexadecimal a Decimal", de: "Hexadezimal zu Dezimal" } },
+            { id: 129, slug: "decimal-to-hex", category: "math", desc: { ar: "عشري إلى سداسي عشر", en: "Decimal to Hex", fr: "Décimal vers Hexadécimal", es: "Decimal a Hexadecimal", de: "Dezimal zu Hexadezimal" } },
+            { id: 130, slug: "octal-to-decimal", category: "math", desc: { ar: "ثماني إلى عشري", en: "Octal to Decimal", fr: "Octal vers Décimal", es: "Octal a Decimal", de: "Oktal zu Dezimal" } },
+            { id: 131, slug: "decimal-to-octal", category: "math", desc: { ar: "عشري إلى ثماني", en: "Decimal to Octal", fr: "Décimal vers Octal", es: "Decimal a Octal", de: "Dezimal zu Oktal" } },
+            { id: 132, slug: "scientific-calculator", category: "math", desc: { ar: "الآلة الحاسبة العلمية", en: "Scientific Calculator", fr: "Calculatrice scientifique", es: "Calculadora científica", de: "Wissenschaftlicher Taschenrechner" } },
+            { id: 133, slug: "percentage-calculator", category: "math", desc: { ar: "حاسبة النسبة المئوية", en: "Percentage Calculator", fr: "Calculatrice de pourcentage", es: "Calculadora de porcentaje", de: "Prozentrechner" } },
+            { id: 134, slug: "bmi-calculator", category: "math", desc: { ar: "حاسبة مؤشر كتلة الجسم", en: "BMI Calculator", fr: "Calculateur d'IMC", es: "Calculadora de IMC", de: "BMI-Rechner" } },
+            { id: 135, slug: "compound-interest-calculator", category: "math", desc: { ar: "حاسبة الفائدة المركبة", en: "Compound Interest Calculator", fr: "Calculateur d'intérêts composés", es: "Calculadora de interés compuesto", de: "Zinseszinsrechner" } },
+            { id: 136, slug: "random-number-generator", category: "math", desc: { ar: "مولد أرقام عشوائية", en: "Random Number Generator", fr: "Générateur de nombres aléatoires", es: "Generador de números aleatorios", de: "Zufallszahlengenerator" } },
+            { id: 137, slug: "average-calculator", category: "math", desc: { ar: "حاسبة المتوسط", en: "Average Calculator", fr: "Calculateur de moyenne", es: "Calculadora de promedio", de: "Durchschnittsrechner" } },
+            
+            // Time - 10 tools (IDs 138-147)
+            { id: 138, slug: "unix-timestamp-converter", category: "time", desc: { ar: "محول Unix Timestamp", en: "Unix Timestamp Converter", fr: "Convertisseur Unix Timestamp", es: "Convertidor de Unix Timestamp", de: "Unix-Timestamp-Konverter" } },
+            { id: 139, slug: "time-zone-converter", category: "time", desc: { ar: "محول المناطق الزمنية", en: "Time Zone Converter", fr: "Convertisseur de fuseaux horaires", es: "Convertidor de zonas horarias", de: "Zeitzonen-Konverter" } },
+            { id: 140, slug: "date-difference-calculator", category: "time", desc: { ar: "حاسبة الفرق بين التواريخ", en: "Date Difference Calculator", fr: "Calculateur de différence de dates", es: "Calculadora de diferencia de fechas", de: "Datumsdifferenz-Rechner" } },
+            { id: 141, slug: "age-calculator", category: "time", desc: { ar: "حاسبة العمر", en: "Age Calculator", fr: "Calculateur d'âge", es: "Calculadora de edad", de: "Altersrechner" } },
+            { id: 142, slug: "days-until-date", category: "time", desc: { ar: "عداد الأيام حتى تاريخ", en: "Days Until Date Counter", fr: "Compteur de jours jusqu'à", es: "Contador de días hasta", de: "Tage bis Datum Zähler" } },
+            { id: 143, slug: "countdown-timer", category: "time", desc: { ar: "مؤقت العد التنازلي", en: "Countdown Timer", fr: "Compte à rebours", es: "Cuenta regresiva", de: "Countdown-Timer" } },
+            { id: 144, slug: "calendar-generator", category: "time", desc: { ar: "مولد التقويم", en: "Calendar Generator", fr: "Générateur de calendrier", es: "Generador de calendario", de: "Kalendergenerator" } },
+            { id: 145, slug: "week-number-calculator", category: "time", desc: { ar: "حاسبة رقم الأسبوع", en: "Week Number Calculator", fr: "Calculateur de numéro de semaine", es: "Calculadora de número de semana", de: "Wochennummer-Rechner" } },
+            { id: 146, slug: "working-days-calculator", category: "time", desc: { ar: "حاسبة أيام العمل", en: "Working Days Calculator", fr: "Calculateur de jours ouvrables", es: "Calculadora de días laborables", de: "Arbeitstage-Rechner" } },
+            { id: 147, slug: "pomodoro-timer", category: "time", desc: { ar: "مؤقت بومودورو", en: "Pomodoro Timer", fr: "Minuteur Pomodoro", es: "Temporizador Pomodoro", de: "Pomodoro-Timer" } },
+            
+            // Units - 16 tools (IDs 148-163)
+            { id: 148, slug: "length-converter", category: "units", desc: { ar: "محول الطول", en: "Length Converter", fr: "Convertisseur de longueur", es: "Convertidor de longitud", de: "Längenkonverter" } },
+            { id: 149, slug: "weight-converter", category: "units", desc: { ar: "محول الوزن", en: "Weight Converter", fr: "Convertisseur de poids", es: "Convertidor de peso", de: "Gewichtskonverter" } },
+            { id: 150, slug: "temperature-converter", category: "units", desc: { ar: "محول درجة الحرارة", en: "Temperature Converter", fr: "Convertisseur de température", es: "Convertidor de temperatura", de: "Temperaturkonverter" } },
+            { id: 151, slug: "area-converter", category: "units", desc: { ar: "محول المساحة", en: "Area Converter", fr: "Convertisseur de surface", es: "Convertidor de área", de: "Flächenkonverter" } },
+            { id: 152, slug: "volume-converter", category: "units", desc: { ar: "محول الحجم", en: "Volume Converter", fr: "Convertisseur de volume", es: "Convertidor de volumen", de: "Volumenkonverter" } },
+            { id: 153, slug: "speed-converter", category: "units", desc: { ar: "محول السرعة", en: "Speed Converter", fr: "Convertisseur de vitesse", es: "Convertidor de velocidad", de: "Geschwindigkeitskonverter" } },
+            { id: 154, slug: "data-storage-converter", category: "units", desc: { ar: "محول تخزين البيانات", en: "Data Storage Converter", fr: "Convertisseur de stockage", es: "Convertidor de almacenamiento", de: "Speicherkonverter" } },
+            { id: 155, slug: "currency-converter", category: "units", desc: { ar: "محول العملات", en: "Currency Converter", fr: "Convertisseur de devises", es: "Convertidor de moneda", de: "Währungskonverter" } },
+            { id: 156, slug: "fuel-efficiency-converter", category: "units", desc: { ar: "محول كفاءة الوقود", en: "Fuel Efficiency Converter", fr: "Convertisseur d'efficacité énergétique", es: "Convertidor de eficiencia de combustible", de: "Kraftstoffeffizienz-Konverter" } },
+            { id: 157, slug: "pressure-converter", category: "units", desc: { ar: "محول الضغط", en: "Pressure Converter", fr: "Convertisseur de pression", es: "Convertidor de presión", de: "Druckkonverter" } },
+            { id: 158, slug: "energy-converter", category: "units", desc: { ar: "محول الطاقة", en: "Energy Converter", fr: "Convertisseur d'énergie", es: "Convertidor de energía", de: "Energiekonverter" } },
+            { id: 159, slug: "angle-converter", category: "units", desc: { ar: "محول الزوايا", en: "Angle Converter", fr: "Convertisseur d'angles", es: "Convertidor de ángulos", de: "Winkelkonverter" } },
+            { id: 160, slug: "shoe-size-converter", category: "units", desc: { ar: "محول مقاسات الأحذية", en: "Shoe Size Converter", fr: "Convertisseur de pointures", es: "Convertidor de tallas de zapatos", de: "Schuhgrößen-Konverter" } },
+            { id: 161, slug: "clothing-size-converter", category: "units", desc: { ar: "محول مقاسات الملابس", en: "Clothing Size Converter", fr: "Convertisseur de tailles de vêtements", es: "Convertidor de tallas de ropa", de: "Kleidergrößen-Konverter" } },
+            { id: 162, slug: "screen-resolution-calculator", category: "units", desc: { ar: "حاسبة دقة الشاشة", en: "Screen Resolution Calculator", fr: "Calculateur de résolution d'écran", es: "Calculadora de resolución de pantalla", de: "Bildschirmauflösungs-Rechner" } },
+            { id: 163, slug: "aspect-ratio-calculator", category: "units", desc: { ar: "حاسبة نسبة العرض للارتفاع", en: "Aspect Ratio Calculator", fr: "Calculateur de ratio d'aspect", es: "Calculadora de relación de aspecto", de: "Seitenverhältnis-Rechner" } },
+            
+            // SEO - 14 tools (IDs 164-177)
+            { id: 164, slug: "meta-tags-generator", category: "seo", desc: { ar: "مولد وسوم Meta", en: "Meta Tags Generator", fr: "Générateur de balises Meta", es: "Generador de metaetiquetas", de: "Meta-Tags-Generator" } },
+            { id: 165, slug: "robots-txt-generator", category: "seo", desc: { ar: "مولد robots.txt", en: "Robots.txt Generator", fr: "Générateur de robots.txt", es: "Generador de robots.txt", de: "robots.txt-Generator" } },
+            { id: 166, slug: "sitemap-xml-generator", category: "seo", desc: { ar: "مولد Sitemap XML", en: "Sitemap XML Generator", fr: "Générateur de Sitemap XML", es: "Generador de Sitemap XML", de: "Sitemap XML-Generator" } },
+            { id: 167, slug: "utm-link-builder", category: "seo", desc: { ar: "منشئ روابط UTM", en: "UTM Link Builder", fr: "Créateur de liens UTM", es: "Creador de enlaces UTM", de: "UTM-Link-Ersteller" } },
+            { id: 168, slug: "url-slug-generator", category: "seo", desc: { ar: "مولد Slug للروابط", en: "URL Slug Generator", fr: "Générateur de Slug URL", es: "Generador de URL Slug", de: "URL-Slug-Generator" } },
+            { id: 169, slug: "open-graph-generator", category: "seo", desc: { ar: "مولد Open Graph", en: "Open Graph Generator", fr: "Générateur Open Graph", es: "Generador de Open Graph", de: "Open-Graph-Generator" } },
+            { id: 170, slug: "twitter-card-generator", category: "seo", desc: { ar: "مولد Twitter Card", en: "Twitter Card Generator", fr: "Générateur de Twitter Card", es: "Generador de Twitter Card", de: "Twitter-Card-Generator" } },
+            { id: 171, slug: "canonical-url-generator", category: "seo", desc: { ar: "مولد الرابط الأساسي", en: "Canonical URL Generator", fr: "Générateur d'URL canonique", es: "Generador de URL canónica", de: "Kanonischer URL-Generator" } },
+            { id: 172, slug: "keyword-density-checker", category: "seo", desc: { ar: "فاحص كثافة الكلمات المفتاحية", en: "Keyword Density Checker", fr: "Vérificateur de densité de mots-clés", es: "Verificador de densidad de palabras clave", de: "Keyword-Dichte-Prüfer" } },
+            { id: 173, slug: "word-count-seo", category: "seo", desc: { ar: "عداد الكلمات للـ SEO", en: "Word Count for SEO", fr: "Compteur de mots pour SEO", es: "Contador de palabras para SEO", de: "Wortzähler für SEO" } },
+            { id: 174, slug: "html-to-markdown", category: "seo", desc: { ar: "HTML إلى Markdown", en: "HTML to Markdown", fr: "HTML vers Markdown", es: "HTML a Markdown", de: "HTML zu Markdown" } },
+            { id: 175, slug: "http-status-codes", category: "seo", desc: { ar: "أكواد حالة HTTP", en: "HTTP Status Codes", fr: "Codes de statut HTTP", es: "Códigos de estado HTTP", de: "HTTP-Statuscodes" } },
+            { id: 176, slug: "hreflang-generator", category: "seo", desc: { ar: "مولد hreflang", en: "hreflang Generator", fr: "Générateur de hreflang", es: "Generador de hreflang", de: "Hreflang-Generator" } },
+            { id: 177, slug: "schema-markup-generator", category: "seo", desc: { ar: "مولد Schema Markup", en: "Schema Markup Generator", fr: "Générateur de Schema Markup", es: "Generador de Schema Markup", de: "Schema-Markup-Generator" } },
+            
+            // Security - 8 tools (IDs 178-185)
+            { id: 178, slug: "password-generator", category: "security", desc: { ar: "مولد كلمات المرور", en: "Password Generator", fr: "Générateur de mots de passe", es: "Generador de contraseñas", de: "Passwortgenerator" } },
+            { id: 179, slug: "password-strength-checker", category: "security", desc: { ar: "فاحص قوة كلمة المرور", en: "Password Strength Checker", fr: "Vérificateur de force de mot de passe", es: "Verificador de fortaleza de contraseña", de: "Passwortstärke-Prüfer" } },
+            { id: 180, slug: "random-pin-generator", category: "security", desc: { ar: "مولد PIN عشوائي", en: "Random PIN Generator", fr: "Générateur de PIN aléatoire", es: "Generador de PIN aleatorio", de: "Zufälliger PIN-Generator" } },
+            { id: 181, slug: "privacy-policy-generator", category: "security", desc: { ar: "مولد سياسة الخصوصية", en: "Privacy Policy Generator", fr: "Générateur de politique de confidentialité", es: "Generador de política de privacidad", de: "Datenschutzrichtlinien-Generator" } },
+            { id: 182, slug: "terms-conditions-generator", category: "security", desc: { ar: "مولد الشروط والأحكام", en: "Terms & Conditions Generator", fr: "Générateur de conditions d'utilisation", es: "Generador de términos y condiciones", de: "Nutzungsbedingungen-Generator" } },
+            { id: 183, slug: "cookie-policy-generator", category: "security", desc: { ar: "مولد سياسة ملفات الارتباط", en: "Cookie Policy Generator", fr: "Générateur de politique de cookies", es: "Generador de política de cookies", de: "Cookie-Richtlinien-Generator" } },
+            { id: 184, slug: "hash-identifier", category: "security", desc: { ar: "محدد نوع التجزئة", en: "Hash Type Identifier", fr: "Identificateur de type de hachage", es: "Identificador de tipo de hash", de: "Hash-Typ-Identifikator" } },
+            { id: 185, slug: "ip-address-lookup", category: "security", desc: { ar: "البحث عن عنوان IP", en: "IP Address Lookup", fr: "Recherche d'adresse IP", es: "Búsqueda de dirección IP", de: "IP-Adressen-Lookup" } },
+            
+            // Data - 10 tools (IDs 186-195)
+            { id: 186, slug: "csv-viewer", category: "data", desc: { ar: "عارض ومحرر CSV", en: "CSV Viewer & Editor", fr: "Visionneuse et éditeur CSV", es: "Visor y editor de CSV", de: "CSV-Betrachter & Editor" } },
+            { id: 187, slug: "markdown-table-generator", category: "data", desc: { ar: "مولد جداول Markdown", en: "Markdown Table Generator", fr: "Générateur de tableaux Markdown", es: "Generador de tablas Markdown", de: "Markdown-Tabellengenerator" } },
+            { id: 188, slug: "html-table-to-csv", category: "data", desc: { ar: "جدول HTML إلى CSV", en: "HTML Table to CSV", fr: "Tableau HTML vers CSV", es: "Tabla HTML a CSV", de: "HTML-Tabelle zu CSV" } },
+            { id: 189, slug: "csv-to-html-table", category: "data", desc: { ar: "CSV إلى جدول HTML", en: "CSV to HTML Table", fr: "CSV vers tableau HTML", es: "CSV a tabla HTML", de: "CSV zu HTML-Tabelle" } },
+            { id: 190, slug: "json-viewer", category: "data", desc: { ar: "عارض شجرة JSON", en: "JSON Tree Viewer", fr: "Visionneuse d'arbre JSON", es: "Visor de árbol JSON", de: "JSON-Baum-Betrachter" } },
+            { id: 191, slug: "fake-data-generator", category: "data", desc: { ar: "مولد بيانات وهمية", en: "Fake Data Generator", fr: "Générateur de fausses données", es: "Generador de datos falsos", de: "Falsches Daten-Generator" } },
+            { id: 192, slug: "qr-code-generator", category: "data", desc: { ar: "مولد رمز QR", en: "QR Code Generator", fr: "Générateur de code QR", es: "Generador de código QR", de: "QR-Code-Generator" } },
+            { id: 193, slug: "qr-code-reader", category: "data", desc: { ar: "قارئ رمز QR", en: "QR Code Reader", fr: "Lecteur de code QR", es: "Lector de código QR", de: "QR-Code-Leser" } },
+            { id: 194, slug: "barcode-generator", category: "data", desc: { ar: "مولد الباركود", en: "Barcode Generator", fr: "Générateur de code-barres", es: "Generador de código de barras", de: "Strichcode-Generator" } },
+            { id: 195, slug: "vcard-generator", category: "data", desc: { ar: "مولد vCard", en: "vCard Generator", fr: "Générateur de vCard", es: "Generador de vCard", de: "vCard-Generator" } },
+            
+            // Special - 10 tools (IDs 196-205)
+            { id: 196, slug: "whatsapp-link-generator", category: "special", desc: { ar: "مولد رابط واتساب", en: "WhatsApp Link Generator", fr: "Générateur de lien WhatsApp", es: "Generador de enlace de WhatsApp", de: "WhatsApp-Link-Generator" } },
+            { id: 197, slug: "emoji-to-unicode", category: "special", desc: { ar: "Emoji إلى Unicode", en: "Emoji to Unicode", fr: "Emoji vers Unicode", es: "Emoji a Unicode", de: "Emoji zu Unicode" } },
+            { id: 198, slug: "unicode-to-emoji", category: "special", desc: { ar: "Unicode إلى Emoji", en: "Unicode to Emoji", fr: "Unicode vers Emoji", es: "Unicode a Emoji", de: "Unicode zu Emoji" } },
+            { id: 199, slug: "text-to-binary", category: "special", desc: { ar: "نص إلى ثنائي", en: "Text to Binary", fr: "Texte vers Binaire", es: "Texto a Binario", de: "Text zu Binär" } },
+            { id: 200, slug: "binary-to-text", category: "special", desc: { ar: "ثنائي إلى نص", en: "Binary to Text", fr: "Binaire vers Texte", es: "Binario a Texto", de: "Binär zu Text" } },
+            { id: 201, slug: "number-to-words", category: "special", desc: { ar: "رقم إلى كلمات", en: "Number to Words", fr: "Nombre vers Mots", es: "Número a Palabras", de: "Zahl zu Wörtern" } },
+            { id: 202, slug: "roman-numeral-converter", category: "special", desc: { ar: "محول الأرقام الرومانية", en: "Roman Numeral Converter", fr: "Convertisseur de chiffres romains", es: "Convertidor de números romanos", de: "Römische Zahlen Konverter" } },
+            { id: 203, slug: "screen-resolution-detector", category: "special", desc: { ar: "كاشف دقة الشاشة", en: "Screen Resolution Detector", fr: "Détecteur de résolution d'écran", es: "Detector de resolución de pantalla", de: "Bildschirmauflösungsdetektor" } },
+            { id: 204, slug: "browser-info-detector", category: "special", desc: { ar: "كاشف معلومات المتصفح", en: "Browser Info Detector", fr: "Détecteur d'informations de navigateur", es: "Detector de información del navegador", de: "Browser-Info-Detektor" } },
+            { id: 205, slug: "internet-speed-test", category: "special", desc: { ar: "اختبار سرعة الإنترنت", en: "Internet Speed Test", fr: "Test de vitesse Internet", es: "Prueba de velocidad de Internet", de: "Internetgeschwindigkeitstest" } }
+        ];
 
         let currentLang = localStorage.getItem('lang') || 'ar';
         let isDark = localStorage.getItem('darkMode') === 'true';
+
+        function getToolName(toolId, lang) {
+            const translations = window['toolsData' + lang.toUpperCase()];
+            return translations ? translations[toolId] : null;
+        }
 
         function updateLanguage(lang) {
             currentLang = lang;
@@ -2223,7 +495,7 @@
             document.getElementById('darkModeText').textContent = isDark ? t.lightMode : t.darkMode;
             
             renderCategories();
-            renderTools();
+            renderAllTools();
         }
 
         function toggleDarkMode() {
@@ -2242,45 +514,97 @@
             const container = document.getElementById('categoriesGrid');
             const cats = Object.keys(categoriesData);
             container.innerHTML = cats.map(cat => `
-                <a href="category/${cat}/index.html" class="card-hover bg-white dark:bg-darkcard rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 text-center group">
-                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">${categoryIcons[cat]}</div>
+                <a href="#${cat}" class="card-hover bg-white dark:bg-darkcard rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 text-center group">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">${categoriesData[cat].icon}</div>
                     <h3 class="font-bold text-lg text-gray-800 dark:text-white mb-2">${categoriesData[cat][currentLang]}</h3>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">${categoryCounts[cat]} ${translations[currentLang].tools}</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">${categoriesData[cat].count} ${translations[currentLang].tools}</span>
                 </a>
             `).join('');
         }
 
-        function renderTools(searchTerm = '', lang = 'ar') {
-            const container = document.getElementById('toolsGrid');
-            let filtered = toolsData;
+        function renderToolCard(tool, lang) {
+            const toolName = getToolName(tool.id, lang) || tool.desc[lang];
+            const categoryName = categoriesData[tool.category][lang];
+            const firstLetter = toolName.charAt(0);
             
-            if (searchTerm) {
-                filtered = toolsData.filter(t => 
-                    (t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                     (t.nameAr && t.nameAr.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                     (t.nameFr && t.nameFr.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                     (t.nameEs && t.nameEs.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                     (t.nameDe && t.nameDe.toLowerCase().includes(searchTerm.toLowerCase()))) ||
-                    categoriesData[t.category][currentLang].toLowerCase().includes(searchTerm.toLowerCase())
-                );
-            }
-            
-            container.innerHTML = filtered.map(tool => `
-                <a href="tool/${tool.slug}/index.html" class="tool-card bg-white dark:bg-darkcard rounded-lg p-4 shadow-md border border-gray-200 dark:border-gray-700 flex items-center gap-4 hover:border-primary dark:hover:border-primary">
-                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white text-xl font-bold shrink-0">
-                        ${tool.name.charAt(0)}
+            return `
+                <a href="tool/${tool.slug}/index.html" class="tool-card group bg-white dark:bg-darkcard rounded-lg p-4 shadow-md border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary flex flex-col h-full">
+                    <div class="flex items-start gap-4 mb-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white text-xl font-bold shrink-0 group-hover:scale-110 transition-transform">
+                            ${firstLetter}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-gray-800 dark:text-white truncate text-lg" title="${toolName}">${toolName}</h4>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">${categoryName}</span>
+                        </div>
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <h4 class="font-semibold text-gray-800 dark:text-white truncate">${tool[`name${lang.charAt(0).toUpperCase() + lang.slice(1)}`] || tool.name}</h4>
-                        <span class="text-xs text-gray-500 dark:text-gray-400">${categoriesData[tool.category][currentLang]}</span>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3 flex-grow">${tool.desc[lang]}</p>
+                    <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100 dark:border-gray-700">
+                        <span class="text-xs text-gray-400">ID: ${tool.id}</span>
+                        <span class="text-primary dark:text-secondary text-sm font-medium group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            ${translations[lang].viewTool}
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </span>
                     </div>
-                    <span class="text-primary dark:text-secondary opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                 </a>
-            `).join('');
+            `;
+        }
+
+        function renderAllTools(searchTerm = '') {
+            const container = document.getElementById('allToolsGrid');
             
-            if (filtered.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">${currentLang === 'ar' ? 'لا توجد نتائج' : 'No results found'}</div>`;
+            let filtered = toolsData;
+            if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+                filtered = toolsData.filter(t => {
+                    const nameAr = getToolName(t.id, 'ar') || '';
+                    const nameEn = getToolName(t.id, 'en') || '';
+                    const nameFr = getToolName(t.id, 'fr') || '';
+                    const nameEs = getToolName(t.id, 'es') || '';
+                    const nameDe = getToolName(t.id, 'de') || '';
+                    const descAr = t.desc.ar || '';
+                    const descEn = t.desc.en || '';
+                    
+                    return nameAr.toLowerCase().includes(term) ||
+                           nameEn.toLowerCase().includes(term) ||
+                           nameFr.toLowerCase().includes(term) ||
+                           nameEs.toLowerCase().includes(term) ||
+                           nameDe.toLowerCase().includes(term) ||
+                           descAr.toLowerCase().includes(term) ||
+                           descEn.toLowerCase().includes(term) ||
+                           categoriesData[t.category][currentLang].toLowerCase().includes(term);
+                });
             }
+            
+            // Group by category
+            const grouped = {};
+            filtered.forEach(tool => {
+                if (!grouped[tool.category]) grouped[tool.category] = [];
+                grouped[tool.category].push(tool);
+            });
+            
+            // Render by category
+            let html = '';
+            const categoryOrder = ['images', 'pdf', 'text', 'developer', 'colors', 'math', 'time', 'units', 'seo', 'security', 'data', 'special'];
+            
+            categoryOrder.forEach(cat => {
+                if (grouped[cat] && grouped[cat].length > 0) {
+                    html += `
+                        <div id="${cat}" class="category-section mb-12">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span class="text-3xl">${categoriesData[cat].icon}</span>
+                                <h3 class="text-2xl font-bold text-gray-800 dark:text-white">${categoriesData[cat][currentLang]}</h3>
+                                <span class="bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary px-3 py-1 rounded-full text-sm font-medium">${grouped[cat].length} ${translations[currentLang].tools}</span>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                ${grouped[cat].map(tool => renderToolCard(tool, currentLang)).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            
+            container.innerHTML = html || `<div class="text-center py-12 text-gray-500">${currentLang === 'ar' ? 'لا توجد نتائج' : 'No results found'}</div>`;
         }
 
         // Initialize
@@ -2289,8 +613,10 @@
             updateLanguage(currentLang);
             
             document.getElementById('searchInput').addEventListener('input', (e) => {
-                renderTools(e.target.value, currentLang);
+                renderAllTools(e.target.value);
             });
+            
+            document.getElementById('langSwitcher').value = currentLang;
         });
     </script>
 </head>
@@ -2309,7 +635,7 @@
                 <nav class="hidden md:flex items-center gap-6">
                     <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Home</a>
                     <a href="#categories" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Categories</a>
-                    <a href="#tools" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">All Tools</a>
+                    <a href="#all-tools" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">All Tools</a>
                 </nav>
                 
                 <!-- Controls -->
@@ -2326,8 +652,9 @@
                     </div>
                     
                     <!-- Dark Mode Toggle -->
-                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-gray-100 dark:bg-darkcard hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" title="Toggle Dark Mode">
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-gray-100 dark:bg-darkcard hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors flex items-center gap-2" title="Toggle Dark Mode">
                         <span id="darkModeIcon" class="text-xl">${isDark ? '☀️' : '🌙'}</span>
+                        <span id="darkModeText" class="text-sm hidden sm:inline">${isDark ? translations[currentLang].lightMode : translations[currentLang].darkMode}</span>
                     </button>
                 </div>
             </div>
@@ -2344,14 +671,14 @@
             <h1 class="text-4xl md:text-6xl font-bold mb-6">
                 <span class="gradient-text">205-Tools</span>
             </h1>
-            <p id="siteTagline" class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">أدوات مجانية على الإنترنت</p>
+            <p id="siteTagline" class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">205 أدوات مجانية على الإنترنت</p>
             
             <!-- Search Bar -->
             <div class="max-w-2xl mx-auto relative">
                 <input type="text" id="searchInput" placeholder="ابحث عن أداة..." 
-                    class="w-full px-6 py-4 rounded-full border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-darkcard text-gray-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-primary shadow-lg text-lg">
-                <button class="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    class="w-full px-6 py-4 pr-14 rounded-full border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-darkcard text-gray-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-primary shadow-lg text-lg">
+                <button class="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-primary transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </button>
             </div>
             
@@ -2376,16 +703,16 @@
     <!-- Categories Section -->
     <section id="categories" class="py-16 px-4 max-w-7xl mx-auto">
         <h2 id="categoriesTitle" class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">التصنيفات</h2>
-        <div id="categoriesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div id="categoriesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
             <!-- Categories rendered by JS -->
         </div>
     </section>
 
     <!-- All Tools Section -->
-    <section id="tools" class="py-16 px-4 max-w-7xl mx-auto">
+    <section id="all-tools" class="py-16 px-4 max-w-7xl mx-auto">
         <h2 id="allToolsTitle" class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">جميع الأدوات</h2>
-        <div id="toolsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            <!-- Tools rendered by JS -->
+        <div id="allToolsGrid">
+            <!-- All tools rendered by JS, grouped by category -->
         </div>
     </section>
 
@@ -2407,9 +734,5 @@
         </div>
     </footer>
 
-    <script>
-        // Set initial language selector value
-        document.getElementById('langSwitcher').value = currentLang;
-    </script>
 </body>
 </html>
