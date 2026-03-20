@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Resolution Detector - 205-Tools</title>
+    <meta name="description" content="Detect your screen resolution and display information">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
+                <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🖥️ Special</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Screen Resolution Detector</h1>
+            <p class="text-xl text-white/90">Get detailed information about your display</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-indigo-50 dark:bg-indigo-900/20 rounded-xl p-6">
+                        <p class="text-sm text-gray-500 mb-1">Screen Resolution</p>
+                        <p class="text-3xl font-bold text-indigo-600" id="resolution">-</p>
+                    </div>
+                    
+                    <div class="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6">
+                        <p class="text-sm text-gray-500 mb-1">Available Screen Size</p>
+                        <p class="text-3xl font-bold text-purple-600" id="availResolution">-</p>
+                    </div>
+                    
+                    <div class="bg-pink-50 dark:bg-pink-900/20 rounded-xl p-6">
+                        <p class="text-sm text-gray-500 mb-1">Pixel Ratio (DPR)</p>
+                        <p class="text-3xl font-bold text-pink-600" id="pixelRatio">-</p>
+                    </div>
+                    
+                    <div class="bg-green-50 dark:bg-green-900/20 rounded-xl p-6">
+                        <p class="text-sm text-gray-500 mb-1">Color Depth</p>
+                        <p class="text-3xl font-bold text-green-600" id="colorDepth">-</p>
+                    </div>
+                    
+                    <div class="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl p-6">
+                        <p class="text-sm text-gray-500 mb-1">Viewport Size</p>
+                        <p class="text-3xl font-bold text-yellow-600" id="viewport">-</p>
+                    </div>
+                    
+                    <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6">
+                        <p class="text-sm text-gray-500 mb-1">Orientation</p>
+                        <p class="text-3xl font-bold text-blue-600" id="orientation">-</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                    <h3 class="font-semibold mb-4">Browser Information</h3>
+                    
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">User Agent</span>
+                            <span class="font-mono text-xs max-w-md truncate" id="userAgent">-</span>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Platform</span>
+                            <span id="platform">-</span>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Language</span>
+                            <span id="language">-</span>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Touch Support</span>
+                            <span id="touchSupport">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="refreshInfo()" class="mt-6 w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all">
+                    Refresh Information
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function getInfo() {
+            // Screen info
+            document.getElementById('resolution').textContent = `${screen.width} × ${screen.height}`;
+            document.getElementById('availResolution').textContent = `${screen.availWidth} × ${screen.availHeight}`;
+            document.getElementById('pixelRatio').textContent = window.devicePixelRatio + 'x';
+            document.getElementById('colorDepth').textContent = screen.colorDepth + '-bit';
+            document.getElementById('viewport').textContent = `${window.innerWidth} × ${window.innerHeight}`;
+            
+            // Orientation
+            const orient = screen.orientation ? screen.orientation.type : (window.innerWidth > window.innerHeight ? 'landscape' : 'portrait');
+            document.getElementById('orientation').textContent = orient.includes('landscape') ? 'Landscape' : 'Portrait';
+            
+            // Browser info
+            document.getElementById('userAgent').textContent = navigator.userAgent;
+            document.getElementById('platform').textContent = navigator.platform;
+            document.getElementById('language').textContent = navigator.language;
+            document.getElementById('touchSupport').textContent = 'ontouchstart' in window || navigator.maxTouchPoints > 0 ? 'Yes' : 'No';
+        }
+
+        function refreshInfo() {
+            getInfo();
+        }
+
+        // Update viewport on resize
+        window.addEventListener('resize', () => {
+            document.getElementById('viewport').textContent = `${window.innerWidth} × ${window.innerHeight}`;
+        });
+
+        // Initial load
+        getInfo();
+    </script>
+</body>
+</html>
