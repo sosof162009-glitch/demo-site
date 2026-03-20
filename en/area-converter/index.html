@@ -4,29 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Converter - 205-Tools</title>
-    <meta name="description" content="Converts between square meters, acres, hectares, square feet, sq miles.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
-    <style>
-        .tool-card { transition: all 0.2s; }
-        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
-        .copy-btn { transition: all 0.2s; }
-        .copy-btn:hover { transform: scale(1.05); }
-        .copy-btn.copied { background-color: #10b981; color: white; }
-    </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="/en/" class="flex items-center space-x-2">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</span>
-                </a>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/en/" class="text-gray-600 dark:text-gray-300 hover:text-indigo-500">Home</a>
-                </div>
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
                 <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
             </div>
         </div>
@@ -43,185 +30,71 @@
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="grid md:grid-cols-3 gap-4 items-end mb-8">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Value</label>
-                        <input type="number" id="value" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700" placeholder="Enter value" value="1" step="any">
-                    </div>
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div>
                         <label class="block text-sm font-medium mb-2">From</label>
-                        <select id="from" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
-                            <option value="sqm" selected>Square Meters</option>
-                            <option value="sqkm">Square Kilometers</option>
-                            <option value="ha">Hectares</option>
-                            <option value="ac">Acres</option>
-                            <option value="sqft">Square Feet</option>
-                            <option value="sqmi">Square Miles</option>
-                            <option value="sqyd">Square Yards</option>
+                        <input type="number" id="fromValue" value="1" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 mb-2">
+                        <select id="fromUnit" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
+                            <option value="sqm" selected>Square Meters (m²)</option>
+                            <option value="sqkm">Square Kilometers (km²)</option>
+                            <option value="sqft">Square Feet (ft²)</option>
+                            <option value="sqin">Square Inches (in²)</option>
+                            <option value="acre">Acres</option>
+                            <option value="hectare">Hectares</option>
                         </select>
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium mb-2">To</label>
-                        <select id="to" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
-                            <option value="sqm">Square Meters</option>
-                            <option value="sqkm">Square Kilometers</option>
-                            <option value="ha">Hectares</option>
-                            <option value="ac" selected>Acres</option>
-                            <option value="sqft">Square Feet</option>
-                            <option value="sqmi">Square Miles</option>
-                            <option value="sqyd">Square Yards</option>
+                        <input type="number" id="toValue" readonly class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 mb-2 bg-gray-50">
+                        <select id="toUnit" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
+                            <option value="sqm">Square Meters (m²)</option>
+                            <option value="sqkm">Square Kilometers (km²)</option>
+                            <option value="sqft" selected>Square Feet (ft²)</option>
+                            <option value="sqin">Square Inches (in²)</option>
+                            <option value="acre">Acres</option>
+                            <option value="hectare">Hectares</option>
                         </select>
                     </div>
                 </div>
 
-                <button onclick="convert()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
+                <button onclick="convert()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all">
                     Convert
                 </button>
-
-                <div id="resultBox" class="hidden bg-green-50 dark:bg-green-900/20 rounded-xl p-6 text-center">
-                    <p class="text-gray-600 dark:text-gray-400 mb-2">Result</p>
-                    <p class="text-3xl font-bold text-green-600 dark:text-green-400" id="resultValue">-</p>
-                    <p class="text-sm text-gray-500 mt-2" id="resultFormula"></p>
-                    <button onclick="copyResult()" class="copy-btn mt-4 px-6 py-2 bg-indigo-500 text-white rounded-lg">Copy Result</button>
-                </div>
-
-                <div class="mt-8 bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                    <h3 class="text-lg font-semibold mb-4">Quick Reference</h3>
-                    <div class="grid md:grid-cols-2 gap-4 text-sm">
-                        <div class="bg-white dark:bg-gray-600 rounded-lg p-3">
-                            <span class="font-mono">1 hectare = 2.471 acres</span>
-                        </div>
-                        <div class="bg-white dark:bg-gray-600 rounded-lg p-3">
-                            <span class="font-mono">1 acre = 4046.86 sq meters</span>
-                        </div>
-                        <div class="bg-white dark:bg-gray-600 rounded-lg p-3">
-                            <span class="font-mono">1 sq km = 100 hectares</span>
-                        </div>
-                        <div class="bg-white dark:bg-gray-600 rounded-lg p-3">
-                            <span class="font-mono">1 sq mile = 2.59 sq km</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">How to Use</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Enter Value</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Type the area value</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Select Units</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Choose from and to units</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get Result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">See converted area</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <a href="/en/length-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                    <span class="text-2xl">📏</span>
-                    <span class="font-medium">Length Converter</span>
-                </a>
-                <a href="/en/weight-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                    <span class="text-2xl">⚖️</span>
-                    <span class="font-medium">Weight Converter</span>
-                </a>
-                <a href="/en/temperature-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                    <span class="text-2xl">🌡️</span>
-                    <span class="font-medium">Temperature Converter</span>
-                </a>
-                <a href="/en/volume-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                    <span class="text-2xl">💧</span>
-                    <span class="font-medium">Volume Converter</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
-        </div>
-    </footer>
 
     <script>
         // Conversion factors to square meters
         const toSqMeters = {
             sqm: 1,
             sqkm: 1000000,
-            ha: 10000,
-            ac: 4046.86,
             sqft: 0.092903,
-            sqmi: 2589988.11,
-            sqyd: 0.836127
-        };
-
-        const unitNames = {
-            sqm: 'square meters',
-            sqkm: 'square kilometers',
-            ha: 'hectares',
-            ac: 'acres',
-            sqft: 'square feet',
-            sqmi: 'square miles',
-            sqyd: 'square yards'
+            sqin: 0.00064516,
+            acre: 4046.86,
+            hectare: 10000
         };
 
         function convert() {
-            const val = parseFloat(document.getElementById('value').value);
-            const from = document.getElementById('from').value;
-            const to = document.getElementById('to').value;
-            
-            if (isNaN(val)) {
-                alert('Please enter a valid number');
+            const value = parseFloat(document.getElementById('fromValue').value);
+            const from = document.getElementById('fromUnit').value;
+            const to = document.getElementById('toUnit').value;
+
+            if (isNaN(value)) {
+                document.getElementById('toValue').value = '';
                 return;
             }
-            
-            const sqMeters = val * toSqMeters[from];
+
+            const sqMeters = value * toSqMeters[from];
             const result = sqMeters / toSqMeters[to];
-            
-            let displayResult;
-            if (result < 0.001 || result > 1000000) {
-                displayResult = result.toExponential(4);
-            } else {
-                displayResult = parseFloat(result.toFixed(6)).toString();
-            }
-            
-            document.getElementById('resultValue').textContent = displayResult + ' ' + unitNames[to];
-            document.getElementById('resultFormula').textContent = val + ' ' + unitNames[from] + ' = ' + displayResult + ' ' + unitNames[to];
-            document.getElementById('resultBox').classList.remove('hidden');
+
+            document.getElementById('toValue').value = result.toFixed(6).replace(/\.?0+$/, '');
         }
 
-        function copyResult() {
-            const resultText = document.getElementById('resultValue').textContent;
-            navigator.clipboard.writeText(resultText).then(() => {
-                const btn = event.target;
-                btn.textContent = 'Copied!';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.textContent = 'Copy Result';
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
-        }
-
-        document.getElementById('value').addEventListener('input', convert);
-        document.getElementById('from').addEventListener('change', convert);
-        document.getElementById('to').addEventListener('change', convert);
+        document.getElementById('fromValue').addEventListener('input', convert);
+        document.getElementById('fromUnit').addEventListener('change', convert);
+        document.getElementById('toUnit').addEventListener('change', convert);
 
         convert();
     </script>
