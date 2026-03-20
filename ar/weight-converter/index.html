@@ -3,29 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weight Converter - 205-أدوات</title>
-    <meta name="description" content="Converts between kg, pounds, ounces, grams, stones, tons.">
+    <title>محول الوزن - 205-أدوات</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
-    <style>
-        .drop-zone { border: 2px dashed #6366f1; transition: all 0.3s; }
-        .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
-        .tool-card { transition: all 0.2s; }
-        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
-    </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="/ar/" class="flex items-center space-x-2">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-أدوات</span>
-                </a>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/ar/" class="text-gray-600 dark:text-gray-300 hover:text-indigo-500">الرئيسية</a>
-                </div>
+                <a href="/ar/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-أدوات</a>
                 <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
             </div>
         </div>
@@ -33,128 +21,68 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">⚖️ الوحدات</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Weight Converter</h1>
-            <p class="text-xl text-white/90">مجاني • سريع • آمن</p>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">📐 وحدات</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">محول الوزن</h1>
+            <p class="text-xl text-white/90">تحويل بين وحدات الوزن</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="text-center mb-8">
-                    <div class="text-6xl mb-4">⚖️</div>
-                    <p class="text-gray-600 dark:text-gray-400">Converts between kg, pounds, ounces, grams, stones, tons.</p>
-                </div>
-                
-                <!-- Converter Inputs -->
-                <div class="grid md:grid-cols-3 gap-4 items-end mb-8">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">القيمة</label>
-                        <input type="number" id="value" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700" placeholder="1">
-                    </div>
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div>
                         <label class="block text-sm font-medium mb-2">من</label>
-                        <select id="from" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
-                            <option>Meters</option>
-                            <option>Kilometers</option>
-                            <option>Centimeters</option>
+                        <input type="number" id="fromValue" value="1" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 mb-2">
+                        <select id="fromUnit" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
+                            <option value="kg" selected>كيلوجرام (كغ)</option>
+                            <option value="g">جرام (غ)</option>
+                            <option value="mg">مليجرام (مغ)</option>
+                            <option value="lb">رطل (lb)</option>
+                            <option value="oz">أونصة (oz)</option>
                         </select>
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium mb-2">إلى</label>
-                        <select id="to" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
-                            <option>Feet</option>
-                            <option>Inches</option>
-                            <option>Yards</option>
+                        <input type="number" id="toValue" readonly class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 mb-2 bg-gray-50">
+                        <select id="toUnit" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
+                            <option value="kg">كيلوجرام (كغ)</option>
+                            <option value="g">جرام (غ)</option>
+                            <option value="mg">مليجرام (مغ)</option>
+                            <option value="lb" selected>رطل (lb)</option>
+                            <option value="oz">أونصة (oz)</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Action Button -->
-                <button onclick="convert()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8" id="actionBtn">
+                <button onclick="convert()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all">
                     تحويل
                 </button>
-
-                <!-- Result -->
-                <div id="resultBox" class="hidden bg-green-50 dark:bg-green-900/20 rounded-xl p-6 text-center">
-                    <p class="text-gray-600 dark:text-gray-400 mb-2">النتيجة</p>
-                    <p class="text-3xl font-bold text-green-600 dark:text-green-400" id="resultValue">-</p>
-                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
+        const toGrams = {
+            kg: 1000, g: 1, mg: 0.001,
+            lb: 453.592, oz: 28.3495
+        };
+
         function convert() {
-            const val = parseFloat(document.getElementById('value').value) || 0;
-            document.getElementById('resultValue').textContent = val * 3.28084;
-            document.getElementById('resultBox').classList.remove('hidden');
+            const value = parseFloat(document.getElementById('fromValue').value);
+            const from = document.getElementById('fromUnit').value;
+            const to = document.getElementById('toUnit').value;
+            if (isNaN(value)) { document.getElementById('toValue').value = ''; return; }
+            const grams = value * toGrams[from];
+            const result = grams / toGrams[to];
+            document.getElementById('toValue').value = result.toFixed(6).replace(/\.?0+$/, '');
         }
+
+        document.getElementById('fromValue').addEventListener('input', convert);
+        document.getElementById('fromUnit').addEventListener('change', convert);
+        document.getElementById('toUnit').addEventListener('change', convert);
+        convert();
     </script>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">كيفية الاستخدام</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">اختر ملفك</h3>
-                    <p class="text-gray-600 dark:text-gray-400">أدخل البيانات المطلوبة</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">انتظر المعالجة</h3>
-                    <p class="text-gray-600 dark:text-gray-400">معالجة...</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">احصل على النتيجة</h3>
-                    <p class="text-gray-600 dark:text-gray-400">احصل على النتيجة فوراً</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">لماذا تستخدم أدواتنا</h2>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center p-6"><div class="text-3xl mb-3">🔒</div><h3 class="font-semibold mb-2">آمن</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">⚡</div><h3 class="font-semibold mb-2">سريع</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">🆓</div><h3 class="font-semibold mb-2">مجاني</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">✨</div><h3 class="font-semibold mb-2">الجودة</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-8">أدوات ذات صلة</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-            <a href="/ar/length-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📏</span>
-                <span class="font-medium">Length Converter</span>
-            </a>
-            <a href="/ar/temperature-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🌡️</span>
-                <span class="font-medium">Temperature Converter</span>
-            </a>
-            <a href="/ar/area-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📐</span>
-                <span class="font-medium">Area Converter</span>
-            </a>
-            <a href="/ar/volume-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">💧</span>
-                <span class="font-medium">Volume Converter</span>
-            </a></div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-أدوات - مجاني</p>
-        </div>
-    </footer>
 </body>
 </html>
