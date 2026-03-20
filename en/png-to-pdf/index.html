@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PNG to PDF Converter - 205-Tools</title>
-    <meta name="description" content="Converts PNG images to PDF format using browser PDF libraries.">
+    <meta name="description" content="Converts PNG images to PDF format using pdf-lib.js in browser.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
@@ -14,6 +15,7 @@
         .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
         .tool-card { transition: all 0.2s; }
         .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
+        .preview-image { max-width: 100px; max-height: 100px; border-radius: 8px; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
@@ -35,7 +37,7 @@
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🖼️ PDF</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">PNG to PDF Converter</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Free • Fast • Secure • 100% Client-Side</p>
         </div>
     </section>
 
@@ -44,64 +46,231 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4">🖼️</div>
-                    <p class="text-gray-600 dark:text-gray-400">Converts PNG images to PDF format using browser PDF libraries.</p>
+                    <p class="text-gray-600 dark:text-gray-400">Convert PNG images to PDF format using pdf-lib.js in your browser. Your files never leave your device.</p>
                 </div>
                 
                 <!-- Upload Zone -->
                 <div class="drop-zone rounded-xl p-12 text-center cursor-pointer mb-8" id="dropZone">
                     <div class="text-5xl mb-4">📁</div>
-                    <p class="text-lg font-medium mb-2">Drag & drop your file here</p>
-                    <p class="text-gray-500">or browse</p>
-                    <input type="file" class="hidden" id="fileInput">
+                    <p class="text-lg font-medium mb-2">Drag & drop your PNG images here</p>
+                    <p class="text-gray-500">or click to browse (multiple files supported)</p>
+                    <input type="file" class="hidden" id="fileInput" accept=".png,image/png" multiple>
+                </div>
+
+                <!-- Preview -->
+                <div id="previewContainer" class="hidden mb-8">
+                    <h3 class="font-medium mb-4">Selected Images:</h3>
+                    <div id="previewGrid" class="flex flex-wrap gap-4"></div>
                 </div>
 
                 <!-- Settings -->
                 <div class="grid md:grid-cols-2 gap-6 mb-8">
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Output Format</label>
-                        <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="format">
-                            <option>Auto</option>
-                            <option>JPG</option>
-                            <option>PNG</option>
-                            <option>WebP</option>
+                        <label class="block text-sm font-medium mb-2">Page Size</label>
+                        <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="pageSize">
+                            <option value="fit">Fit to Image</option>
+                            <option value="A4">A4</option>
+                            <option value="letter">Letter</option>
                         </select>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Quality</label>
-                        <input type="range" min="1" max="100" value="85" class="w-full" id="quality">
+                        <label class="block text-sm font-medium mb-2">Orientation</label>
+                        <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="orientation">
+                            <option value="auto">Auto (match image)</option>
+                            <option value="portrait">Portrait</option>
+                            <option value="landscape">Landscape</option>
+                        </select>
                     </div>
                 </div>
 
+                <!-- Progress -->
+                <div id="progress" class="hidden mb-6">
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2.5 rounded-full transition-all" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <p class="text-sm text-center mt-2 text-gray-600 dark:text-gray-400" id="progressText">Processing...</p>
+                </div>
+
                 <!-- Action Button -->
-                <button onclick="processFile()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Convert
+                <button onclick="convertToPdf()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn" disabled>
+                    Convert to PDF
                 </button>
 
+                <!-- Error Message -->
+                <div id="error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-center"></div>
+
                 <!-- Result -->
-                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ Processing...</p>
-                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download Result</a>
+                <div id="result" class="hidden mt-8">
+                    <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
+                        <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ Conversion Complete!</p>
+                        <button onclick="downloadPdf()" class="px-8 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 font-semibold">
+                            Download PDF
+                        </button>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewGrid = document.getElementById('previewGrid');
+        const actionBtn = document.getElementById('actionBtn');
+        const { PDFDocument } = PDFLib;
+        
+        let selectedFiles = [];
+        let pdfBlob = null;
+
         dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragover', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.add('dragover'); 
+        });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); processFile(); });
-        fileInput.addEventListener('change', processFile);
-        function processFile() {
+        dropZone.addEventListener('drop', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files).filter(f => f.type === 'image/png');
+            handleFiles(files);
+        });
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(Array.from(e.target.files));
+        });
+
+        function handleFiles(files) {
+            if (files.length === 0) return;
+            selectedFiles = files;
+            
+            // Show previews
+            previewGrid.innerHTML = '';
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const div = document.createElement('div');
+                    div.className = 'relative';
+                    div.innerHTML = `<img src="${e.target.result}" class="preview-image border dark:border-gray-600">`;
+                    previewGrid.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+            previewContainer.classList.remove('hidden');
+            actionBtn.disabled = false;
+            document.getElementById('result').classList.add('hidden');
+        }
+
+        async function convertToPdf() {
+            if (selectedFiles.length === 0) {
+                showError('Please select PNG files first');
+                return;
+            }
+
             const btn = document.getElementById('actionBtn');
+            const progress = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
             const result = document.getElementById('result');
-            btn.textContent = 'Processing...';
+            const error = document.getElementById('error');
+
+            btn.textContent = 'Converting...';
             btn.disabled = true;
-            setTimeout(() => { result.classList.remove('hidden'); btn.textContent = 'Convert'; btn.disabled = false; }, 1500);
+            progress.classList.remove('hidden');
+            result.classList.add('hidden');
+            error.classList.add('hidden');
+
+            try {
+                const pdfDoc = await PDFDocument.create();
+                const pageSize = document.getElementById('pageSize').value;
+                const orientation = document.getElementById('orientation').value;
+
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    progressText.textContent = `Processing image ${i + 1} of ${selectedFiles.length}...`;
+                    progressBar.style.width = `${((i + 1) / selectedFiles.length) * 100}%`;
+
+                    const file = selectedFiles[i];
+                    const imageBytes = await file.arrayBuffer();
+                    const pngImage = await pdfDoc.embedPng(imageBytes);
+                    
+                    const imgWidth = pngImage.width;
+                    const imgHeight = pngImage.height;
+                    
+                    // Determine page dimensions
+                    let pageWidth, pageHeight;
+                    
+                    if (pageSize === 'fit') {
+                        pageWidth = imgWidth;
+                        pageHeight = imgHeight;
+                    } else if (pageSize === 'A4') {
+                        pageWidth = 595;
+                        pageHeight = 842;
+                    } else { // letter
+                        pageWidth = 612;
+                        pageHeight = 792;
+                    }
+                    
+                    // Handle orientation
+                    let finalWidth = pageWidth;
+                    let finalHeight = pageHeight;
+                    if (orientation === 'landscape' && pageWidth < pageHeight) {
+                        [finalWidth, finalHeight] = [finalHeight, finalWidth];
+                    } else if (orientation === 'portrait' && pageWidth > pageHeight) {
+                        [finalWidth, finalHeight] = [finalHeight, finalWidth];
+                    } else if (orientation === 'auto' && imgWidth > imgHeight && pageWidth < pageHeight) {
+                        [finalWidth, finalHeight] = [finalHeight, finalWidth];
+                    }
+
+                    const page = pdfDoc.addPage([finalWidth, finalHeight]);
+                    
+                    // Scale image to fit page while maintaining aspect ratio
+                    const scale = Math.min(finalWidth / imgWidth, finalHeight / imgHeight);
+                    const scaledWidth = imgWidth * scale;
+                    const scaledHeight = imgHeight * scale;
+                    const x = (finalWidth - scaledWidth) / 2;
+                    const y = (finalHeight - scaledHeight) / 2;
+
+                    page.drawImage(pngImage, {
+                        x: x,
+                        y: y,
+                        width: scaledWidth,
+                        height: scaledHeight
+                    });
+                }
+
+                const pdfBytes = await pdfDoc.save();
+                pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+                
+                progressBar.style.width = '100%';
+                result.classList.remove('hidden');
+                btn.textContent = 'Convert More Images';
+                btn.disabled = false;
+                progress.classList.add('hidden');
+
+            } catch (err) {
+                console.error(err);
+                showError('Error converting to PDF: ' + err.message);
+                btn.textContent = 'Convert to PDF';
+                btn.disabled = false;
+                progress.classList.add('hidden');
+            }
+        }
+
+        function downloadPdf() {
+            if (!pdfBlob) return;
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(pdfBlob);
+            link.download = selectedFiles.length === 1 
+                ? selectedFiles[0].name.replace('.png', '.pdf')
+                : 'converted_images.pdf';
+            link.click();
+        }
+
+        function showError(msg) {
+            const error = document.getElementById('error');
+            error.textContent = msg;
+            error.classList.remove('hidden');
         }
     </script>
-            </div>
-        </div>
-    </section>
 
     <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
         <div class="max-w-5xl mx-auto px-4">
@@ -109,18 +278,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Upload PNG</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Select or drag your PNG images</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Configure</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Choose page size and orientation</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Download</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Get your PDF instantly</p>
                 </div>
             </div>
         </div>
@@ -163,7 +332,7 @@
 
     <footer class="bg-gray-900 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
+            <p class="text-gray-400">© 2025 205-Tools - Free Online Tools</p>
         </div>
     </footer>
 </body>

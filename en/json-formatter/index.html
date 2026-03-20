@@ -49,8 +49,8 @@
                 
                 <!-- Code Input -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Input</label>
-                    <textarea id="input" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Paste your code here..."></textarea>
+                    <label class="block text-sm font-medium mb-2">Input JSON</label>
+                    <textarea id="input" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Paste your JSON here..."></textarea>
                 </div>
 
                 <!-- Action Buttons -->
@@ -89,7 +89,7 @@
                 const obj = JSON.parse(input);
                 document.getElementById('output').value = JSON.stringify(obj);
             } catch(e) {
-                document.getElementById('output').value = input.replace(/\s+/g, ' ').trim();
+                document.getElementById('output').value = 'Error: ' + e.message;
             }
         }
         
@@ -108,18 +108,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Paste JSON</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Enter your JSON data</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Click Format</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Validate and beautify</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Get Result</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Copy formatted JSON</p>
                 </div>
             </div>
         </div>

@@ -76,11 +76,19 @@
             btn.disabled = true;
             
             setTimeout(() => {
-                // Simple processing - can be customized per tool
-                document.getElementById('output').value = input.toUpperCase();
+                const lines = input.split('\n');
+                const totalLines = lines.length;
+                const emptyLines = lines.filter(l => l.trim() === '').length;
+                const nonEmptyLines = lines.filter(l => l.trim() !== '').length;
+                
+                const result = `Total Lines: ${totalLines}
+Empty Lines: ${emptyLines}
+Non-Empty Lines: ${nonEmptyLines}`;
+                
+                document.getElementById('output').value = result;
                 btn.textContent = 'Process';
                 btn.disabled = false;
-            }, 500);
+            }, 300);
         }
         
         function copyOutput() {

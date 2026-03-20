@@ -6,6 +6,7 @@
     <title>PDF Metadata Viewer - 205-Tools</title>
     <meta name="description" content="Displays PDF metadata including author, creation date, title, subject.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
@@ -35,7 +36,7 @@
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">📋 PDF</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">PDF Metadata Viewer</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Free • Fast • Secure • 100% Client-Side</p>
         </div>
     </section>
 
@@ -44,64 +45,192 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4">📋</div>
-                    <p class="text-gray-600 dark:text-gray-400">Displays PDF metadata including author, creation date, title, subject.</p>
+                    <p class="text-gray-600 dark:text-gray-400">View PDF metadata including title, author, creation date, and more. Your files never leave your device.</p>
                 </div>
                 
                 <!-- Upload Zone -->
                 <div class="drop-zone rounded-xl p-12 text-center cursor-pointer mb-8" id="dropZone">
                     <div class="text-5xl mb-4">📁</div>
-                    <p class="text-lg font-medium mb-2">Drag & drop your file here</p>
-                    <p class="text-gray-500">or browse</p>
-                    <input type="file" class="hidden" id="fileInput">
-                </div>
-
-                <!-- Settings -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Output Format</label>
-                        <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="format">
-                            <option>Auto</option>
-                            <option>JPG</option>
-                            <option>PNG</option>
-                            <option>WebP</option>
-                        </select>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Quality</label>
-                        <input type="range" min="1" max="100" value="85" class="w-full" id="quality">
-                    </div>
+                    <p class="text-lg font-medium mb-2">Drag & drop your PDF here</p>
+                    <p class="text-gray-500">or click to browse</p>
+                    <input type="file" class="hidden" id="fileInput" accept=".pdf,application/pdf">
                 </div>
 
                 <!-- Action Button -->
                 <button onclick="processFile()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Convert
+                    View Metadata
                 </button>
 
+                <!-- Error Message -->
+                <div id="error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-center"></div>
+
                 <!-- Result -->
-                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ Processing...</p>
-                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download Result</a>
+                <div id="result" class="hidden mt-8">
+                    <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                        <p class="text-green-600 dark:text-green-400 font-medium mb-4 text-center">✅ Metadata Extracted!</p>
+                        
+                        <!-- Basic Info -->
+                        <div class="bg-white dark:bg-gray-700 rounded-lg p-4 mb-4">
+                            <h3 class="font-semibold mb-3 text-lg border-b pb-2 dark:border-gray-600">Document Info</h3>
+                            <div id="metadataContent" class="space-y-2"></div>
+                        </div>
+
+                        <!-- PDF Info -->
+                        <div class="bg-white dark:bg-gray-700 rounded-lg p-4">
+                            <h3 class="font-semibold mb-3 text-lg border-b pb-2 dark:border-gray-600">PDF Properties</h3>
+                            <div id="pdfInfo" class="space-y-2"></div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
+        const { PDFDocument } = PDFLib;
+        let currentFile = null;
+
         dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragover', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.add('dragover'); 
+        });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); processFile(); });
-        fileInput.addEventListener('change', processFile);
-        function processFile() {
+        dropZone.addEventListener('drop', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.remove('dragover'); 
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === 'application/pdf') {
+                fileInput.files = files;
+                currentFile = files[0];
+            }
+        });
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                currentFile = e.target.files[0];
+            }
+        });
+
+        async function processFile() {
+            if (!currentFile) {
+                showError('Please select a PDF file first');
+                return;
+            }
+
             const btn = document.getElementById('actionBtn');
             const result = document.getElementById('result');
-            btn.textContent = 'Processing...';
+            const error = document.getElementById('error');
+            const metadataContent = document.getElementById('metadataContent');
+            const pdfInfo = document.getElementById('pdfInfo');
+
+            btn.textContent = 'Loading...';
             btn.disabled = true;
-            setTimeout(() => { result.classList.remove('hidden'); btn.textContent = 'Convert'; btn.disabled = false; }, 1500);
+            result.classList.add('hidden');
+            error.classList.add('hidden');
+
+            try {
+                const arrayBuffer = await currentFile.arrayBuffer();
+                const pdf = await PDFDocument.load(arrayBuffer);
+                
+                // Get metadata
+                const title = pdf.getTitle() || 'Not specified';
+                const author = pdf.getAuthor() || 'Not specified';
+                const subject = pdf.getSubject() || 'Not specified';
+                const keywords = pdf.getKeywords() || 'Not specified';
+                const creator = pdf.getCreator() || 'Not specified';
+                const producer = pdf.getProducer() || 'Not specified';
+                const creationDate = pdf.getCreationDate() ? pdf.getCreationDate().toLocaleString() : 'Not specified';
+                const modificationDate = pdf.getModificationDate() ? pdf.getModificationDate().toLocaleString() : 'Not specified';
+
+                // Get page count
+                const pageCount = pdf.getPageCount();
+                const pages = pdf.getPages();
+                let totalSize = 0;
+                
+                // Try to get file size
+                const fileSizeMB = (arrayBuffer.byteLength / 1024 / 1024).toFixed(2);
+
+                metadataContent.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Title</span>
+                            <p class="font-medium">${escapeHtml(title)}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Author</span>
+                            <p class="font-medium">${escapeHtml(author)}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Subject</span>
+                            <p class="font-medium">${escapeHtml(subject)}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Keywords</span>
+                            <p class="font-medium">${escapeHtml(keywords)}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Creator</span>
+                            <p class="font-medium">${escapeHtml(creator)}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Producer</span>
+                            <p class="font-medium">${escapeHtml(producer)}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Creation Date</span>
+                            <p class="font-medium">${creationDate}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Modified Date</span>
+                            <p class="font-medium">${modificationDate}</p>
+                        </div>
+                    </div>
+                `;
+
+                pdfInfo.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded text-center">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Pages</span>
+                            <p class="font-medium text-2xl">${pageCount}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded text-center">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">File Size</span>
+                            <p class="font-medium text-2xl">${fileSizeMB} MB</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-gray-600 rounded text-center">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">PDF Version</span>
+                            <p class="font-medium text-2xl">1.${pdf.context.header?.major || 4}</p>
+                        </div>
+                    </div>
+                `;
+
+                result.classList.remove('hidden');
+                btn.textContent = 'View Another PDF';
+                btn.disabled = false;
+
+            } catch (err) {
+                console.error(err);
+                showError('Error reading PDF metadata: ' + err.message);
+                btn.textContent = 'View Metadata';
+                btn.disabled = false;
+            }
+        }
+
+        function showError(msg) {
+            const error = document.getElementById('error');
+            error.textContent = msg;
+            error.classList.remove('hidden');
+        }
+
+        function escapeHtml(text) {
+            if (typeof text !== 'string') return text;
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
     </script>
-            </div>
-        </div>
-    </section>
 
     <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
         <div class="max-w-5xl mx-auto px-4">
@@ -109,18 +238,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Upload PDF</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Select or drag your PDF file</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">View</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Click to extract metadata</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Review</h3>
+                    <p class="text-gray-600 dark:text-gray-400">See all document properties</p>
                 </div>
             </div>
         </div>
@@ -163,7 +292,7 @@
 
     <footer class="bg-gray-900 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
+            <p class="text-gray-400">© 2025 205-Tools - Free Online Tools</p>
         </div>
     </footer>
 </body>

@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Split PDF File - 205-Tools</title>
-    <meta name="description" content="Splits a PDF into individual pages or page ranges in browser.">
+    <meta name="description" content="Splits a PDF into individual pages or page ranges using pdf-lib.js in browser.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
@@ -35,7 +37,7 @@
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">✂️ PDF</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Split PDF File</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Free • Fast • Secure • 100% Client-Side</p>
         </div>
     </section>
 
@@ -44,64 +46,261 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4">✂️</div>
-                    <p class="text-gray-600 dark:text-gray-400">Splits a PDF into individual pages or page ranges in browser.</p>
+                    <p class="text-gray-600 dark:text-gray-400">Split a PDF into individual pages or page ranges using pdf-lib.js in your browser.</p>
                 </div>
                 
                 <!-- Upload Zone -->
                 <div class="drop-zone rounded-xl p-12 text-center cursor-pointer mb-8" id="dropZone">
                     <div class="text-5xl mb-4">📁</div>
-                    <p class="text-lg font-medium mb-2">Drag & drop your file here</p>
-                    <p class="text-gray-500">or browse</p>
-                    <input type="file" class="hidden" id="fileInput">
+                    <p class="text-lg font-medium mb-2">Drag & drop your PDF here</p>
+                    <p class="text-gray-500">or click to browse</p>
+                    <input type="file" class="hidden" id="fileInput" accept=".pdf,application/pdf">
                 </div>
 
-                <!-- Settings -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Output Format</label>
-                        <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="format">
-                            <option>Auto</option>
-                            <option>JPG</option>
-                            <option>PNG</option>
-                            <option>WebP</option>
-                        </select>
+                <!-- File Info -->
+                <div id="fileInfo" class="hidden mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <p class="text-sm"><span class="font-medium">File:</span> <span id="fileName"></span></p>
+                    <p class="text-sm"><span class="font-medium">Pages:</span> <span id="pageCount"></span></p>
+                </div>
+
+                <!-- Split Options -->
+                <div id="splitOptions" class="hidden mb-8">
+                    <label class="block text-sm font-medium mb-2">Split Method</label>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <label class="flex items-center p-4 border dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <input type="radio" name="splitMethod" value="all" checked class="mr-3" onchange="updateSplitUI()">
+                            <div>
+                                <span class="font-medium">Every page</span>
+                                <p class="text-xs text-gray-500">Create separate PDF for each page</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center p-4 border dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <input type="radio" name="splitMethod" value="range" class="mr-3" onchange="updateSplitUI()">
+                            <div>
+                                <span class="font-medium">Page range</span>
+                                <p class="text-xs text-gray-500">Extract specific pages</p>
+                            </div>
+                        </label>
                     </div>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Quality</label>
-                        <input type="range" min="1" max="100" value="85" class="w-full" id="quality">
+                    
+                    <div id="rangeInput" class="hidden">
+                        <label class="block text-sm font-medium mb-2">Page Range (e.g., 1-3, 5, 7-10)</label>
+                        <input type="text" id="pageRange" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700" placeholder="1-3, 5, 7-10">
+                        <p class="text-xs text-gray-500 mt-1">Enter pages or ranges separated by commas</p>
                     </div>
+                </div>
+
+                <!-- Progress -->
+                <div id="progress" class="hidden mb-6">
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2.5 rounded-full transition-all" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <p class="text-sm text-center mt-2 text-gray-600 dark:text-gray-400" id="progressText">Processing...</p>
                 </div>
 
                 <!-- Action Button -->
-                <button onclick="processFile()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Convert
+                <button onclick="splitPdf()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn" disabled>
+                    Split PDF
                 </button>
 
+                <!-- Error Message -->
+                <div id="error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-center"></div>
+
                 <!-- Result -->
-                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ Processing...</p>
-                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download Result</a>
+                <div id="result" class="hidden mt-8">
+                    <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
+                        <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ PDF Split Complete!</p>
+                        <p id="resultText" class="text-sm text-gray-600 dark:text-gray-400 mb-4"></p>
+                        <button onclick="downloadAll()" class="px-8 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 font-semibold">
+                            Download All as ZIP
+                        </button>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const splitOptions = document.getElementById('splitOptions');
+        const actionBtn = document.getElementById('actionBtn');
+        const { PDFDocument } = PDFLib;
+        
+        let currentFile = null;
+        let currentPdf = null;
+        let currentPageCount = 0;
+        let splitFiles = [];
+
         dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragover', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.add('dragover'); 
+        });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); processFile(); });
-        fileInput.addEventListener('change', processFile);
-        function processFile() {
+        dropZone.addEventListener('drop', async (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === 'application/pdf') {
+                await loadPdf(files[0]);
+            }
+        });
+        fileInput.addEventListener('change', async (e) => {
+            if (e.target.files.length > 0) {
+                await loadPdf(e.target.files[0]);
+            }
+        });
+
+        async function loadPdf(file) {
+            try {
+                currentFile = file;
+                const arrayBuffer = await file.arrayBuffer();
+                currentPdf = await PDFDocument.load(arrayBuffer);
+                currentPageCount = currentPdf.getPageCount();
+                
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('pageCount').textContent = currentPageCount;
+                fileInfo.classList.remove('hidden');
+                splitOptions.classList.remove('hidden');
+                actionBtn.disabled = false;
+                document.getElementById('result').classList.add('hidden');
+            } catch (err) {
+                showError('Error loading PDF: ' + err.message);
+            }
+        }
+
+        function updateSplitUI() {
+            const method = document.querySelector('input[name="splitMethod"]:checked').value;
+            document.getElementById('rangeInput').classList.toggle('hidden', method !== 'range');
+        }
+
+        function parsePageRange(rangeStr, maxPages) {
+            const pages = new Set();
+            const parts = rangeStr.split(',').map(p => p.trim());
+            
+            for (const part of parts) {
+                if (part.includes('-')) {
+                    const [start, end] = part.split('-').map(n => parseInt(n.trim()));
+                    for (let i = start; i <= end && i <= maxPages; i++) {
+                        if (i > 0) pages.add(i);
+                    }
+                } else {
+                    const page = parseInt(part);
+                    if (page > 0 && page <= maxPages) pages.add(page);
+                }
+            }
+            
+            return Array.from(pages).sort((a, b) => a - b);
+        }
+
+        async function splitPdf() {
+            if (!currentPdf) {
+                showError('Please select a PDF file first');
+                return;
+            }
+
             const btn = document.getElementById('actionBtn');
+            const progress = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
             const result = document.getElementById('result');
-            btn.textContent = 'Processing...';
+            const error = document.getElementById('error');
+
+            btn.textContent = 'Splitting...';
             btn.disabled = true;
-            setTimeout(() => { result.classList.remove('hidden'); btn.textContent = 'Convert'; btn.disabled = false; }, 1500);
+            progress.classList.remove('hidden');
+            result.classList.add('hidden');
+            error.classList.add('hidden');
+            splitFiles = [];
+
+            try {
+                const method = document.querySelector('input[name="splitMethod"]:checked').value;
+                const pdfBytes = await currentFile.arrayBuffer();
+                const sourcePdf = await PDFDocument.load(pdfBytes);
+                const pages = sourcePdf.getPages();
+                
+                let pagesToExtract = [];
+                
+                if (method === 'all') {
+                    for (let i = 0; i < pages.length; i++) {
+                        pagesToExtract.push([i]);
+                    }
+                } else {
+                    const rangeStr = document.getElementById('pageRange').value;
+                    if (!rangeStr) {
+                        throw new Error('Please enter a page range');
+                    }
+                    const selectedPages = parsePageRange(rangeStr, pages.length);
+                    pagesToExtract = selectedPages.map(p => [p - 1]);
+                }
+
+                for (let i = 0; i < pagesToExtract.length; i++) {
+                    progressText.textContent = `Creating PDF ${i + 1} of ${pagesToExtract.length}...`;
+                    progressBar.style.width = `${((i + 1) / pagesToExtract.length) * 100}%`;
+
+                    const newPdf = await PDFDocument.create();
+                    const pageIndices = pagesToExtract[i];
+                    
+                    for (const pageIndex of pageIndices) {
+                        const [copiedPage] = await newPdf.copyPages(sourcePdf, [pageIndex]);
+                        newPdf.addPage(copiedPage);
+                    }
+                    
+                    const newPdfBytes = await newPdf.save();
+                    splitFiles.push({
+                        bytes: newPdfBytes,
+                        name: method === 'all' 
+                            ? `${currentFile.name.replace('.pdf', '')}_page_${pageIndices[0] + 1}.pdf`
+                            : `${currentFile.name.replace('.pdf', '')}_page_${pageIndices[0] + 1}.pdf`
+                    });
+                }
+
+                document.getElementById('resultText').textContent = 
+                    `Created ${splitFiles.length} PDF file(s)`;
+                progressBar.style.width = '100%';
+                result.classList.remove('hidden');
+                btn.textContent = 'Split Another PDF';
+                btn.disabled = false;
+                progress.classList.add('hidden');
+
+            } catch (err) {
+                console.error(err);
+                showError('Error splitting PDF: ' + err.message);
+                btn.textContent = 'Split PDF';
+                btn.disabled = false;
+                progress.classList.add('hidden');
+            }
+        }
+
+        async function downloadAll() {
+            if (splitFiles.length === 0) return;
+            
+            if (splitFiles.length === 1) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(new Blob([splitFiles[0].bytes], { type: 'application/pdf' }));
+                link.download = splitFiles[0].name;
+                link.click();
+            } else {
+                const zip = new JSZip();
+                splitFiles.forEach(file => {
+                    zip.file(file.name, file.bytes);
+                });
+                const content = await zip.generateAsync({ type: 'blob' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = 'split_pdfs.zip';
+                link.click();
+            }
+        }
+
+        function showError(msg) {
+            const error = document.getElementById('error');
+            error.textContent = msg;
+            error.classList.remove('hidden');
         }
     </script>
-            </div>
-        </div>
-    </section>
 
     <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
         <div class="max-w-5xl mx-auto px-4">
@@ -109,18 +308,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Upload PDF</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Select your PDF file</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Choose Method</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Split all pages or select range</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Download</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Get your split PDFs</p>
                 </div>
             </div>
         </div>
@@ -142,28 +341,28 @@
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
             <div class="grid md:grid-cols-2 gap-4">
+            <a href="/en/merge-pdf/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                <span class="text-2xl">📄</span>
+                <span class="font-medium">Merge PDF Files</span>
+            </a>
+            <a href="/en/reorder-pdf-pages/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                <span class="text-2xl">📋</span>
+                <span class="font-medium">Reorder PDF Pages</span>
+            </a>
             <a href="/en/pdf-to-jpg/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">📄</span>
                 <span class="font-medium">PDF to JPG Converter</span>
             </a>
-            <a href="/en/pdf-to-png/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📄</span>
-                <span class="font-medium">PDF to PNG Converter</span>
-            </a>
-            <a href="/en/pdf-to-webp/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📄</span>
-                <span class="font-medium">PDF to WebP Converter</span>
-            </a>
-            <a href="/en/pdf-to-text/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📝</span>
-                <span class="font-medium">PDF to Text Extractor</span>
+            <a href="/en/rotate-pdf/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                <span class="text-2xl">🔄</span>
+                <span class="font-medium">Rotate PDF Pages</span>
             </a></div>
         </div>
     </section>
 
     <footer class="bg-gray-900 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
+            <p class="text-gray-400">© 2025 205-Tools - Free Online Tools</p>
         </div>
     </footer>
 </body>

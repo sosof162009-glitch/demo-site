@@ -86,17 +86,59 @@
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
+        let currentFile = null;
+        
         dropZone.addEventListener('click', () => fileInput.click());
         dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); processFile(); });
-        fileInput.addEventListener('change', processFile);
+        dropZone.addEventListener('drop', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.remove('dragover'); 
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                fileInput.files = files;
+                currentFile = files[0];
+            }
+        });
+        fileInput.addEventListener('change', (e) => { currentFile = e.target.files[0]; });
+        
         function processFile() {
+            if (!currentFile && fileInput.files.length) currentFile = fileInput.files[0];
+            if (!currentFile) return alert('Please select an SVG file');
+            
             const btn = document.getElementById('actionBtn');
             const result = document.getElementById('result');
-            btn.textContent = 'Processing...';
+            const downloadLink = document.getElementById('downloadLink');
+            const qualitySlider = document.getElementById('quality');
+            
+            btn.textContent = 'Converting...';
             btn.disabled = true;
-            setTimeout(() => { result.classList.remove('hidden'); btn.textContent = 'Convert'; btn.disabled = false; }, 1500);
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const svgText = e.target.result;
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width || 800;
+                    canvas.height = img.height || 600;
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                    
+                    const quality = qualitySlider.value / 100;
+                    const jpgDataUrl = canvas.toDataURL('image/jpeg', quality);
+                    downloadLink.href = jpgDataUrl;
+                    downloadLink.download = currentFile.name.replace(/\.svg$/i, '.jpg');
+                    
+                    result.classList.remove('hidden');
+                    btn.textContent = 'Convert';
+                    btn.disabled = false;
+                };
+                img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
+            };
+            reader.readAsText(currentFile);
         }
     </script>
             </div>

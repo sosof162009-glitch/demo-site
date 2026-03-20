@@ -14,6 +14,7 @@
         .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
         .tool-card { transition: all 0.2s; }
         .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
+        .preview-img { max-width: 100%; max-height: 300px; border-radius: 8px; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
@@ -50,53 +51,197 @@
                 <!-- Upload Zone -->
                 <div class="drop-zone rounded-xl p-12 text-center cursor-pointer mb-8" id="dropZone">
                     <div class="text-5xl mb-4">📁</div>
-                    <p class="text-lg font-medium mb-2">Drag & drop your file here</p>
-                    <p class="text-gray-500">or browse</p>
-                    <input type="file" class="hidden" id="fileInput">
+                    <p class="text-lg font-medium mb-2">Drag & drop your image here</p>
+                    <p class="text-gray-500">or click to browse</p>
+                    <input type="file" class="hidden" id="fileInput" accept="image/*">
                 </div>
 
-                <!-- Settings -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Output Format</label>
-                        <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="format">
-                            <option>Auto</option>
-                            <option>JPG</option>
-                            <option>PNG</option>
-                            <option>WebP</option>
-                        </select>
+                <!-- Preview -->
+                <div id="previewContainer" class="hidden mb-8 text-center">
+                    <p class="text-sm text-gray-500 mb-2">Original Image</p>
+                    <img id="previewImg" class="preview-img mx-auto" src="" alt="Preview">
+                </div>
+
+                <!-- Resize Settings -->
+                <div id="settingsPanel" class="hidden">
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <label class="block text-sm font-medium mb-2">Width (px)</label>
+                            <input type="number" id="widthInput" class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" min="1" max="8192">
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <label class="block text-sm font-medium mb-2">Height (px)</label>
+                            <input type="number" id="heightInput" class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" min="1" max="8192">
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex items-center">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" id="lockAspect" class="w-5 h-5 mr-3 accent-indigo-500" checked>
+                                <span class="text-sm font-medium">Lock Aspect Ratio</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Quality</label>
-                        <input type="range" min="1" max="100" value="85" class="w-full" id="quality">
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <label class="block text-sm font-medium mb-2">Output Format</label>
+                            <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="format">
+                                <option value="auto">Auto (Same as input)</option>
+                                <option value="image/jpeg">JPG</option>
+                                <option value="image/png">PNG</option>
+                                <option value="image/webp">WebP</option>
+                            </select>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <label class="block text-sm font-medium mb-2">Quality (<span id="qualityValue">85</span>%)</label>
+                            <input type="range" min="1" max="100" value="85" class="w-full" id="quality">
+                        </div>
                     </div>
                 </div>
 
                 <!-- Action Button -->
-                <button onclick="processFile()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Convert
+                <button onclick="processFile()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn" disabled>
+                    Resize Image
                 </button>
 
                 <!-- Result -->
                 <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ Processing...</p>
-                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download Result</a>
+                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ Image Resized!</p>
+                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download Resized Image</a>
                 </div>
 
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImg = document.getElementById('previewImg');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const widthInput = document.getElementById('widthInput');
+        const heightInput = document.getElementById('heightInput');
+        const lockAspect = document.getElementById('lockAspect');
+        const actionBtn = document.getElementById('actionBtn');
+        const qualitySlider = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        
+        let currentFile = null;
+        let originalWidth = 0;
+        let originalHeight = 0;
+        let aspectRatio = 1;
+
         dropZone.addEventListener('click', () => fileInput.click());
         dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); processFile(); });
-        fileInput.addEventListener('change', processFile);
+        dropZone.addEventListener('drop', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.remove('dragover'); 
+            const files = e.dataTransfer.files;
+            if (files.length && files[0].type.startsWith('image/')) {
+                fileInput.files = files;
+                handleFile(files[0]);
+            }
+        });
+        fileInput.addEventListener('change', (e) => { 
+            if (e.target.files.length) handleFile(e.target.files[0]); 
+        });
+
+        qualitySlider.addEventListener('input', (e) => {
+            qualityValue.textContent = e.target.value;
+        });
+
+        widthInput.addEventListener('input', () => {
+            if (lockAspect.checked && originalWidth) {
+                heightInput.value = Math.round(widthInput.value / aspectRatio);
+            }
+        });
+
+        heightInput.addEventListener('input', () => {
+            if (lockAspect.checked && originalHeight) {
+                widthInput.value = Math.round(heightInput.value * aspectRatio);
+            }
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+            currentFile = file;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    originalWidth = img.width;
+                    originalHeight = img.height;
+                    aspectRatio = originalWidth / originalHeight;
+                    
+                    previewImg.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                    settingsPanel.classList.remove('hidden');
+                    actionBtn.disabled = false;
+                    
+                    widthInput.value = originalWidth;
+                    heightInput.value = originalHeight;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
         function processFile() {
+            if (!currentFile) return;
+            
             const btn = document.getElementById('actionBtn');
             const result = document.getElementById('result');
-            btn.textContent = 'Processing...';
+            const downloadLink = document.getElementById('downloadLink');
+            const formatSelect = document.getElementById('format');
+            
+            const newWidth = parseInt(widthInput.value) || originalWidth;
+            const newHeight = parseInt(heightInput.value) || originalHeight;
+            
+            if (newWidth < 1 || newHeight < 1) {
+                alert('Please enter valid dimensions');
+                return;
+            }
+            
+            btn.textContent = 'Resizing...';
             btn.disabled = true;
-            setTimeout(() => { result.classList.remove('hidden'); btn.textContent = 'Convert'; btn.disabled = false; }, 1500);
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Use better quality scaling
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
+                    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                    
+                    let mimeType = formatSelect.value;
+                    if (mimeType === 'auto') {
+                        mimeType = currentFile.type || 'image/png';
+                    }
+                    
+                    const quality = qualitySlider.value / 100;
+                    const dataUrl = canvas.toDataURL(mimeType, quality);
+                    
+                    const ext = mimeType.split('/')[1] || 'png';
+                    const newName = currentFile.name.replace(/\.[^.]+$/, '') + '_resized.' + ext;
+                    
+                    downloadLink.href = dataUrl;
+                    downloadLink.download = newName;
+                    
+                    result.classList.remove('hidden');
+                    btn.textContent = 'Resize Image';
+                    btn.disabled = false;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(currentFile);
         }
     </script>
             </div>
@@ -109,18 +254,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Upload Image</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Drag & drop or select your image</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Set Dimensions</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Enter width and height, lock aspect ratio</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Download</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Get your resized image instantly</p>
                 </div>
             </div>
         </div>

@@ -69,6 +69,26 @@
                 </button>
 
     <script>
+        const morseCode = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+            'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+            'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+            'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+            'Y': '-.--', 'Z': '--..', '1': '.----', '2': '..---', '3': '...--',
+            '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..',
+            '9': '----.', '0': '-----', ' ': ' / ', '.': '.-.-.-', ',': '--..--',
+            '?': '..--..', "'": '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.',
+            ')': '-.--.-', '&': '.-...', ':': '---...', ';': '-.-.-.', '=': '-...-',
+            '+': '.-.-.', '-': '-....-', '_': '..--.-', '"': '.-..-.', '$': '...-..-',
+            '@': '.--.-.', ' ': ' '
+        };
+        
+        const reverseMorse = Object.fromEntries(Object.entries(morseCode).map(([k, v]) => [v, k]));
+        
+        function isMorse(text) {
+            return /^[.\-\/\s]+$/.test(text.trim());
+        }
+        
         function processText() {
             const input = document.getElementById('input').value;
             const btn = document.getElementById('actionBtn');
@@ -76,11 +96,25 @@
             btn.disabled = true;
             
             setTimeout(() => {
-                // Simple processing - can be customized per tool
-                document.getElementById('output').value = input.toUpperCase();
+                let result = '';
+                
+                if (isMorse(input)) {
+                    // Morse to text
+                    const words = input.trim().split(' / ');
+                    result = words.map(word => 
+                        word.split(' ').map(char => reverseMorse[char] || '').join('')
+                    ).join(' ');
+                } else {
+                    // Text to morse
+                    result = input.toUpperCase().split('').map(char => 
+                        morseCode[char] || char
+                    ).join(' ');
+                }
+                
+                document.getElementById('output').value = result;
                 btn.textContent = 'Process';
                 btn.disabled = false;
-            }, 500);
+            }, 300);
         }
         
         function copyOutput() {

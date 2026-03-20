@@ -49,17 +49,14 @@
                 
                 <!-- Code Input -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Input</label>
-                    <textarea id="input" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Paste your code here..."></textarea>
+                    <label class="block text-sm font-medium mb-2">Input CSV</label>
+                    <textarea id="input" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="name,age,city\nJohn,30,New York\nJane,25,Boston"></textarea>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="flex gap-4 mb-6">
-                    <button onclick="formatCode()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="formatBtn">
-                        Format
-                    </button>
-                    <button onclick="minifyCode()" class="flex-1 py-4 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
-                        Minify
+                    <button onclick="convertToJson()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="formatBtn">
+                        Convert to JSON
                     </button>
                     <button onclick="clearCode()" class="px-6 py-4 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl font-medium hover:bg-red-200 dark:hover:bg-red-900/50 transition-all">
                         Clear
@@ -68,29 +65,80 @@
 
                 <!-- Output -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Result</label>
+                    <label class="block text-sm font-medium mb-2">JSON Result</label>
                     <textarea id="output" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
                 </div>
 
     <script>
-        function formatCode() {
-            const input = document.getElementById('input').value;
+        function convertToJson() {
+            const input = document.getElementById('input').value.trim();
+            if (!input) {
+                document.getElementById('output').value = 'Error: Empty input';
+                return;
+            }
+            
             try {
-                const obj = JSON.parse(input);
-                document.getElementById('output').value = JSON.stringify(obj, null, 2);
+                const lines = input.split('\n').filter(line => line.trim() !== '');
+                if (lines.length === 0) {
+                    document.getElementById('output').value = 'Error: No data found';
+                    return;
+                }
+                
+                // Parse CSV
+                const result = [];
+                const headers = parseCSVLine(lines[0]);
+                
+                for (let i = 1; i < lines.length; i++) {
+                    const values = parseCSVLine(lines[i]);
+                    const obj = {};
+                    for (let j = 0; j < headers.length; j++) {
+                        let value = values[j] || '';
+                        // Try to convert to number if possible
+                        if (/^-?\d+$/.test(value)) {
+                            value = parseInt(value, 10);
+                        } else if (/^-?\d*\.\d+$/.test(value)) {
+                            value = parseFloat(value);
+                        } else if (value.toLowerCase() === 'true') {
+                            value = true;
+                        } else if (value.toLowerCase() === 'false') {
+                            value = false;
+                        }
+                        obj[headers[j]] = value;
+                    }
+                    result.push(obj);
+                }
+                
+                document.getElementById('output').value = JSON.stringify(result, null, 2);
             } catch(e) {
                 document.getElementById('output').value = 'Error: ' + e.message;
             }
         }
         
-        function minifyCode() {
-            const input = document.getElementById('input').value;
-            try {
-                const obj = JSON.parse(input);
-                document.getElementById('output').value = JSON.stringify(obj);
-            } catch(e) {
-                document.getElementById('output').value = input.replace(/\s+/g, ' ').trim();
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                const nextChar = line[i + 1];
+                
+                if (char === '"') {
+                    if (inQuotes && nextChar === '"') {
+                        current += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
             }
+            result.push(current.trim());
+            return result;
         }
         
         function clearCode() {
@@ -108,18 +156,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Paste CSV</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Enter CSV data with headers</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Click Convert</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Transform to JSON</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Get Result</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Copy JSON output</p>
                 </div>
             </div>
         </div>
@@ -153,9 +201,9 @@
                 <span class="text-2xl">📊</span>
                 <span class="font-medium">JSON to CSV Converter</span>
             </a>
-            <a href="/en/json-to-xml/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+            <a href="/en/xml-to-json/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">📄</span>
-                <span class="font-medium">JSON to XML Converter</span>
+                <span class="font-medium">XML to JSON Converter</span>
             </a></div>
         </div>
     </section>

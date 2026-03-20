@@ -49,17 +49,14 @@
                 
                 <!-- Code Input -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Input</label>
-                    <textarea id="input" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Paste your code here..."></textarea>
+                    <label class="block text-sm font-medium mb-2">Input JSON</label>
+                    <textarea id="input" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder='{"root": {"name": "John", "age": 30}}'></textarea>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="flex gap-4 mb-6">
-                    <button onclick="formatCode()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="formatBtn">
-                        Format
-                    </button>
-                    <button onclick="minifyCode()" class="flex-1 py-4 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
-                        Minify
+                    <button onclick="convertToXml()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="formatBtn">
+                        Convert to XML
                     </button>
                     <button onclick="clearCode()" class="px-6 py-4 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl font-medium hover:bg-red-200 dark:hover:bg-red-900/50 transition-all">
                         Clear
@@ -68,29 +65,62 @@
 
                 <!-- Output -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Result</label>
+                    <label class="block text-sm font-medium mb-2">XML Result</label>
                     <textarea id="output" rows="10" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
                 </div>
 
     <script>
-        function formatCode() {
+        function convertToXml() {
             const input = document.getElementById('input').value;
             try {
-                const obj = JSON.parse(input);
-                document.getElementById('output').value = JSON.stringify(obj, null, 2);
+                const data = JSON.parse(input);
+                const xml = jsonToXml(data);
+                document.getElementById('output').value = xml;
             } catch(e) {
                 document.getElementById('output').value = 'Error: ' + e.message;
             }
         }
         
-        function minifyCode() {
-            const input = document.getElementById('input').value;
-            try {
-                const obj = JSON.parse(input);
-                document.getElementById('output').value = JSON.stringify(obj);
-            } catch(e) {
-                document.getElementById('output').value = input.replace(/\s+/g, ' ').trim();
+        function jsonToXml(obj, rootName = 'root') {
+            let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+            
+            function buildXml(obj, name) {
+                if (obj === null || obj === undefined) {
+                    return '';
+                }
+                
+                if (typeof obj !== 'object') {
+                    return escapeXml(String(obj));
+                }
+                
+                if (Array.isArray(obj)) {
+                    return obj.map(item => buildXml(item, name)).join('');
+                }
+                
+                let xmlStr = '';
+                for (const [key, value] of Object.entries(obj)) {
+                    if (Array.isArray(value)) {
+                        xmlStr += value.map(item => `<${key}>${buildXml(item, key)}</${key}>`).join('');
+                    } else if (typeof value === 'object' && value !== null) {
+                        xmlStr += `<${key}>${buildXml(value, key)}</${key}>`;
+                    } else {
+                        xmlStr += `<${key}>${escapeXml(String(value))}</${key}>`;
+                    }
+                }
+                return xmlStr;
             }
+            
+            function escapeXml(str) {
+                return str
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&apos;');
+            }
+            
+            xml += `<${rootName}>\n${buildXml(obj, rootName)}\n</${rootName}>`;
+            return xml;
         }
         
         function clearCode() {
@@ -108,18 +138,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Paste JSON</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Enter JSON data</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Click Convert</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Transform to XML</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Get Result</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Copy XML output</p>
                 </div>
             </div>
         </div>

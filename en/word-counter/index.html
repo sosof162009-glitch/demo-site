@@ -76,11 +76,22 @@
             btn.disabled = true;
             
             setTimeout(() => {
-                // Simple processing - can be customized per tool
-                document.getElementById('output').value = input.toUpperCase();
+                const words = input.split(/\s+/).filter(w => w.length > 0).length;
+                const characters = input.length;
+                const charactersNoSpaces = input.replace(/\s/g, '').length;
+                const sentences = input.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+                const paragraphs = input.split(/\n\n+/).filter(p => p.trim().length > 0).length;
+                
+                const result = `Words: ${words}
+Characters (with spaces): ${characters}
+Characters (no spaces): ${charactersNoSpaces}
+Sentences: ${sentences}
+Paragraphs: ${paragraphs}`;
+                
+                document.getElementById('output').value = result;
                 btn.textContent = 'Process';
                 btn.disabled = false;
-            }, 500);
+            }, 300);
         }
         
         function copyOutput() {

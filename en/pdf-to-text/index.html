@@ -6,8 +6,10 @@
     <title>PDF to Text Extractor - 205-Tools</title>
     <meta name="description" content="Extracts plain text content from PDF files using PDF.js text layer.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
     <style>
         .drop-zone { border: 2px dashed #6366f1; transition: all 0.3s; }
@@ -35,7 +37,7 @@
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">📝 PDF</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">PDF to Text Extractor</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Free • Fast • Secure • 100% Client-Side</p>
         </div>
     </section>
 
@@ -44,64 +46,164 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4">📝</div>
-                    <p class="text-gray-600 dark:text-gray-400">Extracts plain text content from PDF files using PDF.js text layer.</p>
+                    <p class="text-gray-600 dark:text-gray-400">Extract plain text from PDF files using PDF.js text layer. Your files never leave your device.</p>
                 </div>
                 
                 <!-- Upload Zone -->
                 <div class="drop-zone rounded-xl p-12 text-center cursor-pointer mb-8" id="dropZone">
                     <div class="text-5xl mb-4">📁</div>
-                    <p class="text-lg font-medium mb-2">Drag & drop your file here</p>
-                    <p class="text-gray-500">or browse</p>
-                    <input type="file" class="hidden" id="fileInput">
+                    <p class="text-lg font-medium mb-2">Drag & drop your PDF here</p>
+                    <p class="text-gray-500">or click to browse</p>
+                    <input type="file" class="hidden" id="fileInput" accept=".pdf,application/pdf">
                 </div>
 
-                <!-- Settings -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Output Format</label>
-                        <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="format">
-                            <option>Auto</option>
-                            <option>JPG</option>
-                            <option>PNG</option>
-                            <option>WebP</option>
-                        </select>
+                <!-- Progress -->
+                <div id="progress" class="hidden mb-6">
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2.5 rounded-full transition-all" id="progressBar" style="width: 0%"></div>
                     </div>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Quality</label>
-                        <input type="range" min="1" max="100" value="85" class="w-full" id="quality">
-                    </div>
+                    <p class="text-sm text-center mt-2 text-gray-600 dark:text-gray-400" id="progressText">Extracting text...</p>
                 </div>
 
                 <!-- Action Button -->
                 <button onclick="processFile()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Convert
+                    Extract Text
                 </button>
 
+                <!-- Error Message -->
+                <div id="error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-center"></div>
+
                 <!-- Result -->
-                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ Processing...</p>
-                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download Result</a>
+                <div id="result" class="hidden mt-8">
+                    <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                        <p class="text-green-600 dark:text-green-400 font-medium mb-4 text-center">✅ Text Extraction Complete!</p>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Extracted Text:</label>
+                            <textarea id="textOutput" class="w-full h-64 p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm resize-none" readonly></textarea>
+                        </div>
+                        <div class="flex gap-4">
+                            <button onclick="copyText()" class="flex-1 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-semibold">
+                                Copy to Clipboard
+                            </button>
+                            <button onclick="downloadText()" class="flex-1 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 font-semibold">
+                                Download .txt
+                            </button>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
+        let extractedText = '';
+        let currentFile = null;
+
         dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragover', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.add('dragover'); 
+        });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); processFile(); });
-        fileInput.addEventListener('change', processFile);
-        function processFile() {
+        dropZone.addEventListener('drop', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.remove('dragover'); 
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === 'application/pdf') {
+                fileInput.files = files;
+                currentFile = files[0];
+            }
+        });
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                currentFile = e.target.files[0];
+            }
+        });
+
+        async function processFile() {
+            if (!currentFile) {
+                showError('Please select a PDF file first');
+                return;
+            }
+
             const btn = document.getElementById('actionBtn');
+            const progress = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
             const result = document.getElementById('result');
-            btn.textContent = 'Processing...';
+            const error = document.getElementById('error');
+            const textOutput = document.getElementById('textOutput');
+
+            btn.textContent = 'Extracting...';
             btn.disabled = true;
-            setTimeout(() => { result.classList.remove('hidden'); btn.textContent = 'Convert'; btn.disabled = false; }, 1500);
+            progress.classList.remove('hidden');
+            result.classList.add('hidden');
+            error.classList.add('hidden');
+            extractedText = '';
+
+            try {
+                const arrayBuffer = await currentFile.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                const numPages = pdf.numPages;
+                let fullText = '';
+
+                for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+                    progressText.textContent = `Extracting text from page ${pageNum} of ${numPages}...`;
+                    progressBar.style.width = `${(pageNum / numPages) * 100}%`;
+
+                    const page = await pdf.getPage(pageNum);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    
+                    if (pageText.trim()) {
+                        fullText += `\n--- Page ${pageNum} ---\n\n${pageText}\n`;
+                    }
+                }
+
+                extractedText = fullText.trim() || 'No text found in this PDF.';
+                textOutput.value = extractedText;
+                progressBar.style.width = '100%';
+                result.classList.remove('hidden');
+                btn.textContent = 'Extract from Another PDF';
+                btn.disabled = false;
+                progress.classList.add('hidden');
+
+            } catch (err) {
+                console.error(err);
+                showError('Error extracting text: ' + err.message);
+                btn.textContent = 'Extract Text';
+                btn.disabled = false;
+                progress.classList.add('hidden');
+            }
+        }
+
+        function showError(msg) {
+            const error = document.getElementById('error');
+            error.textContent = msg;
+            error.classList.remove('hidden');
+        }
+
+        function copyText() {
+            const textOutput = document.getElementById('textOutput');
+            textOutput.select();
+            document.execCommand('copy');
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = originalText, 2000);
+        }
+
+        function downloadText() {
+            const blob = new Blob([extractedText], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = currentFile ? currentFile.name.replace('.pdf', '.txt') : 'extracted_text.txt';
+            link.click();
         }
     </script>
-            </div>
-        </div>
-    </section>
 
     <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
         <div class="max-w-5xl mx-auto px-4">
@@ -109,18 +211,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Upload PDF</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Select or drag your PDF file</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Extract</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Click extract and wait</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Copy or Download</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Get your text instantly</p>
                 </div>
             </div>
         </div>
@@ -163,7 +265,7 @@
 
     <footer class="bg-gray-900 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
+            <p class="text-gray-400">© 2025 205-Tools - Free Online Tools</p>
         </div>
     </footer>
 </body>

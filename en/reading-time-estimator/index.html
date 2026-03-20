@@ -76,11 +76,39 @@
             btn.disabled = true;
             
             setTimeout(() => {
-                // Simple processing - can be customized per tool
-                document.getElementById('output').value = input.toUpperCase();
+                const words = input.split(/\s+/).filter(w => w.length > 0).length;
+                const characters = input.length;
+                
+                // Average reading speed: 200-250 WPM
+                const avgWPM = 225;
+                const slowWPM = 150;
+                const fastWPM = 300;
+                
+                const avgMinutes = words / avgWPM;
+                const slowMinutes = words / slowWPM;
+                const fastMinutes = words / fastWPM;
+                
+                const formatTime = (mins) => {
+                    if (mins < 1) {
+                        return `${Math.round(mins * 60)} seconds`;
+                    }
+                    const m = Math.floor(mins);
+                    const s = Math.round((mins - m) * 60);
+                    return s > 0 ? `${m} min ${s} sec` : `${m} min`;
+                };
+                
+                const result = `Word Count: ${words}
+Character Count: ${characters}
+
+Estimated Reading Time:
+- Slow reader (150 WPM): ${formatTime(slowMinutes)}
+- Average reader (225 WPM): ${formatTime(avgMinutes)}
+- Fast reader (300 WPM): ${formatTime(fastMinutes)}`;
+                
+                document.getElementById('output').value = result;
                 btn.textContent = 'Process';
                 btn.disabled = false;
-            }, 500);
+            }, 300);
         }
         
         function copyOutput() {

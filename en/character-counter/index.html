@@ -76,11 +76,22 @@
             btn.disabled = true;
             
             setTimeout(() => {
-                // Simple processing - can be customized per tool
-                document.getElementById('output').value = input.toUpperCase();
+                const totalChars = input.length;
+                const charsNoSpaces = input.replace(/\s/g, '').length;
+                const letters = input.replace(/[^a-zA-Z]/g, '').length;
+                const numbers = input.replace(/[^0-9]/g, '').length;
+                const specialChars = input.replace(/[a-zA-Z0-9\s]/g, '').length;
+                
+                const result = `Total Characters: ${totalChars}
+Characters (no spaces): ${charsNoSpaces}
+Letters: ${letters}
+Numbers: ${numbers}
+Special Characters: ${specialChars}`;
+                
+                document.getElementById('output').value = result;
                 btn.textContent = 'Process';
                 btn.disabled = false;
-            }, 500);
+            }, 300);
         }
         
         function copyOutput() {

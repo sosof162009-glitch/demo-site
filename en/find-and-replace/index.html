@@ -53,6 +53,18 @@
                     <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter text here..."></textarea>
                 </div>
 
+                <!-- Find Input -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Find</label>
+                    <input type="text" id="findText" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Text to find...">
+                </div>
+
+                <!-- Replace Input -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Replace with</label>
+                    <input type="text" id="replaceText" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Replacement text...">
+                </div>
+
                 <!-- Action Button -->
                 <button onclick="processText()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
                     Process
@@ -71,16 +83,18 @@
     <script>
         function processText() {
             const input = document.getElementById('input').value;
+            const find = document.getElementById('findText').value;
+            const replace = document.getElementById('replaceText').value;
             const btn = document.getElementById('actionBtn');
             btn.textContent = 'Processing...';
             btn.disabled = true;
             
             setTimeout(() => {
-                // Simple processing - can be customized per tool
-                document.getElementById('output').value = input.toUpperCase();
+                const result = input.split(find).join(replace);
+                document.getElementById('output').value = result;
                 btn.textContent = 'Process';
                 btn.disabled = false;
-            }, 500);
+            }, 300);
         }
         
         function copyOutput() {

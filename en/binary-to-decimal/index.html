@@ -48,23 +48,24 @@
                 </div>
                 
                 <!-- Calculator Inputs -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 md:col-span-2">
-                        <label class="block text-sm font-medium mb-2">Value</label>
-                        <input type="number" id="value" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="0">
+                <div class="grid md:grid-cols-1 gap-6 mb-8">
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <label class="block text-sm font-medium mb-2">Binary Number</label>
+                        <input type="text" id="binaryInput" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="e.g. 101010">
+                        <p class="text-xs text-gray-500 mt-1">Enter binary digits (0-1)</p>
                     </div>
                 </div>
 
                 <!-- Action Button -->
                 <button onclick="calculate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Calculate
+                    Convert to Decimal
                 </button>
 
                 <!-- Result -->
                 <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-gray-600 dark:text-gray-400 mb-2">Result</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-2">Decimal Value</p>
                     <p class="text-3xl font-bold text-green-600 dark:text-green-400" id="resultValue">-</p>
+                    <button onclick="copyResult()" class="mt-4 px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 text-sm">Copy Result</button>
                 </div>
 
     <script>
@@ -72,15 +73,42 @@
             const btn = document.getElementById('actionBtn');
             const result = document.getElementById('result');
             const resultValue = document.getElementById('resultValue');
-            btn.textContent = 'Processing...';
+            const binaryInput = document.getElementById('binaryInput').value.trim();
+            
+            if (!binaryInput) {
+                alert('Please enter a binary number');
+                return;
+            }
+            
+            // Validate binary input
+            if (!/^[01]+$/.test(binaryInput)) {
+                alert('Please enter a valid binary number (only 0s and 1s)');
+                return;
+            }
+            
+            btn.textContent = 'Converting...';
             btn.disabled = true;
             
             setTimeout(() => {
-                resultValue.textContent = '42'; result.classList.remove('hidden');
-                btn.textContent = 'Calculate';
+                const decimal = parseInt(binaryInput, 2);
+                resultValue.textContent = decimal;
+                result.classList.remove('hidden');
+                btn.textContent = 'Convert to Decimal';
                 btn.disabled = false;
-            }, 800);
+            }, 300);
         }
+        
+        function copyResult() {
+            const resultValue = document.getElementById('resultValue').textContent;
+            navigator.clipboard.writeText(resultValue).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+        
+        // Allow Enter key to calculate
+        document.getElementById('binaryInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculate();
+        });
     </script>
             </div>
         </div>

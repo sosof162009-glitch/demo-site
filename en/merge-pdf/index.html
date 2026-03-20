@@ -6,6 +6,7 @@
     <title>Merge PDF Files - 205-Tools</title>
     <meta name="description" content="Combines multiple PDF files into one document using pdf-lib.js.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
@@ -14,6 +15,8 @@
         .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
         .tool-card { transition: all 0.2s; }
         .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
+        .file-item { transition: all 0.2s; }
+        .file-item:hover { background: rgba(99, 102, 241, 0.1); }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
@@ -35,7 +38,7 @@
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔗 PDF</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Merge PDF Files</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Free • Fast • Secure • 100% Client-Side</p>
         </div>
     </section>
 
@@ -44,64 +47,182 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4">🔗</div>
-                    <p class="text-gray-600 dark:text-gray-400">Combines multiple PDF files into one document using pdf-lib.js.</p>
+                    <p class="text-gray-600 dark:text-gray-400">Combines multiple PDF files into one document using pdf-lib.js. Your files never leave your device.</p>
                 </div>
                 
                 <!-- Upload Zone -->
                 <div class="drop-zone rounded-xl p-12 text-center cursor-pointer mb-8" id="dropZone">
                     <div class="text-5xl mb-4">📁</div>
-                    <p class="text-lg font-medium mb-2">Drag & drop your file here</p>
-                    <p class="text-gray-500">or browse</p>
-                    <input type="file" class="hidden" id="fileInput">
+                    <p class="text-lg font-medium mb-2">Drag & drop PDF files here</p>
+                    <p class="text-gray-500">or click to browse (select multiple)</p>
+                    <input type="file" class="hidden" id="fileInput" accept=".pdf,application/pdf" multiple>
                 </div>
 
-                <!-- Settings -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Output Format</label>
-                        <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="format">
-                            <option>Auto</option>
-                            <option>JPG</option>
-                            <option>PNG</option>
-                            <option>WebP</option>
-                        </select>
+                <!-- File List -->
+                <div id="fileList" class="hidden mb-8">
+                    <h3 class="text-sm font-medium mb-3">Selected Files (<span id="fileCount">0</span>)</h3>
+                    <div id="filesContainer" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                    <button onclick="clearFiles()" class="mt-3 text-sm text-red-500 hover:text-red-600">Clear all files</button>
+                </div>
+
+                <!-- Progress -->
+                <div id="progress" class="hidden mb-6">
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2.5 rounded-full transition-all" id="progressBar" style="width: 0%"></div>
                     </div>
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">Quality</label>
-                        <input type="range" min="1" max="100" value="85" class="w-full" id="quality">
-                    </div>
+                    <p class="text-sm text-center mt-2 text-gray-600 dark:text-gray-400" id="progressText">Merging...</p>
                 </div>
 
                 <!-- Action Button -->
-                <button onclick="processFile()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Convert
+                <button onclick="mergePDFs()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn" disabled>
+                    Merge PDFs
                 </button>
+
+                <!-- Error Message -->
+                <div id="error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-center"></div>
 
                 <!-- Result -->
                 <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ Processing...</p>
-                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download Result</a>
+                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ PDFs Merged Successfully!</p>
+                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download Merged PDF</a>
                 </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const filesContainer = document.getElementById('filesContainer');
+        const fileCount = document.getElementById('fileCount');
+        const actionBtn = document.getElementById('actionBtn');
+        let selectedFiles = [];
+
         dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragover', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.add('dragover'); 
+        });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); processFile(); });
-        fileInput.addEventListener('change', processFile);
-        function processFile() {
+        dropZone.addEventListener('drop', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.remove('dragover'); 
+            const files = Array.from(e.dataTransfer.files).filter(f => f.type === 'application/pdf');
+            addFiles(files);
+        });
+        fileInput.addEventListener('change', (e) => {
+            addFiles(Array.from(e.target.files));
+        });
+
+        function addFiles(files) {
+            selectedFiles = [...selectedFiles, ...files];
+            updateFileList();
+        }
+
+        function updateFileList() {
+            if (selectedFiles.length === 0) {
+                fileList.classList.add('hidden');
+                actionBtn.disabled = true;
+                return;
+            }
+            fileList.classList.remove('hidden');
+            fileCount.textContent = selectedFiles.length;
+            filesContainer.innerHTML = selectedFiles.map((file, index) => `
+                <div class="file-item flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">📄</span>
+                        <div>
+                            <p class="font-medium text-sm">${file.name}</p>
+                            <p class="text-xs text-gray-500">${(file.size / 1024).toFixed(1)} KB</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="moveFile(${index}, -1)" class="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded" ${index === 0 ? 'disabled' : ''}>⬆️</button>
+                        <button onclick="moveFile(${index}, 1)" class="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded" ${index === selectedFiles.length - 1 ? 'disabled' : ''}>⬇️</button>
+                        <button onclick="removeFile(${index})" class="p-1 hover:bg-red-100 text-red-500 rounded">✕</button>
+                    </div>
+                </div>
+            `).join('');
+            actionBtn.disabled = selectedFiles.length < 2;
+            actionBtn.textContent = selectedFiles.length < 2 ? 'Select at least 2 PDFs' : `Merge ${selectedFiles.length} PDFs`;
+        }
+
+        function moveFile(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= selectedFiles.length) return;
+            const temp = selectedFiles[index];
+            selectedFiles[index] = selectedFiles[newIndex];
+            selectedFiles[newIndex] = temp;
+            updateFileList();
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateFileList();
+        }
+
+        function clearFiles() {
+            selectedFiles = [];
+            fileInput.value = '';
+            updateFileList();
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('error').classList.add('hidden');
+        }
+
+        async function mergePDFs() {
+            if (selectedFiles.length < 2) return;
+
             const btn = document.getElementById('actionBtn');
+            const progress = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
             const result = document.getElementById('result');
-            btn.textContent = 'Processing...';
+            const error = document.getElementById('error');
+            const downloadLink = document.getElementById('downloadLink');
+
+            btn.textContent = 'Merging...';
             btn.disabled = true;
-            setTimeout(() => { result.classList.remove('hidden'); btn.textContent = 'Convert'; btn.disabled = false; }, 1500);
+            progress.classList.remove('hidden');
+            result.classList.add('hidden');
+            error.classList.add('hidden');
+
+            try {
+                const mergedPdf = await PDFLib.PDFDocument.create();
+                
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    progressText.textContent = `Processing PDF ${i + 1} of ${selectedFiles.length}...`;
+                    progressBar.style.width = `${((i + 1) / selectedFiles.length) * 100}%`;
+                    
+                    const file = selectedFiles[i];
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                    const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                    pages.forEach(page => mergedPdf.addPage(page));
+                }
+
+                const mergedPdfBytes = await mergedPdf.save();
+                const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                
+                downloadLink.href = url;
+                downloadLink.download = `merged_${selectedFiles.length}_pdfs.pdf`;
+                
+                result.classList.remove('hidden');
+                btn.textContent = `Merge ${selectedFiles.length} PDFs`;
+                btn.disabled = false;
+                progress.classList.add('hidden');
+
+            } catch (err) {
+                console.error(err);
+                error.textContent = 'Error merging PDFs: ' + err.message;
+                error.classList.remove('hidden');
+                btn.textContent = `Merge ${selectedFiles.length} PDFs`;
+                btn.disabled = false;
+                progress.classList.add('hidden');
+            }
         }
     </script>
-            </div>
-        </div>
-    </section>
 
     <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
         <div class="max-w-5xl mx-auto px-4">
@@ -109,18 +230,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Upload PDFs</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Select multiple PDF files</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Arrange Order</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Reorder files if needed</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Download</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Get your merged PDF</p>
                 </div>
             </div>
         </div>
@@ -130,10 +251,10 @@
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-12">Why use our tools</h2>
             <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center p-6"><div class="text-3xl mb-3">🔒</div><h3 class="font-semibold mb-2">Secure</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">⚡</div><h3 class="font-semibold mb-2">Fast</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">🆓</div><h3 class="font-semibold mb-2">Free</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">✨</div><h3 class="font-semibold mb-2">Quality</h3></div>
+                <div class="text-center p-6"><div class="text-3xl mb-3">🔒</div><h3 class="font-semibold mb-2">Secure</h3><p class="text-sm text-gray-500">Files processed locally</p></div>
+                <div class="text-center p-6"><div class="text-3xl mb-3">⚡</div><h3 class="font-semibold mb-2">Fast</h3><p class="text-sm text-gray-500">No server upload needed</p></div>
+                <div class="text-center p-6"><div class="text-3xl mb-3">🆓</div><h3 class="font-semibold mb-2">Free</h3><p class="text-sm text-gray-500">Unlimited merges</p></div>
+                <div class="text-center p-6"><div class="text-3xl mb-3">✨</div><h3 class="font-semibold mb-2">Quality</h3><p class="text-sm text-gray-500">Preserves all content</p></div>
             </div>
         </div>
     </section>
@@ -146,24 +267,24 @@
                 <span class="text-2xl">📄</span>
                 <span class="font-medium">PDF to JPG Converter</span>
             </a>
-            <a href="/en/pdf-to-png/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📄</span>
-                <span class="font-medium">PDF to PNG Converter</span>
+            <a href="/en/split-pdf/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                <span class="text-2xl">✂️</span>
+                <span class="font-medium">Split PDF File</span>
             </a>
-            <a href="/en/pdf-to-webp/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📄</span>
-                <span class="font-medium">PDF to WebP Converter</span>
+            <a href="/en/compress-pdf/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                <span class="text-2xl">🗜️</span>
+                <span class="font-medium">Compress PDF</span>
             </a>
-            <a href="/en/pdf-to-text/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📝</span>
-                <span class="font-medium">PDF to Text Extractor</span>
+            <a href="/en/reorder-pdf-pages/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                <span class="text-2xl">📋</span>
+                <span class="font-medium">Reorder PDF Pages</span>
             </a></div>
         </div>
     </section>
 
     <footer class="bg-gray-900 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
+            <p class="text-gray-400">© 2025 205-Tools - Free Online Tools</p>
         </div>
     </footer>
 </body>

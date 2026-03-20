@@ -10,10 +10,12 @@
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
     <style>
-        .drop-zone { border: 2px dashed #6366f1; transition: all 0.3s; }
-        .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
         .tool-card { transition: all 0.2s; }
         .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
+        .copy-btn { transition: all 0.2s; }
+        .copy-btn:hover { transform: scale(1.05); }
+        .copy-btn.copied { background-color: #10b981; color: white; }
+        .temp-preview { transition: all 0.3s; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
@@ -35,44 +37,39 @@
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🌡️ Units</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Temperature Converter</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Convert between Celsius, Fahrenheit, and Kelvin</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="text-center mb-8">
-                    <div class="text-6xl mb-4">🌡️</div>
-                    <p class="text-gray-600 dark:text-gray-400">Converts between Celsius, Fahrenheit, and Kelvin temperature scales.</p>
-                </div>
-                
                 <!-- Converter Inputs -->
                 <div class="grid md:grid-cols-3 gap-4 items-end mb-8">
                     <div>
                         <label class="block text-sm font-medium mb-2">Value</label>
-                        <input type="number" id="value" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700" placeholder="1">
+                        <input type="number" id="value" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700" placeholder="Enter value" value="0" step="any">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">From</label>
                         <select id="from" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
-                            <option>Meters</option>
-                            <option>Kilometers</option>
-                            <option>Centimeters</option>
+                            <option value="c" selected>Celsius (°C)</option>
+                            <option value="f">Fahrenheit (°F)</option>
+                            <option value="k">Kelvin (K)</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">To</label>
                         <select id="to" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
-                            <option>Feet</option>
-                            <option>Inches</option>
-                            <option>Yards</option>
+                            <option value="c">Celsius (°C)</option>
+                            <option value="f" selected>Fahrenheit (°F)</option>
+                            <option value="k">Kelvin (K)</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- Action Button -->
-                <button onclick="convert()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8" id="actionBtn">
+                <button onclick="convert()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
                     Convert
                 </button>
 
@@ -80,15 +77,37 @@
                 <div id="resultBox" class="hidden bg-green-50 dark:bg-green-900/20 rounded-xl p-6 text-center">
                     <p class="text-gray-600 dark:text-gray-400 mb-2">Result</p>
                     <p class="text-3xl font-bold text-green-600 dark:text-green-400" id="resultValue">-</p>
+                    <p class="text-sm text-gray-500 mt-2" id="resultFormula"></p>
+                    <button onclick="copyResult()" class="copy-btn mt-4 px-6 py-2 bg-indigo-500 text-white rounded-lg">Copy Result</button>
                 </div>
 
-    <script>
-        function convert() {
-            const val = parseFloat(document.getElementById('value').value) || 0;
-            document.getElementById('resultValue').textContent = val * 3.28084;
-            document.getElementById('resultBox').classList.remove('hidden');
-        }
-    </script>
+                <!-- Visual Preview -->
+                <div class="mt-8 bg-gray-50 dark:bg-gray-700 rounded-xl p-6 text-center">
+                    <p class="text-sm font-medium mb-4">Temperature Visual</p>
+                    <div id="tempVisual" class="temp-preview w-32 h-32 mx-auto rounded-full shadow-lg flex items-center justify-center text-2xl font-bold">
+                        🌡️
+                    </div>
+                    <p id="tempDesc" class="text-sm text-gray-500 mt-3">-</p>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="mt-8 bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
+                    <h3 class="text-lg font-semibold mb-4">Quick Reference</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-white dark:bg-gray-600 rounded-lg p-3">
+                            <span class="font-mono">°C to °F: (°C × 9/5) + 32</span>
+                        </div>
+                        <div class="bg-white dark:bg-gray-600 rounded-lg p-3">
+                            <span class="font-mono">°F to °C: (°F - 32) × 5/9</span>
+                        </div>
+                        <div class="bg-white dark:bg-gray-600 rounded-lg p-3">
+                            <span class="font-mono">°C to K: °C + 273.15</span>
+                        </div>
+                        <div class="bg-white dark:bg-gray-600 rounded-lg p-3">
+                            <span class="font-mono">Water freezes: 0°C = 32°F = 273.15K</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -99,18 +118,18 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
+                    <h3 class="font-semibold mb-2">Enter Temperature</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Type the temperature value</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
+                    <h3 class="font-semibold mb-2">Select Scale</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Choose temperature scales</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
+                    <h3 class="font-semibold mb-2">Get Result</h3>
+                    <p class="text-gray-600 dark:text-gray-400">See converted temperature</p>
                 </div>
             </div>
         </div>
@@ -118,36 +137,25 @@
 
     <section class="py-12">
         <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">Why use our tools</h2>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center p-6"><div class="text-3xl mb-3">🔒</div><h3 class="font-semibold mb-2">Secure</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">⚡</div><h3 class="font-semibold mb-2">Fast</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">🆓</div><h3 class="font-semibold mb-2">Free</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">✨</div><h3 class="font-semibold mb-2">Quality</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
             <div class="grid md:grid-cols-2 gap-4">
-            <a href="/en/length-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📏</span>
-                <span class="font-medium">Length Converter</span>
-            </a>
-            <a href="/en/weight-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">⚖️</span>
-                <span class="font-medium">Weight Converter</span>
-            </a>
-            <a href="/en/area-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📐</span>
-                <span class="font-medium">Area Converter</span>
-            </a>
-            <a href="/en/volume-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">💧</span>
-                <span class="font-medium">Volume Converter</span>
-            </a></div>
+                <a href="/en/length-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">📏</span>
+                    <span class="font-medium">Length Converter</span>
+                </a>
+                <a href="/en/weight-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">⚖️</span>
+                    <span class="font-medium">Weight Converter</span>
+                </a>
+                <a href="/en/area-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">📐</span>
+                    <span class="font-medium">Area Converter</span>
+                </a>
+                <a href="/en/volume-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+                    <span class="text-2xl">💧</span>
+                    <span class="font-medium">Volume Converter</span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -156,5 +164,90 @@
             <p class="text-gray-400">© 2025 205-Tools - Free</p>
         </div>
     </footer>
+
+    <script>
+        const unitLabels = { c: '°C', f: '°F', k: 'K' };
+        const unitNames = { c: 'Celsius', f: 'Fahrenheit', k: 'Kelvin' };
+
+        function convert() {
+            const val = parseFloat(document.getElementById('value').value);
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            
+            if (isNaN(val)) {
+                alert('Please enter a valid number');
+                return;
+            }
+            
+            let celsius;
+            // Convert to Celsius first
+            switch(from) {
+                case 'c': celsius = val; break;
+                case 'f': celsius = (val - 32) * 5/9; break;
+                case 'k': celsius = val - 273.15; break;
+            }
+            
+            // Convert from Celsius to target
+            let result;
+            switch(to) {
+                case 'c': result = celsius; break;
+                case 'f': result = (celsius * 9/5) + 32; break;
+                case 'k': result = celsius + 273.15; break;
+            }
+            
+            const displayResult = parseFloat(result.toFixed(2)).toString();
+            document.getElementById('resultValue').textContent = displayResult + ' ' + unitLabels[to];
+            document.getElementById('resultFormula').textContent = val + ' ' + unitLabels[from] + ' = ' + displayResult + ' ' + unitLabels[to];
+            document.getElementById('resultBox').classList.remove('hidden');
+            
+            updateVisual(celsius);
+        }
+
+        function updateVisual(celsius) {
+            const visual = document.getElementById('tempVisual');
+            const desc = document.getElementById('tempDesc');
+            
+            let color, description;
+            if (celsius <= 0) {
+                color = '#3b82f6'; // Blue for freezing
+                description = 'Freezing ❄️';
+            } else if (celsius <= 15) {
+                color = '#06b6d4'; // Cyan for cold
+                description = 'Cold 🧥';
+            } else if (celsius <= 25) {
+                color = '#22c55e'; // Green for comfortable
+                description = 'Comfortable 😊';
+            } else if (celsius <= 35) {
+                color = '#f97316'; // Orange for hot
+                description = 'Hot ☀️';
+            } else {
+                color = '#ef4444'; // Red for very hot
+                description = 'Very Hot 🔥';
+            }
+            
+            visual.style.backgroundColor = color;
+            visual.style.color = celsius > 20 ? 'white' : 'white';
+            desc.textContent = description;
+        }
+
+        function copyResult() {
+            const resultText = document.getElementById('resultValue').textContent;
+            navigator.clipboard.writeText(resultText).then(() => {
+                const btn = event.target;
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy Result';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        document.getElementById('value').addEventListener('input', convert);
+        document.getElementById('from').addEventListener('change', convert);
+        document.getElementById('to').addEventListener('change', convert);
+
+        convert();
+    </script>
 </body>
 </html>
