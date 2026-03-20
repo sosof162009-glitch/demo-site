@@ -1,200 +1,914 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>205-Tools | 205 أداة مجانية</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-        body { font-family: 'Tajawal', sans-serif; }
-        .tool-card:hover { transform: translateY(-3px); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>205-Tools | 205 أداة مجانية</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+body { font-family: 'Tajawal', sans-serif; }
+.tool-card:hover { transform: translateY(-3px); }
+</style>
 </head>
 <body class="bg-gray-100">
-    <header class="bg-white shadow p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <h1 class="text-2xl font-bold text-indigo-600">205-Tools</h1>
-            <input type="text" id="search" placeholder="ابحث عن أداة..." class="border rounded-lg px-4 py-2 w-full md:w-96">
-            <select id="lang" class="border rounded-lg px-4 py-2">
-                <option value="ar">🇸🇦 العربية</option>
-                <option value="en">🇬🇧 English</option>
-                <option value="fr">🇫🇷 Français</option>
-                <option value="es">🇪🇸 Español</option>
-                <option value="de">🇩🇪 Deutsch</option>
-            </select>
-        </div>
-    </header>
-
-    <main class="container mx-auto p-4">
-        <!-- Images -->
-        <section class="mb-8" data-category="images">
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">🖼️ أدوات الصور</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                <a href="ar/jpg-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">JPG to PNG</div></a>
-                <a href="ar/png-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">PNG to JPG</div></a>
-                <a href="ar/webp-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">WebP to JPG</div></a>
-                <a href="ar/jpg-to-webp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">JPG to WebP</div></a>
-                <a href="ar/png-to-webp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">PNG to WebP</div></a>
-                <a href="ar/webp-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">WebP to PNG</div></a>
-                <a href="ar/heic-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">HEIC to JPG</div></a>
-                <a href="ar/heic-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">HEIC to PNG</div></a>
-                <a href="ar/bmp-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">BMP to JPG</div></a>
-                <a href="ar/bmp-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">BMP to PNG</div></a>
-                <a href="ar/tiff-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">TIFF to JPG</div></a>
-                <a href="ar/tiff-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">TIFF to PNG</div></a>
-                <a href="ar/gif-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">GIF to JPG</div></a>
-                <a href="ar/gif-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">GIF to PNG</div></a>
-                <a href="ar/svg-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">SVG to JPG</div></a>
-                <a href="ar/svg-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">SVG to PNG</div></a>
-                <a href="ar/avif-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">AVIF to JPG</div></a>
-                <a href="ar/avif-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">AVIF to PNG</div></a>
-                <a href="ar/ico-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">ICO to JPG</div></a>
-                <a href="ar/ico-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">ICO to PNG</div></a>
-                <a href="ar/jpg-to-gif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">JPG to GIF</div></a>
-                <a href="ar/png-to-gif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">PNG to GIF</div></a>
-                <a href="ar/jpg-to-ico/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">JPG to ICO</div></a>
-                <a href="ar/png-to-ico/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">PNG to ICO</div></a>
-                <a href="ar/jpg-to-avif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">JPG to AVIF</div></a>
-                <a href="ar/png-to-avif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">PNG to AVIF</div></a>
-                <a href="ar/jpg-to-bmp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">JPG to BMP</div></a>
-                <a href="ar/png-to-bmp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">PNG to BMP</div></a>
-                <a href="ar/webp-to-gif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">WebP to GIF</div></a>
-                <a href="ar/webp-to-avif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">WebP to AVIF</div></a>
-                <a href="ar/gif-to-webp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">GIF to WebP</div></a>
-                <a href="ar/avif-to-webp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">AVIF to WebP</div></a>
-                <a href="ar/gif-splitter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">GIF Splitter</div></a>
-                <a href="ar/gif-maker/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">GIF Maker</div></a>
-                <a href="ar/image-resizer/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">Image Resizer</div></a>
-                <a href="ar/image-compressor/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">Image Compressor</div></a>
-                <a href="ar/image-cropper/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">Image Cropper</div></a>
-                <a href="ar/image-to-base64/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">Image to Base64</div></a>
-                <a href="ar/base64-to-image/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">Base64 to Image</div></a>
-                <a href="ar/exif-remover/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">EXIF Remover</div></a>
-                <a href="ar/favicon-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">Favicon Generator</div></a>
-                <a href="ar/color-palette-extractor/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">Color Palette</div></a>
-                <a href="ar/grayscale-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🖼️</div><div class="text-sm font-medium">Grayscale</div></a>
-            </div>
-        </section>
-
-        <!-- PDF -->
-        <section class="mb-8" data-category="pdf">
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">📄 أدوات PDF</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                <a href="ar/pdf-merger/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PDF Merger</div></a>
-                <a href="ar/pdf-splitter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PDF Splitter</div></a>
-                <a href="ar/pdf-compressor/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PDF Compressor</div></a>
-                <a href="ar/pdf-to-word/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PDF to Word</div></a>
-                <a href="ar/pdf-to-excel/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PDF to Excel</div></a>
-                <a href="ar/pdf-to-powerpoint/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PDF to PPT</div></a>
-                <a href="ar/pdf-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PDF to JPG</div></a>
-                <a href="ar/pdf-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PDF to PNG</div></a>
-                <a href="ar/pdf-to-pdfa/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PDF to PDF/A</div></a>
-                <a href="ar/word-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">Word to PDF</div></a>
-                <a href="ar/excel-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">Excel to PDF</div></a>
-                <a href="ar/powerpoint-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PPT to PDF</div></a>
-                <a href="ar/jpg-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">JPG to PDF</div></a>
-                <a href="ar/png-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">PNG to PDF</div></a>
-                <a href="ar/protect-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">Protect PDF</div></a>
-                <a href="ar/unlock-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">Unlock PDF</div></a>
-                <a href="ar/rotate-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">Rotate PDF</div></a>
-                <a href="ar/remove-pdf-password/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">📄</div><div class="text-sm font-medium">Remove Password</div></a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-white border-t mt-12 p-6 text-center text-gray-500">
-        <p>© 2026 205-Tools | جميع الأدوات مجانية</p>
-        <!-- Text -->
-        <section class="mb-8" data-category="text">
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">✍️ أدوات النصوص</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                <a href="ar/word-counter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Word Counter</div></a>
-                <a href="ar/character-counter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Character Counter</div></a>
-                <a href="ar/line-counter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Line Counter</div></a>
-                <a href="ar/remove-duplicate-lines/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Remove Duplicates</div></a>
-                <a href="ar/sort-lines/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Sort Lines</div></a>
-                <a href="ar/reverse-text/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Reverse Text</div></a>
-                <a href="ar/case-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Case Converter</div></a>
-                <a href="ar/remove-extra-spaces/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Remove Spaces</div></a>
-                <a href="ar/text-to-slug/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Text to Slug</div></a>
-                <a href="ar/remove-line-breaks/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Remove Line Breaks</div></a>
-                <a href="ar/add-line-numbers/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Add Line Numbers</div></a>
-                <a href="ar/text-diff-checker/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Diff Checker</div></a>
-                <a href="ar/find-and-replace/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Find & Replace</div></a>
-                <a href="ar/lorem-ipsum-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Lorem Ipsum</div></a>
-                <a href="ar/random-text-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Random Text</div></a>
-                <a href="ar/text-to-ascii-art/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">ASCII Art</div></a>
-                <a href="ar/fancy-text-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Fancy Text</div></a>
-                <a href="ar/morse-code-translator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Morse Code</div></a>
-                <a href="ar/reading-time-estimator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Reading Time</div></a>
-                <a href="ar/text-repeater/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Text Repeater</div></a>
-                <a href="ar/upside-down-text/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Upside Down</div></a>
-                <a href="ar/mirror-text/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">✍️</div><div class="text-sm font-medium">Mirror Text</div></a>
-            </div>
-        </section>
-
-        <!-- Developers -->
-        <section class="mb-8" data-category="developer">
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">💻 أدوات المطورين</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                <a href="ar/json-formatter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">JSON Formatter</div></a>
-                <a href="ar/json-minifier/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">JSON Minifier</div></a>
-                <a href="ar/json-to-csv/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">JSON to CSV</div></a>
-                <a href="ar/json-to-xml/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">JSON to XML</div></a>
-                <a href="ar/json-to-yaml/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">JSON to YAML</div></a>
-                <a href="ar/csv-to-json/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">CSV to JSON</div></a>
-                <a href="ar/xml-to-json/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">XML to JSON</div></a>
-                <a href="ar/yaml-to-json/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">YAML to JSON</div></a>
-                <a href="ar/json-schema-validator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">JSON Validator</div></a>
-                <a href="ar/html-formatter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">HTML Formatter</div></a>
-                <a href="ar/html-minifier/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">HTML Minifier</div></a>
-                <a href="ar/css-formatter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">CSS Formatter</div></a>
-                <a href="ar/css-minifier/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">CSS Minifier</div></a>
-                <a href="ar/js-minifier/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">JS Minifier</div></a>
-                <a href="ar/sql-formatter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">SQL Formatter</div></a>
-                <a href="ar/html-entities-encoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">HTML Entities</div></a>
-                <a href="ar/html-entities-decoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">HTML Decoder</div></a>
-                <a href="ar/base64-encoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">Base64 Encode</div></a>
-                <a href="ar/base64-decoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">Base64 Decode</div></a>
-                <a href="ar/url-encoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">URL Encoder</div></a>
-                <a href="ar/url-decoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">URL Decoder</div></a>
-                <a href="ar/md5-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">MD5 Generator</div></a>
-                <a href="ar/sha256-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">SHA256</div></a>
-                <a href="ar/sha512-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">SHA512</div></a>
-                <a href="ar/jwt-decoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">JWT Decoder</div></a>
-                <a href="ar/uuid-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">UUID Generator</div></a>
-                <a href="ar/regex-tester/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">Regex Tester</div></a>
-                <a href="ar/markdown-to-html/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">Markdown to HTML</div></a>
-            </div>
-        </section>
-
-        <!-- Colors -->
-        <section class="mb-8" data-category="colors">
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">🎨 أدوات الألوان</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                <a href="ar/hex-to-rgb/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">HEX to RGB</div></a>
-                <a href="ar/rgb-to-hex/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">RGB to HEX</div></a>
-                <a href="ar/hex-to-hsl/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">HEX to HSL</div></a>
-                <a href="ar/hsl-to-hex/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">HSL to HEX</div></a>
-                <a href="ar/cmyk-to-rgb/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">CMYK to RGB</div></a>
-                <a href="ar/rgb-to-cmyk/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">RGB to CMYK</div></a>
-                <a href="ar/color-picker/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">Color Picker</div></a>
-                <a href="ar/gradient-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">Gradient</div></a>
-                <a href="ar/color-palette-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">Color Palette</div></a>
-                <a href="ar/color-contrast-checker/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">Contrast Checker</div></a>
-                <a href="ar/box-shadow-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">Box Shadow</div></a>
-                <a href="ar/glassmorphism-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">Glassmorphism</div></a>
-                <a href="ar/neumorphism-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">Neumorphism</div></a>
-                <a href="ar/border-radius-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">Border Radius</div></a>
-                <a href="ar/text-shadow-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition"><div class="text-2xl mb-1">🎨</div><div class="text-sm font-medium">Text Shadow</div></a>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-white border-t mt-12 p-6 text-center text-gray-500">
-        <p>© 2026 205-Tools | جميع الأدوات مجانية</p>
-    </footer>
+<header class="bg-white shadow p-4 sticky top-0 z-50">
+<div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+<h1 class="text-2xl font-bold text-indigo-600">205-Tools</h1>
+<input type="text" id="search" placeholder="ابحث عن أداة..." class="border rounded-lg px-4 py-2 w-full md:w-96">
+<select id="lang" class="border rounded-lg px-4 py-2">
+<option value="ar">🇸🇦 العربية</option>
+<option value="en">🇬🇧 English</option>
+<option value="fr">🇫🇷 Français</option>
+<option value="es">🇪🇸 Español</option>
+<option value="de">🇩🇪 Deutsch</option>
+</select>
+</div>
+</header>
+<main class="container mx-auto p-4">
+<section class="mb-8" data-category="images">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">🖼️ أدوات الصور (42)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/jpg-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">JPG to PNG Converter</div>
+</a>
+<a href="ar/png-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">PNG to JPG Converter</div>
+</a>
+<a href="ar/webp-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">WebP to JPG Converter</div>
+</a>
+<a href="ar/jpg-to-webp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">JPG to WebP Converter</div>
+</a>
+<a href="ar/png-to-webp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">PNG to WebP Converter</div>
+</a>
+<a href="ar/webp-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">WebP to PNG Converter</div>
+</a>
+<a href="ar/heic-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">HEIC to JPG Converter</div>
+</a>
+<a href="ar/heic-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">HEIC to PNG Converter</div>
+</a>
+<a href="ar/bmp-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">BMP to JPG Converter</div>
+</a>
+<a href="ar/bmp-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">BMP to PNG Converter</div>
+</a>
+<a href="ar/tiff-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">TIFF to JPG Converter</div>
+</a>
+<a href="ar/tiff-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">TIFF to PNG Converter</div>
+</a>
+<a href="ar/gif-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">GIF to JPG Converter</div>
+</a>
+<a href="ar/gif-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">GIF to PNG Converter</div>
+</a>
+<a href="ar/svg-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">SVG to JPG Converter</div>
+</a>
+<a href="ar/svg-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">SVG to PNG Converter</div>
+</a>
+<a href="ar/avif-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">AVIF to JPG Converter</div>
+</a>
+<a href="ar/avif-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">AVIF to PNG Converter</div>
+</a>
+<a href="ar/ico-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">ICO to JPG Converter</div>
+</a>
+<a href="ar/ico-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">ICO to PNG Converter</div>
+</a>
+<a href="ar/jpg-to-gif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">JPG to GIF Converter</div>
+</a>
+<a href="ar/png-to-gif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">PNG to GIF Converter</div>
+</a>
+<a href="ar/jpg-to-ico/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">JPG to ICO Converter</div>
+</a>
+<a href="ar/png-to-ico/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">PNG to ICO Converter</div>
+</a>
+<a href="ar/jpg-to-avif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">JPG to AVIF Converter</div>
+</a>
+<a href="ar/png-to-avif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">PNG to AVIF Converter</div>
+</a>
+<a href="ar/jpg-to-bmp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">JPG to BMP Converter</div>
+</a>
+<a href="ar/png-to-bmp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">PNG to BMP Converter</div>
+</a>
+<a href="ar/webp-to-gif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">WebP to GIF Converter</div>
+</a>
+<a href="ar/webp-to-avif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">WebP to AVIF Converter</div>
+</a>
+<a href="ar/gif-to-webp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">GIF to WebP Converter</div>
+</a>
+<a href="ar/avif-to-webp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">AVIF to WebP Converter</div>
+</a>
+<a href="ar/image-resizer/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">Image Resizer</div>
+</a>
+<a href="ar/compress-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">Compress JPG</div>
+</a>
+<a href="ar/compress-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">Compress PNG</div>
+</a>
+<a href="ar/image-cropper/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">Image Cropper</div>
+</a>
+<a href="ar/image-to-base64/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">Image to Base64</div>
+</a>
+<a href="ar/base64-to-image/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">Base64 to Image</div>
+</a>
+<a href="ar/remove-exif/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">EXIF Data Remover</div>
+</a>
+<a href="ar/favicon-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">Favicon Generator</div>
+</a>
+<a href="ar/color-palette-extractor/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">Color Palette Extractor</div>
+</a>
+<a href="ar/image-to-grayscale/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🖼️</div>
+<div class="text-sm font-medium">Image to Grayscale</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="pdf">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">📄 أدوات PDF (18)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/pdf-to-jpg/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">PDF to JPG Converter</div>
+</a>
+<a href="ar/pdf-to-png/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">PDF to PNG Converter</div>
+</a>
+<a href="ar/pdf-to-webp/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">PDF to WebP Converter</div>
+</a>
+<a href="ar/pdf-to-text/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">PDF to Text Extractor</div>
+</a>
+<a href="ar/pdf-metadata/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">PDF Metadata Viewer</div>
+</a>
+<a href="ar/jpg-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">JPG to PDF Converter</div>
+</a>
+<a href="ar/png-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">PNG to PDF Converter</div>
+</a>
+<a href="ar/images-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">Images to PDF Converter</div>
+</a>
+<a href="ar/word-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">Word to PDF Converter</div>
+</a>
+<a href="ar/html-to-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">HTML to PDF Converter</div>
+</a>
+<a href="ar/merge-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">Merge PDF Files</div>
+</a>
+<a href="ar/split-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">Split PDF File</div>
+</a>
+<a href="ar/compress-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">Compress PDF</div>
+</a>
+<a href="ar/rotate-pdf/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">Rotate PDF Pages</div>
+</a>
+<a href="ar/pdf-watermark/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">Add Watermark to PDF</div>
+</a>
+<a href="ar/pdf-page-numbers/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">PDF Page Numbering</div>
+</a>
+<a href="ar/reorder-pdf-pages/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">Reorder PDF Pages</div>
+</a>
+<a href="ar/remove-pdf-password/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📄</div>
+<div class="text-sm font-medium">Remove PDF Password</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="text">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">✍️ أدوات النصوص (22)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/word-counter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Word Counter</div>
+</a>
+<a href="ar/character-counter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Character Counter</div>
+</a>
+<a href="ar/line-counter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Line Counter</div>
+</a>
+<a href="ar/remove-duplicate-lines/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Remove Duplicate Lines</div>
+</a>
+<a href="ar/sort-lines/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Sort Lines A-Z</div>
+</a>
+<a href="ar/reverse-text/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Reverse Text Generator</div>
+</a>
+<a href="ar/case-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Case Converter</div>
+</a>
+<a href="ar/remove-extra-spaces/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Remove Extra Spaces</div>
+</a>
+<a href="ar/text-to-slug/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Text to URL Slug</div>
+</a>
+<a href="ar/remove-line-breaks/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Remove Line Breaks</div>
+</a>
+<a href="ar/add-line-numbers/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Add Line Numbers</div>
+</a>
+<a href="ar/text-diff-checker/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Text Diff Checker</div>
+</a>
+<a href="ar/find-and-replace/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Find and Replace Text</div>
+</a>
+<a href="ar/lorem-ipsum-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Lorem Ipsum Generator</div>
+</a>
+<a href="ar/random-text-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Random Text Generator</div>
+</a>
+<a href="ar/text-to-ascii-art/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Text to ASCII Art</div>
+</a>
+<a href="ar/fancy-text-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Fancy Text Generator</div>
+</a>
+<a href="ar/morse-code-translator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Morse Code Translator</div>
+</a>
+<a href="ar/reading-time-estimator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Reading Time Estimator</div>
+</a>
+<a href="ar/text-repeater/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Text Repeater</div>
+</a>
+<a href="ar/upside-down-text/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Upside Down Text</div>
+</a>
+<a href="ar/mirror-text/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">✍️</div>
+<div class="text-sm font-medium">Mirror Text Generator</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="developers">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">💻 أدوات المطورين (28)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/json-formatter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">JSON Formatter & Validator</div>
+</a>
+<a href="ar/json-minifier/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">JSON Minifier</div>
+</a>
+<a href="ar/json-to-csv/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">JSON to CSV Converter</div>
+</a>
+<a href="ar/json-to-xml/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">JSON to XML Converter</div>
+</a>
+<a href="ar/json-to-yaml/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">JSON to YAML Converter</div>
+</a>
+<a href="ar/csv-to-json/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">CSV to JSON Converter</div>
+</a>
+<a href="ar/xml-to-json/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">XML to JSON Converter</div>
+</a>
+<a href="ar/yaml-to-json/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">YAML to JSON Converter</div>
+</a>
+<a href="ar/json-schema-validator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">JSON Schema Validator</div>
+</a>
+<a href="ar/html-formatter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">HTML Formatter</div>
+</a>
+<a href="ar/html-minifier/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">HTML Minifier</div>
+</a>
+<a href="ar/css-formatter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">CSS Formatter</div>
+</a>
+<a href="ar/css-minifier/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">CSS Minifier</div>
+</a>
+<a href="ar/js-minifier/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">JavaScript Minifier</div>
+</a>
+<a href="ar/sql-formatter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">SQL Formatter</div>
+</a>
+<a href="ar/html-entities-encoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">HTML Entities Encoder</div>
+</a>
+<a href="ar/html-entities-decoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">HTML Entities Decoder</div>
+</a>
+<a href="ar/base64-encoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">Base64 Encoder</div>
+</a>
+<a href="ar/base64-decoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">Base64 Decoder</div>
+</a>
+<a href="ar/url-encoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">URL Encoder</div>
+</a>
+<a href="ar/url-decoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">URL Decoder</div>
+</a>
+<a href="ar/md5-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">MD5 Hash Generator</div>
+</a>
+<a href="ar/sha256-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">SHA-256 Hash Generator</div>
+</a>
+<a href="ar/sha512-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">SHA-512 Hash Generator</div>
+</a>
+<a href="ar/jwt-decoder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">JWT Decoder</div>
+</a>
+<a href="ar/uuid-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">UUID / GUID Generator</div>
+</a>
+<a href="ar/regex-tester/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">Regex Tester</div>
+</a>
+<a href="ar/markdown-to-html/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">💻</div>
+<div class="text-sm font-medium">Markdown to HTML</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="colors">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">🎨 أدوات الألوان (15)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/hex-to-rgb/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">HEX to RGB Converter</div>
+</a>
+<a href="ar/rgb-to-hex/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">RGB to HEX Converter</div>
+</a>
+<a href="ar/hex-to-hsl/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">HEX to HSL Converter</div>
+</a>
+<a href="ar/hsl-to-hex/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">HSL to HEX Converter</div>
+</a>
+<a href="ar/cmyk-to-rgb/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">CMYK to RGB Converter</div>
+</a>
+<a href="ar/rgb-to-cmyk/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">RGB to CMYK Converter</div>
+</a>
+<a href="ar/color-picker/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">Color Picker Tool</div>
+</a>
+<a href="ar/gradient-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">CSS Gradient Generator</div>
+</a>
+<a href="ar/color-palette-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">Color Palette Generator</div>
+</a>
+<a href="ar/color-contrast-checker/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">Color Contrast Checker</div>
+</a>
+<a href="ar/box-shadow-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">Box Shadow Generator</div>
+</a>
+<a href="ar/glassmorphism-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">Glassmorphism Generator</div>
+</a>
+<a href="ar/neumorphism-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">Neumorphism Generator</div>
+</a>
+<a href="ar/border-radius-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">Border Radius Generator</div>
+</a>
+<a href="ar/text-shadow-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎨</div>
+<div class="text-sm font-medium">Text Shadow Generator</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="math">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">🔢 أدوات الرياضيات (12)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/binary-to-decimal/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Binary to Decimal</div>
+</a>
+<a href="ar/decimal-to-binary/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Decimal to Binary</div>
+</a>
+<a href="ar/hex-to-decimal/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Hex to Decimal</div>
+</a>
+<a href="ar/decimal-to-hex/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Decimal to Hex</div>
+</a>
+<a href="ar/octal-to-decimal/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Octal to Decimal</div>
+</a>
+<a href="ar/decimal-to-octal/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Decimal to Octal</div>
+</a>
+<a href="ar/scientific-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Scientific Calculator</div>
+</a>
+<a href="ar/percentage-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Percentage Calculator</div>
+</a>
+<a href="ar/bmi-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">BMI Calculator</div>
+</a>
+<a href="ar/compound-interest-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Compound Interest Calc</div>
+</a>
+<a href="ar/random-number-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Random Number Generator</div>
+</a>
+<a href="ar/average-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔢</div>
+<div class="text-sm font-medium">Average Calculator</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="time">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">⏱️ أدوات الوقت (10)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/unix-timestamp-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Unix Timestamp Converter</div>
+</a>
+<a href="ar/time-zone-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Time Zone Converter</div>
+</a>
+<a href="ar/date-difference-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Date Difference Calculator</div>
+</a>
+<a href="ar/age-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Age Calculator</div>
+</a>
+<a href="ar/days-until-date/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Days Until Date Counter</div>
+</a>
+<a href="ar/countdown-timer/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Countdown Timer</div>
+</a>
+<a href="ar/calendar-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Calendar Generator</div>
+</a>
+<a href="ar/week-number-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Week Number Calculator</div>
+</a>
+<a href="ar/working-days-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Working Days Calculator</div>
+</a>
+<a href="ar/pomodoro-timer/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">⏱️</div>
+<div class="text-sm font-medium">Pomodoro Timer</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="units">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">📐 أدوات الوحدات (16)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/length-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Length Converter</div>
+</a>
+<a href="ar/weight-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Weight Converter</div>
+</a>
+<a href="ar/temperature-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Temperature Converter</div>
+</a>
+<a href="ar/area-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Area Converter</div>
+</a>
+<a href="ar/volume-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Volume Converter</div>
+</a>
+<a href="ar/speed-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Speed Converter</div>
+</a>
+<a href="ar/data-storage-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Data Storage Converter</div>
+</a>
+<a href="ar/currency-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Currency Converter</div>
+</a>
+<a href="ar/fuel-efficiency-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Fuel Efficiency Converter</div>
+</a>
+<a href="ar/pressure-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Pressure Converter</div>
+</a>
+<a href="ar/energy-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Energy Converter</div>
+</a>
+<a href="ar/angle-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Angle Converter</div>
+</a>
+<a href="ar/shoe-size-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Shoe Size Converter</div>
+</a>
+<a href="ar/clothing-size-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Clothing Size Converter</div>
+</a>
+<a href="ar/screen-resolution-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Screen Resolution Calc</div>
+</a>
+<a href="ar/aspect-ratio-calculator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📐</div>
+<div class="text-sm font-medium">Aspect Ratio Calculator</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="seo">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">🌐 أدوات SEO (14)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/meta-tags-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">Meta Tags Generator</div>
+</a>
+<a href="ar/robots-txt-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">Robots.txt Generator</div>
+</a>
+<a href="ar/sitemap-xml-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">Sitemap XML Generator</div>
+</a>
+<a href="ar/utm-link-builder/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">UTM Link Builder</div>
+</a>
+<a href="ar/url-slug-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">URL Slug Generator</div>
+</a>
+<a href="ar/open-graph-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">Open Graph Generator</div>
+</a>
+<a href="ar/twitter-card-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">Twitter Card Generator</div>
+</a>
+<a href="ar/canonical-url-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">Canonical URL Generator</div>
+</a>
+<a href="ar/keyword-density-checker/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">Keyword Density Checker</div>
+</a>
+<a href="ar/word-count-seo/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">Word Count for SEO</div>
+</a>
+<a href="ar/html-to-markdown/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">HTML to Markdown</div>
+</a>
+<a href="ar/http-status-codes/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">HTTP Status Codes</div>
+</a>
+<a href="ar/hreflang-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">hreflang Generator</div>
+</a>
+<a href="ar/schema-markup-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🌐</div>
+<div class="text-sm font-medium">Schema Markup Generator</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="security">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">🔐 أدوات الأمان (8)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/password-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔐</div>
+<div class="text-sm font-medium">Password Generator</div>
+</a>
+<a href="ar/password-strength-checker/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔐</div>
+<div class="text-sm font-medium">Password Strength Checker</div>
+</a>
+<a href="ar/random-pin-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔐</div>
+<div class="text-sm font-medium">Random PIN Generator</div>
+</a>
+<a href="ar/privacy-policy-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔐</div>
+<div class="text-sm font-medium">Privacy Policy Generator</div>
+</a>
+<a href="ar/terms-conditions-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔐</div>
+<div class="text-sm font-medium">Terms & Conditions Gen</div>
+</a>
+<a href="ar/cookie-policy-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔐</div>
+<div class="text-sm font-medium">Cookie Policy Generator</div>
+</a>
+<a href="ar/hash-identifier/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔐</div>
+<div class="text-sm font-medium">Hash Type Identifier</div>
+</a>
+<a href="ar/ip-address-lookup/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🔐</div>
+<div class="text-sm font-medium">IP Address Lookup</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="data">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">📊 أدوات البيانات (10)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/csv-viewer/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">CSV Viewer & Editor</div>
+</a>
+<a href="ar/markdown-table-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">Markdown Table Generator</div>
+</a>
+<a href="ar/html-table-to-csv/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">HTML Table to CSV</div>
+</a>
+<a href="ar/csv-to-html-table/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">CSV to HTML Table</div>
+</a>
+<a href="ar/json-viewer/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">JSON Tree Viewer</div>
+</a>
+<a href="ar/fake-data-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">Fake Data Generator</div>
+</a>
+<a href="ar/qr-code-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">QR Code Generator</div>
+</a>
+<a href="ar/qr-code-reader/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">QR Code Reader</div>
+</a>
+<a href="ar/barcode-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">Barcode Generator</div>
+</a>
+<a href="ar/vcard-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-medium">vCard Generator</div>
+</a>
+</div>
+</section>
+<section class="mb-8" data-category="special">
+<h2 class="text-xl font-bold mb-4 flex items-center gap-2">🎯 أدوات خاصة (10)</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+<a href="ar/whatsapp-link-generator/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">WhatsApp Link Generator</div>
+</a>
+<a href="ar/emoji-to-unicode/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">Emoji to Unicode</div>
+</a>
+<a href="ar/unicode-to-emoji/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">Unicode to Emoji</div>
+</a>
+<a href="ar/text-to-binary/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">Text to Binary</div>
+</a>
+<a href="ar/binary-to-text/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">Binary to Text</div>
+</a>
+<a href="ar/number-to-words/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">Number to Words</div>
+</a>
+<a href="ar/roman-numeral-converter/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">Roman Numeral Converter</div>
+</a>
+<a href="ar/screen-resolution-detector/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">Screen Resolution Detector</div>
+</a>
+<a href="ar/browser-info-detector/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">Browser Info Detector</div>
+</a>
+<a href="ar/internet-speed-test/" class="tool-card bg-white p-3 rounded shadow text-center hover:shadow-lg transition">
+<div class="text-2xl mb-1">🎯</div>
+<div class="text-sm font-medium">Internet Speed Test</div>
+</a>
+</div>
+</section>
+</main>
+<footer class="bg-white border-t mt-12 p-6 text-center text-gray-500">
+<p>© 2026 205-Tools | جميع الأدوات مجانية | 205 أداة</p>
+</footer>
 </body>
 </html>
