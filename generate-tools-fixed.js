@@ -424,7 +424,7 @@ function generateTextInterface(tool, lang, t) {
                 <!-- Text Input -->
                 <div class="mb-6">
                     <label class="block text-sm font-medium mb-2">${t.inputText}</label>
-                    <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="${lang === 'fr' ? 'Entrez le texte ici...' : lang === 'es' ? 'Ingrese texto aquí...' : lang === 'de' ? 'Text hier eingeben...' : 'Enter text here...'}"></textarea>
+                    <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="${lang === 'ar' ? 'أدخل النص هنا...' : lang === 'fr' ? 'Entrez le texte ici...' : lang === 'es' ? 'Ingrese texto aquí...' : lang === 'de' ? 'Text hier eingeben...' : 'Enter text here...'}"></textarea>
                 </div>
 
                 <!-- Action Button -->
