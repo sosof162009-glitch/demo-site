@@ -17,7 +17,6 @@
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
-    <!-- Header -->
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -32,7 +31,6 @@
         </div>
     </header>
 
-    <!-- Hero -->
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🎨 الألوان</span>
@@ -41,7 +39,6 @@
         </div>
     </section>
 
-    <!-- Tool Interface -->
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
@@ -49,105 +46,90 @@
                     <div class="text-6xl mb-4">🎨</div>
                     <p class="text-gray-600 dark:text-gray-400">Converts RGB color values to HEX color codes.</p>
                 </div>
-
-                <!-- Upload Zone -->
-                <div class="drop-zone rounded-xl p-12 text-center cursor-pointer mb-8" id="dropZone">
-                    <div class="text-5xl mb-4">📁</div>
-                    <p class="text-lg font-medium mb-2">اسحب وأفلت الملف هنا</p>
-                    <p class="text-gray-500">أو تصفح</p>
-                    <input type="file" class="hidden" id="fileInput">
+                
+                <!-- Color Picker -->
+                <div class="flex justify-center mb-8">
+                    <input type="color" id="colorPicker" value="#6366f1" class="w-32 h-32 rounded-xl cursor-pointer border-4 border-white dark:border-gray-700 shadow-lg">
                 </div>
 
-                <!-- Settings -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <!-- Color Values -->
+                <div class="grid md:grid-cols-3 gap-4 mb-8">
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">صيغة الإخراج</label>
-                        <select class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600" id="format">
-                            <option>Auto</option>
-                            <option>JPG</option>
-                            <option>PNG</option>
-                            <option>WebP</option>
-                        </select>
+                        <label class="block text-sm font-medium mb-2">HEX</label>
+                        <input type="text" id="hex" value="#6366f1" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono" readonly>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <label class="block text-sm font-medium mb-2">الجودة</label>
-                        <input type="range" min="1" max="100" value="85" class="w-full" id="quality">
+                        <label class="block text-sm font-medium mb-2">RGB</label>
+                        <input type="text" id="rgb" value="rgb(99, 102, 241)" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono" readonly>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <label class="block text-sm font-medium mb-2">HSL</label>
+                        <input type="text" id="hsl" value="hsl(239, 84%, 67%)" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono" readonly>
                     </div>
                 </div>
 
-                <!-- Action Button -->
-                <button onclick="processFile()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="convertBtn">
-                    تحويل
-                </button>
-
-                <!-- Result -->
-                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl">
-                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ جاري المعالجة...</p>
-                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">تحميل النتيجة</a>
+                <!-- Preview -->
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-xl p-6 text-center">
+                    <p class="text-sm text-gray-500 mb-4">Preview</p>
+                    <div id="preview" class="w-full h-24 rounded-lg shadow-inner" style="background-color: #6366f1;"></div>
                 </div>
+
+    <script>
+        document.getElementById('colorPicker').addEventListener('input', function(e) {
+            const hex = e.target.value;
+            document.getElementById('hex').value = hex;
+            document.getElementById('preview').style.backgroundColor = hex;
+            
+            // Convert to RGB
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            document.getElementById('rgb').value = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+        });
+    </script>
             </div>
         </div>
     </section>
 
-    <!-- How to Use -->
     <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
         <div class="max-w-5xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-12">كيفية الاستخدام</h2>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">اختر ملفك أو أدخل بياناتك</h3>
-                    <p class="text-gray-600 dark:text-gray-400">اسحب الملف أو تصفح</p>
+                    <h3 class="font-semibold mb-2">اختر ملفك</h3>
+                    <p class="text-gray-600 dark:text-gray-400">أدخل البيانات المطلوبة</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
                     <h3 class="font-semibold mb-2">انتظر المعالجة</h3>
-                    <p class="text-gray-600 dark:text-gray-400">جاري المعالجة...</p>
+                    <p class="text-gray-600 dark:text-gray-400">معالجة...</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
                     <h3 class="font-semibold mb-2">احصل على النتيجة</h3>
-                    <p class="text-gray-600 dark:text-gray-400">تحميل فوري</p>
+                    <p class="text-gray-600 dark:text-gray-400">احصل على النتيجة فوراً</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Use -->
     <section class="py-12">
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-12">لماذا تستخدم أدواتنا</h2>
             <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center p-6">
-                    <div class="text-3xl mb-3">🔒</div>
-                    <h3 class="font-semibold mb-2">آمن</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">لا يتم رفع الملفات للخادم</p>
-                </div>
-                <div class="text-center p-6">
-                    <div class="text-3xl mb-3">⚡</div>
-                    <h3 class="font-semibold mb-2">سريع</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">معالجة في المتصفح</p>
-                </div>
-                <div class="text-center p-6">
-                    <div class="text-3xl mb-3">🆓</div>
-                    <h3 class="font-semibold mb-2">مجاني</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">بدون حدود</p>
-                </div>
-                <div class="text-center p-6">
-                    <div class="text-3xl mb-3">✨</div>
-                    <h3 class="font-semibold mb-2">الجودة</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">أفضل النتائج</p>
-                </div>
+                <div class="text-center p-6"><div class="text-3xl mb-3">🔒</div><h3 class="font-semibold mb-2">آمن</h3></div>
+                <div class="text-center p-6"><div class="text-3xl mb-3">⚡</div><h3 class="font-semibold mb-2">سريع</h3></div>
+                <div class="text-center p-6"><div class="text-3xl mb-3">🆓</div><h3 class="font-semibold mb-2">مجاني</h3></div>
+                <div class="text-center p-6"><div class="text-3xl mb-3">✨</div><h3 class="font-semibold mb-2">الجودة</h3></div>
             </div>
         </div>
     </section>
 
-    <!-- Related Tools -->
     <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-8">أدوات ذات صلة</h2>
             <div class="grid md:grid-cols-2 gap-4">
-                
             <a href="/ar/hex-to-rgb/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">🎨</span>
                 <span class="font-medium">HEX to RGB Converter</span>
@@ -163,41 +145,14 @@
             <a href="/ar/cmyk-to-rgb/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">🖨️</span>
                 <span class="font-medium">CMYK to RGB Converter</span>
-            </a>
-            </div>
+            </a></div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <p class="text-gray-400">© 2025 205-أدوات - مجاني</p>
         </div>
     </footer>
-
-    <script>
-        // Drag & Drop
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('fileInput');
-
-        dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); processFile(); });
-        fileInput.addEventListener('change', processFile);
-
-        function processFile() {
-            const btn = document.getElementById('convertBtn');
-            const result = document.getElementById('result');
-            btn.textContent = 'جاري المعالجة...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                result.classList.remove('hidden');
-                btn.textContent = 'تحويل';
-                btn.disabled = false;
-            }, 1500);
-        }
-    </script>
 </body>
 </html>
