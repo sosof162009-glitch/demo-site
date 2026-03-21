@@ -4,28 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countdown Timer - 205-Tools</title>
-    <meta name="description" content="Creates a visual countdown timer to any target date and time.">
+    <meta name="description" content="Set a countdown timer">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
-    <style>
-        .drop-zone { border: 2px dashed #6366f1; transition: all 0.3s; }
-        .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
-        .tool-card { transition: all 0.2s; }
-        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
-    </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="/en/" class="flex items-center space-x-2">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</span>
-                </a>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/en/" class="text-gray-600 dark:text-gray-300 hover:text-indigo-500">Home</a>
-                </div>
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
                 <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
             </div>
         </div>
@@ -35,119 +24,114 @@
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">⏱️ Time</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Countdown Timer</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Set a countdown timer</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="text-center mb-8">
-                    <div class="text-6xl mb-4">⏱️</div>
-                    <p class="text-gray-600 dark:text-gray-400">Creates a visual countdown timer to any target date and time.</p>
-                </div>
-                
-                <!-- Calculator Inputs -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div id="setup" class="grid grid-cols-3 gap-4 mb-8">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Hours</label>
+                        <input type="number" id="hours" min="0" max="99" value="0" class="w-full p-3 text-center text-2xl rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    </div>
                     
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 md:col-span-2">
-                        <label class="block text-sm font-medium mb-2">Value</label>
-                        <input type="number" id="value" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600" placeholder="0">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Minutes</label>
+                        <input type="number" id="minutes" min="0" max="59" value="5" class="w-full p-3 text-center text-2xl rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Seconds</label>
+                        <input type="number" id="seconds" min="0" max="59" value="0" class="w-full p-3 text-center text-2xl rounded-lg border dark:border-gray-600 dark:bg-gray-600">
                     </div>
                 </div>
 
-                <!-- Action Button -->
-                <button onclick="calculate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
-                    Calculate
-                </button>
-
-                <!-- Result -->
-                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-gray-600 dark:text-gray-400 mb-2">Result</p>
-                    <p class="text-3xl font-bold text-green-600 dark:text-green-400" id="resultValue">-</p>
+                <div class="text-center mb-8">
+                    <p class="text-8xl font-bold text-indigo-600 dark:text-indigo-400 font-mono hidden" id="display">00:05:00</p>
                 </div>
+
+                <div class="flex justify-center gap-4">
+                    <button onclick="start()" id="startBtn" class="px-8 py-3 bg-green-500 text-white rounded-xl font-semibold text-lg">Start</button>
+                    <button onclick="pause()" id="pauseBtn" class="px-8 py-3 bg-yellow-500 text-white rounded-xl font-semibold text-lg hidden">Pause</button>
+                    <button onclick="reset()" class="px-8 py-3 bg-red-500 text-white rounded-xl font-semibold text-lg">Reset</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
-        function calculate() {
-            const btn = document.getElementById('actionBtn');
-            const result = document.getElementById('result');
-            const resultValue = document.getElementById('resultValue');
-            btn.textContent = 'Processing...';
-            btn.disabled = true;
+        let timeLeft = 0;
+        let timer = null;
+        let isRunning = false;
+
+        function updateDisplay() {
+            const hrs = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
+            const mins = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, '0');
+            const secs = (timeLeft % 60).toString().padStart(2, '0');
             
-            setTimeout(() => {
-                resultValue.textContent = '42'; result.classList.remove('hidden');
-                btn.textContent = 'Calculate';
-                btn.disabled = false;
-            }, 800);
+            if (timeLeft >= 3600) {
+                document.getElementById('display').textContent = `${hrs}:${mins}:${secs}`;
+            } else {
+                document.getElementById('display').textContent = `${mins}:${secs}`;
+            }
+        }
+
+        function start() {
+            if (isRunning) return;
+            
+            if (!timer) {
+                const h = parseInt(document.getElementById('hours').value) || 0;
+                const m = parseInt(document.getElementById('minutes').value) || 0;
+                const s = parseInt(document.getElementById('seconds').value) || 0;
+                timeLeft = h * 3600 + m * 60 + s;
+                
+                if (timeLeft === 0) {
+                    alert('Please set a time');
+                    return;
+                }
+                
+                document.getElementById('setup').classList.add('hidden');
+                document.getElementById('display').classList.remove('hidden');
+            }
+            
+            isRunning = true;
+            document.getElementById('startBtn').classList.add('hidden');
+            document.getElementById('pauseBtn').classList.remove('hidden');
+            
+            timer = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateDisplay();
+                } else {
+                    complete();
+                }
+            }, 1000);
+        }
+
+        function pause() {
+            isRunning = false;
+            clearInterval(timer);
+            timer = 'paused';
+            document.getElementById('startBtn').classList.remove('hidden');
+            document.getElementById('pauseBtn').classList.add('hidden');
+        }
+
+        function reset() {
+            isRunning = false;
+            clearInterval(timer);
+            timer = null;
+            document.getElementById('setup').classList.remove('hidden');
+            document.getElementById('display').classList.add('hidden');
+            document.getElementById('startBtn').classList.remove('hidden');
+            document.getElementById('pauseBtn').classList.add('hidden');
+        }
+
+        function complete() {
+            reset();
+            alert('Timer complete!');
         }
     </script>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">How to Use</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">Why use our tools</h2>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center p-6"><div class="text-3xl mb-3">🔒</div><h3 class="font-semibold mb-2">Secure</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">⚡</div><h3 class="font-semibold mb-2">Fast</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">🆓</div><h3 class="font-semibold mb-2">Free</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">✨</div><h3 class="font-semibold mb-2">Quality</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-            <a href="/en/unix-timestamp-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">⏰</span>
-                <span class="font-medium">Unix Timestamp Converter</span>
-            </a>
-            <a href="/en/time-zone-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🌍</span>
-                <span class="font-medium">Time Zone Converter</span>
-            </a>
-            <a href="/en/date-difference-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📅</span>
-                <span class="font-medium">Date Difference Calculator</span>
-            </a>
-            <a href="/en/age-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🎂</span>
-                <span class="font-medium">Age Calculator</span>
-            </a></div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
-        </div>
-    </footer>
 </body>
 </html>

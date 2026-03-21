@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown to HTML - 205-Tools</title>
-    <meta name="description" content="Convert Markdown to HTML">
+    <title>URL Extractor - 205-Tools</title>
+    <meta name="description" content="Extract URLs from text">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
@@ -23,9 +22,9 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">📝 Text</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Markdown to HTML</h1>
-            <p class="text-xl text-white/90">Convert Markdown to HTML</p>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔗 Text</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">URL Extractor</h1>
+            <p class="text-xl text-white/90">Extract URLs from text</p>
         </div>
     </section>
 
@@ -33,17 +32,21 @@
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
-                    <label class="block text-sm font-medium mb-2">Markdown Input</label>
-                    <textarea id="input" rows="10" placeholder="# Heading&#10;&#10;**Bold** and *italic*&#10;&#10;- List item 1&#10;- List item 2" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-sm"></textarea>
+                    <label class="block text-sm font-medium mb-2">Input Text</label>
+                    <textarea id="input" rows="10" placeholder="Paste text containing URLs..." class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600"></textarea>
                 </div>
 
-                <button onclick="convert()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
-                    Convert to HTML
+                <button onclick="extract()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
+                    Extract URLs
                 </button>
 
                 <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
-                    <label class="block text-sm font-medium mb-2">HTML Output</label>
-                    <textarea id="output" rows="10" readonly class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-xs"></textarea>
+                    <label class="block text-sm font-medium mb-2">Extracted URLs</label>
+                    <textarea id="output" rows="8" readonly class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-xs"></textarea>
+                </div>
+
+                <div id="stats" class="hidden text-center mb-8 text-indigo-600 dark:text-indigo-400">
+                    <p>Found <span id="count" class="font-bold"></span> unique URLs</p>
                 </div>
 
                 <div class="flex gap-4">
@@ -55,12 +58,20 @@
     </section>
 
     <script>
-        function convert() {
+        function extract() {
             const input = document.getElementById('input').value;
             if (!input) return;
             
-            const html = marked.parse(input);
-            document.getElementById('output').value = html;
+            // URL regex pattern
+            const urlPattern = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/g;
+            const matches = input.match(urlPattern) || [];
+            
+            // Get unique URLs
+            const unique = [...new Set(matches)];
+            
+            document.getElementById('output').value = unique.join('\n');
+            document.getElementById('count').textContent = unique.length;
+            document.getElementById('stats').classList.remove('hidden');
         }
 
         function copyResult() {
@@ -74,6 +85,7 @@
         function clearAll() {
             document.getElementById('input').value = '';
             document.getElementById('output').value = '';
+            document.getElementById('stats').classList.add('hidden');
         }
     </script>
 </body>
