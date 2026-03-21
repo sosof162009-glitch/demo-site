@@ -3,29 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base64 Encoder - 205-Tools</title>
-    <meta name="description" content="Encodes text or files to Base64 string using browser atob/btoa.">
+    <title>Base64 Encoder/Decoder - 205-Tools</title>
+    <meta name="description" content="Encode and decode Base64">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
-    <style>
-        .drop-zone { border: 2px dashed #6366f1; transition: all 0.3s; }
-        .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
-        .tool-card { transition: all 0.2s; }
-        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
-    </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="/en/" class="flex items-center space-x-2">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</span>
-                </a>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/en/" class="text-gray-600 dark:text-gray-300 hover:text-indigo-500">Home</a>
-                </div>
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
                 <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
             </div>
         </div>
@@ -33,141 +22,80 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔢 Developers</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Base64 Encoder</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">💻 Developers</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Base64 Encoder/Decoder</h1>
+            <p class="text-xl text-white/90">Encode and decode Base64</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="text-center mb-8">
-                    <div class="text-6xl mb-4">🔢</div>
-                    <p class="text-gray-600 dark:text-gray-400">Encodes text or files to Base64 string using browser atob/btoa.</p>
-                </div>
-                
-                <!-- Code Input -->
-                <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Text to Encode</label>
-                    <textarea id="input" rows="8" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter text to encode to Base64..."></textarea>
+                <div class="flex gap-4 mb-8">
+                    <button onclick="setMode('encode')" id="btnEncode" class="flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium">Encode</button>
+                    <button onclick="setMode('decode')" id="btnDecode" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium">Decode</button>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="flex gap-4 mb-6">
-                    <button onclick="encodeText()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="formatBtn">
-                        Encode
-                    </button>
-                    <button onclick="copyResult()" id="copyBtn" class="flex-1 py-4 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
-                        Copy
-                    </button>
-                    <button onclick="clearCode()" class="px-6 py-4 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl font-medium hover:bg-red-200 dark:hover:bg-red-900/50 transition-all">
-                        Clear
-                    </button>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
+                    <label class="block text-sm font-medium mb-2"><span id="inputLabel">Text to Encode</span></label>
+                    <textarea id="input" rows="6" placeholder="Enter text..." class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600"></textarea>
                 </div>
 
-                <!-- Output -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Base64 Result</label>
-                    <textarea id="output" rows="8" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
+                <button onclick="processBase64()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
+                    Process
+                </button>
+
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
+                    <label class="block text-sm font-medium mb-2">Result</label>
+                    <div class="flex gap-4">
+                        <textarea id="output" rows="6" readonly class="flex-1 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-sm"></textarea>
+                    </div>
                 </div>
+
+                <div class="flex gap-4">
+                    <button onclick="copyResult()" class="flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium hover:bg-indigo-600 transition-all">Copy</button>
+                    <button onclick="clearAll()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">Clear</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
-        function encodeText() {
+        let mode = 'encode';
+
+        function setMode(m) {
+            mode = m;
+            document.getElementById('btnEncode').className = m === 'encode' ? 'flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium' : 'flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium';
+            document.getElementById('btnDecode').className = m === 'decode' ? 'flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium' : 'flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium';
+            document.getElementById('inputLabel').textContent = m === 'encode' ? 'Text to Encode' : 'Base64 to Decode';
+        }
+
+        function processBase64() {
             const input = document.getElementById('input').value;
+            
             try {
-                // btoa expects Latin-1, so we need to handle UTF-8 properly
-                const encoded = btoa(unescape(encodeURIComponent(input)));
-                document.getElementById('output').value = encoded;
-            } catch(e) {
-                document.getElementById('output').value = 'Error: ' + e.message;
+                if (mode === 'encode') {
+                    document.getElementById('output').value = btoa(input);
+                } else {
+                    document.getElementById('output').value = atob(input);
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
             }
         }
 
         function copyResult() {
             const output = document.getElementById('output');
+            if (!output.value) return;
             output.select();
             document.execCommand('copy');
-            const btn = document.getElementById('copyBtn');
-            const originalText = btn.textContent;
-            btn.textContent = 'Copied!';
-            setTimeout(() => btn.textContent = originalText, 2000);
+            alert('Copied!');
         }
 
-        function clearCode() {
+        function clearAll() {
             document.getElementById('input').value = '';
             document.getElementById('output').value = '';
         }
-
-        // Auto-encode on input
-        document.getElementById('input').addEventListener('input', encodeText);
     </script>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">How to Use</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">Choose your file</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Enter required data</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">Wait for processing</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Processing...</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">Get the result</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Get result instantly</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">Why use our tools</h2>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center p-6"><div class="text-3xl mb-3">🔒</div><h3 class="font-semibold mb-2">Secure</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">⚡</div><h3 class="font-semibold mb-2">Fast</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">🆓</div><h3 class="font-semibold mb-2">Free</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">✨</div><h3 class="font-semibold mb-2">Quality</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-            <a href="/en/json-formatter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📋</span>
-                <span class="font-medium">JSON Formatter & Validator</span>
-            </a>
-            <a href="/en/json-minifier/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🗜️</span>
-                <span class="font-medium">JSON Minifier</span>
-            </a>
-            <a href="/en/json-to-csv/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📊</span>
-                <span class="font-medium">JSON to CSV Converter</span>
-            </a>
-            <a href="/en/json-to-xml/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">📄</span>
-                <span class="font-medium">JSON to XML Converter</span>
-            </a></div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
-        </div>
-    </footer>
 </body>
 </html>
