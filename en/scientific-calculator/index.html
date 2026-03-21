@@ -4,28 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scientific Calculator - 205-Tools</title>
-    <meta name="description" content="Advanced scientific calculator with trigonometric, logarithmic, and exponential functions.">
+    <meta name="description" content="Advanced scientific calculator">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
     <style>
-        .calc-btn { transition: all 0.1s; }
-        .calc-btn:active { transform: scale(0.95); }
-        .tool-card { transition: all 0.2s; }
-        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
+        .calc-btn { @apply p-4 text-xl font-semibold rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-indigo-500 hover:text-white transition-all; }
+        .calc-btn.op { @apply bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400; }
+        .calc-btn.eq { @apply bg-indigo-500 text-white col-span-2; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="/en/" class="flex items-center space-x-2">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</span>
-                </a>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/en/" class="text-gray-600 dark:text-gray-300 hover:text-indigo-500">Home</a>
-                </div>
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
                 <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
             </div>
         </div>
@@ -35,243 +29,109 @@
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔢 Math</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Scientific Calculator</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Advanced scientific calculator</p>
         </div>
     </section>
 
     <section class="py-12">
-        <div class="max-w-2xl mx-auto px-4">
+        <div class="max-w-md mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
-                <div class="text-center mb-6">
-                    <div class="text-6xl mb-4">🔬</div>
-                    <p class="text-gray-600 dark:text-gray-400">Advanced scientific calculator with trigonometric, logarithmic, and exponential functions.</p>
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 mb-4 text-right">
+                    <div class="text-sm text-gray-500 h-6" id="history"></div>
+                    <div class="text-3xl font-mono overflow-x-auto" id="display">0</div>
                 </div>
 
-                <!-- Display -->
-                <div class="mb-4">
-                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 text-right">
-                        <div id="expression" class="text-sm text-gray-500 dark:text-gray-400 h-6"></div>
-                        <input type="text" id="display" class="w-full bg-transparent text-right text-3xl font-mono outline-none" value="0" readonly>
-                    </div>
+                <div class="grid grid-cols-5 gap-2">
+                    <button onclick="clearAll()" class="calc-btn text-red-500">AC</button>
+                    <button onclick="clearEntry()" class="calc-btn">CE</button>
+                    <button onclick="insert('(')" class="calc-btn op">(</button>
+                    <button onclick="insert(')')" class="calc-btn op">)</button>
+                    <button onclick="insert('/')" class="calc-btn op">÷</button>
+
+                    <button onclick="insert('sin(')" class="calc-btn text-sm">sin</button>
+                    <button onclick="insert('7')" class="calc-btn">7</button>
+                    <button onclick="insert('8')" class="calc-btn">8</button>
+                    <button onclick="insert('9')" class="calc-btn">9</button>
+                    <button onclick="insert('*')" class="calc-btn op">×</button>
+
+                    <button onclick="insert('cos(')" class="calc-btn text-sm">cos</button>
+                    <button onclick="insert('4')" class="calc-btn">4</button>
+                    <button onclick="insert('5')" class="calc-btn">5</button>
+                    <button onclick="insert('6')" class="calc-btn">6</button>
+                    <button onclick="insert('-')" class="calc-btn op">−</button>
+
+                    <button onclick="insert('tan(')" class="calc-btn text-sm">tan</button>
+                    <button onclick="insert('1')" class="calc-btn">1</button>
+                    <button onclick="insert('2')" class="calc-btn">2</button>
+                    <button onclick="insert('3')" class="calc-btn">3</button>
+                    <button onclick="insert('+')" class="calc-btn op">+</button>
+
+                    <button onclick="insert('sqrt(')" class="calc-btn text-sm">√</button>
+                    <button onclick="insert('0')" class="calc-btn">0</button>
+                    <button onclick="insert('.')" class="calc-btn">.</button>
+                    <button onclick="insert('^')" class="calc-btn op">^</button>
+                    <button onclick="calculate()" class="calc-btn eq">=</button>
                 </div>
 
-                <!-- Mode Toggle -->
-                <div class="flex justify-center mb-4">
-                    <button onclick="toggleMode()" id="modeBtn" class="px-4 py-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg text-sm font-medium">DEG</button>
-                </div>
-
-                <!-- Scientific Functions -->
-                <div class="grid grid-cols-4 gap-2 mb-2">
-                    <button onclick="insertFunction('sin(')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">sin</button>
-                    <button onclick="insertFunction('cos(')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">cos</button>
-                    <button onclick="insertFunction('tan(')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">tan</button>
-                    <button onclick="insertFunction('log(')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">log</button>
-                </div>
-                <div class="grid grid-cols-4 gap-2 mb-2">
-                    <button onclick="insertFunction('ln(')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">ln</button>
-                    <button onclick="insertFunction('sqrt(')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">√</button>
-                    <button onclick="insertFunction('pow(')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">x^y</button>
-                    <button onclick="insertFunction('abs(')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">|x|</button>
-                </div>
-                <div class="grid grid-cols-4 gap-2 mb-2">
-                    <button onclick="insertFunction('pi')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">π</button>
-                    <button onclick="insertFunction('e')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">e</button>
-                    <button onclick="insertFunction('(')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">(</button>
-                    <button onclick="insertFunction(')')" class="calc-btn py-3 bg-purple-100 dark:bg-purple-900 rounded-lg font-medium text-sm hover:bg-purple-200">)</button>
-                </div>
-
-                <!-- Number Pad -->
-                <div class="grid grid-cols-4 gap-2">
-                    <button onclick="clearDisplay()" class="calc-btn py-4 bg-red-100 dark:bg-red-900 rounded-lg font-bold text-red-600">C</button>
-                    <button onclick="backspace()" class="calc-btn py-4 bg-gray-200 dark:bg-gray-600 rounded-lg">⌫</button>
-                    <button onclick="insertFunction('%')" class="calc-btn py-4 bg-gray-200 dark:bg-gray-600 rounded-lg">%</button>
-                    <button onclick="insertFunction('/')" class="calc-btn py-4 bg-indigo-500 text-white rounded-lg">÷</button>
-                    
-                    <button onclick="insertNumber('7')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">7</button>
-                    <button onclick="insertNumber('8')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">8</button>
-                    <button onclick="insertNumber('9')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">9</button>
-                    <button onclick="insertFunction('*')" class="calc-btn py-4 bg-indigo-500 text-white rounded-lg">×</button>
-                    
-                    <button onclick="insertNumber('4')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">4</button>
-                    <button onclick="insertNumber('5')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">5</button>
-                    <button onclick="insertNumber('6')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">6</button>
-                    <button onclick="insertFunction('-')" class="calc-btn py-4 bg-indigo-500 text-white rounded-lg">−</button>
-                    
-                    <button onclick="insertNumber('1')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">1</button>
-                    <button onclick="insertNumber('2')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">2</button>
-                    <button onclick="insertNumber('3')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">3</button>
-                    <button onclick="insertFunction('+')" class="calc-btn py-4 bg-indigo-500 text-white rounded-lg">+</button>
-                    
-                    <button onclick="insertNumber('0')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg col-span-2">0</button>
-                    <button onclick="insertNumber('.')" class="calc-btn py-4 bg-gray-100 dark:bg-gray-700 rounded-lg">.</button>
-                    <button onclick="calculate()" class="calc-btn py-4 bg-green-500 text-white rounded-lg">=</button>
-                </div>
-
-                <!-- History -->
-                <div id="history" class="mt-6 max-h-32 overflow-y-auto">
-                    <div class="text-sm text-gray-500 mb-2">History:</div>
-                    <div id="historyList"></div>
+                <div class="grid grid-cols-4 gap-2 mt-2">
+                    <button onclick="insert('log(')" class="calc-btn text-sm">log</button>
+                    <button onclick="insert('ln(')" class="calc-btn text-sm">ln</button>
+                    <button onclick="insert('PI')" class="calc-btn text-sm">π</button>
+                    <button onclick="insert('E')" class="calc-btn text-sm">e</button>
                 </div>
             </div>
         </div>
     </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <a href="/en/percentage-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                    <span class="text-2xl">📊</span>
-                    <span class="font-medium">Percentage Calculator</span>
-                </a>
-                <a href="/en/compound-interest-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                    <span class="text-2xl">💰</span>
-                    <span class="font-medium">Compound Interest Calculator</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
-        </div>
-    </footer>
 
     <script>
-        let currentInput = '0';
-        let expression = '';
-        let isRadians = false;
-        let history = [];
+        let current = '';
+        let history = '';
+
+        function insert(val) {
+            if (current === '0' && !isNaN(val)) current = '';
+            current += val;
+            updateDisplay();
+        }
 
         function updateDisplay() {
-            document.getElementById('display').value = currentInput;
-            document.getElementById('expression').textContent = expression;
+            document.getElementById('display').textContent = current || '0';
+            document.getElementById('history').textContent = history;
         }
 
-        function insertNumber(num) {
-            if (currentInput === '0' && num !== '.') {
-                currentInput = num;
-            } else {
-                currentInput += num;
-            }
+        function clearAll() {
+            current = '';
+            history = '';
             updateDisplay();
         }
 
-        function insertFunction(func) {
-            if (currentInput === '0') {
-                currentInput = func;
-            } else {
-                currentInput += func;
-            }
+        function clearEntry() {
+            current = current.slice(0, -1);
             updateDisplay();
-        }
-
-        function clearDisplay() {
-            currentInput = '0';
-            expression = '';
-            updateDisplay();
-        }
-
-        function backspace() {
-            if (currentInput.length > 1) {
-                currentInput = currentInput.slice(0, -1);
-            } else {
-                currentInput = '0';
-            }
-            updateDisplay();
-        }
-
-        function toggleMode() {
-            isRadians = !isRadians;
-            document.getElementById('modeBtn').textContent = isRadians ? 'RAD' : 'DEG';
-        }
-
-        function toRadians(degrees) {
-            return degrees * (Math.PI / 180);
         }
 
         function calculate() {
             try {
-                let expr = currentInput;
-                expression = expr + ' =';
+                let expr = current
+                    .replace(/sin\(/g, 'Math.sin(Math.PI/180*')
+                    .replace(/cos\(/g, 'Math.cos(Math.PI/180*')
+                    .replace(/tan\(/g, 'Math.tan(Math.PI/180*')
+                    .replace(/sqrt\(/g, 'Math.sqrt(')
+                    .replace(/log\(/g, 'Math.log10(')
+                    .replace(/ln\(/g, 'Math.log(')
+                    .replace(/\^/g, '**')
+                    .replace(/PI/g, 'Math.PI')
+                    .replace(/E/g, 'Math.E');
                 
-                // Replace constants
-                expr = expr.replace(/pi/g, 'Math.PI');
-                expr = expr.replace(/e/g, 'Math.E');
-                
-                // Replace functions
-                expr = expr.replace(/sin\(/g, isRadians ? 'Math.sin(' : 'Math.sin(toRadians(');
-                expr = expr.replace(/cos\(/g, isRadians ? 'Math.cos(' : 'Math.cos(toRadians(');
-                expr = expr.replace(/tan\(/g, isRadians ? 'Math.tan(' : 'Math.tan(toRadians(');
-                expr = expr.replace(/log\(/g, 'Math.log10(');
-                expr = expr.replace(/ln\(/g, 'Math.log(');
-                expr = expr.replace(/sqrt\(/g, 'Math.sqrt(');
-                expr = expr.replace(/abs\(/g, 'Math.abs(');
-                expr = expr.replace(/pow\(/g, 'Math.pow(');
-                
-                // Handle degrees closing parenthesis
-                if (!isRadians) {
-                    expr = expr.replace(/Math\.sin\(toRadians\(([^)]+)\)\)/g, 'Math.sin(toRadians($1))');
-                    expr = expr.replace(/Math\.cos\(toRadians\(([^)]+)\)\)/g, 'Math.cos(toRadians($1))');
-                    expr = expr.replace(/Math\.tan\(toRadians\(([^)]+)\)\)/g, 'Math.tan(toRadians($1))');
-                }
-                
-                // Evaluate
-                const result = eval(expr);
-                
-                if (!isFinite(result) || isNaN(result)) {
-                    throw new Error('Invalid result');
-                }
-                
-                // Format result
-                let formatted = parseFloat(result.toFixed(10)).toString();
-                currentInput = formatted;
-                
-                // Add to history
-                history.unshift(`${expression} ${formatted}`);
-                if (history.length > 10) history.pop();
-                updateHistory();
-                
+                history = current;
+                current = String(eval(expr));
+                if (current.length > 12) current = parseFloat(current).toExponential(6);
                 updateDisplay();
-            } catch (error) {
-                currentInput = 'Error';
+            } catch (e) {
+                current = 'Error';
                 updateDisplay();
-                setTimeout(() => {
-                    currentInput = '0';
-                    expression = '';
-                    updateDisplay();
-                }, 1500);
+                setTimeout(() => { current = ''; updateDisplay(); }, 1500);
             }
         }
-
-        function updateHistory() {
-            const historyList = document.getElementById('historyList');
-            historyList.innerHTML = history.map(h => 
-                `<div class="text-sm py-1 border-b dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 px-2" onclick="useHistory('${h.split(' = ')[1]}')">${h}</div>`
-            ).join('');
-        }
-
-        function useHistory(value) {
-            currentInput = value;
-            updateDisplay();
-        }
-
-        // Keyboard support
-        document.addEventListener('keydown', (e) => {
-            if (e.key >= '0' && e.key <= '9') insertNumber(e.key);
-            else if (e.key === '.') insertNumber('.');
-            else if (e.key === '+') insertFunction('+');
-            else if (e.key === '-') insertFunction('-');
-            else if (e.key === '*') insertFunction('*');
-            else if (e.key === '/') insertFunction('/');
-            else if (e.key === '(') insertFunction('(');
-            else if (e.key === ')') insertFunction(')');
-            else if (e.key === '%') insertFunction('%');
-            else if (e.key === 'Enter') calculate();
-            else if (e.key === 'Escape') clearDisplay();
-            else if (e.key === 'Backspace') backspace();
-        });
     </script>
 </body>
 </html>

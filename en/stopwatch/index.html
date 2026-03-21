@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch - 205-Tools</title>
+    <meta name="description" content="Simple stopwatch with lap times">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
+                <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">⏱️ Time</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Stopwatch</h1>
+            <p class="text-xl text-white/90">Simple stopwatch with lap times</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <div class="text-center mb-8">
+                    <p class="text-7xl font-bold text-indigo-600 dark:text-indigo-400 font-mono" id="display">00:00:00</p>
+                    <p class="text-2xl text-gray-500 font-mono mt-2" id="ms">.00</p>
+                </div>
+
+                <div class="flex justify-center gap-4 mb-8">
+                    <button onclick="start()" id="startBtn" class="px-8 py-3 bg-green-500 text-white rounded-xl font-semibold text-lg">Start</button>
+                    <button onclick="stop()" id="stopBtn" class="px-8 py-3 bg-red-500 text-white rounded-xl font-semibold text-lg hidden">Stop</button>
+                    <button onclick="lap()" id="lapBtn" class="px-8 py-3 bg-indigo-500 text-white rounded-xl font-semibold text-lg hidden">Lap</button>
+                    <button onclick="reset()" class="px-8 py-3 bg-gray-500 text-white rounded-xl font-semibold text-lg">Reset</button>
+                </div>
+
+                <div id="laps" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 max-h-64 overflow-y-auto hidden">
+                    <h3 class="font-semibold mb-4">Lap Times</h3>
+                    <div id="lapList"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let startTime = 0;
+        let elapsedTime = 0;
+        let timerInterval = null;
+        let running = false;
+        let lapCount = 0;
+
+        function formatTime(ms) {
+            const date = new Date(ms);
+            const m = date.getUTCMinutes().toString().padStart(2, '0');
+            const s = date.getUTCSeconds().toString().padStart(2, '0');
+            const h = date.getUTCHours().toString().padStart(2, '0');
+            const milli = Math.floor(date.getUTCMilliseconds() / 10).toString().padStart(2, '0');
+            return { time: `${h}:${m}:${s}`, ms: `.${milli}` };
+        }
+
+        function updateDisplay() {
+            const currentTime = Date.now();
+            const time = elapsedTime + (running ? currentTime - startTime : 0);
+            const formatted = formatTime(time);
+            document.getElementById('display').textContent = formatted.time;
+            document.getElementById('ms').textContent = formatted.ms;
+        }
+
+        function start() {
+            if (!running) {
+                running = true;
+                startTime = Date.now();
+                timerInterval = setInterval(updateDisplay, 10);
+                document.getElementById('startBtn').classList.add('hidden');
+                document.getElementById('stopBtn').classList.remove('hidden');
+                document.getElementById('lapBtn').classList.remove('hidden');
+            }
+        }
+
+        function stop() {
+            if (running) {
+                running = false;
+                elapsedTime += Date.now() - startTime;
+                clearInterval(timerInterval);
+                document.getElementById('startBtn').classList.remove('hidden');
+                document.getElementById('stopBtn').classList.add('hidden');
+                document.getElementById('lapBtn').classList.add('hidden');
+            }
+        }
+
+        function lap() {
+            if (running) {
+                lapCount++;
+                const currentTime = elapsedTime + (Date.now() - startTime);
+                const formatted = formatTime(currentTime);
+                const lapItem = document.createElement('div');
+                lapItem.className = 'flex justify-between py-2 border-b dark:border-gray-600 last:border-0';
+                lapItem.innerHTML = `<span>Lap ${lapCount}</span><span class="font-mono">${formatted.time}${formatted.ms}</span>`;
+                document.getElementById('lapList').appendChild(lapItem);
+                document.getElementById('laps').classList.remove('hidden');
+            }
+        }
+
+        function reset() {
+            stop();
+            elapsedTime = 0;
+            lapCount = 0;
+            document.getElementById('display').textContent = '00:00:00';
+            document.getElementById('ms').textContent = '.00';
+            document.getElementById('lapList').innerHTML = '';
+            document.getElementById('laps').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
