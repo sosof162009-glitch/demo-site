@@ -4,26 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Percentage Calculator - 205-Tools</title>
-    <meta name="description" content="Calculate percentages, percentage change, and find what percentage one number is of another.">
+    <meta name="description" content="Calculate percentages easily">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
-    <style>
-        .tool-card { transition: all 0.2s; }
-        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
-    </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="/en/" class="flex items-center space-x-2">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</span>
-                </a>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/en/" class="text-gray-600 dark:text-gray-300 hover:text-indigo-500">Home</a>
-                </div>
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
                 <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
             </div>
         </div>
@@ -31,156 +22,93 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔢 Math</span>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">📊 Math</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Percentage Calculator</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Calculate percentages easily</p>
         </div>
     </section>
 
     <section class="py-12">
-        <div class="max-w-4xl mx-auto px-4">
+        <div class="max-w-4xl mx-auto px-4 space-y-8">
+            <!-- Calculate percentage of a number -->
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="text-center mb-8">
-                    <div class="text-6xl mb-4">📊</div>
-                    <p class="text-gray-600 dark:text-gray-400">Calculate percentages, percentage change, and find what percentage one number is of another.</p>
+                <h2 class="text-xl font-bold mb-6">What is % of a number?</h2>
+                
+                <div class="flex items-center gap-4 flex-wrap">
+                    <input type="number" id="p1" placeholder="%" class="w-24 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    <span>% of</span>
+                    <input type="number" id="n1" placeholder="number" class="w-32 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    
+                    <button onclick="calc1()" class="px-6 py-3 bg-indigo-500 text-white rounded-lg">=</button>
+                    
+                    <span id="r1" class="text-xl font-bold"></span>
                 </div>
+            </div>
 
-                <!-- Calculator 1: What is X% of Y? -->
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
-                    <h3 class="font-semibold mb-4">What is <input type="number" id="calc1Percent" class="w-20 p-2 rounded border dark:border-gray-600 dark:bg-gray-600 mx-1" placeholder="%"> % of <input type="number" id="calc1Value" class="w-24 p-2 rounded border dark:border-gray-600 dark:bg-gray-600 mx-1" placeholder="value">?</h3>
-                    <button onclick="calc1()" class="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600">Calculate</button>
-                    <div id="result1" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                        <p class="text-2xl font-bold text-green-600 dark:text-green-400" id="result1Value"></p>
-                    </div>
+            <!-- Percentage of one number to another -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <h2 class="text-xl font-bold mb-6">What percentage is a number of another?</h2>
+                
+                <div class="flex items-center gap-4 flex-wrap">
+                    <input type="number" id="n2a" placeholder="number" class="w-32 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    
+                    <span>is what % of</span>
+                    
+                    <input type="number" id="n2b" placeholder="number" class="w-32 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    
+                    <button onclick="calc2()" class="px-6 py-3 bg-purple-500 text-white rounded-lg">=</button>
+                    
+                    <span id="r2" class="text-xl font-bold"></span>
                 </div>
+            </div>
 
-                <!-- Calculator 2: X is what % of Y? -->
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
-                    <h3 class="font-semibold mb-4"><input type="number" id="calc2Part" class="w-24 p-2 rounded border dark:border-gray-600 dark:bg-gray-600 mr-1" placeholder="part"> is what % of <input type="number" id="calc2Whole" class="w-24 p-2 rounded border dark:border-gray-600 dark:bg-gray-600 ml-1" placeholder="whole">?</h3>
-                    <button onclick="calc2()" class="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600">Calculate</button>
-                    <div id="result2" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                        <p class="text-2xl font-bold text-green-600 dark:text-green-400" id="result2Value"></p>
-                    </div>
-                </div>
-
-                <!-- Calculator 3: Percentage Change -->
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
-                    <h3 class="font-semibold mb-4">Percentage Change from <input type="number" id="calc3Old" class="w-24 p-2 rounded border dark:border-gray-600 dark:bg-gray-600 mr-1" placeholder="old"> to <input type="number" id="calc3New" class="w-24 p-2 rounded border dark:border-gray-600 dark:bg-gray-600 ml-1" placeholder="new"></h3>
-                    <button onclick="calc3()" class="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600">Calculate</button>
-                    <div id="result3" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                        <p class="text-2xl font-bold" id="result3Value"></p>
-                    </div>
-                </div>
-
-                <!-- Calculator 4: Percentage Difference -->
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-                    <h3 class="font-semibold mb-4">Percentage Difference between <input type="number" id="calc4A" class="w-24 p-2 rounded border dark:border-gray-600 dark:bg-gray-600 mr-1" placeholder="value 1"> and <input type="number" id="calc4B" class="w-24 p-2 rounded border dark:border-gray-600 dark:bg-gray-600 ml-1" placeholder="value 2"></h3>
-                    <button onclick="calc4()" class="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600">Calculate</button>
-                    <div id="result4" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                        <p class="text-2xl font-bold text-green-600 dark:text-green-400" id="result4Value"></p>
-                    </div>
+            <!-- Percentage change -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <h2 class="text-xl font-bold mb-6">Percentage Change</h2>
+                
+                <div class="flex items-center gap-4 flex-wrap">
+                    <span>From</span>
+                    
+                    <input type="number" id="n3a" placeholder="original" class="w-32 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    
+                    <span>to</span>
+                    
+                    <input type="number" id="n3b" placeholder="new" class="w-32 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    
+                    <button onclick="calc3()" class="px-6 py-3 bg-pink-500 text-white rounded-lg">=</button>
+                    
+                    <span id="r3" class="text-xl font-bold"></span>
                 </div>
             </div>
         </div>
     </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <a href="/en/scientific-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                    <span class="text-2xl">🔬</span>
-                    <span class="font-medium">Scientific Calculator</span>
-                </a>
-                <a href="/en/compound-interest-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                    <span class="text-2xl">💰</span>
-                    <span class="font-medium">Compound Interest Calculator</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-Tools - Free</p>
-        </div>
-    </footer>
 
     <script>
         function calc1() {
-            const percent = parseFloat(document.getElementById('calc1Percent').value);
-            const value = parseFloat(document.getElementById('calc1Value').value);
-            
-            if (isNaN(percent) || isNaN(value)) {
-                alert('Please enter valid numbers');
-                return;
+            const p = parseFloat(document.getElementById('p1').value);
+            const n = parseFloat(document.getElementById('n1').value);
+            if (!isNaN(p) && !isNaN(n)) {
+                document.getElementById('r1').textContent = (p / 100 * n).toFixed(2);
             }
-            
-            const result = (percent / 100) * value;
-            document.getElementById('result1Value').textContent = result.toFixed(2);
-            document.getElementById('result1').classList.remove('hidden');
         }
 
         function calc2() {
-            const part = parseFloat(document.getElementById('calc2Part').value);
-            const whole = parseFloat(document.getElementById('calc2Whole').value);
-            
-            if (isNaN(part) || isNaN(whole) || whole === 0) {
-                alert('Please enter valid numbers (whole cannot be 0)');
-                return;
+            const a = parseFloat(document.getElementById('n2a').value);
+            const b = parseFloat(document.getElementById('n2b').value);
+            if (!isNaN(a) && !isNaN(b) && b !== 0) {
+                document.getElementById('r2').textContent = ((a / b) * 100).toFixed(2) + '%';
             }
-            
-            const result = (part / whole) * 100;
-            document.getElementById('result2Value').textContent = result.toFixed(2) + '%';
-            document.getElementById('result2').classList.remove('hidden');
         }
 
         function calc3() {
-            const oldVal = parseFloat(document.getElementById('calc3Old').value);
-            const newVal = parseFloat(document.getElementById('calc3New').value);
-            
-            if (isNaN(oldVal) || isNaN(newVal) || oldVal === 0) {
-                alert('Please enter valid numbers (old value cannot be 0)');
-                return;
+            const a = parseFloat(document.getElementById('n3a').value);
+            const b = parseFloat(document.getElementById('n3b').value);
+            if (!isNaN(a) && !isNaN(b) && a !== 0) {
+                const change = ((b - a) / a) * 100;
+                const sign = change >= 0 ? '+' : '';
+                document.getElementById('r3').textContent = sign + change.toFixed(2) + '%';
             }
-            
-            const change = newVal - oldVal;
-            const percentChange = (change / oldVal) * 100;
-            const isIncrease = percentChange >= 0;
-            
-            document.getElementById('result3Value').textContent = 
-                (isIncrease ? '+' : '') + percentChange.toFixed(2) + '% ' + (isIncrease ? '↑' : '↓');
-            document.getElementById('result3Value').className = 
-                'text-2xl font-bold ' + (isIncrease ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400');
-            document.getElementById('result3').classList.remove('hidden');
         }
-
-        function calc4() {
-            const a = parseFloat(document.getElementById('calc4A').value);
-            const b = parseFloat(document.getElementById('calc4B').value);
-            
-            if (isNaN(a) || isNaN(b)) {
-                alert('Please enter valid numbers');
-                return;
-            }
-            
-            const diff = Math.abs(a - b);
-            const avg = (a + b) / 2;
-            const percentDiff = (diff / avg) * 100;
-            
-            document.getElementById('result4Value').textContent = percentDiff.toFixed(2) + '%';
-            document.getElementById('result4').classList.remove('hidden');
-        }
-
-        // Enter key support
-        document.querySelectorAll('input[type="number"]').forEach(input => {
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    const container = this.closest('.bg-gray-50, .dark\\:bg-gray-700');
-                    if (container) container.querySelector('button').click();
-                }
-            });
-        });
     </script>
 </body>
 </html>
