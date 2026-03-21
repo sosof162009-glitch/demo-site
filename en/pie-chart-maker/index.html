@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart Maker - 205-Tools</title>
+    <meta name="description" content="Create pie charts">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
+                <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">📊 Data</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Pie Chart Maker</h1>
+            <p class="text-xl text-white/90">Create pie charts</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-semibold mb-4">Chart Data</h3>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Chart Title</label>
+                            <input type="text" id="chartTitle" value="My Pie Chart" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        </div>
+
+                        <div id="dataRows">
+                            <div class="flex gap-2 mb-2">
+                                <input type="text" placeholder="Label" class="data-label flex-1 p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                                <input type="number" placeholder="Value" class="data-value w-24 p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                            </div>
+                            <div class="flex gap-2 mb-2">
+                                <input type="text" placeholder="Label" class="data-label flex-1 p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                                <input type="number" placeholder="Value" class="data-value w-24 p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                            </div>
+                            <div class="flex gap-2 mb-2">
+                                <input type="text" placeholder="Label" class="data-label flex-1 p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                                <input type="number" placeholder="Value" class="data-value w-24 p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                            </div>
+                        </div>
+
+                        <button onclick="addRow()" class="mt-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg">+ Add Slice</button>
+
+                        <button onclick="createChart()" class="w-full mt-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all">
+                            Create Chart
+                        </button>
+                    </div>
+
+                    <div>
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let chart = null;
+
+        const colors = [
+            'rgba(99, 102, 241, 0.8)',
+            'rgba(168, 85, 247, 0.8)',
+            'rgba(236, 72, 153, 0.8)',
+            'rgba(59, 130, 246, 0.8)',
+            'rgba(16, 185, 129, 0.8)',
+            'rgba(245, 158, 11, 0.8)',
+            'rgba(239, 68, 68, 0.8)',
+            'rgba(139, 92, 246, 0.8)'
+        ];
+
+        const borderColors = [
+            'rgb(99, 102, 241)',
+            'rgb(168, 85, 247)',
+            'rgb(236, 72, 153)',
+            'rgb(59, 130, 246)',
+            'rgb(16, 185, 129)',
+            'rgb(245, 158, 11)',
+            'rgb(239, 68, 68)',
+            'rgb(139, 92, 246)'
+        ];
+
+        function addRow() {
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 mb-2';
+            div.innerHTML = `
+                <input type="text" placeholder="Label" class="data-label flex-1 p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                <input type="number" placeholder="Value" class="data-value w-24 p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                <button onclick="this.parentElement.remove()" class="px-3 py-2 bg-red-500 text-white rounded-lg">×</button>
+            `;
+            document.getElementById('dataRows').appendChild(div);
+        }
+
+        function createChart() {
+            const labels = [];
+            const values = [];
+            
+            document.querySelectorAll('.data-label').forEach((input, i) => {
+                const valueInput = document.querySelectorAll('.data-value')[i];
+                if (input.value && valueInput.value) {
+                    labels.push(input.value);
+                    values.push(parseFloat(valueInput.value));
+                }
+            });
+
+            if (labels.length === 0) {
+                alert('Please enter at least one data point');
+                return;
+            }
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            
+            if (chart) chart.destroy();
+
+            const isDark = document.documentElement.classList.contains('dark');
+
+            chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: colors.slice(0, values.length),
+                        borderColor: borderColors.slice(0, values.length),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: document.getElementById('chartTitle').value,
+                            color: isDark ? '#fff' : '#333'
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: isDark ? '#fff' : '#333'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
