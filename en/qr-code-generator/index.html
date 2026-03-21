@@ -4,28 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator - 205-Tools</title>
-    <meta name="description" content="Generates QR codes from text or URLs using qrcode.js.">
+    <meta name="description" content="Generate QR codes from text or URLs">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
-    <style>
-        .tool-card { transition: all 0.2s; }
-        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
-        #qrcode img { margin: 0 auto; }
-    </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="/en/" class="flex items-center space-x-2">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</span>
-                </a>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/en/" class="text-gray-600 dark:text-gray-300 hover:text-indigo-500">Home</a>
-                </div>
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
                 <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
             </div>
         </div>
@@ -33,51 +23,39 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">📱 Data</span>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔲 Special</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">QR Code Generator</h1>
-            <p class="text-xl text-white/90">Free • Fast • Secure</p>
+            <p class="text-xl text-white/90">Generate QR codes from text or URLs</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="text-center mb-8">
-                    <div class="text-6xl mb-4">📱</div>
-                    <p class="text-gray-600 dark:text-gray-400">Generate QR codes from text, URLs, or any data.</p>
-                </div>
-                
-                <!-- Input -->
-                <div class="mb-6">
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
                     <label class="block text-sm font-medium mb-2">Text or URL</label>
-                    <textarea id="qrText" rows="3" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700" placeholder="Enter text or URL to encode..."></textarea>
+                    <input type="text" id="qrText" placeholder="https://example.com or any text" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
                 </div>
 
-                <!-- Options -->
-                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
                     <div>
                         <label class="block text-sm font-medium mb-2">Size (px)</label>
-                        <input type="number" id="qrSize" value="200" min="100" max="500" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
+                        <input type="number" id="qrSize" value="200" min="100" max="500" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">Color</label>
-                        <input type="color" id="qrColor" value="#000000" class="w-full h-12 rounded-lg border dark:border-gray-600">
+                        <input type="color" id="qrColor" value="#000000" class="w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-600 h-12">
                     </div>
                 </div>
 
-                <!-- Generate Button -->
-                <button onclick="generateQR()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
+                <button onclick="generateQR()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all">
                     Generate QR Code
                 </button>
 
-                <!-- QR Code Output -->
-                <div id="result" class="hidden">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-8 text-center mb-6">
-                        <div id="qrcode"></div>
-                    </div>
-                    <button onclick="downloadQR()" class="w-full py-3 bg-green-500 text-white rounded-xl font-medium hover:bg-green-600 transition-all">
-                        Download QR Code
-                    </button>
+                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
+                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ QR Code generated!</p>
+                    <div id="qrcode" class="flex justify-center mb-4"></div>
+                    <button onclick="downloadQR()" class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download PNG</button>
                 </div>
             </div>
         </div>
@@ -87,37 +65,42 @@
         let currentQR = null;
 
         function generateQR() {
-            const text = document.getElementById('qrText').value;
+            const text = document.getElementById('qrText').value.trim();
+            
             if (!text) {
                 alert('Please enter text or URL');
                 return;
             }
 
-            const size = parseInt(document.getElementById('qrSize').value) || 200;
-            const color = document.getElementById('qrColor').value;
+            const btn = document.querySelector('button[onclick="generateQR()"]');
+            btn.textContent = 'Generating...';
+            btn.disabled = true;
 
             // Clear previous
-            const container = document.getElementById('qrcode');
-            container.innerHTML = '';
+            document.getElementById('qrcode').innerHTML = '';
 
-            // Generate new QR
-            currentQR = new QRCode(container, {
+            const size = parseInt(document.getElementById('qrSize').value);
+            const color = document.getElementById('qrColor').value;
+
+            currentQR = new QRCode(document.getElementById('qrcode'), {
                 text: text,
                 width: size,
                 height: size,
                 colorDark: color,
                 colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.M
+                correctLevel: QRCode.CorrectLevel.H
             });
 
             document.getElementById('result').classList.remove('hidden');
+            btn.textContent = 'Generate QR Code';
+            btn.disabled = false;
         }
 
         function downloadQR() {
-            const img = document.querySelector('#qrcode img');
-            if (img) {
+            const qrCanvas = document.querySelector('#qrcode canvas');
+            if (qrCanvas) {
                 const link = document.createElement('a');
-                link.href = img.src;
+                link.href = qrCanvas.toDataURL('image/png');
                 link.download = 'qrcode.png';
                 link.click();
             }
