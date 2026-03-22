@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Cropper - 205-Tools</title>
-    <meta name="description" content="Crop images to custom dimensions">
+    <meta name="description" content="Crop images online">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
     <style>
-        .drop-zone { border: 2px dashed #6366f1; transition: all 0.3s; }
-        .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
-        #canvasContainer { position: relative; display: inline-block; }
-        #cropOverlay { position: absolute; border: 2px dashed #fff; background: rgba(0,0,0,0.3); cursor: move; }
+        .crop-area { border: 2px dashed #6366f1; cursor: crosshair; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
@@ -28,111 +25,164 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">✂️ Images</span>
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">✂️ Image</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Image Cropper</h1>
-            <p class="text-xl text-white/90">Crop images to custom dimensions</p>
+            <p class="text-xl text-white/90">Crop images to your desired size</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="drop-zone rounded-xl p-12 text-center cursor-pointer mb-8" id="dropZone">
-                    <div class="text-5xl mb-4">📁</div>
-                    <p class="text-lg font-medium mb-2">Drag & drop image here</p>
-                    <p class="text-gray-500">or browse</p>
-                    <input type="file" class="hidden" id="fileInput" accept="image/*">
+                <div id="uploadArea" class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center mb-8">
+                    <input type="file" id="fileInput" accept="image/*" class="hidden">
+                    <p class="text-lg mb-2">Drag & drop image here</p>
+                    <p class="text-sm text-gray-500">or</p>
+                    <button onclick="document.getElementById('fileInput').click()" class="mt-2 px-6 py-2 bg-indigo-500 text-white rounded-lg">Browse Files</button>
                 </div>
 
-                <div id="editor" class="hidden mb-8">
-                    <div id="canvasContainer" class="mx-auto">
-                        <canvas id="imageCanvas"></canvas>
-                    </div>
-                    
-                    <div class="grid grid-cols-4 gap-4 mt-4">
-                        <div>
-                            <label class="text-sm">X</label>
-                            <input type="number" id="cropX" value="0" class="w-full p-2 border rounded">
-                        </div>
-                        <div>
-                            <label class="text-sm">Y</label>
-                            <input type="number" id="cropY" value="0" class="w-full p-2 border rounded">
-                        </div>
-                        <div>
-                            <label class="text-sm">Width</label>
-                            <input type="number" id="cropW" value="200" class="w-full p-2 border rounded">
-                        </div>
-                        <div>
-                            <label class="text-sm">Height</label>
-                            <input type="number" id="cropH" value="200" class="w-full p-2 border rounded">
+                <div id="editor" class="hidden">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Aspect Ratio</label>
+                        <div class="flex gap-2">
+                            <button onclick="setRatio(null)" class="px-4 py-2 bg-indigo-500 text-white rounded-lg">Free</button>
+                            
+                            <button onclick="setRatio(1)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg">1:1</button>
+                            
+                            <button onclick="setRatio(16/9)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg">16:9</button>
+                            
+                            <button onclick="setRatio(4/3)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg">4:3</button>
                         </div>
                     </div>
-                </div>
 
-                <button onclick="cropImage()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all">
-                    Crop Image
-                </button>
+                    <div class="relative bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mb-6">
+                        <canvas id="canvas" class="max-w-full"></canvas>
+                    </div>
 
-                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-green-600 dark:text-green-400 font-medium mb-4">✅ Image cropped!</p>
-                    <a href="#" id="downloadLink" class="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">Download Cropped Image</a>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">X</label>
+                            <input type="number" id="cropX" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Y</label>
+                            <input type="number" id="cropY" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Width</label>
+                            <input type="number" id="cropW" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Height</label>
+                            <input type="number" id="cropH" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        </div>
+                    </div>
+
+                    <button onclick="crop()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-4">
+                        Crop Image
+                    </button>
+
+                    <a id="downloadLink" class="hidden block w-full py-4 bg-green-500 text-white rounded-xl font-semibold text-lg text-center hover:bg-green-600 transition-all">Download Cropped Image</a>
                 </div>
             </div>
         </div>
     </section>
 
     <script>
-        const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
-        const canvas = document.getElementById('imageCanvas');
+        const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        let currentImage = null;
+        let originalImage = null;
+        let cropData = { x: 0, y: 0, w: 0, h: 0 };
+        let aspectRatio = null;
 
-        dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-        });
-        fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+        fileInput.addEventListener('change', handleFile);
 
-        function handleFile(file) {
+        function handleFile(e) {
+            const file = e.target.files[0];
+            if (!file || !file.type.startsWith('image/')) return;
+
             const reader = new FileReader();
-            reader.onload = function(e) {
-                currentImage = new Image();
-                currentImage.onload = function() {
-                    canvas.width = currentImage.width;
-                    canvas.height = currentImage.height;
-                    ctx.drawImage(currentImage, 0, 0);
+            reader.onload = function(event) {
+                originalImage = new Image();
+                originalImage.onload = function() {
+                    canvas.width = originalImage.width;
+                    canvas.height = originalImage.height;
+                    ctx.drawImage(originalImage, 0, 0);
+                    
+                    // Set initial crop to center
+                    cropData.w = originalImage.width * 0.5;
+                    cropData.h = originalImage.height * 0.5;
+                    cropData.x = (originalImage.width - cropData.w) / 2;
+                    cropData.y = (originalImage.height - cropData.h) / 2;
+                    
+                    updateInputs();
+                    drawOverlay();
+                    
+                    document.getElementById('uploadArea').classList.add('hidden');
                     document.getElementById('editor').classList.remove('hidden');
-                    document.getElementById('cropW').value = Math.min(200, currentImage.width);
-                    document.getElementById('cropH').value = Math.min(200, currentImage.height);
                 };
-                currentImage.src = e.target.result;
+                originalImage.src = event.target.result;
             };
             reader.readAsDataURL(file);
         }
 
-        function cropImage() {
-            if (!currentImage) { alert('Please select an image'); return; }
+        function setRatio(ratio) {
+            aspectRatio = ratio;
+            if (ratio && cropData.w > 0) {
+                cropData.h = cropData.w / ratio;
+                updateInputs();
+                drawOverlay();
+            }
+        }
+
+        function updateInputs() {
+            document.getElementById('cropX').value = Math.round(cropData.x);
+            document.getElementById('cropY').value = Math.round(cropData.y);
+            document.getElementById('cropW').value = Math.round(cropData.w);
+            document.getElementById('cropH').value = Math.round(cropData.h);
+        }
+
+        function drawOverlay() {
+            ctx.drawImage(originalImage, 0, 0);
             
-            const x = parseInt(document.getElementById('cropX').value);
-            const y = parseInt(document.getElementById('cropY').value);
-            const w = parseInt(document.getElementById('cropW').value);
-            const h = parseInt(document.getElementById('cropH').value);
+            // Draw dark overlay
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Clear crop area
+            ctx.clearRect(cropData.x, cropData.y, cropData.w, cropData.h);
+            ctx.drawImage(originalImage, cropData.x, cropData.y, cropData.w, cropData.h, cropData.x, cropData.y, cropData.w, cropData.h);
+            
+            // Draw border
+            ctx.strokeStyle = '#6366f1';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(cropData.x, cropData.y, cropData.w, cropData.h);
+        }
 
-            const cropCanvas = document.createElement('canvas');
-            cropCanvas.width = w;
-            cropCanvas.height = h;
-            const cropCtx = cropCanvas.getContext('2d');
-            cropCtx.drawImage(canvas, x, y, w, h, 0, 0, w, h);
+        function crop() {
+            const x = parseInt(document.getElementById('cropX').value) || 0;
+            const y = parseInt(document.getElementById('cropY').value) || 0;
+            const w = parseInt(document.getElementById('cropW').value) || 100;
+            const h = parseInt(document.getElementById('cropH').value) || 100;
 
-            const link = document.getElementById('downloadLink');
-            link.href = cropCanvas.toDataURL('image/png');
-            link.download = 'cropped.png';
-            document.getElementById('result').classList.remove('hidden');
+            const outputCanvas = document.createElement('canvas');
+            outputCanvas.width = w;
+            outputCanvas.height = h;
+            const outputCtx = outputCanvas.getContext('2d');
+            
+            outputCtx.drawImage(originalImage, x, y, w, h, 0, 0, w, h);
+            
+            outputCanvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const link = document.getElementById('downloadLink');
+                link.href = url;
+                link.download = 'cropped.png';
+                link.classList.remove('hidden');
+            });
         }
     </script>
 </body>
