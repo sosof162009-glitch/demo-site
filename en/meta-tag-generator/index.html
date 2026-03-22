@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Tag Generator - 205-Tools</title>
+    <meta name="description" content="Generate HTML meta tags for SEO">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
+                <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔍 SEO</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Meta Tag Generator</h1>
+            <p class="text-xl text-white/90">Generate HTML meta tags for SEO</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <div class="space-y-6 mb-8">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Page Title</label>
+                        <input type="text" id="title" placeholder="My Awesome Website" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Description</label>
+                        <textarea id="description" rows="3" placeholder="A brief description of your page..." class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Keywords (comma separated)</label>
+                        <input type="text" id="keywords" placeholder="keyword1, keyword2, keyword3" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Author</label>
+                        <input type="text" id="author" placeholder="John Doe" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">OG Image URL (for social sharing)</label>
+                        <input type="url" id="ogImage" placeholder="https://example.com/image.jpg" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Website URL</label>
+                        <input type="url" id="url" placeholder="https://example.com" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                    </div>
+                </div>
+
+                <button onclick="generate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
+                    Generate Meta Tags
+                </button>
+
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
+                    <label class="block text-sm font-medium mb-2">Generated Meta Tags</label>
+                    <textarea id="output" rows="15" readonly class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-xs"></textarea>
+                </div>
+
+                <div class="flex gap-4">
+                    <button onclick="copyResult()" class="flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium hover:bg-indigo-600 transition-all">Copy</button>
+                    <button onclick="clearAll()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">Clear</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function generate() {
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const keywords = document.getElementById('keywords').value;
+            const author = document.getElementById('author').value;
+            const ogImage = document.getElementById('ogImage').value;
+            const url = document.getElementById('url').value;
+
+            let metaTags = '';
+
+            if (title) {
+                metaTags += `<!-- Title -->\n`;
+                metaTags += `<title>${escapeHtml(title)}</title>\n`;
+                metaTags += `<meta name="title" content="${escapeHtml(title)}">\n`;
+                metaTags += `<meta property="og:title" content="${escapeHtml(title)}">\n`;
+                metaTags += `<meta name="twitter:title" content="${escapeHtml(title)}">\n\n`;
+            }
+
+            if (description) {
+                metaTags += `<!-- Description -->\n`;
+                metaTags += `<meta name="description" content="${escapeHtml(description)}">\n`;
+                metaTags += `<meta property="og:description" content="${escapeHtml(description)}">\n`;
+                metaTags += `<meta name="twitter:description" content="${escapeHtml(description)}">\n\n`;
+            }
+
+            if (keywords) {
+                metaTags += `<!-- Keywords -->\n`;
+                metaTags += `<meta name="keywords" content="${escapeHtml(keywords)}">\n\n`;
+            }
+
+            if (author) {
+                metaTags += `<!-- Author -->\n`;
+                metaTags += `<meta name="author" content="${escapeHtml(author)}">\n\n`;
+            }
+
+            metaTags += `<!-- Character Encoding -->\n`;
+            metaTags += `<meta charset="UTF-8">\n\n`;
+
+            metaTags += `<!-- Viewport -->\n`;
+            metaTags += `<meta name="viewport" content="width=device-width, initial-scale=1.0">\n\n`;
+
+            if (url) {
+                metaTags += `<!-- Open Graph -->\n`;
+                metaTags += `<meta property="og:type" content="website">\n`;
+                metaTags += `<meta property="og:url" content="${escapeHtml(url)}">\n\n`;
+            }
+
+            if (ogImage) {
+                metaTags += `<!-- Open Graph Image -->\n`;
+                metaTags += `<meta property="og:image" content="${escapeHtml(ogImage)}">\n`;
+                metaTags += `<meta name="twitter:image" content="${escapeHtml(ogImage)}">\n`;
+                metaTags += `<meta name="twitter:card" content="summary_large_image">\n\n`;
+            }
+
+            metaTags += `<!-- Robots -->\n`;
+            metaTags += `<meta name="robots" content="index, follow">\n`;
+
+            document.getElementById('output').value = metaTags;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function copyResult() {
+            const output = document.getElementById('output');
+            if (!output.value) return;
+            output.select();
+            document.execCommand('copy');
+            alert('Copied!');
+        }
+
+        function clearAll() {
+            document.getElementById('title').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('keywords').value = '';
+            document.getElementById('author').value = '';
+            document.getElementById('ogImage').value = '';
+            document.getElementById('url').value = '';
+            document.getElementById('output').value = '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap Generator - 205-Tools</title>
+    <meta name="description" content="Generate XML sitemap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
+                <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔍 SEO</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Sitemap Generator</h1>
+            <p class="text-xl text-white/90">Generate XML sitemap for your website</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <div class="mb-8">
+                    <label class="block text-sm font-medium mb-2">Base URL</label>
+                    <input type="url" id="baseUrl" placeholder="https://example.com" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 mb-4">
+
+                    <label class="block text-sm font-medium mb-2">URLs (one per line)</label>
+                    <textarea id="urls" rows="10" placeholder="/&#10;/about&#10;/contact&#10;/products/item1&#10;/blog/post-1" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-sm"></textarea>
+                </div>
+
+                <button onclick="generate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
+                    Generate Sitemap
+                </button>
+
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
+                    <label class="block text-sm font-medium mb-2">Generated Sitemap XML</label>
+                    <textarea id="output" rows="15" readonly class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-xs"></textarea>
+                </div>
+
+                <div class="flex gap-4">
+                    <button onclick="copyResult()" class="flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium hover:bg-indigo-600 transition-all">Copy</button>
+                    <button onclick="downloadXML()" class="flex-1 py-3 bg-green-500 text-white rounded-xl font-medium hover:bg-green-600 transition-all">Download XML</button>
+                    <button onclick="clearAll()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">Clear</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function generate() {
+            const baseUrl = document.getElementById('baseUrl').value.trim();
+            const urls = document.getElementById('urls').value.trim().split('\n').filter(u => u.trim());
+
+            if (!baseUrl) {
+                alert('Please enter a base URL');
+                return;
+            }
+
+            if (urls.length === 0) {
+                alert('Please enter at least one URL path');
+                return;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+
+            let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+            sitemap += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+            urls.forEach(url => {
+                const fullUrl = baseUrl.replace(/\/$/, '') + '/' + url.replace(/^\//, '');
+                sitemap += `  <url>\n`;
+                sitemap += `    <loc>${escapeXml(fullUrl)}</loc>\n`;
+                sitemap += `    <lastmod>${today}</lastmod>\n`;
+                sitemap += `    <changefreq>weekly</changefreq>\n`;
+                sitemap += `    <priority>0.8</priority>\n`;
+                sitemap += `  </url>\n`;
+            });
+
+            sitemap += `</urlset>`;
+
+            document.getElementById('output').value = sitemap;
+        }
+
+        function escapeXml(text) {
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&apos;');
+        }
+
+        function copyResult() {
+            const output = document.getElementById('output');
+            if (!output.value) return;
+            output.select();
+            document.execCommand('copy');
+            alert('Copied!');
+        }
+
+        function downloadXML() {
+            const output = document.getElementById('output').value;
+            if (!output) return;
+            
+            const blob = new Blob([output], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sitemap.xml';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearAll() {
+            document.getElementById('baseUrl').value = '';
+            document.getElementById('urls').value = '';
+            document.getElementById('output').value = '';
+        }
+    </script>
+</body>
+</html>
