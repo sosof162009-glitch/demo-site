@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Parser - 205-Tools</title>
+    <meta name="description" content="Parse and analyze URLs">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
+                <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔧 Developer</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">URL Parser</h1>
+            <p class="text-xl text-white/90">Parse and analyze URL components</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <div class="flex gap-4 mb-8">
+                    <input type="url" id="url" placeholder="https://example.com/path?key=value#hash" class="flex-1 p-4 rounded-xl border dark:border-gray-600 dark:bg-gray-600">
+                    
+                    <button onclick="parse()" class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all">Parse</button>
+                </div>
+
+                <div id="result" class="hidden space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <p class="text-sm text-gray-500">Protocol</p>
+                            <p id="protocol" class="text-lg font-medium">--</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <p class="text-sm text-gray-500">Hostname</p>
+                            <p id="hostname" class="text-lg font-medium">--</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <p class="text-sm text-gray-500">Port</p>
+                            <p id="port" class="text-lg font-medium">--</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <p class="text-sm text-gray-500">Pathname</p>
+                            <p id="pathname" class="text-lg font-medium">--</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <p class="text-sm text-gray-500">Search/Query</p>
+                        <p id="search" class="text-lg font-medium">--</p>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <p class="text-sm text-gray-500">Hash/Fragment</p>
+                        <p id="hash" class="text-lg font-medium">--</p>
+                    </div>
+
+                    <div id="paramsSection" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 hidden">
+                        <p class="text-sm text-gray-500 mb-2">Query Parameters</p>
+                        <div id="params" class="space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function parse() {
+            const urlString = document.getElementById('url').value.trim();
+            if (!urlString) {
+                alert('Please enter a URL');
+                return;
+            }
+
+            try {
+                const url = new URL(urlString);
+
+                document.getElementById('protocol').textContent = url.protocol || '--';
+                document.getElementById('hostname').textContent = url.hostname || '--';
+                document.getElementById('port').textContent = url.port || 'Default';
+                document.getElementById('pathname').textContent = url.pathname || '/';
+                document.getElementById('search').textContent = url.search || 'None';
+                document.getElementById('hash').textContent = url.hash || 'None';
+
+                // Parse query parameters
+                const params = new URLSearchParams(url.search);
+                const paramsDiv = document.getElementById('params');
+                const paramsSection = document.getElementById('paramsSection');
+
+                if (params.toString()) {
+                    paramsDiv.innerHTML = '';
+                    for (const [key, value] of params) {
+                        paramsDiv.innerHTML += `
+                            <div class="flex gap-2">
+                                <span class="font-mono text-indigo-500">${key}</span>
+                                <span class="text-gray-400">=</span>
+                                <span class="font-mono">${value}</span>
+                            </div>
+                        `;
+                    }
+                    paramsSection.classList.remove('hidden');
+                } else {
+                    paramsSection.classList.add('hidden');
+                }
+
+                document.getElementById('result').classList.remove('hidden');
+            } catch (e) {
+                alert('Invalid URL: ' + e.message);
+            }
+        }
+    </script>
+</body>
+</html>

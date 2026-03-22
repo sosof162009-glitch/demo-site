@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Validator - 205-Tools</title>
+    <meta name="description" content="Validate JSON syntax">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
+                <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔧 Developer</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">JSON Validator</h1>
+            <p class="text-xl text-white/90">Validate JSON syntax and format</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">JSON Input</label>
+                    <textarea id="input" rows="12" placeholder='{"name": "John", "age": 30}' class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-sm"></textarea>
+                </div>
+
+                <div class="flex gap-4 mb-6">
+                    <button onclick="validate()" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all">Validate</button>
+                    
+                    <button onclick="format()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">Format</button>
+                    
+                    <button onclick="minify()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">Minify</button>
+                </div>
+
+                <div id="result" class="hidden rounded-xl p-6 mb-6">
+                    <p id="resultText" class="text-lg font-semibold"></p>
+                    <p id="errorText" class="text-sm mt-2"></p>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
+                    <label class="block text-sm font-medium mb-2">Result</label>
+                    <pre id="output" class="p-4 rounded-lg border dark:border-gray-600 bg-gray-900 text-gray-100 font-mono text-sm overflow-x-auto"></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function validate() {
+            const input = document.getElementById('input').value.trim();
+            const resultDiv = document.getElementById('result');
+            const resultText = document.getElementById('resultText');
+            const errorText = document.getElementById('errorText');
+
+            if (!input) {
+                alert('Please enter JSON');
+                return;
+            }
+
+            try {
+                JSON.parse(input);
+                resultDiv.className = 'rounded-xl p-6 mb-6 bg-green-100 dark:bg-green-900/30';
+                resultText.textContent = '✓ Valid JSON';
+                resultText.className = 'text-lg font-semibold text-green-700 dark:text-green-400';
+                errorText.textContent = '';
+                resultDiv.classList.remove('hidden');
+            } catch (e) {
+                resultDiv.className = 'rounded-xl p-6 mb-6 bg-red-100 dark:bg-red-900/30';
+                resultText.textContent = '✗ Invalid JSON';
+                resultText.className = 'text-lg font-semibold text-red-700 dark:text-red-400';
+                errorText.textContent = e.message;
+                errorText.className = 'text-sm mt-2 text-red-600 dark:text-red-400';
+                resultDiv.classList.remove('hidden');
+            }
+        }
+
+        function format() {
+            const input = document.getElementById('input').value.trim();
+            if (!input) return;
+
+            try {
+                const obj = JSON.parse(input);
+                document.getElementById('output').textContent = JSON.stringify(obj, null, 2);
+            } catch (e) {
+                document.getElementById('output').textContent = 'Error: ' + e.message;
+            }
+        }
+
+        function minify() {
+            const input = document.getElementById('input').value.trim();
+            if (!input) return;
+
+            try {
+                const obj = JSON.parse(input);
+                document.getElementById('output').textContent = JSON.stringify(obj);
+            } catch (e) {
+                document.getElementById('output').textContent = 'Error: ' + e.message;
+            }
+        }
+    </script>
+</body>
+</html>

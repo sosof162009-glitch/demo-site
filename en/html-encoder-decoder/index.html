@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Encoder/Decoder - 205-Tools</title>
+    <meta name="description" content="Encode and decode HTML entities">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
+                <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔧 Developer</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">HTML Encoder/Decoder</h1>
+            <p class="text-xl text-white/90">Encode and decode HTML entities</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Input</label>
+                    <textarea id="input" rows="8" placeholder="Enter text or HTML entities..." class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-sm"></textarea>
+                </div>
+
+                <div class="flex gap-4 mb-6">
+                    <button onclick="encode()" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all">Encode</button>
+                    
+                    <button onclick="decode()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">Decode</button>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
+                    <label class="block text-sm font-medium mb-2">Result</label>
+                    <textarea id="output" rows="8" readonly class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-sm"></textarea>
+                </div>
+
+                <div class="flex gap-4">
+                    <button onclick="copyResult()" class="flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium hover:bg-indigo-600 transition-all">Copy</button>
+                    
+                    <button onclick="clearAll()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">Clear</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function encode() {
+            const input = document.getElementById('input').value;
+            if (!input) return;
+
+            const encoded = input
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+
+            document.getElementById('output').value = encoded;
+        }
+
+        function decode() {
+            const input = document.getElementById('input').value;
+            if (!input) return;
+
+            const decoded = input
+                .replace(/&amp;/g, '&')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"')
+                .replace(/&#039;/g, "'")
+                .replace(/&#x27;/g, "'")
+                .replace(/&#x2F;/g, '/');
+
+            document.getElementById('output').value = decoded;
+        }
+
+        function copyResult() {
+            const output = document.getElementById('output');
+            if (!output.value) return;
+            output.select();
+            document.execCommand('copy');
+            alert('Copied!');
+        }
+
+        function clearAll() {
+            document.getElementById('input').value = '';
+            document.getElementById('output').value = '';
+        }
+    </script>
+</body>
+</html>
