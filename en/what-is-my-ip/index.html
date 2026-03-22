@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is My IP - 205-Tools</title>
+    <meta name="description" content="Find your IP address">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
+                <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🌐 Network</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">What Is My IP</h1>
+            <p class="text-xl text-white/90">Find your public IP address</p>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center">
+                <div id="loading" class="py-8">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
+                    <p class="mt-4 text-gray-500">Detecting your IP address...</p>
+                </div>
+
+                <div id="result" class="hidden">
+                    <p class="text-lg text-gray-500 mb-4">Your Public IP Address</p>
+                    
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-2xl p-8 mb-8">
+                        <p id="ipAddress" class="text-4xl md:text-5xl font-bold font-mono">--.--.--.--</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-8">
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <p class="text-sm text-gray-500">City</p>
+                            <p id="city" class="text-lg font-medium">--</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <p class="text-sm text-gray-500">Region</p>
+                            <p id="region" class="text-lg font-medium">--</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <p class="text-sm text-gray-500">Country</p>
+                            <p id="country" class="text-lg font-medium">--</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <p class="text-sm text-gray-500">ISP</p>
+                            <p id="isp" class="text-lg font-medium">--</p>
+                        </div>
+                    </div>
+
+                    <button onclick="copyIP()" class="px-8 py-3 bg-indigo-500 text-white rounded-xl font-medium hover:bg-indigo-600 transition-all">Copy IP</button>
+                </div>
+
+                <div id="error" class="hidden py-8">
+                    <p class="text-red-500">Unable to detect IP address. Please check your connection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        async function getIP() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                
+                document.getElementById('ipAddress').textContent = data.ip;
+                document.getElementById('city').textContent = data.city || 'Unknown';
+                document.getElementById('region').textContent = data.region || 'Unknown';
+                document.getElementById('country').textContent = data.country_name || data.country || 'Unknown';
+                document.getElementById('isp').textContent = data.org || 'Unknown';
+                
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('result').classList.remove('hidden');
+            } catch (error) {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('error').classList.remove('hidden');
+            }
+        }
+
+        function copyIP() {
+            const ip = document.getElementById('ipAddress').textContent;
+            navigator.clipboard.writeText(ip).then(() => {
+                alert('IP copied!');
+            });
+        }
+
+        getIP();
+    </script>
+</body>
+</html>
