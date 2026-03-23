@@ -7,8 +7,201 @@
     <meta name="description" content="Calculate age from birth date">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
-    </script>
+    // Calculator Logic
+function initCalculator(type) {
+    // Auto-calculate on input
+    document.querySelectorAll('.calc-input').forEach(input => {
+        input.addEventListener('input', calculate);
+    });
+    
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', calculate);
+    });
+
+    window.calculate = function() {
+        try {
+            let result = null;
+            
+            switch(type) {
+                case 'bmi':
+                    result = calculateBMI();
+                    break;
+                case 'loan':
+                    result = calculateLoan();
+                    break;
+                case 'percentage':
+                    result = calculatePercentage();
+                    break;
+                case 'binary':
+                    result = convertBinary();
+                    break;
+                case 'hex':
+                    result = convertHex();
+                    break;
+                case 'temperature':
+                    result = convertTemperature();
+                    break;
+                case 'length':
+                case 'weight':
+                case 'area':
+                case 'volume':
+                    result = convertUnit(type);
+                    break;
+                case 'age':
+                    result = calculateAge();
+                    break;
+                case 'time':
+                    result = calculateTimeDifference();
+                    break;
+                default:
+                    result = { value: '0', unit: '' };
+            }
+            
+            if (result) {
+                document.getElementById('resultSection').classList.remove('hidden');
+                document.getElementById('mainResult').textContent = result.value;
+                document.getElementById('resultUnit').textContent = result.unit || '';
+            }
+        } catch (err) {
+            console.error('Calculation error:', err);
+        }
+    };
+    
+    function calculateBMI() {
+        const weight = parseFloat(document.getElementById('weight')?.value || 0);
+        const height = parseFloat(document.getElementById('height')?.value || 0);
+        
+        if (weight > 0 && height > 0) {
+            const bmi = weight / ((height / 100) ** 2);
+            let category = '';
+            if (bmi < 18.5) category = 'Underweight';
+            else if (bmi < 25) category = 'Normal';
+            else if (bmi < 30) category = 'Overweight';
+            else category = 'Obese';
+            
+            return { value: bmi.toFixed(1), unit: category };
+        }
+        return { value: '--', unit: '' };
+    }
+    
+    function calculateLoan() {
+        const amount = parseFloat(document.getElementById('amount')?.value || 0);
+        const rate = parseFloat(document.getElementById('rate')?.value || 0);
+        const years = parseFloat(document.getElementById('years')?.value || 0);
+        
+        if (amount > 0 && rate > 0 && years > 0) {
+            const monthlyRate = rate / 100 / 12;
+            const numPayments = years * 12;
+            const monthlyPayment = amount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+            const totalPayment = monthlyPayment * numPayments;
+            const totalInterest = totalPayment - amount;
+            
+            return { value: monthlyPayment.toFixed(2), unit: '/ month' };
+        }
+        return { value: '--', unit: '' };
+    }
+    
+    function calculatePercentage() {
+        const value = parseFloat(document.getElementById('value')?.value || 0);
+        const percent = parseFloat(document.getElementById('percent')?.value || 0);
+        
+        if (!isNaN(value) && !isNaN(percent)) {
+            const result = (value * percent) / 100;
+            return { value: result.toFixed(2), unit: '' };
+        }
+        return { value: '--', unit: '' };
+    }
+    
+    function convertBinary() {
+        const input = document.getElementById('binaryInput')?.value || '';
+        if (/^[01]+$/.test(input)) {
+            return { value: parseInt(input, 2).toString(), unit: 'Decimal' };
+        }
+        return { value: '--', unit: '' };
+    }
+    
+    function convertHex() {
+        const input = document.getElementById('hexInput')?.value || '';
+        if (/^[0-9A-Fa-f]+$/.test(input)) {
+            return { value: parseInt(input, 16).toString(), unit: 'Decimal' };
+        }
+        return { value: '--', unit: '' };
+    }
+    
+    function convertTemperature() {
+        const temp = parseFloat(document.getElementById('temperature')?.value || 0);
+        const fromUnit = document.querySelector('input[name="fromUnit"]:checked')?.value || 'C';
+        const toUnit = document.querySelector('input[name="toUnit"]:checked')?.value || 'F';
+        
+        let celsius = temp;
+        if (fromUnit === 'F') celsius = (temp - 32) * 5/9;
+        else if (fromUnit === 'K') celsius = temp - 273.15;
+        
+        let result = celsius;
+        if (toUnit === 'F') result = celsius * 9/5 + 32;
+        else if (toUnit === 'K') result = celsius + 273.15;
+        
+        return { value: result.toFixed(2), unit: '°' + toUnit };
+    }
+    
+    function convertUnit(type) {
+        const value = parseFloat(document.getElementById('inputValue')?.value || 0);
+        const fromUnit = document.getElementById('fromUnit')?.value || '';
+        const toUnit = document.getElementById('toUnit')?.value || '';
+        
+        if (isNaN(value)) return { value: '--', unit: '' };
+        
+        // Conversion factors (simplified)
+        const factors = {
+            length: { m: 1, km: 1000, cm: 0.01, mm: 0.001, ft: 0.3048, in: 0.0254, yd: 0.9144, mi: 1609.34 },
+            weight: { kg: 1, g: 0.001, mg: 0.000001, lb: 0.453592, oz: 0.0283495 },
+            area: { m2: 1, km2: 1000000, cm2: 0.0001, ft2: 0.092903, ac: 4046.86, ha: 10000 },
+            volume: { l: 1, ml: 0.001, m3: 1000, gal: 3.78541, qt: 0.946353, pt: 0.473176 }
+        };
+        
+        const factor = factors[type];
+        if (factor && factor[fromUnit] && factor[toUnit]) {
+            const result = value * factor[fromUnit] / factor[toUnit];
+            return { value: result.toFixed(4), unit: toUnit };
+        }
+        
+        return { value: value.toString(), unit: toUnit };
+    }
+    
+    function calculateAge() {
+        const birthDate = new Date(document.getElementById('birthDate')?.value || '');
+        if (isNaN(birthDate.getTime())) return { value: '--', unit: '' };
+        
+        const today = new Date();
+        let years = today.getFullYear() - birthDate.getFullYear();
+        const months = today.getMonth() - birthDate.getMonth();
+        
+        if (months < 0 || (months === 0 && today.getDate() < birthDate.getDate())) {
+            years--;
+        }
+        
+        return { value: years.toString(), unit: 'years' };
+    }
+    
+    function calculateTimeDifference() {
+        const date1 = new Date(document.getElementById('date1')?.value || '');
+        const date2 = new Date(document.getElementById('date2')?.value || '');
+        
+        if (isNaN(date1.getTime()) || isNaN(date2.getTime())) return { value: '--', unit: '' };
+        
+        const diff = Math.abs(date2 - date1);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        
+        return { value: days.toString(), unit: 'days' };
+    }
+}
+
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      initCalculator('age');
+    });
+  </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
