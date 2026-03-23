@@ -1,0 +1,515 @@
+[
+  {
+    "cat": "Images",
+    "slug": "jpg-to-png",
+    "name": "JPG to PNG",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Images",
+    "slug": "png-to-jpg",
+    "name": "PNG to JPG",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Images",
+    "slug": "webp-to-jpg",
+    "name": "WebP to JPG",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Images",
+    "slug": "heic-to-jpg",
+    "name": "HEIC to JPG",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Images",
+    "slug": "image-resizer",
+    "name": "Image Resizer",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Images",
+    "slug": "compress-jpg",
+    "name": "Compress JPG",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Images",
+    "slug": "image-to-base64",
+    "name": "Image to Base64",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Images",
+    "slug": "favicon-generator",
+    "name": "Favicon Generator",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "PDF",
+    "slug": "pdf-to-jpg",
+    "name": "PDF to JPG",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "PDF",
+    "slug": "merge-pdf",
+    "name": "Merge PDF",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "PDF",
+    "slug": "split-pdf",
+    "name": "Split PDF",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "PDF",
+    "slug": "compress-pdf",
+    "name": "Compress PDF",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "PDF",
+    "slug": "jpg-to-pdf",
+    "name": "JPG to PDF",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Text",
+    "slug": "character-counter",
+    "name": "Character Counter",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Text",
+    "slug": "case-converter",
+    "name": "Case Converter",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Text",
+    "slug": "reverse-text",
+    "name": "Reverse Text",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Text",
+    "slug": "lorem-ipsum",
+    "name": "Lorem Ipsum",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Text",
+    "slug": "morse-code",
+    "name": "Morse Code",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Developers",
+    "slug": "json-minifier",
+    "name": "JSON Minifier",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Developers",
+    "slug": "csv-to-json",
+    "name": "CSV to JSON",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Developers",
+    "slug": "html-formatter",
+    "name": "HTML Formatter",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Developers",
+    "slug": "css-minifier",
+    "name": "CSS Minifier",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Developers",
+    "slug": "base64-encoder",
+    "name": "Base64 Encoder",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Developers",
+    "slug": "md5-hash",
+    "name": "MD5 Hash",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Developers",
+    "slug": "uuid-generator",
+    "name": "UUID Generator",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Developers",
+    "slug": "regex-tester",
+    "name": "Regex Tester",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Math",
+    "slug": "binary-to-decimal",
+    "name": "Binary to Decimal",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Math",
+    "slug": "scientific-calculator",
+    "name": "Scientific Calculator",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Math",
+    "slug": "percentage-calculator",
+    "name": "Percentage Calculator",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Math",
+    "slug": "compound-interest",
+    "name": "Compound Interest",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Math",
+    "slug": "random-number",
+    "name": "Random Number",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Colors",
+    "slug": "hex-to-rgb",
+    "name": "HEX to RGB",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Colors",
+    "slug": "color-picker",
+    "name": "Color Picker",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Colors",
+    "slug": "css-gradient",
+    "name": "CSS Gradient",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Colors",
+    "slug": "color-palette",
+    "name": "Color Palette",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Colors",
+    "slug": "glassmorphism",
+    "name": "Glassmorphism",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Security",
+    "slug": "password-strength",
+    "name": "Password Strength",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Security",
+    "slug": "pin-generator",
+    "name": "PIN Generator",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Security",
+    "slug": "privacy-policy",
+    "name": "Privacy Policy",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Security",
+    "slug": "ip-lookup",
+    "name": "IP Lookup",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "SEO",
+    "slug": "meta-tags",
+    "name": "Meta Tags",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "SEO",
+    "slug": "sitemap-xml",
+    "name": "Sitemap XML",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "SEO",
+    "slug": "utm-builder",
+    "name": "UTM Builder",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "SEO",
+    "slug": "keyword-density",
+    "name": "Keyword Density",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Data",
+    "slug": "csv-viewer",
+    "name": "CSV Viewer",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": true,
+    "ok": true
+  },
+  {
+    "cat": "Data",
+    "slug": "fake-data",
+    "name": "Fake Data",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Data",
+    "slug": "qr-code",
+    "name": "QR Code",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Data",
+    "slug": "barcode",
+    "name": "Barcode",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Time",
+    "slug": "timestamp",
+    "name": "Unix Timestamp",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Time",
+    "slug": "timezone",
+    "name": "Time Zone",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Time",
+    "slug": "date-difference",
+    "name": "Date Difference",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Time",
+    "slug": "age-calculator",
+    "name": "Age Calculator",
+    "status": 200,
+    "hasJS": true,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Units",
+    "slug": "length",
+    "name": "Length",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Units",
+    "slug": "weight",
+    "name": "Weight",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Units",
+    "slug": "temperature",
+    "name": "Temperature",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Units",
+    "slug": "currency",
+    "name": "Currency",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  },
+  {
+    "cat": "Units",
+    "slug": "speed",
+    "name": "Speed",
+    "status": 404,
+    "hasJS": false,
+    "hasTemplate": false,
+    "ok": false
+  }
+]
