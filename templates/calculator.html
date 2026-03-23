@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="{{lang}}" dir="{{dir}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} - 205-Tools</title>
+    <meta name="description" content="{{description}}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { 
+            darkMode: 'class', 
+            theme: { 
+                extend: { 
+                    colors: { 
+                        primary: '#f59e0b',
+                        secondary: '#f97316',
+                        accent: '#ef4444'
+                    } 
+                } 
+            } 
+        };
+    </script>
+    <style>
+        /* Calculator Style */
+        .calc-input {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .calc-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+        .dark .calc-input {
+            background: #1f2937;
+            border-color: #374151;
+            color: white;
+        }
+        .dark .calc-input:focus {
+            border-color: #f59e0b;
+        }
+        .calc-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        .dark .calc-label {
+            color: #d1d5db;
+        }
+        .calc-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+        .calc-btn:active {
+            transform: translateY(0);
+        }
+        .result-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+        .dark .result-card {
+            background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+            border-color: #d97706;
+        }
+        .result-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #92400e;
+            line-height: 1;
+        }
+        .dark .result-value {
+            color: #fcd34d;
+        }
+        .result-label {
+            color: #78350f;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        .dark .result-label {
+            color: #fbbf24;
+        }
+        .info-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .dark .info-card {
+            background: #1f2937;
+            border-color: #374151;
+        }
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .dark .progress-bar {
+            background: #374151;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #f97316);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .radio-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .radio-option {
+            flex: 1;
+            min-width: 100px;
+        }
+        .radio-option input {
+            display: none;
+        }
+        .radio-option label {
+            display: block;
+            padding: 12px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dark .radio-option label {
+            background: #1f2937;
+            border-color: #374151;
+        }
+        .radio-option input:checked + label {
+            background: #fef3c7;
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+        .dark .radio-option input:checked + label {
+            background: #451a03;
+            color: #fcd34d;
+        }
+        .slider-container {
+            margin-top: 8px;
+        }
+        .slider-value {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e5e7eb;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        .dark input[type="range"] {
+            background: #374151;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/{{lang}}/" class="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
+                    205-Tools
+                </a>
+                <div class="flex items-center gap-4">
+                    <a href="/{{lang}}/{{category}}/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-500">
+                        ← {{category_name}}
+                    </a>
+                    <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">
+                        🌙
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 text-white py-10">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-3">🧮 {{category_name}}</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-3">{{title}}</h1>
+            <p class="text-lg text-white/90 max-w-2xl mx-auto">{{description}}</p>
+        </div>
+    </section>
+
+    <!-- Main Interface -->
+    <section class="py-8">
+        <div class="max-w-4xl mx-auto px-4">
+            
+            <!-- Input Form -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
+                <h2 class="text-xl font-semibold mb-6">{{input_title}}</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    {{input_fields}}
+                </div>
+
+                <!-- Options if needed -->
+                <div id="optionsSection" class="mt-6">
+                    {{options_fields}}
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="calculate()" class="calc-btn">
+                        🧮 {{calculate_btn}}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Result Section -->
+            <div id="resultSection" class="hidden">
+                <div class="result-card mb-6">
+                    <p class="text-sm text-amber-800 dark:text-amber-200 mb-2">{{result_label}}</p>
+                    <p class="result-value" id="mainResult">--</p>
+                    <p class="result-label" id="resultUnit"></p>
+                </div>
+
+                <!-- Additional Results/Details -->
+                <div id="detailsSection" class="grid md:grid-cols-2 gap-4">
+                    {{details_content}}
+                </div>
+
+                <!-- Visualization (if applicable) -->
+                <div id="visualSection" class="mt-6 hidden">
+                    <div class="info-card">
+                        <h3 class="font-semibold mb-4">{{visual_title}}</h3>
+                        <div id="visualContent"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info/Explanation -->
+            <div class="mt-8 info-card">
+                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {{info_title}}
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                    {{info_content}}
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // Auto-calculate on input (optional)
+        document.querySelectorAll('.calc-input').forEach(input => {
+            input.addEventListener('input', {{auto_calculate}});
+        });
+
+        function calculate() {
+            try {
+                {{calculate_logic}}
+                
+                document.getElementById('resultSection').classList.remove('hidden');
+                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (err) {
+                alert('{{error_message}}: ' + err.message);
+            }
+        }
+
+        function updateResult(value, unit = '') {
+            document.getElementById('mainResult').textContent = value;
+            document.getElementById('resultUnit').textContent = unit;
+        }
+
+        function showDetails(details) {
+            const container = document.getElementById('detailsSection');
+            container.innerHTML = details.map(d => `
+                <div class="info-card">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">${d.label}</p>
+                    <p class="text-xl font-semibold text-gray-900 dark:text-white">${d.value}</p>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

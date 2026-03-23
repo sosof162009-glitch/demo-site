@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="{{lang}}" dir="{{dir}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} - 205-Tools</title>
+    <meta name="description" content="{{description}}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { 
+            darkMode: 'class', 
+            theme: { 
+                extend: { 
+                    colors: { 
+                        primary: '#ec4899',
+                        secondary: '#8b5cf6',
+                        accent: '#06b6d4'
+                    } 
+                } 
+            } 
+        };
+    </script>
+    <style>
+        /* Generator Style */
+        .generator-card {
+            background: white;
+            border: 2px solid #fce7f3;
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+        .dark .generator-card {
+            background: #1f2937;
+            border-color: #831843;
+        }
+        .generator-card:hover {
+            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.1);
+        }
+        .result-display {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            border: 2px dashed #f472b6;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            word-break: break-all;
+            font-family: 'Consolas', monospace;
+            font-size: 18px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark .result-display {
+            background: linear-gradient(135deg, #500724 0%, #831843 100%);
+            border-color: #ec4899;
+        }
+        .generate-btn {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            color: white;
+            padding: 16px 48px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
+        }
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(236, 72, 153, 0.5);
+        }
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .option-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #fce7f3;
+        }
+        .dark .option-row {
+            border-color: #374151;
+        }
+        .option-row:last-child {
+            border-bottom: none;
+        }
+        .switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #e5e7eb;
+            border-radius: 28px;
+            transition: 0.3s;
+        }
+        .dark .slider {
+            background: #4b5563;
+        }
+        .slider:before {
+            content: "";
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        input:checked + .slider {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+        }
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        .length-slider {
+            width: 100%;
+            margin-top: 8px;
+        }
+        .length-display {
+            display: inline-block;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            min-width: 50px;
+            text-align: center;
+        }
+        .copy-btn {
+            background: white;
+            border: 2px solid #ec4899;
+            color: #ec4899;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: #ec4899;
+            color: white;
+        }
+        .dark .copy-btn {
+            background: transparent;
+        }
+        .strength-bar {
+            height: 6px;
+            border-radius: 3px;
+            background: #e5e7eb;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+        .dark .strength-bar {
+            background: #374151;
+        }
+        .strength-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        .strength-weak { background: #ef4444; }
+        .strength-medium { background: #f59e0b; }
+        .strength-strong { background: #10b981; }
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: #f9fafb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dark .checkbox-item {
+            background: #374151;
+        }
+        .checkbox-item:hover {
+            background: #fce7f3;
+        }
+        .dark .checkbox-item:hover {
+            background: #831843;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #ec4899;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/{{lang}}/" class="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                    205-Tools
+                </a>
+                <div class="flex items-center gap-4">
+                    <a href="/{{lang}}/{{category}}/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-pink-500">
+                        ← {{category_name}}
+                    </a>
+                    <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">
+                        🌙
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 text-white py-10">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-3">⚡ {{category_name}}</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-3">{{title}}</h1>
+            <p class="text-lg text-white/90 max-w-2xl mx-auto">{{description}}</p>
+        </div>
+    </section>
+
+    <!-- Main Interface -->
+    <section class="py-8">
+        <div class="max-w-3xl mx-auto px-4">
+            
+            <div class="generator-card">
+                
+                <!-- Result Display -->
+                <div class="mb-8">
+                    <div class="result-display" id="resultDisplay">
+                        <span class="text-gray-400">{{empty_message}}</span>
+                    </div>
+                    
+                    <!-- Strength Bar (for passwords) -->
+                    <div id="strengthBar" class="hidden">
+                        <div class="flex justify-between text-xs text-gray-500 mt-3 mb-1">
+                            <span>{{strength_label}}</span>
+                            <span id="strengthText">--</span>
+                        </div>
+                        <div class="strength-bar">
+                            <div id="strengthFill" class="strength-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <div class="text-center mb-8">
+                    <button onclick="generate()" id="generateBtn" class="generate-btn">
+                        ⚡ {{generate_btn}}
+                    </button>
+                </div>
+
+                <!-- Options -->
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+                    <h3 class="text-lg font-semibold mb-4">{{options_title}}</h3>
+                    
+                    <!-- Length Slider -->
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600 dark:text-gray-400">{{length_label}}</span>
+                            <span id="lengthValue" class="length-display">16</span>
+                        </div>
+                        <input 
+                            type="range" 
+                            min="{{min_length}}" 
+                            max="{{max_length}}" 
+                            value="{{default_length}}"
+                            class="length-slider"
+                            id="lengthSlider"
+                            oninput="updateLength(this.value)"
+                        >
+                    </div>
+
+                    <!-- Checkboxes -->
+                    <div class="checkbox-grid">
+                        {{checkbox_options}}
+                    </div>
+
+                    <!-- Toggle Options -->
+                    <div class="mt-6 space-y-3">
+                        {{toggle_options}}
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div id="actionButtons" class="hidden mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 flex gap-3 justify-center">
+                    <button onclick="copyResult()" class="copy-btn">
+                        📋 {{copy_btn}}
+                    </button>
+                    
+                    <button onclick="generate()" class="px-6 py-3 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                        🔄 {{regenerate_btn}}
+                    </button>
+                </div>
+            </div>
+
+            <!-- History (optional) -->
+            <div id="historySection" class="mt-8 hidden">
+                <h3 class="text-lg font-semibold mb-4">{{history_title}}</h3>
+                <div id="historyList" class="space-y-2"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        let currentResult = '';
+        let history = [];
+
+        function updateLength(value) {
+            document.getElementById('lengthValue').textContent = value;
+        }
+
+        function generate() {
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = true;
+            btn.innerHTML = '⏳ {{generating_text}}...';
+
+            setTimeout(() => {
+                try {
+                    {{generate_logic}}
+                    
+                    document.getElementById('resultDisplay').textContent = currentResult;
+                    document.getElementById('resultDisplay').classList.add('text-gray-900', 'dark:text-white');
+                    document.getElementById('actionButtons').classList.remove('hidden');
+                    
+                    // Add to history
+                    addToHistory(currentResult);
+                    
+                    // Show strength if applicable
+                    {{strength_calculation}}
+                    
+                } catch (err) {
+                    alert('{{error_message}}: ' + err.message);
+                }
+                
+                btn.disabled = false;
+                btn.innerHTML = '⚡ {{generate_btn}}';
+            }, 300);
+        }
+
+        async function copyResult() {
+            try {
+                await navigator.clipboard.writeText(currentResult);
+                showToast('{{copied_message}}');
+            } catch (err) {
+                const textarea = document.createElement('textarea');
+                textarea.value = currentResult;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('{{copied_message}}');
+            }
+        }
+
+        function addToHistory(item) {
+            history.unshift({ value: item, time: new Date().toLocaleTimeString() });
+            if (history.length > 5) history.pop();
+            
+            const container = document.getElementById('historyList');
+            container.innerHTML = history.map(h => `
+                <div class="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <span class="font-mono text-sm truncate flex-1">${h.value}</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-gray-400">${h.time}</span>
+                        <button onclick="navigator.clipboard.writeText('${h.value}')" class="p-1 text-gray-400 hover:text-pink-500">
+                            📋
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('historySection').classList.remove('hidden');
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-xl shadow-2xl flex items-center gap-2 z-50';
+            toast.innerHTML = `
+                <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                ${message}
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+    </script>
+</body>
+</html>
