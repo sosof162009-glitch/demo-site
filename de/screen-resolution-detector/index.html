@@ -331,45 +331,54 @@ function initSpeedTest() {
                     <p class="text-gray-600 dark:text-gray-400">Detects and displays device screen resolution, PPI, and device pixel ratio.</p>
                 </div>
                 
-                <!-- Text Input -->
-                <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Eingabetext</label>
-                    <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Text hier eingeben..."></textarea>
+                
+                <div id="resolutionDisplay" class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Screen Width</p>
+                        <p class="text-3xl font-bold text-blue-600" id="screenWidth">--</p>
+                        <p class="text-xs text-gray-500">px</p>
+                    </div>
+                    <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Screen Height</p>
+                        <p class="text-3xl font-bold text-blue-600" id="screenHeight">--</p>
+                        <p class="text-xs text-gray-500">px</p>
+                    </div>
+                    <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Window Width</p>
+                        <p class="text-3xl font-bold text-green-600" id="windowWidth">--</p>
+                        <p class="text-xs text-gray-500">px</p>
+                    </div>
+                    <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Window Height</p>
+                        <p class="text-3xl font-bold text-green-600" id="windowHeight">--</p>
+                        <p class="text-xs text-gray-500">px</p>
+                    </div>
+                    <div class="p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Pixel Ratio</p>
+                        <p class="text-3xl font-bold text-purple-600" id="pixelRatio">--</p>
+                    </div>
+                    <div class="p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Color Depth</p>
+                        <p class="text-3xl font-bold text-purple-600" id="colorDepth">--</p>
+                        <p class="text-xs text-gray-500">bit</p>
+                    </div>
                 </div>
 
-                <!-- Action Button -->
-                <button onclick="processText()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
-                    Verarbeiten
-                </button>
-
-                <!-- Output -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Ausgabetext</label>
-                    <textarea id="output" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
-                </div>
-
-                <button onclick="copyOutput()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
-                    Kopieren
+                <button onclick="updateResolution()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all">
+                    Refresh
                 </button>
 
     <script>
-        function processText() {
-            const input = document.getElementById('input').value;
-            const btn = document.getElementById('actionBtn');
-            btn.textContent = 'Verarbeitung...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                // Simple processing - can be customized per tool
-                document.getElementById('output').value = input.toUpperCase();
-                btn.textContent = 'Verarbeiten';
-                btn.disabled = false;
-            }, 500);
+        function updateResolution() {
+            document.getElementById('screenWidth').textContent = screen.width;
+            document.getElementById('screenHeight').textContent = screen.height;
+            document.getElementById('windowWidth').textContent = window.innerWidth;
+            document.getElementById('windowHeight').textContent = window.innerHeight;
+            document.getElementById('pixelRatio').textContent = window.devicePixelRatio.toFixed(2);
+            document.getElementById('colorDepth').textContent = screen.colorDepth;
         }
-        
-        function copyOutput() {
-            navigator.clipboard.writeText(document.getElementById('output').value);
-        }
+        updateResolution();
+        window.addEventListener('resize', updateResolution);
     </script>
             </div>
         </div>

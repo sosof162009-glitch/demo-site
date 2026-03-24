@@ -331,45 +331,44 @@ function initSpeedTest() {
                     <p class="text-gray-600 dark:text-gray-400">Converts binary code back to readable plain text characters.</p>
                 </div>
                 
-                <!-- Text Input -->
+                
+                <!-- Binary Input -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Texto de entrada</label>
-                    <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Ingrese texto aquí..."></textarea>
+                    <label class="block text-sm font-medium mb-2">Enter Binary</label>
+                    <textarea id="binaryInput" rows="4" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-xs" placeholder="01001000 01101001"></textarea>
                 </div>
 
-                <!-- Action Button -->
-                <button onclick="processText()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
-                    Procesar
+                <button onclick="convertToText()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6">
+                    Convert to Text
                 </button>
 
-                <!-- Output -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Texto de salida</label>
-                    <textarea id="output" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
+                    <label class="block text-sm font-medium mb-2">Result</label>
+                    <textarea id="textOutput" rows="4" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
                 </div>
 
-                <button onclick="copyOutput()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
-                    Copiar
+                <button onclick="copyResult()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                    Copy
                 </button>
 
     <script>
-        function processText() {
-            const input = document.getElementById('input').value;
-            const btn = document.getElementById('actionBtn');
-            btn.textContent = 'Procesando...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                // Simple processing - can be customized per tool
-                document.getElementById('output').value = input.toUpperCase();
-                btn.textContent = 'Procesar';
-                btn.disabled = false;
-            }, 500);
+        function convertToText() {
+            const input = document.getElementById('binaryInput').value.replace(/\s/g, '');
+            const output = document.getElementById('textOutput');
+            let text = '';
+            for (let i = 0; i < input.length; i += 8) {
+                const byte = input.substr(i, 8);
+                text += String.fromCharCode(parseInt(byte, 2));
+            }
+            output.value = text;
         }
-        
-        function copyOutput() {
-            navigator.clipboard.writeText(document.getElementById('output').value);
+        function copyResult() {
+            const output = document.getElementById('textOutput');
+            output.select();
+            document.execCommand('copy');
+            alert('Copied!');
         }
+        document.getElementById('binaryInput').addEventListener('input', convertToText);
     </script>
             </div>
         </div>

@@ -331,45 +331,48 @@ function initSpeedTest() {
                     <p class="text-gray-600 dark:text-gray-400">Displays browser name, version, OS, device type, and user agent string.</p>
                 </div>
                 
-                <!-- Text Input -->
-                <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Texte d'entrée</label>
-                    <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Entrez le texte ici..."></textarea>
+                
+                <div id="browserInfo" class="space-y-3 mb-6">
+                    <div class="flex justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <span class="text-gray-600 dark:text-gray-400">Browser</span>
+                        <span class="font-medium" id="browserName">--</span>
+                    </div>
+                    <div class="flex justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <span class="text-gray-600 dark:text-gray-400">Language</span>
+                        <span class="font-medium" id="browserLang">--</span>
+                    </div>
+                    <div class="flex justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <span class="text-gray-600 dark:text-gray-400">Platform</span>
+                        <span class="font-medium" id="platform">--</span>
+                    </div>
+                    <div class="flex justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <span class="text-gray-600 dark:text-gray-400">Online</span>
+                        <span class="font-medium" id="onlineStatus">--</span>
+                    </div>
+                    <div class="flex justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <span class="text-gray-600 dark:text-gray-400">Cookies</span>
+                        <span class="font-medium" id="cookiesEnabled">--</span>
+                    </div>
+                    <div class="flex justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <span class="text-gray-600 dark:text-gray-400">Touch Support</span>
+                        <span class="font-medium" id="touchSupport">--</span>
+                    </div>
                 </div>
 
-                <!-- Action Button -->
-                <button onclick="processText()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
-                    Traiter
-                </button>
-
-                <!-- Output -->
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Texte de sortie</label>
-                    <textarea id="output" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
-                </div>
-
-                <button onclick="copyOutput()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
-                    Copier
+                <button onclick="detectBrowser()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all">
+                    Refresh
                 </button>
 
     <script>
-        function processText() {
-            const input = document.getElementById('input').value;
-            const btn = document.getElementById('actionBtn');
-            btn.textContent = 'Traitement...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                // Simple processing - can be customized per tool
-                document.getElementById('output').value = input.toUpperCase();
-                btn.textContent = 'Traiter';
-                btn.disabled = false;
-            }, 500);
+        function detectBrowser() {
+            document.getElementById('browserName').textContent = navigator.userAgent.split(')')[0] + ')';
+            document.getElementById('browserLang').textContent = navigator.language;
+            document.getElementById('platform').textContent = navigator.platform;
+            document.getElementById('onlineStatus').textContent = navigator.onLine ? '✅' : '❌';
+            document.getElementById('cookiesEnabled').textContent = navigator.cookieEnabled ? '✅' : '❌';
+            document.getElementById('touchSupport').textContent = 'ontouchstart' in window ? '✅' : '❌';
         }
-        
-        function copyOutput() {
-            navigator.clipboard.writeText(document.getElementById('output').value);
-        }
+        detectBrowser();
     </script>
             </div>
         </div>
