@@ -45,9 +45,16 @@ TAILWIND_TO_CSS = {
     "text-gray-900": "t-text-primary",
     "text-white": "t-text-primary",
     
-    # Layout - Containers
+    # Layout - Containers  
     "container": "t-container",
-    "mx-auto": "",
+    "mx-auto": "t-container",
+    "max-w-4xl": "t-container-sm",
+    "max-w-5xl": "t-container-md", 
+    "max-w-6xl": "t-container-lg",
+    "max-w-7xl": "t-container",
+    "px-4": "",
+    "sm:px-6": "",
+    "lg:px-8": "",
     
     # Display
     "block": "t-block",
@@ -162,7 +169,7 @@ CLASSES_TO_REMOVE = [
     "bg-gradient-to-r", "bg-gradient-to-br", "from-indigo-500",
     "to-purple-600", "via-purple-500", "to-pink-500",
     "bg-clip-text", "text-transparent", "from-white/20",
-    "bg-gray-700", "dark:bg-gray-700", "dark:bg-gray-800",
+    "bg-gray-700", "dark:bg-gray-600", "dark:bg-gray-700", "dark:bg-gray-800",
     "text-gray-900", "dark:text-gray-100", "dark:text-gray-300",
     "dark:text-gray-400", "dark:text-white", "text-gray-500",
     "dark:border-gray-700", "dark:border-gray-600",
@@ -173,27 +180,29 @@ CLASSES_TO_REMOVE = [
     "text-emerald-600", "dark:text-emerald-400",
     "h-16", "min-h-screen", "h-5", "w-5", "w-16",
     "transform", "translate-y-0", "duration-200", "ease-in-out",
-    "max-w-7xl", "max-w-6xl", "max-w-5xl", "max-w-4xl",
-    "px-4", "sm:px-6", "lg:px-8", "py-12", "py-8",
     "bg-gray-50", "bg-gray-100",
+    # Dark mode colors with opacity
+    "dark:bg-blue-900/30", "dark:bg-red-900/30", "dark:bg-green-900/30",
+    "dark:bg-purple-900/30", "dark:bg-pink-900/30", "dark:hover:bg-red-900/50",
+    "dark:text-amber-400", "dark:text-red-400",
+    # Old hover colors
+    "hover:border-blue-500", "hover:bg-gray-200", "hover:text-red-600",
+    "hover:text-red-500", "hover:bg-red-200", "hover:bg-green-600",
+    "hover:bg-blue-600", "hover:text-blue-500", "hover:shadow-blue-500/25",
+    "hover:border-red-400", "hover:text-pink-500",
 ]
 
-unmatched_classes = Counter()
-files_processed = 0
-classes_converted = 0
-classes_removed = 0
-
-def convert_classes(class_string):
+def convert_classes(class_string, unmatched_counter):
     """Convert Tailwind classes to CSS classes"""
-    global classes_converted, classes_removed
-    
     classes = class_string.split()
     new_classes = []
+    converted = 0
+    removed = 0
     
     for cls in classes:
         # Skip classes that should be removed
         if cls in CLASSES_TO_REMOVE:
-            classes_removed += 1
+            removed += 1
             continue
         
         # Check for responsive prefixes
@@ -203,9 +212,9 @@ def convert_classes(class_string):
                 mapped = TAILWIND_TO_CSS[base_cls]
                 if mapped:
                     new_classes.append(mapped)
-                    classes_converted += 1
+                    converted += 1
                 else:
-                    classes_removed += 1
+                    removed += 1
                 continue
         
         # Map the class
@@ -213,33 +222,30 @@ def convert_classes(class_string):
             mapped = TAILWIND_TO_CSS[cls]
             if mapped:
                 new_classes.append(mapped)
-                classes_converted += 1
+                converted += 1
             else:
-                classes_removed += 1
+                removed += 1
         else:
             # Keep custom classes (not Tailwind)
             if not cls.startswith(('hover:', 'focus:', 'active:', 'dark:')):
                 new_classes.append(cls)
             else:
-                classes_removed += 1
-                unmatched_classes[cls] += 1
+                removed += 1
+                unmatched_counter[cls] += 1
     
-    return " ".join(new_classes) if new_classes else ""
+    return " ".join(new_classes) if new_classes else "", converted, removed
 
 
-def process_html_file(filepath):
+def process_html_file(filepath, unmatched_counter):
     """Process a single HTML file"""
-    global files_processed
     
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        original_content = content
-        
         # Remove Tailwind CDN
         content = re.sub(r'<script src="https://cdn\.tailwindcss\.com"></script>\n?', '', content)
-        content = re.sub(r'<script>[^<]*tailwind\.config[^<]*</script>\n?', '', content, flags=re.DOTALL)
+        content = re.sub(r'<script>[^\u003c]*tailwind\.config[^\u003c]*</script>\n?', '', content, flags=re.DOTALL)
         
         # Add local CSS link if not present
         if 'styles.css' not in content:
@@ -250,16 +256,22 @@ def process_html_file(filepath):
             content = re.sub(r'(</head>)', css_link + '\n\1', content)
         
         # Remove dark mode toggle
-        content = re.sub(r'<button[^>]*onclick="document\.documentElement\.classList\.toggle\(\'dark\'\)[^"]*"[^>]*>[^<]*</button>\n?', '', content, flags=re.IGNORECASE)
-        content = re.sub(r'<button[^>]*>🌙</button>\n?', '', content)
+        content = re.sub(r'<button[^\u003e]*onclick="document\.documentElement\.classList\.toggle\(\'dark\'\)[^"]*"[^\u003e]*>[^\u003c]*</button>\n?', '', content, flags=re.IGNORECASE)
+        content = re.sub(r'<button[^\u003e]*>🌙</button>\n?', '', content)
         
         # Remove dark class from html
-        content = re.sub(r'<html([^>]*)class="dark"', r'<html\1', content)
+        content = re.sub(r'<html([^\u003e]*)class="dark"', r'<html\1', content)
         
         # Convert class attributes
+        total_converted = 0
+        total_removed = 0
+        
         def replace_classes(match):
+            nonlocal total_converted, total_removed
             class_content = match.group(1)
-            new_classes = convert_classes(class_content)
+            new_classes, c, r = convert_classes(class_content, unmatched_counter)
+            total_converted += c
+            total_removed += r
             if new_classes:
                 return f' class="{new_classes}"'
             return ''
@@ -272,16 +284,20 @@ def process_html_file(filepath):
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
         
-        files_processed += 1
-        return True
+        return True, total_converted, total_removed
         
     except Exception as e:
         print(f"❌ Error processing {filepath}: {e}")
-        return False
+        return False, 0, 0
 
 
 def main():
     """Main function to process all HTML files"""
+    
+    unmatched_classes = Counter()
+    files_processed = 0
+    total_converted = 0
+    total_removed = 0
     
     languages = ['en', 'ar', 'fr', 'es', 'de']
     
@@ -296,7 +312,11 @@ def main():
             
             html_file = tool_dir / 'index.html'
             if html_file.exists():
-                process_html_file(html_file)
+                success, c, r = process_html_file(html_file, unmatched_classes)
+                if success:
+                    files_processed += 1
+                    total_converted += c
+                    total_removed += r
                 
                 if files_processed % 100 == 0:
                     print(f"Processed {files_processed} files...")
@@ -304,8 +324,8 @@ def main():
     # Save report
     report = {
         "files_processed": files_processed,
-        "classes_converted": classes_converted,
-        "classes_removed": classes_removed,
+        "classes_converted": total_converted,
+        "classes_removed": total_removed,
         "unmatched_classes": dict(unmatched_classes.most_common(50))
     }
     
@@ -317,8 +337,8 @@ def main():
     print("📊 Conversion Summary")
     print("="*60)
     print(f"Files processed: {files_processed}")
-    print(f"Classes converted: {classes_converted}")
-    print(f"Classes removed: {classes_removed}")
+    print(f"Classes converted: {total_converted}")
+    print(f"Classes removed: {total_removed}")
     print(f"Unmatched classes: {len(unmatched_classes)}")
     print("="*60)
     

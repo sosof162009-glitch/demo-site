@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SVG to JPG Converter - 205-Tools</title>
     <meta name="description" content="Renders SVG vector graphics and exports to JPG format in browser.">
-        <script>
+    
+    <script>
     // Image Converter Logic Template
 // This will be embedded in each image converter tool
 
@@ -231,11 +232,14 @@ function initImageConverter(inputFormat, outputFormat) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-
-<body class="t-page-wrapper">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Startseite","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/de/"},{"@type":"ListItem","position":2,"name":"SVG to JPG Converter","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/de/SVG to JPG Converter/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use svg-to-jpg","description":"How to use SVG to JPG Converter","step":[{"@type":"HowToStep","position":1,"name":"Open the tool","text":"Navigate to the tool page in your browser","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/svg-to-jpg/"},{"@type":"HowToStep","position":2,"name":"Enter your input","text":"Type or paste your data into the input field","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/svg-to-jpg/"},{"@type":"HowToStep","position":3,"name":"Process the data","text":"Click the action button to process your input","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/svg-to-jpg/"},{"@type":"HowToStep","position":4,"name":"Get results","text":"Copy or download your processed output","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/svg-to-jpg/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
+</head>
+<body>
     <!-- Header -->
-    <header class="t-shadow-sm t-site-header">
-        <div>
+    <header class="card t-shadow-sm t-site-header">
+        <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/de/" class="t-text-2xl t-font-bold from-blue-500">
                     205-Tools
@@ -253,24 +257,24 @@ function initImageConverter(inputFormat, outputFormat) {
     </header>
 
     <!-- Hero -->
-    <section class="from-blue-600 via-purple-600 t-text-primary">
-        <div class="t-text-center">
-            <span class="t-inline-block t-py-xs t-rounded-full t-text-sm t-mb-md backdrop-blur-sm">
+    <section class="from-blue-600 via-purple-600 t-text-primary t-py-xl">
+        <div class="t-container-md t-container t-px-md t-text-center">
+            <span class="t-inline-block t-px-md t-py-xs t-rounded-full t-text-sm t-mb-md backdrop-blur-sm">
                 🎨 Images
             </span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">SVG to JPG Converter</h1>
-            <p class="t-text-xl max-w-2xl">Renders SVG vector graphics and exports to JPG format in browser.</p>
+            <p class="t-text-xl max-w-2xl t-container">Renders SVG vector graphics and exports to JPG format in browser.</p>
         </div>
     </section>
 
     <!-- Main Tool Interface -->
-    <section>
-        <div>
+    <section class="t-py-lg">
+        <div class="t-container-lg t-container t-px-md">
             
             <!-- Step 1: Upload -->
-            <div id="uploadStep" class="t-rounded-xl t-shadow-lg t-p-xl t-mb-lg">
+            <div id="uploadStep" class="card t-rounded-xl t-shadow-lg t-p-xl t-mb-lg">
                 <div class="upload-zone t-rounded-xl p-12 t-text-center cursor-pointer" id="dropZone">
-                    <div class="w-20 h-20 t-mb-lg bg-blue-100 t-rounded-xl t-flex t-items-center t-justify-center">
+                    <div class="w-20 h-20 t-container t-mb-lg bg-blue-100 t-rounded-xl t-flex t-items-center t-justify-center">
                         <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
@@ -287,7 +291,7 @@ function initImageConverter(inputFormat, outputFormat) {
             <!-- Step 2: Preview & Controls -->
             <div id="previewStep" class="t-hidden">
                 <!-- Preview Area -->
-                <div class="t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                <div class="card t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
                     <div class="t-flex t-items-center t-justify-between t-mb-md">
                         <h3 class="t-text-lg t-font-semibold">Preview</h3>
                         <button onclick="resetTool()" class="t-text-sm text-red-500">
@@ -295,7 +299,7 @@ function initImageConverter(inputFormat, outputFormat) {
                         </button>
                     </div>
                     <div class="preview-container t-p-md">
-                        <img id="imagePreview" class="image-preview" src="" alt="Preview">
+                        <img id="imagePreview" class="image-preview t-container" src="" alt="Preview">
                     </div>
                     <div class="t-mt-md t-flex t-items-center t-justify-between t-text-sm">
                         <span id="fileInfo">filename.jpg • 2.5 MB</span>
@@ -304,7 +308,7 @@ function initImageConverter(inputFormat, outputFormat) {
                 </div>
 
                 <!-- Controls -->
-                <div class="t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                <div class="card t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
                     <h3 class="t-text-lg t-font-semibold t-mb-md">Conversion Settings</h3>
                     
                     <!-- Output Format -->
@@ -312,9 +316,9 @@ function initImageConverter(inputFormat, outputFormat) {
                         <label class="t-block t-text-sm t-font-medium t-mb-sm">Output Format</label>
                         <div class="t-flex flex-wrap t-gap-sm" id="formatButtons">
                             
-    <button class="format-btn py-2 border-2 t-rounded t-font-medium t-transition" data-format="png">PNG</button>
-    <button class="format-btn py-2 border-2 t-rounded t-font-medium t-transition" data-format="jpg">JPG</button>
-    <button class="format-btn py-2 border-2 t-rounded t-font-medium t-transition" data-format="webp">WebP</button>
+    <button class="format-btn t-px-md py-2 border-2 t-rounded t-font-medium t-transition" data-format="png">PNG</button>
+    <button class="format-btn t-px-md py-2 border-2 t-rounded t-font-medium t-transition" data-format="jpg">JPG</button>
+    <button class="format-btn t-px-md py-2 border-2 t-rounded t-font-medium t-transition" data-format="webp">WebP</button>
   
                         </div>
                     </div>
@@ -356,8 +360,8 @@ function initImageConverter(inputFormat, outputFormat) {
 
             <!-- Step 3: Result -->
             <div id="resultStep" class="t-hidden">
-                <div class="t-rounded-xl t-shadow-lg t-p-xl t-text-center">
-                    <div class="t-mb-md bg-green-100 t-rounded-full t-flex t-items-center t-justify-center">
+                <div class="card t-rounded-xl t-shadow-lg t-p-xl t-text-center">
+                    <div class="t-container t-mb-md bg-green-100 t-rounded-full t-flex t-items-center t-justify-center">
                         <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
@@ -383,22 +387,22 @@ function initImageConverter(inputFormat, outputFormat) {
     </section>
 
     <!-- How to Use -->
-    <section>
-        <div>
+    <section class="t-py-lg">
+        <div class="t-container-sm t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">How to Use</h2>
             <div class="t-grid md:grid-cols-3 gap-6">
                 <div class="t-text-center">
-                    <div class="w-12 h-12 t-mb-md bg-blue-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">1</div>
+                    <div class="w-12 h-12 t-container t-mb-md bg-blue-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">1</div>
                     <h3 class="t-font-semibold t-mb-sm">Upload</h3>
                     <p class="t-text-sm">Select your image file</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="w-12 h-12 t-mb-md bg-purple-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">2</div>
+                    <div class="w-12 h-12 t-container t-mb-md bg-purple-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">2</div>
                     <h3 class="t-font-semibold t-mb-sm">Adjust</h3>
                     <p class="t-text-sm">Set quality and output format</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="w-12 h-12 t-mb-md bg-pink-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">3</div>
+                    <div class="w-12 h-12 t-container t-mb-md bg-pink-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">3</div>
                     <h3 class="t-font-semibold t-mb-sm">Download</h3>
                     <p class="t-text-sm">Get your converted image</p>
                 </div>
@@ -409,7 +413,7 @@ function initImageConverter(inputFormat, outputFormat) {
     <script>
         // Theme handling
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
+            ;
             document.getElementById('theme-icon').textContent = '☀️';
         }
         

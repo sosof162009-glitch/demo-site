@@ -500,6 +500,44 @@ select:focus {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   State Classes (Error, Success, Warning, Info)
+   ═══════════════════════════════════════════════════════════════ */
+.t-state-error {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.t-state-success {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.t-state-warning {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.t-state-info {
+  background: rgba(79, 142, 247, 0.12);
+  border-color: rgba(79, 142, 247, 0.3);
+}
+
+.t-hover-danger:hover {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.t-hover-accent:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.t-hover-success:hover {
+  border-color: var(--success);
+  color: var(--success);
+}
+
+/* ═══════════════════════════════════════════════════════════════
    Print Styles
    ═══════════════════════════════════════════════════════════════ */
 @media print {

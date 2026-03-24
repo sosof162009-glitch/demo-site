@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Schema Validator - 205-Outils</title>
     <meta name="description" content="Validates JSON data against a JSON Schema definition in browser.">
-        <script>
+    
+    <script>
     // Code Editor Logic
 function initCodeEditor(language) {
     const codeEditor = document.getElementById('codeEditor');
@@ -192,10 +193,13 @@ function initCodeEditor(language) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-
-<body class="t-page-wrapper">
-    <header class="t-shadow-sm t-site-header">
-        <div>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/fr/"},{"@type":"ListItem","position":2,"name":"JSON Schema Validator - 205-Outils","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/fr/JSON Schema Validator - 205-Outils/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use json-schema-validator","description":"How to use JSON Schema Validator - 205-Outils","step":[{"@type":"HowToStep","position":1,"name":"Open the tool","text":"Navigate to the tool page in your browser","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/json-schema-validator/"},{"@type":"HowToStep","position":2,"name":"Enter your input","text":"Type or paste your data into the input field","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/json-schema-validator/"},{"@type":"HowToStep","position":3,"name":"Process the data","text":"Click the action button to process your input","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/json-schema-validator/"},{"@type":"HowToStep","position":4,"name":"Get results","text":"Copy or download your processed output","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/json-schema-validator/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
+</head>
+<body>
+    <header class="card t-shadow-sm t-site-header">
+        <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/fr/" class="t-flex t-items-center t-space-x-sm">
                     <span class="t-text-2xl t-font-bold">205-Outils</span>
@@ -203,21 +207,22 @@ function initCodeEditor(language) {
                 <div class="t-hidden md:flex t-items-center t-space-x-lg">
                     <a href="/fr/" class="t-text-muted">Accueil</a>
                 </div>
-                            </div>
+                
+            </div>
         </div>
     </header>
 
     <section class="t-text-primary py-16">
-        <div class="t-text-center">
+        <div class="t-container-sm t-container t-px-md t-text-center">
             <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">✅ Développeurs</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">JSON Schema Validator</h1>
             <p class="t-text-xl">Gratuit • Rapide • Sécurisé</p>
         </div>
     </section>
 
-    <section>
-        <div>
-            <div class="t-rounded-xl t-shadow-lg t-p-xl">
+    <section class="t-py-xl">
+        <div class="t-container-sm t-container t-px-md">
+            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
                 <div class="t-text-center t-mb-xl">
                     <div class="t-text-6xl t-mb-md">✅</div>
                     <p class="t-text-muted">Validates JSON data against a JSON Schema definition in browser.</p>
@@ -278,22 +283,22 @@ function initCodeEditor(language) {
         </div>
     </section>
 
-    <section>
-        <div>
+    <section class="t-py-xl">
+        <div class="t-container-md t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">Comment utiliser</h2>
             <div class="t-grid md:grid-cols-3 t-gap-lg">
                 <div class="t-text-center">
-                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-mb-md">1</div>
+                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">1</div>
                     <h3 class="t-font-semibold t-mb-sm">Choisissez votre fichier</h3>
                     <p class="t-text-muted">Entrez les données requises</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-mb-md">2</div>
+                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">2</div>
                     <h3 class="t-font-semibold t-mb-sm">Attendez le traitement</h3>
                     <p class="t-text-muted">Traitement...</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-mb-md">3</div>
+                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">3</div>
                     <h3 class="t-font-semibold t-mb-sm">Récupérez le résultat</h3>
                     <p class="t-text-muted">Obtenez le résultat instantanément</p>
                 </div>
@@ -301,8 +306,8 @@ function initCodeEditor(language) {
         </div>
     </section>
 
-    <section>
-        <div>
+    <section class="t-py-xl">
+        <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">Pourquoi utiliser</h2>
             <div class="t-grid t-grid-md-4 gap-6">
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">🔒</div><h3 class="t-font-semibold t-mb-sm">Sécurisé</h3></div>
@@ -313,31 +318,31 @@ function initCodeEditor(language) {
         </div>
     </section>
 
-    <section>
-        <div>
+    <section class="t-py-xl">
+        <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">Outils similaires</h2>
             <div class="t-grid t-grid-md-2 t-gap-md">
-            <a href="/fr/json-formatter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/fr/json-formatter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">📋</span>
                 <span class="t-font-medium">JSON Formatter & Validator</span>
             </a>
-            <a href="/fr/json-minifier/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/fr/json-minifier/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">🗜️</span>
                 <span class="t-font-medium">JSON Minifier</span>
             </a>
-            <a href="/fr/json-to-csv/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/fr/json-to-csv/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">📊</span>
                 <span class="t-font-medium">JSON to CSV Converter</span>
             </a>
-            <a href="/fr/json-to-xml/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/fr/json-to-xml/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">📄</span>
                 <span class="t-font-medium">JSON to XML Converter</span>
             </a></div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 t-text-primary">
-        <div class="t-text-center">
+    <footer class="bg-gray-900 t-text-primary t-py-lg">
+        <div class="t-container t-container t-px-md t-text-center">
             <p class="t-text-muted-light">© 2025 205-Outils - Gratuit</p>
         </div>
     </footer>

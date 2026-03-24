@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Average Calculator - 205-Herramientas</title>
     <meta name="description" content="Calculates mean, median, mode, and range from a set of numbers.">
-        <script>
+    
+    <script>
       function calculate() {
         const nums = document.getElementById('numbers').value.split(/[,,\n]+/).map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
         if (nums.length === 0) return;
@@ -19,22 +20,22 @@
         </div>
     </section>
 
-    <section>
-        <div>
+    <section class="t-py-xl">
+        <div class="t-container-md t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">Cómo usar</h2>
             <div class="t-grid md:grid-cols-3 t-gap-lg">
                 <div class="t-text-center">
-                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-mb-md">1</div>
+                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">1</div>
                     <h3 class="t-font-semibold t-mb-sm">Elige tu archivo</h3>
                     <p class="t-text-muted">Ingrese los datos requeridos</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-mb-md">2</div>
+                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">2</div>
                     <h3 class="t-font-semibold t-mb-sm">Espera el procesamiento</h3>
                     <p class="t-text-muted">Procesando...</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-mb-md">3</div>
+                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">3</div>
                     <h3 class="t-font-semibold t-mb-sm">Obtén el resultado</h3>
                     <p class="t-text-muted">Obtenga el resultado instantáneamente</p>
                 </div>
@@ -42,8 +43,8 @@
         </div>
     </section>
 
-    <section>
-        <div>
+    <section class="t-py-xl">
+        <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">Por qué usar</h2>
             <div class="t-grid t-grid-md-4 gap-6">
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">🔒</div><h3 class="t-font-semibold t-mb-sm">Seguro</h3></div>
@@ -54,31 +55,31 @@
         </div>
     </section>
 
-    <section>
-        <div>
+    <section class="t-py-xl">
+        <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">Herramientas relacionadas</h2>
             <div class="t-grid t-grid-md-2 t-gap-md">
-            <a href="/es/binary-to-decimal/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/es/binary-to-decimal/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">🔢</span>
                 <span class="t-font-medium">Binary to Decimal</span>
             </a>
-            <a href="/es/decimal-to-binary/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/es/decimal-to-binary/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">🔢</span>
                 <span class="t-font-medium">Decimal to Binary</span>
             </a>
-            <a href="/es/hex-to-decimal/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/es/hex-to-decimal/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">🔢</span>
                 <span class="t-font-medium">Hex to Decimal</span>
             </a>
-            <a href="/es/decimal-to-hex/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/es/decimal-to-hex/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">🔢</span>
                 <span class="t-font-medium">Decimal to Hex</span>
             </a></div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 t-text-primary">
-        <div class="t-text-center">
+    <footer class="bg-gray-900 t-text-primary t-py-lg">
+        <div class="t-container t-container t-px-md t-text-center">
             <p class="t-text-muted-light">© 2025 205-Herramientas - Gratis</p>
         </div>
     </footer>

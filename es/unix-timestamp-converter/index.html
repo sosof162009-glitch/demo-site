@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unix Timestamp Converter - 205-Herramientas</title>
     <meta name="description" content="Converts Unix timestamps to human-readable dates and vice versa.">
-        <script>function useNow() { document.getElementById('timestamp').value = Math.floor(Date.now()/1000); }
+    
+    <script>function useNow() { document.getElementById('timestamp').value = Math.floor(Date.now()/1000); }
     function convert() {
       const ts = parseInt(document.getElementById('timestamp').value) * 1000;
       const d = new Date(ts);
@@ -16,22 +17,22 @@
         </div>
     </section>
 
-    <section>
-        <div>
+    <section class="t-py-xl">
+        <div class="t-container-md t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">Cómo usar</h2>
             <div class="t-grid md:grid-cols-3 t-gap-lg">
                 <div class="t-text-center">
-                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-mb-md">1</div>
+                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">1</div>
                     <h3 class="t-font-semibold t-mb-sm">Elige tu archivo</h3>
                     <p class="t-text-muted">Ingrese los datos requeridos</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-mb-md">2</div>
+                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">2</div>
                     <h3 class="t-font-semibold t-mb-sm">Espera el procesamiento</h3>
                     <p class="t-text-muted">Procesando...</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-mb-md">3</div>
+                    <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">3</div>
                     <h3 class="t-font-semibold t-mb-sm">Obtén el resultado</h3>
                     <p class="t-text-muted">Obtenga el resultado instantáneamente</p>
                 </div>
@@ -39,8 +40,8 @@
         </div>
     </section>
 
-    <section>
-        <div>
+    <section class="t-py-xl">
+        <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">Por qué usar</h2>
             <div class="t-grid t-grid-md-4 gap-6">
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">🔒</div><h3 class="t-font-semibold t-mb-sm">Seguro</h3></div>
@@ -51,31 +52,31 @@
         </div>
     </section>
 
-    <section>
-        <div>
+    <section class="t-py-xl">
+        <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">Herramientas relacionadas</h2>
             <div class="t-grid t-grid-md-2 t-gap-md">
-            <a href="/es/time-zone-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/es/time-zone-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">🌍</span>
                 <span class="t-font-medium">Time Zone Converter</span>
             </a>
-            <a href="/es/date-difference-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/es/date-difference-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">📅</span>
                 <span class="t-font-medium">Date Difference Calculator</span>
             </a>
-            <a href="/es/age-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/es/age-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">🎂</span>
                 <span class="t-font-medium">Age Calculator</span>
             </a>
-            <a href="/es/days-until-date/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-rounded-lg border t-hover-accent t-transition">
+            <a href="/es/days-until-date/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
                 <span class="t-text-2xl">📆</span>
                 <span class="t-font-medium">Days Until Date Counter</span>
             </a></div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 t-text-primary">
-        <div class="t-text-center">
+    <footer class="bg-gray-900 t-text-primary t-py-lg">
+        <div class="t-container t-container t-px-md t-text-center">
             <p class="t-text-muted-light">© 2025 205-Herramientas - Gratis</p>
         </div>
     </footer>

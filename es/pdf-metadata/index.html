@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Metadata Viewer - 205-Tools</title>
     <meta name="description" content="Displays PDF metadata including author, creation date, title, subject.">
-        <script>
+    
+    <script>
     // PDF Tool Logic
 function initPDFTool(toolType) {
     let files = [];
@@ -257,11 +258,14 @@ function initPDFTool(toolType) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-
-<body class="t-page-wrapper">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/es/"},{"@type":"ListItem","position":2,"name":"PDF Metadata Viewer","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/es/PDF Metadata Viewer/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use pdf-metadata","description":"How to use PDF Metadata Viewer","step":[{"@type":"HowToStep","position":1,"name":"Open the tool","text":"Navigate to the tool page in your browser","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/pdf-metadata/"},{"@type":"HowToStep","position":2,"name":"Enter your input","text":"Type or paste your data into the input field","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/pdf-metadata/"},{"@type":"HowToStep","position":3,"name":"Process the data","text":"Click the action button to process your input","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/pdf-metadata/"},{"@type":"HowToStep","position":4,"name":"Get results","text":"Copy or download your processed output","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/pdf-metadata/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
+</head>
+<body>
     <!-- Header -->
-    <header class="t-shadow-sm t-site-header">
-        <div>
+    <header class="card t-shadow-sm t-site-header">
+        <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/es/" class="t-text-2xl t-font-bold from-red-500 to-orange-500">
                     205-Tools
@@ -280,16 +284,16 @@ function initPDFTool(toolType) {
 
     <!-- Hero -->
     <section class="from-red-500 via-orange-500 to-amber-500 t-text-primary py-10">
-        <div class="t-text-center">
-            <span class="t-inline-block t-py-xs t-rounded-full t-text-sm t-mb-sm">📄 PDF</span>
+        <div class="t-container-md t-container t-px-md t-text-center">
+            <span class="t-inline-block t-px-md t-py-xs t-rounded-full t-text-sm t-mb-sm">📄 PDF</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-sm">PDF Metadata Viewer</h1>
-            <p class="t-text-lg max-w-2xl">Displays PDF metadata including author, creation date, title, subject.</p>
+            <p class="t-text-lg max-w-2xl t-container">Displays PDF metadata including author, creation date, title, subject.</p>
         </div>
     </section>
 
     <!-- Step Indicator -->
-    <section class="py-6 border-b">
-        <div>
+    <section class="py-6 card border-b">
+        <div class="t-container-sm t-container t-px-md">
             <div class="t-flex t-items-center t-justify-center">
                 <div class="step-indicator">
                     <div class="step-number active" id="step1-indicator">1</div>
@@ -310,13 +314,13 @@ function initPDFTool(toolType) {
     </section>
 
     <!-- Main Interface -->
-    <section>
-        <div>
+    <section class="t-py-lg">
+        <div class="t-container-md t-container t-px-md">
             
             <!-- STEP 1: Upload Files -->
-            <div id="step1" class="t-rounded-xl t-shadow-lg t-p-xl">
+            <div id="step1" class="card t-rounded-xl t-shadow-lg t-p-xl">
                 <div class="pdf-upload-zone t-rounded-xl p-12 t-text-center cursor-pointer" id="dropZone">
-                    <div class="w-20 h-20 t-mb-lg bg-red-100 t-rounded-xl t-flex t-items-center t-justify-center">
+                    <div class="w-20 h-20 t-container t-mb-lg bg-red-100 t-rounded-xl t-flex t-items-center t-justify-center">
                         <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                         </svg>
@@ -329,11 +333,11 @@ function initPDFTool(toolType) {
                     <input type="file" class="t-hidden" id="fileInput" accept=".pdf" >
                     
                     <div class="mt-6 t-flex t-justify-center t-gap-md">
-                        <button class="t-flex t-items-center t-gap-sm py-2 border t-rounded t-text-sm">
+                        <button class="t-flex t-items-center t-gap-sm t-px-md py-2 border t-rounded t-text-sm">
                             <svg viewBox="0 0 24 24" fill="#4285f4"><path d="M12 10.5v6.5h1.5v-6.5h2.25L12 6 8.25 10.5H10.5zM7.5 15v4.5h9V15H18v4.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 016 19.5V15h1.5z"/></svg>
                             Google Drive
                         </button>
-                        <button class="t-flex t-items-center t-gap-sm py-2 border t-rounded t-text-sm">
+                        <button class="t-flex t-items-center t-gap-sm t-px-md py-2 border t-rounded t-text-sm">
                             <svg viewBox="0 0 24 24" fill="#0061ff"><path d="M6 2l6 4-6 4-6-4 6-4zm12 0l6 4-6 4-6-4 6-4zM0 14l6 4 6-4-6-4-6 4zm18-4l6 4-6 4-6-4 6-4zM6 16.5l6 4 6-4v2l-6 4-6-4v-2z"/></svg>
                             Dropbox
                         </button>
@@ -343,7 +347,7 @@ function initPDFTool(toolType) {
 
             <!-- STEP 2: Organize & Options -->
             <div id="step2" class="t-hidden">
-                <div class="t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                <div class="card t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
                     <div class="t-flex t-items-center t-justify-between t-mb-md">
                         <h3 class="t-text-lg t-font-semibold">PDF Files (<span id="fileCount">0</span>)</h3>
                         <button onclick="addMoreFiles()" class="text-red-500 t-text-sm t-font-medium">
@@ -360,7 +364,7 @@ function initPDFTool(toolType) {
                 </div>
 
                 <!-- Options -->
-                <div class="t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                <div class="card t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
                     <h3 class="t-text-lg t-font-semibold t-mb-md">Options</h3>
                     
                     <div class="t-grid t-grid-md-2 t-gap-md">
@@ -380,8 +384,8 @@ function initPDFTool(toolType) {
 
             <!-- STEP 3: Processing & Result -->
             <div id="step3" class="t-hidden">
-                <div id="processingView" class="t-rounded-xl t-shadow-lg p-12 t-text-center">
-                    <div class="w-20 h-20 t-mb-lg relative">
+                <div id="processingView" class="card t-rounded-xl t-shadow-lg p-12 t-text-center">
+                    <div class="w-20 h-20 t-container t-mb-lg relative">
                         <div class="absolute inset-0 border-4 border-red-200 t-rounded-full"></div>
                         <div class="absolute inset-0 border-4 border-red-500 t-rounded-full border-t-transparent animate-spin"></div>
                         <svg class="w-8 h-8 text-red-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -392,8 +396,8 @@ function initPDFTool(toolType) {
                     <p>Please wait while we process your files</p>
                 </div>
 
-                <div id="resultView" class="t-hidden t-rounded-xl t-shadow-lg t-p-xl t-text-center">
-                    <div class="w-20 h-20 t-mb-lg bg-green-100 t-rounded-full t-flex t-items-center t-justify-center">
+                <div id="resultView" class="t-hidden card t-rounded-xl t-shadow-lg t-p-xl t-text-center">
+                    <div class="w-20 h-20 t-container t-mb-lg bg-green-100 t-rounded-full t-flex t-items-center t-justify-center">
                         <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
@@ -402,7 +406,7 @@ function initPDFTool(toolType) {
                     <h3 class="t-text-2xl t-font-bold t-mb-sm">Conversion Complete!</h3>
                     <p class="t-mb-lg">Your image has been successfully converted.</p>
                     
-                    <div class="t-rounded-lg t-p-md t-mb-lg max-w-sm">
+                    <div class="t-rounded-lg t-p-md t-mb-lg max-w-sm t-container">
                         <div class="t-flex t-items-center t-justify-between t-text-sm">
                             <span>Original:</span>
                             <span id="originalSize">--</span>

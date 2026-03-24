@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsApp Link Generator - 205-Tools</title>
     <meta name="description" content="Generate WhatsApp click-to-chat links with custom messages.">
-        <script>
+    
+    <script>
     // Special Tools Logic
 function initSpecialTool(type) {
     switch(type) {
@@ -61,7 +62,7 @@ function initWhatsAppGenerator() {
             <div class="t-p-md bg-green-50 t-rounded">
                 <p class="t-font-medium t-mb-sm">Your WhatsApp Link:</p>
                 <a href="${link}" target="_blank" class="text-green-600 break-all">${link}</a>
-                <button onclick="navigator.clipboard.writeText('${link}')" class="t-mt-sm py-2 bg-green-500 t-text-primary t-rounded-sm">Copy Link</button>
+                <button onclick="navigator.clipboard.writeText('${link}')" class="t-mt-sm t-px-md py-2 bg-green-500 t-text-primary t-rounded-sm">Copy Link</button>
             </div>
         `;
     };
@@ -300,29 +301,33 @@ function initSpeedTest() {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-
-<body class="t-page-wrapper">
-    <header class="t-shadow-sm t-site-header">
-        <div>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/"},{"@type":"ListItem","position":2,"name":"WhatsApp Link Generator","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/WhatsApp Link Generator/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use whatsapp-link-generator","description":"How to use WhatsApp Link Generator","step":[{"@type":"HowToStep","position":1,"name":"Open the tool","text":"Navigate to the tool page in your browser","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/whatsapp-link-generator/"},{"@type":"HowToStep","position":2,"name":"Enter your input","text":"Type or paste your data into the input field","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/whatsapp-link-generator/"},{"@type":"HowToStep","position":3,"name":"Process the data","text":"Click the action button to process your input","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/whatsapp-link-generator/"},{"@type":"HowToStep","position":4,"name":"Get results","text":"Copy or download your processed output","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/whatsapp-link-generator/"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
+</head>
+<body>
+    <header class="card t-shadow-sm t-site-header">
+        <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/en/" class="t-flex t-items-center t-space-x-sm">
                     <span class="t-text-2xl t-font-bold">205-Tools</span>
                 </a>
-                            </div>
+                
+            </div>
         </div>
     </header>
 
     <section class="t-text-primary py-16">
-        <div class="t-text-center">
+        <div class="t-container-sm t-container t-px-md t-text-center">
             <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">💬 Special</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">WhatsApp Link Generator</h1>
             <p class="t-text-xl">Create click-to-chat links for WhatsApp</p>
         </div>
     </section>
 
-    <section>
-        <div>
-            <div class="t-rounded-xl t-shadow-lg t-p-xl">
+    <section class="t-py-xl">
+        <div class="t-container-sm t-container t-px-md">
+            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
                 <div class="t-text-center t-mb-xl">
                     <div class="t-text-6xl t-mb-md">💬</div>
                     <p class="t-text-muted">Generate WhatsApp wa.me links with phone number and custom message.</p>
