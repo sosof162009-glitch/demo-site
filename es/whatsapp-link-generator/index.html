@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Enlaces WhatsApp - 205-Tools</title>
     <meta name="description" content="Crear enlaces de chat de WhatsApp directos">
-    
-    <script>
+        <script>
     // Special Tools Logic
 function initSpecialTool(type) {
     switch(type) {
@@ -59,10 +58,10 @@ function initWhatsAppGenerator() {
         
         const link = `https://wa.me/${phone}${message ? '?text=' + message : ''}`;
         resultDiv.innerHTML = `
-            <div class="p-4 bg-green-50 rounded-lg">
-                <p class="font-medium mb-2">Your WhatsApp Link:</p>
+            <div class="t-p-md bg-green-50 t-rounded">
+                <p class="t-font-medium t-mb-sm">Your WhatsApp Link:</p>
                 <a href="${link}" target="_blank" class="text-green-600 break-all">${link}</a>
-                <button onclick="navigator.clipboard.writeText('${link}')" class="mt-2 px-4 py-2 bg-green-500 text-white rounded">Copy Link</button>
+                <button onclick="navigator.clipboard.writeText('${link}')" class="t-mt-sm py-2 bg-green-500 t-text-primary t-rounded-sm">Copy Link</button>
             </div>
         `;
     };
@@ -206,13 +205,13 @@ function initScreenResolution() {
     
     function updateResolution() {
         display.innerHTML = `
-            <div class="grid grid-cols-2 gap-4">
-                <div class="p-4 bg-blue-50 rounded">Screen Width: ${window.screen.width}px</div>
-                <div class="p-4 bg-blue-50 rounded">Screen Height: ${window.screen.height}px</div>
-                <div class="p-4 bg-green-50 rounded">Window Width: ${window.innerWidth}px</div>
-                <div class="p-4 bg-green-50 rounded">Window Height: ${window.innerHeight}px</div>
-                <div class="p-4 bg-purple-50 rounded">Pixel Ratio: ${window.devicePixelRatio}</div>
-                <div class="p-4 bg-purple-50 rounded">Color Depth: ${window.screen.colorDepth}-bit</div>
+            <div class="t-grid t-grid-2 t-gap-md">
+                <div class="t-p-md bg-blue-50 t-rounded-sm">Screen Width: ${window.screen.width}px</div>
+                <div class="t-p-md bg-blue-50 t-rounded-sm">Screen Height: ${window.screen.height}px</div>
+                <div class="t-p-md bg-green-50 t-rounded-sm">Window Width: ${window.innerWidth}px</div>
+                <div class="t-p-md bg-green-50 t-rounded-sm">Window Height: ${window.innerHeight}px</div>
+                <div class="t-p-md bg-purple-50 t-rounded-sm">Pixel Ratio: ${window.devicePixelRatio}</div>
+                <div class="t-p-md bg-purple-50 t-rounded-sm">Color Depth: ${window.screen.colorDepth}-bit</div>
             </div>
         `;
     }
@@ -239,8 +238,8 @@ function initBrowserInfo() {
     let html = '<div class="space-y-2">';
     for (const [key, value] of Object.entries(info)) {
         html += `
-            <div class="flex justify-between p-3 bg-gray-50 rounded">
-                <span class="font-medium">${key}:</span>
+            <div class="t-flex t-justify-between p-3 t-rounded-sm">
+                <span class="t-font-medium">${key}:</span>
                 <span>${value}</span>
             </div>
         `;
@@ -273,9 +272,9 @@ function initSpeedTest() {
             const speedMbps = (speedBps / 1024 / 1024).toFixed(2);
             
             result.innerHTML = `
-                <div class="p-4 bg-green-50 rounded text-center">
-                    <p class="text-2xl font-bold text-green-600">${speedMbps} Mbps</p>
-                    <p class="text-sm text-gray-600">Download Speed</p>
+                <div class="t-p-md bg-green-50 t-rounded-sm t-text-center">
+                    <p class="t-text-2xl t-font-bold text-green-600">${speedMbps} Mbps</p>
+                    <p class="t-text-sm t-text-muted">Download Speed</p>
                 </div>
             `;
         } catch (err) {
@@ -297,68 +296,64 @@ function initSpeedTest() {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/es/"},{"@type":"ListItem","position":2,"name":"Generador de Enlaces WhatsApp","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/es/Generador de Enlaces WhatsApp/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use whatsapp-link-generator","description":"How to use Generador de Enlaces WhatsApp","step":[{"@type":"HowToStep","position":1,"name":"Open the tool","text":"Navigate to the tool page in your browser","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/whatsapp-link-generator/"},{"@type":"HowToStep","position":2,"name":"Enter your input","text":"Type or paste your data into the input field","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/whatsapp-link-generator/"},{"@type":"HowToStep","position":3,"name":"Process the data","text":"Click the action button to process your input","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/whatsapp-link-generator/"},{"@type":"HowToStep","position":4,"name":"Get results","text":"Copy or download your processed output","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/whatsapp-link-generator/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
-</head>
-<body class="  min-h-screen">
-    <header class="card shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="/es/" class="flex items-center space-x-2">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</span>
+
+<body class="t-page-wrapper">
+    <header class="t-shadow-sm t-site-header">
+        <div>
+            <div class="t-flex t-items-center t-justify-between">
+                <a href="/es/" class="t-flex t-items-center t-space-x-sm">
+                    <span class="t-text-2xl t-font-bold">205-Tools</span>
                 </a>
-                
-            </div>
+                            </div>
         </div>
     </header>
 
-    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">💬 Especial</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Generador de Enlaces WhatsApp</h1>
-            <p class="text-xl text-white/90">Crear enlaces de chat de WhatsApp</p>
+    <section class="t-text-primary py-16">
+        <div class="t-text-center">
+            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">💬 Especial</span>
+            <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">Generador de Enlaces WhatsApp</h1>
+            <p class="t-text-xl">Crear enlaces de chat de WhatsApp</p>
         </div>
     </section>
 
-    <section class="py-12">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="card rounded-2xl shadow-xl p-8">
-                <div class="text-center mb-8">
-                    <div class="text-6xl mb-4">💬</div>
-                    <p class="text-gray-600 dark:text-gray-400">Generar enlaces wa.me con número de teléfono y mensaje personalizado</p>
+    <section>
+        <div>
+            <div class="t-rounded-xl t-shadow-lg t-p-xl">
+                <div class="t-text-center t-mb-xl">
+                    <div class="t-text-6xl t-mb-md">💬</div>
+                    <p class="t-text-muted">Generar enlaces wa.me con número de teléfono y mensaje personalizado</p>
                 </div>
                 
                 <!-- Número de teléfono -->
-                <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Número de Teléfono (con código de país)</label>
-                    <input type="tel" id="phone" placeholder="ej: 34612345678" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700">
-                    <p class="text-xs text-gray-500 mt-1">Ingrese el número sin + o 00 (ej: 34612345678 para España)</p>
+                <div class="t-mb-lg">
+                    <label class="t-block t-text-sm t-font-medium t-mb-sm">Número de Teléfono (con código de país)</label>
+                    <input type="tel" id="phone" placeholder="ej: 34612345678" class="t-w-full p-3 t-rounded border">
+                    <p class="t-text-xs t-mt-xs">Ingrese el número sin + o 00 (ej: 34612345678 para España)</p>
                 </div>
 
                 <!-- Mensaje -->
-                <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Mensaje Personalizado (opcional)</label>
-                    <textarea id="message" rows="3" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700" placeholder="Ingrese un mensaje prellenado..."></textarea>
+                <div class="t-mb-lg">
+                    <label class="t-block t-text-sm t-font-medium t-mb-sm">Mensaje Personalizado (opcional)</label>
+                    <textarea id="message" rows="3" class="t-w-full p-3 t-rounded border" placeholder="Ingrese un mensaje prellenado..."></textarea>
                 </div>
 
                 <!-- Botón Generar -->
-                <button onclick="generateLink()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
+                <button onclick="generateLink()" class="t-w-full t-py-md t-text-primary t-rounded-lg t-font-semibold t-text-lg t-hover-shadow t-transition t-mb-xl">
                     Generar Enlace
                 </button>
 
                 <!-- Resultado -->
-                <div id="result" class="hidden">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 mb-6">
-                        <p class="text-sm text-gray-500 mb-2">Enlace Generado</p>
-                        <input type="text" id="waLink" readonly class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 text-sm font-mono">
+                <div id="result" class="t-hidden">
+                    <div class="t-rounded-lg t-p-lg t-mb-lg">
+                        <p class="t-text-sm t-mb-sm">Enlace Generado</p>
+                        <input type="text" id="waLink" readonly class="t-w-full p-3 t-rounded border t-text-sm t-font-mono">
                     </div>
                     
-                    <div class="flex gap-4">
-                        <button onclick="copyLink()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                    <div class="t-flex t-gap-md">
+                        <button onclick="copyLink()" class="flex-1 t-py-sm t-rounded-lg t-font-medium t-transition">
                             Copiar Enlace
                         </button>
-                        <a id="openLink" href="#" target="_blank" class="flex-1 py-3 bg-green-500 text-white rounded-xl font-medium text-center hover:bg-green-600 transition-all">
+                        <a id="openLink" href="#" target="_blank" class="flex-1 t-py-sm bg-green-500 t-text-primary t-rounded-lg t-font-medium t-text-center t-transition">
                             Abrir en WhatsApp
                         </a>
                     </div>

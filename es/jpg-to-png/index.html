@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JPG to PNG Converter - 205-Tools</title>
     <meta name="description" content="Converts JPG/JPEG images to PNG format using browser Canvas API. Supports transparency output.">
-    
-    <script>
+        <script>
     // Image Converter Logic Template
 // This will be embedded in each image converter tool
 
@@ -100,7 +99,7 @@ function initImageConverter(inputFormat, outputFormat) {
 
         const btn = document.querySelector('button[onclick="processImage()"]');
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
+        btn.innerHTML = '<svg class="animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
         btn.disabled = true;
 
         setTimeout(() => {
@@ -232,23 +231,20 @@ function initImageConverter(inputFormat, outputFormat) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/es/"},{"@type":"ListItem","position":2,"name":"JPG to PNG Converter","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/es/JPG to PNG Converter/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use jpg-to-png","description":"How to use JPG to PNG Converter","step":[{"@type":"HowToStep","position":1,"name":"Open the tool","text":"Navigate to the tool page in your browser","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/jpg-to-png/"},{"@type":"HowToStep","position":2,"name":"Enter your input","text":"Type or paste your data into the input field","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/jpg-to-png/"},{"@type":"HowToStep","position":3,"name":"Process the data","text":"Click the action button to process your input","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/jpg-to-png/"},{"@type":"HowToStep","position":4,"name":"Get results","text":"Copy or download your processed output","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/jpg-to-png/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
-</head>
-<body class="  min-h-screen">
+
+<body class="t-page-wrapper">
     <!-- Header -->
-    <header class="card shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="/es/" class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+    <header class="t-shadow-sm t-site-header">
+        <div>
+            <div class="t-flex t-items-center t-justify-between">
+                <a href="/es/" class="t-text-2xl t-font-bold from-blue-500">
                     205-Tools
                 </a>
-                <div class="flex items-center gap-4">
-                    <a href="/es/images/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500">
+                <div class="t-flex t-items-center t-gap-md">
+                    <a href="/es/images/" class="t-text-sm t-text-muted">
                         ← Images
                     </a>
-                    <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                    <button onclick="document.documentElement.classList.toggle('dark')" class="t-p-xs t-rounded t-transition-colors">
                         <span id="theme-icon">🌙</span>
                     </button>
                 </div>
@@ -257,91 +253,91 @@ function initImageConverter(inputFormat, outputFormat) {
     </header>
 
     <!-- Hero -->
-    <section class="bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 text-white py-12">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-4 backdrop-blur-sm">
+    <section class="from-blue-600 via-purple-600 t-text-primary">
+        <div class="t-text-center">
+            <span class="t-inline-block t-py-xs t-rounded-full t-text-sm t-mb-md backdrop-blur-sm">
                 📷 Images
             </span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">JPG to PNG Converter</h1>
-            <p class="text-xl text-white/90 max-w-2xl mx-auto">Converts JPG/JPEG images to PNG format using browser Canvas API. Supports transparency output.</p>
+            <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">JPG to PNG Converter</h1>
+            <p class="t-text-xl max-w-2xl">Converts JPG/JPEG images to PNG format using browser Canvas API. Supports transparency output.</p>
         </div>
     </section>
 
     <!-- Main Tool Interface -->
-    <section class="py-8">
-        <div class="max-w-6xl mx-auto px-4">
+    <section>
+        <div>
             
             <!-- Step 1: Upload -->
-            <div id="uploadStep" class="card rounded-2xl shadow-xl p-8 mb-6">
-                <div class="upload-zone rounded-2xl p-12 text-center cursor-pointer" id="dropZone">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center">
+            <div id="uploadStep" class="t-rounded-xl t-shadow-lg t-p-xl t-mb-lg">
+                <div class="upload-zone t-rounded-xl p-12 t-text-center cursor-pointer" id="dropZone">
+                    <div class="w-20 h-20 t-mb-lg bg-blue-100 t-rounded-xl t-flex t-items-center t-justify-center">
                         <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Upload your image</h3>
-                    <p class="text-gray-500 dark:text-gray-400 mb-4">Drag & drop your image here</p>
-                    <button class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-colors">
+                    <h3 class="t-text-xl t-font-semibold t-mb-sm">Upload your image</h3>
+                    <p class="t-mb-md">Drag & drop your image here</p>
+                    <button class="px-6 t-py-sm bg-blue-500 t-text-primary t-rounded-lg t-font-medium t-transition-colors">
                         Browse Files
                     </button>
-                    <input type="file" class="hidden" id="fileInput" accept=".jpg,image/jpg">
+                    <input type="file" class="t-hidden" id="fileInput" accept=".jpg,image/jpg">
                 </div>
             </div>
 
             <!-- Step 2: Preview & Controls -->
-            <div id="previewStep" class="hidden">
+            <div id="previewStep" class="t-hidden">
                 <!-- Preview Area -->
-                <div class="card rounded-2xl shadow-xl p-6 mb-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold">Preview</h3>
-                        <button onclick="resetTool()" class="text-sm text-red-500 hover:text-red-600">
+                <div class="t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                    <div class="t-flex t-items-center t-justify-between t-mb-md">
+                        <h3 class="t-text-lg t-font-semibold">Preview</h3>
+                        <button onclick="resetTool()" class="t-text-sm text-red-500">
                             Remove
                         </button>
                     </div>
-                    <div class="preview-container p-4">
-                        <img id="imagePreview" class="image-preview mx-auto" src="" alt="Preview">
+                    <div class="preview-container t-p-md">
+                        <img id="imagePreview" class="image-preview" src="" alt="Preview">
                     </div>
-                    <div class="mt-4 flex items-center justify-between text-sm text-gray-500">
+                    <div class="t-mt-md t-flex t-items-center t-justify-between t-text-sm">
                         <span id="fileInfo">filename.jpg • 2.5 MB</span>
                         <span id="dimensions">1920 × 1080 px</span>
                     </div>
                 </div>
 
                 <!-- Controls -->
-                <div class="card rounded-2xl shadow-xl p-6 mb-6">
-                    <h3 class="text-lg font-semibold mb-4">Conversion Settings</h3>
+                <div class="t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                    <h3 class="t-text-lg t-font-semibold t-mb-md">Conversion Settings</h3>
                     
                     <!-- Output Format -->
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-3">Output Format</label>
-                        <div class="flex flex-wrap gap-2" id="formatButtons">
+                    <div class="t-mb-lg">
+                        <label class="t-block t-text-sm t-font-medium t-mb-sm">Output Format</label>
+                        <div class="t-flex flex-wrap t-gap-sm" id="formatButtons">
                             
-    <button class="format-btn px-4 py-2 border-2 border-gray-200 dark:border-gray-600 rounded-lg font-medium transition-all hover:border-blue-500" data-format="png">PNG</button>
-    <button class="format-btn px-4 py-2 border-2 border-gray-200 dark:border-gray-600 rounded-lg font-medium transition-all hover:border-blue-500" data-format="jpg">JPG</button>
-    <button class="format-btn px-4 py-2 border-2 border-gray-200 dark:border-gray-600 rounded-lg font-medium transition-all hover:border-blue-500" data-format="webp">WebP</button>
+    <button class="format-btn py-2 border-2 t-rounded t-font-medium t-transition" data-format="png">PNG</button>
+    <button class="format-btn py-2 border-2 t-rounded t-font-medium t-transition" data-format="jpg">JPG</button>
+    <button class="format-btn py-2 border-2 t-rounded t-font-medium t-transition" data-format="webp">WebP</button>
   
                         </div>
                     </div>
 
                     <!-- Quality Slider -->
-                    <div class="mb-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="text-sm font-medium">Quality</label>
-                            <span id="qualityValue" class="text-sm text-blue-500 font-semibold">90%</span>
+                    <div class="t-mb-lg">
+                        <div class="t-flex t-items-center t-justify-between t-mb-sm">
+                            <label class="t-text-sm t-font-medium">Quality</label>
+                            <span id="qualityValue" class="t-text-sm text-blue-500 t-font-semibold">90%</span>
                         </div>
                         <input type="range" min="1" max="100" value="90" class="control-slider" id="qualitySlider">
-                        <div class="flex justify-between text-xs text-gray-400 mt-1">
+                        <div class="t-flex t-justify-between t-text-xs t-text-muted-light t-mt-xs">
                             <span>Low</span>
                             <span>High</span>
                         </div>
                     </div>
 
                     <!-- Additional Options -->
-                    <div class="grid md:grid-cols-2 gap-4">
+                    <div class="t-grid t-grid-md-2 t-gap-md">
                         
     <div>
-      <label class="flex items-center gap-2 cursor-pointer">
-        <input type="checkbox" id="maintainRatio" checked class="w-5 h-5 text-blue-500 rounded">
+      <label class="t-flex t-items-center t-gap-sm cursor-pointer">
+        <input type="checkbox" id="maintainRatio" checked class="text-blue-500 t-rounded-sm">
         <span>Maintain aspect ratio</span>
       </label>
     </div>
@@ -350,8 +346,8 @@ function initImageConverter(inputFormat, outputFormat) {
                 </div>
 
                 <!-- Action Button -->
-                <button onclick="processImage()" class="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-blue-500/25 transition-all flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button onclick="processImage()" class="t-w-full t-py-md from-blue-500 t-text-primary t-rounded-lg t-font-semibold t-text-lg t-hover-shadow t-transition t-flex t-items-center t-justify-center t-gap-sm">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                     </svg>
                     Convert
@@ -359,24 +355,24 @@ function initImageConverter(inputFormat, outputFormat) {
             </div>
 
             <!-- Step 3: Result -->
-            <div id="resultStep" class="hidden">
-                <div class="card rounded-2xl shadow-xl p-8 text-center">
-                    <div class="w-16 h-16 mx-auto mb-4 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+            <div id="resultStep" class="t-hidden">
+                <div class="t-rounded-xl t-shadow-lg t-p-xl t-text-center">
+                    <div class="t-mb-md bg-green-100 t-rounded-full t-flex t-items-center t-justify-center">
                         <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">Conversion Complete!</h3>
-                    <p class="text-gray-500 mb-6">Your image has been successfully converted.</p>
+                    <h3 class="t-text-2xl t-font-bold t-mb-sm">Conversion Complete!</h3>
+                    <p class="t-mb-lg">Your image has been successfully converted.</p>
                     
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a id="downloadLink" href="#" class="px-8 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-semibold transition-colors flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="t-flex t-flex-col sm:flex-row t-gap-md t-justify-center">
+                        <a id="downloadLink" href="#" class="px-8 t-py-sm bg-green-500 t-text-primary t-rounded-lg t-font-semibold t-transition-colors t-flex t-items-center t-justify-center t-gap-sm">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                             </svg>
                             Download
                         </a>
-                        <button onclick="resetTool()" class="px-8 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-xl font-medium transition-colors">
+                        <button onclick="resetTool()" class="px-8 t-py-sm t-rounded-lg t-font-medium t-transition-colors">
                             Convert Another
                         </button>
                     </div>
@@ -387,24 +383,24 @@ function initImageConverter(inputFormat, outputFormat) {
     </section>
 
     <!-- How to Use -->
-    <section class="py-8 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-8">How to Use</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="text-center">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-xl">1</div>
-                    <h3 class="font-semibold mb-2">Upload</h3>
-                    <p class="text-sm text-gray-500">Select your image file</p>
+    <section>
+        <div>
+            <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">How to Use</h2>
+            <div class="t-grid md:grid-cols-3 gap-6">
+                <div class="t-text-center">
+                    <div class="w-12 h-12 t-mb-md bg-blue-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">1</div>
+                    <h3 class="t-font-semibold t-mb-sm">Upload</h3>
+                    <p class="t-text-sm">Select your image file</p>
                 </div>
-                <div class="text-center">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-xl">2</div>
-                    <h3 class="font-semibold mb-2">Adjust</h3>
-                    <p class="text-sm text-gray-500">Set quality and output format</p>
+                <div class="t-text-center">
+                    <div class="w-12 h-12 t-mb-md bg-purple-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">2</div>
+                    <h3 class="t-font-semibold t-mb-sm">Adjust</h3>
+                    <p class="t-text-sm">Set quality and output format</p>
                 </div>
-                <div class="text-center">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-pink-100 dark:bg-pink-900/30 rounded-xl flex items-center justify-center text-xl">3</div>
-                    <h3 class="font-semibold mb-2">Download</h3>
-                    <p class="text-sm text-gray-500">Get your converted image</p>
+                <div class="t-text-center">
+                    <div class="w-12 h-12 t-mb-md bg-pink-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">3</div>
+                    <h3 class="t-font-semibold t-mb-sm">Download</h3>
+                    <p class="t-text-sm">Get your converted image</p>
                 </div>
             </div>
         </div>
@@ -413,7 +409,7 @@ function initImageConverter(inputFormat, outputFormat) {
     <script>
         // Theme handling
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            ;
+            document.documentElement.classList.add('dark');
             document.getElementById('theme-icon').textContent = '☀️';
         }
         
@@ -482,7 +478,7 @@ function initImageConverter(inputFormat, outputFormat) {
             // Show processing state
             const btn = document.querySelector('button[onclick="processImage()"]');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
+            btn.innerHTML = '<svg class="animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
             btn.disabled = true;
 
             // Simulate processing (replace with actual logic)

@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remove Extra Spaces - 205-Tools</title>
     <meta name="description" content="Removes extra whitespace and leading/trailing spaces from text.">
-    
-    <script>
+        <script>
     // Text Analyzer Logic
 function initTextAnalyzer() {
     const textInput = document.getElementById('textInput');
@@ -207,23 +206,20 @@ function initTextAnalyzer() {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/es/"},{"@type":"ListItem","position":2,"name":"Remove Extra Spaces","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/es/Remove Extra Spaces/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use remove-extra-spaces","description":"How to use Remove Extra Spaces","step":[{"@type":"HowToStep","position":1,"name":"Open the tool","text":"Navigate to the tool page in your browser","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/remove-extra-spaces/"},{"@type":"HowToStep","position":2,"name":"Enter your input","text":"Type or paste your data into the input field","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/remove-extra-spaces/"},{"@type":"HowToStep","position":3,"name":"Process the data","text":"Click the action button to process your input","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/remove-extra-spaces/"},{"@type":"HowToStep","position":4,"name":"Get results","text":"Copy or download your processed output","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/remove-extra-spaces/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
-</head>
-<body class="  min-h-screen">
+
+<body class="t-page-wrapper">
     <!-- Header -->
-    <header class="card shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="/es/" class="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
+    <header class="t-shadow-sm t-site-header">
+        <div>
+            <div class="t-flex t-items-center t-justify-between">
+                <a href="/es/" class="t-text-2xl t-font-bold from-emerald-500 to-cyan-500">
                     205-Tools
                 </a>
-                <div class="flex items-center gap-4">
-                    <a href="/es/text/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-500">
+                <div class="t-flex t-items-center t-gap-md">
+                    <a href="/es/text/" class="t-text-sm t-text-muted">
                         ← Text
                     </a>
-                    <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">
+                    <button onclick="document.documentElement.classList.toggle('dark')" class="t-p-xs t-rounded">
                         <span id="theme-icon">🌙</span>
                     </button>
                 </div>
@@ -232,31 +228,31 @@ function initTextAnalyzer() {
     </header>
 
     <!-- Hero -->
-    <section class="bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 text-white py-10">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-3">📝 Text</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-3">Remove Extra Spaces</h1>
-            <p class="text-lg text-white/90 max-w-2xl mx-auto">Removes extra whitespace and leading/trailing spaces from text.</p>
+    <section class="from-emerald-500 via-teal-500 to-cyan-500 t-text-primary py-10">
+        <div class="t-text-center">
+            <span class="t-inline-block t-py-xs t-rounded-full t-text-sm t-mb-sm">📝 Text</span>
+            <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-sm">Remove Extra Spaces</h1>
+            <p class="t-text-lg max-w-2xl">Removes extra whitespace and leading/trailing spaces from text.</p>
         </div>
     </section>
 
     <!-- Main Interface -->
-    <section class="py-8">
-        <div class="max-w-6xl mx-auto px-4">
+    <section>
+        <div>
             
             <!-- Editor Area -->
-            <div class="grid lg:grid-cols-3 gap-6">
+            <div class="t-grid lg:grid-cols-3 gap-6">
                 
                 <!-- Main Editor -->
                 <div class="lg:col-span-2">
                     <div class="editor-container">
-                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-600">
-                            <span class="text-sm font-medium text-gray-500">Enter your text</span>
-                            <div class="flex gap-2">
-                                <button onclick="pasteText()" class="text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                        <div class="t-flex t-items-center t-justify-between t-py-sm border-b">
+                            <span class="t-text-sm t-font-medium">Enter your text</span>
+                            <div class="t-flex t-gap-sm">
+                                <button onclick="pasteText()" class="t-text-sm px-3 t-py-xs t-rounded-sm t-transition-colors">
                                     📋 Paste
                                 </button>
-                                <button onclick="clearText()" class="text-sm px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors">
+                                <button onclick="clearText()" class="t-text-sm px-3 t-py-xs bg-red-100 text-red-600 t-rounded-sm t-transition-colors">
                                     🗑️ Clear
                                 </button>
                             </div>
@@ -265,12 +261,12 @@ function initTextAnalyzer() {
                         <textarea 
                             id="textInput" 
                             placeholder="Type or paste your text here..."
-                            class="w-full h-80 p-4 bg-transparent border-none resize-none focus:outline-none text-base leading-relaxed"
+                            class="t-w-full h-80 t-p-md bg-transparent border-none resize-none t-text-base leading-relaxed"
                         ></textarea>
                         
-                        <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-600 text-sm text-gray-500">
+                        <div class="t-flex t-items-center t-justify-between t-py-sm border-t t-text-sm">
                             <span id="lastUpdated">Ready</span>
-                            <button onclick="copyResult()" id="copyBtn" class="flex items-center gap-1 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-colors">
+                            <button onclick="copyResult()" id="copyBtn" class="t-flex t-items-center gap-1 px-3 t-py-xs bg-emerald-100 t-rounded-sm t-transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                                 </svg>
@@ -280,16 +276,16 @@ function initTextAnalyzer() {
                     </div>
 
                     <!-- Quick Actions -->
-                    <div class="mt-4 flex flex-wrap gap-3">
+                    <div class="t-mt-md t-flex flex-wrap gap-3">
                         
                     </div>
                 </div>
 
                 <!-- Stats Panel -->
                 <div class="lg:col-span-1">
-                    <div class="card rounded-2xl shadow-xl p-6 sticky top-24">
-                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="t-rounded-xl t-shadow-lg t-p-lg t-site-header top-24">
+                        <h3 class="t-text-lg t-font-semibold t-mb-md t-flex t-items-center t-gap-sm">
+                            <svg class="text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                             </svg>
                             Statistics
@@ -297,80 +293,80 @@ function initTextAnalyzer() {
                         
                         <div class="space-y-3">
                             <!-- Word Count -->
-                            <div class="stat-card p-4 rounded-xl">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600 dark:text-gray-300">Words</span>
-                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="stat-card t-p-md t-rounded-lg">
+                                <div class="t-flex t-items-center t-justify-between">
+                                    <span class="t-text-sm t-text-muted">Words</span>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="wordCount">0</p>
+                                <p class="t-text-3xl t-font-bold t-mt-xs" id="wordCount">0</p>
                             </div>
 
                             <!-- Character Count -->
-                            <div class="stat-card p-4 rounded-xl">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600 dark:text-gray-300">Characters</span>
-                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="stat-card t-p-md t-rounded-lg">
+                                <div class="t-flex t-items-center t-justify-between">
+                                    <span class="t-text-sm t-text-muted">Characters</span>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="charCount">0</p>
+                                <p class="t-text-3xl t-font-bold t-mt-xs" id="charCount">0</p>
                             </div>
 
                             <!-- Characters (no spaces) -->
-                            <div class="stat-card p-4 rounded-xl">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600 dark:text-gray-300">Without spaces</span>
-                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="stat-card t-p-md t-rounded-lg">
+                                <div class="t-flex t-items-center t-justify-between">
+                                    <span class="t-text-sm t-text-muted">Without spaces</span>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="charCountNoSpaces">0</p>
+                                <p class="t-text-3xl t-font-bold t-mt-xs" id="charCountNoSpaces">0</p>
                             </div>
 
                             <!-- Sentences -->
-                            <div class="stat-card p-4 rounded-xl">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600 dark:text-gray-300">Sentences</span>
-                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="stat-card t-p-md t-rounded-lg">
+                                <div class="t-flex t-items-center t-justify-between">
+                                    <span class="t-text-sm t-text-muted">Sentences</span>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="sentenceCount">0</p>
+                                <p class="t-text-3xl t-font-bold t-mt-xs" id="sentenceCount">0</p>
                             </div>
 
                             <!-- Paragraphs -->
-                            <div class="stat-card p-4 rounded-xl">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600 dark:text-gray-300">Paragraphs</span>
-                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="stat-card t-p-md t-rounded-lg">
+                                <div class="t-flex t-items-center t-justify-between">
+                                    <span class="t-text-sm t-text-muted">Paragraphs</span>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="paragraphCount">0</p>
+                                <p class="t-text-3xl t-font-bold t-mt-xs" id="paragraphCount">0</p>
                             </div>
 
                             <!-- Reading Time -->
-                            <div class="stat-card warning p-4 rounded-xl">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600 dark:text-gray-300">Reading time</span>
-                                    <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="stat-card warning t-p-md t-rounded-lg">
+                                <div class="t-flex t-items-center t-justify-between">
+                                    <span class="t-text-sm t-text-muted">Reading time</span>
+                                    <svg class="text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-1" id="readingTime">0s</p>
+                                <p class="t-text-3xl t-font-bold text-amber-600 t-mt-xs" id="readingTime">0s</p>
                             </div>
 
                             <!-- Speaking Time -->
-                            <div class="stat-card p-4 rounded-xl">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600 dark:text-gray-300">Speaking time</span>
-                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="stat-card t-p-md t-rounded-lg">
+                                <div class="t-flex t-items-center t-justify-between">
+                                    <span class="t-text-sm t-text-muted">Speaking time</span>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="speakingTime">0s</p>
+                                <p class="t-text-3xl t-font-bold t-mt-xs" id="speakingTime">0s</p>
                             </div>
 
                         </div>
@@ -382,8 +378,8 @@ function initTextAnalyzer() {
     </section>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-xl shadow-2xl hidden items-center gap-2 z-50">
-        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 t-py-sm bg-gray-900 t-text-primary t-rounded-lg shadow-2xl t-hidden t-items-center t-gap-sm">
+        <svg class="text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
         </svg>
         <span id="toastMessage">Copied!</span>

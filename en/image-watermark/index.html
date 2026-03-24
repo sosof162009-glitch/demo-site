@@ -5,67 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Watermark - 205-Tools</title>
     <meta name="description" content="Add watermark to images">
-    
-    
-<link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/"},{"@type":"ListItem","position":2,"name":"Image Watermark","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/Image Watermark/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use image-watermark","description":"How to use Image Watermark","step":[{"@type":"HowToStep","position":1,"name":"Open the tool","text":"Navigate to the tool page in your browser","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/image-watermark/"},{"@type":"HowToStep","position":2,"name":"Enter your input","text":"Type or paste your data into the input field","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/image-watermark/"},{"@type":"HowToStep","position":3,"name":"Process the data","text":"Click the action button to process your input","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/image-watermark/"},{"@type":"HowToStep","position":4,"name":"Get results","text":"Copy or download your processed output","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/image-watermark/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
-</head>
-<body class="  min-h-screen">
-    <header class="card shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="/en/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
-                
-            </div>
+
+<body class="t-page-wrapper">
+    <header class="t-shadow-sm t-site-header">
+        <div>
+            <div class="t-flex t-items-center t-justify-between">
+                <a href="/en/" class="t-text-2xl t-font-bold">205-Tools</a>
+                            </div>
         </div>
     </header>
 
-    <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">💧 Image</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Image Watermark</h1>
-            <p class="text-xl text-white/90">Add text watermark to images</p>
+    <section class="t-text-primary py-16">
+        <div class="t-text-center">
+            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">💧 Image</span>
+            <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">Image Watermark</h1>
+            <p class="t-text-xl">Add text watermark to images</p>
         </div>
     </section>
 
-    <section class="py-12">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="card rounded-2xl shadow-xl p-8">
-                <div id="uploadArea" class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center mb-8">
-                    <input type="file" id="fileInput" accept="image/*" class="hidden">
-                    <p class="text-lg mb-2">Drag & drop image here</p>
-                    <p class="text-sm text-gray-500">or</p>
-                    <button onclick="document.getElementById('fileInput').click()" class="mt-2 px-6 py-2 bg-indigo-500 text-white rounded-lg">Browse Files</button>
+    <section>
+        <div>
+            <div class="t-rounded-xl t-shadow-lg t-p-xl">
+                <div id="uploadArea" class="border-2 border-dashed t-rounded-lg t-p-xl t-text-center t-mb-xl">
+                    <input type="file" id="fileInput" accept="image/*" class="t-hidden">
+                    <p class="t-text-lg t-mb-sm">Drag & drop image here</p>
+                    <p class="t-text-sm">or</p>
+                    <button onclick="document.getElementById('fileInput').click()" class="t-mt-sm px-6 py-2 bg-indigo-500 t-text-primary t-rounded">Browse Files</button>
                 </div>
 
-                <div id="editor" class="hidden space-y-6">
+                <div id="editor" class="t-hidden space-y-6">
                     <div>
-                        <label class="block text-sm font-medium mb-2">Watermark Text</label>
-                        <input type="text" id="watermarkText" value="© My Website" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        <label class="t-block t-text-sm t-font-medium t-mb-sm">Watermark Text</label>
+                        <input type="text" id="watermarkText" value="© My Website" class="t-w-full p-3 t-rounded border">
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="t-grid t-grid-2 t-gap-md">
                         <div>
-                            <label class="block text-sm font-medium mb-2">Font Size</label>
-                            <input type="range" id="fontSize" min="12" max="120" value="48" class="w-full" oninput="document.getElementById('fontSizeVal').textContent = this.value + 'px'">
-                            <p id="fontSizeVal" class="text-center text-sm">48px</p>
+                            <label class="t-block t-text-sm t-font-medium t-mb-sm">Font Size</label>
+                            <input type="range" id="fontSize" min="12" max="120" value="48" class="t-w-full" oninput="document.getElementById('fontSizeVal').textContent = this.value + 'px'">
+                            <p id="fontSizeVal" class="t-text-center t-text-sm">48px</p>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium mb-2">Opacity</label>
-                            <input type="range" id="opacity" min="10" max="100" value="50" class="w-full" oninput="document.getElementById('opacityVal').textContent = this.value + '%'">
-                            <p id="opacityVal" class="text-center text-sm">50%</p>
+                            <label class="t-block t-text-sm t-font-medium t-mb-sm">Opacity</label>
+                            <input type="range" id="opacity" min="10" max="100" value="50" class="t-w-full" oninput="document.getElementById('opacityVal').textContent = this.value + '%'">
+                            <p id="opacityVal" class="t-text-center t-text-sm">50%</p>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium mb-2">Position</label>
-                        <select id="position" class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600">
+                        <label class="t-block t-text-sm t-font-medium t-mb-sm">Position</label>
+                        <select id="position" class="t-w-full p-3 t-rounded border">
                             <option value="center">Center</option>
                             <option value="top-left">Top Left</option>
                             <option value="top-right">Top Right</option>
@@ -75,23 +69,23 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium mb-2">Text Color</label>
-                        <div class="flex gap-2">
-                            <button onclick="setColor('#ffffff')" class="w-10 h-10 rounded-full bg-white border-2"></button>
+                        <label class="t-block t-text-sm t-font-medium t-mb-sm">Text Color</label>
+                        <div class="t-flex t-gap-sm">
+                            <button onclick="setColor('#ffffff')" class="w-10 h-10 t-rounded-full border-2"></button>
                             
-                            <button onclick="setColor('#000000')" class="w-10 h-10 rounded-full bg-black border-2"></button>
+                            <button onclick="setColor('#000000')" class="w-10 h-10 t-rounded-full bg-black border-2"></button>
                             
-                            <button onclick="setColor('#ff0000')" class="w-10 h-10 rounded-full bg-red-500 border-2"></button>
+                            <button onclick="setColor('#ff0000')" class="w-10 h-10 t-rounded-full bg-red-500 border-2"></button>
                             
-                            <input type="color" id="colorPicker" value="#ffffff" class="w-10 h-10 rounded-full">
+                            <input type="color" id="colorPicker" value="#ffffff" class="w-10 h-10 t-rounded-full">
                         </div>
                     </div>
 
-                    <button onclick="applyWatermark()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all">
+                    <button onclick="applyWatermark()" class="t-w-full t-py-md t-text-primary t-rounded-lg t-font-semibold t-text-lg t-hover-shadow t-transition">
                         Apply Watermark
                     </button>
 
-                    <a id="downloadLink" class="hidden block w-full py-4 bg-green-500 text-white rounded-xl font-semibold text-lg text-center hover:bg-green-600 transition-all">Download Watermarked Image</a>
+                    <a id="downloadLink" class="t-hidden t-block t-w-full t-py-md bg-green-500 t-text-primary t-rounded-lg t-font-semibold t-text-lg t-text-center t-transition">Download Watermarked Image</a>
                 </div>
             </div>
         </div>

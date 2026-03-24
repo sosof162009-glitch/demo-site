@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Watermark to PDF - 205-Tools</title>
     <meta name="description" content="Adds text or image watermark to PDF pages using pdf-lib.js.">
-    
-    <script>
+        <script>
     // PDF Tool Logic
 function initPDFTool(toolType) {
     let files = [];
@@ -53,11 +52,11 @@ function initPDFTool(toolType) {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                 </svg>
                 <div class="flex-1 min-w-0">
-                    <p class="font-medium truncate">${file.name}</p>
-                    <p class="text-sm text-gray-500">${(file.size/1024/1024).toFixed(2)} MB</p>
+                    <p class="t-font-medium truncate">${file.name}</p>
+                    <p class="t-text-sm">${(file.size/1024/1024).toFixed(2)} MB</p>
                 </div>
-                <button onclick="removeFile(${index})" class="p-2 text-gray-400 hover:text-red-500">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button onclick="removeFile(${index})" class="t-p-xs t-text-muted-light">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
@@ -258,23 +257,20 @@ function initPDFTool(toolType) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/fr/"},{"@type":"ListItem","position":2,"name":"Add Watermark to PDF","item":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/fr/Add Watermark to PDF/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to use pdf-watermark","description":"How to use Add Watermark to PDF","step":[{"@type":"HowToStep","position":1,"name":"Open the tool","text":"Navigate to the tool page in your browser","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/pdf-watermark/"},{"@type":"HowToStep","position":2,"name":"Enter your input","text":"Type or paste your data into the input field","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/pdf-watermark/"},{"@type":"HowToStep","position":3,"name":"Process the data","text":"Click the action button to process your input","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/pdf-watermark/"},{"@type":"HowToStep","position":4,"name":"Get results","text":"Copy or download your processed output","url":"https://tools-205-cl18xmzs1-sas-projects-611869a5.vercel.app/en/pdf-watermark/"}]}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
-</head>
-<body class="  min-h-screen">
+
+<body class="t-page-wrapper">
     <!-- Header -->
-    <header class="card shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="/fr/" class="text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+    <header class="t-shadow-sm t-site-header">
+        <div>
+            <div class="t-flex t-items-center t-justify-between">
+                <a href="/fr/" class="t-text-2xl t-font-bold from-red-500 to-orange-500">
                     205-Tools
                 </a>
-                <div class="flex items-center gap-4">
-                    <a href="/fr/pdf/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-red-500">
+                <div class="t-flex t-items-center t-gap-md">
+                    <a href="/fr/pdf/" class="t-text-sm t-text-muted">
                         ← PDF
                     </a>
-                    <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">
+                    <button onclick="document.documentElement.classList.toggle('dark')" class="t-p-xs t-rounded">
                         <span id="theme-icon">🌙</span>
                     </button>
                 </div>
@@ -283,62 +279,62 @@ function initPDFTool(toolType) {
     </header>
 
     <!-- Hero -->
-    <section class="bg-gradient-to-br from-red-500 via-orange-500 to-amber-500 text-white py-10">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-3">📄 PDF</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-3">Add Watermark to PDF</h1>
-            <p class="text-lg text-white/90 max-w-2xl mx-auto">Adds text or image watermark to PDF pages using pdf-lib.js.</p>
+    <section class="from-red-500 via-orange-500 to-amber-500 t-text-primary py-10">
+        <div class="t-text-center">
+            <span class="t-inline-block t-py-xs t-rounded-full t-text-sm t-mb-sm">📄 PDF</span>
+            <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-sm">Add Watermark to PDF</h1>
+            <p class="t-text-lg max-w-2xl">Adds text or image watermark to PDF pages using pdf-lib.js.</p>
         </div>
     </section>
 
     <!-- Step Indicator -->
-    <section class="py-6 card border-b dark:border-gray-700">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="flex items-center justify-center">
+    <section class="py-6 border-b">
+        <div>
+            <div class="t-flex t-items-center t-justify-center">
                 <div class="step-indicator">
                     <div class="step-number active" id="step1-indicator">1</div>
-                    <span class="ml-2 text-sm font-medium">Select Files</span>
+                    <span class="t-ml-sm t-text-sm t-font-medium">Select Files</span>
                 </div>
                 <div class="step-line" id="line1-2"></div>
                 <div class="step-indicator">
                     <div class="step-number pending" id="step2-indicator">2</div>
-                    <span class="ml-2 text-sm font-medium text-gray-400">Options</span>
+                    <span class="t-ml-sm t-text-sm t-font-medium t-text-muted-light">Options</span>
                 </div>
                 <div class="step-line" id="line2-3"></div>
                 <div class="step-indicator">
                     <div class="step-number pending" id="step3-indicator">3</div>
-                    <span class="ml-2 text-sm font-medium text-gray-400">Download</span>
+                    <span class="t-ml-sm t-text-sm t-font-medium t-text-muted-light">Download</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Main Interface -->
-    <section class="py-8">
-        <div class="max-w-5xl mx-auto px-4">
+    <section>
+        <div>
             
             <!-- STEP 1: Upload Files -->
-            <div id="step1" class="card rounded-2xl shadow-xl p-8">
-                <div class="pdf-upload-zone rounded-2xl p-12 text-center cursor-pointer" id="dropZone">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center">
+            <div id="step1" class="t-rounded-xl t-shadow-lg t-p-xl">
+                <div class="pdf-upload-zone t-rounded-xl p-12 t-text-center cursor-pointer" id="dropZone">
+                    <div class="w-20 h-20 t-mb-lg bg-red-100 t-rounded-xl t-flex t-items-center t-justify-center">
                         <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Upload your image</h3>
-                    <p class="text-gray-500 mb-4">Drag & drop your image here</p>
-                    <button class="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-medium">
+                    <h3 class="t-text-xl t-font-semibold t-mb-sm">Upload your image</h3>
+                    <p class="t-mb-md">Drag & drop your image here</p>
+                    <button class="px-6 t-py-sm bg-red-500 t-text-primary t-rounded-lg t-font-medium">
                         Browse Files
                     </button>
-                    <input type="file" class="hidden" id="fileInput" accept=".pdf" >
+                    <input type="file" class="t-hidden" id="fileInput" accept=".pdf" >
                     
-                    <div class="mt-6 flex justify-center gap-4">
-                        <button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-700 border rounded-lg text-sm hover:border-red-400">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#4285f4"><path d="M12 10.5v6.5h1.5v-6.5h2.25L12 6 8.25 10.5H10.5zM7.5 15v4.5h9V15H18v4.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 016 19.5V15h1.5z"/></svg>
+                    <div class="mt-6 t-flex t-justify-center t-gap-md">
+                        <button class="t-flex t-items-center t-gap-sm py-2 border t-rounded t-text-sm">
+                            <svg viewBox="0 0 24 24" fill="#4285f4"><path d="M12 10.5v6.5h1.5v-6.5h2.25L12 6 8.25 10.5H10.5zM7.5 15v4.5h9V15H18v4.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 016 19.5V15h1.5z"/></svg>
                             Google Drive
                         </button>
-                        <button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-700 border rounded-lg text-sm hover:border-red-400">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#0061ff"><path d="M6 2l6 4-6 4-6-4 6-4zm12 0l6 4-6 4-6-4 6-4zM0 14l6 4 6-4-6-4-6 4zm18-4l6 4-6 4-6-4 6-4zM6 16.5l6 4 6-4v2l-6 4-6-4v-2z"/></svg>
+                        <button class="t-flex t-items-center t-gap-sm py-2 border t-rounded t-text-sm">
+                            <svg viewBox="0 0 24 24" fill="#0061ff"><path d="M6 2l6 4-6 4-6-4 6-4zm12 0l6 4-6 4-6-4 6-4zM0 14l6 4 6-4-6-4-6 4zm18-4l6 4-6 4-6-4 6-4zM6 16.5l6 4 6-4v2l-6 4-6-4v-2z"/></svg>
                             Dropbox
                         </button>
                     </div>
@@ -346,11 +342,11 @@ function initPDFTool(toolType) {
             </div>
 
             <!-- STEP 2: Organize & Options -->
-            <div id="step2" class="hidden">
-                <div class="card rounded-2xl shadow-xl p-6 mb-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold">PDF Files (<span id="fileCount">0</span>)</h3>
-                        <button onclick="addMoreFiles()" class="text-red-500 hover:text-red-600 text-sm font-medium">
+            <div id="step2" class="t-hidden">
+                <div class="t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                    <div class="t-flex t-items-center t-justify-between t-mb-md">
+                        <h3 class="t-text-lg t-font-semibold">PDF Files (<span id="fileCount">0</span>)</h3>
+                        <button onclick="addMoreFiles()" class="text-red-500 t-text-sm t-font-medium">
                             + Add More
                         </button>
                     </div>
@@ -360,71 +356,71 @@ function initPDFTool(toolType) {
                         <!-- File items will be inserted here -->
                     </div>
                     
-                    <p class="text-sm text-gray-500 mt-4 text-center">💡 Drag files to reorder them</p>
+                    <p class="t-text-sm t-mt-md t-text-center">💡 Drag files to reorder them</p>
                 </div>
 
                 <!-- Options -->
-                <div class="card rounded-2xl shadow-xl p-6 mb-6">
-                    <h3 class="text-lg font-semibold mb-4">Options</h3>
+                <div class="t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                    <h3 class="t-text-lg t-font-semibold t-mb-md">Options</h3>
                     
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <p class="text-gray-500">No additional options needed</p>
+                    <div class="t-grid t-grid-md-2 t-gap-md">
+                        <p>No additional options needed</p>
                     </div>
                 </div>
 
-                <div class="flex gap-4">
-                    <button onclick="goToStep(1)" class="flex-1 py-4 bg-gray-200 dark:bg-gray-700 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600">
+                <div class="t-flex t-gap-md">
+                    <button onclick="goToStep(1)" class="flex-1 t-py-md t-rounded-lg t-font-semibold">
                         Back
                     </button>
-                    <button onclick="processFiles()" class="flex-1 py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl font-semibold hover:shadow-lg">
+                    <button onclick="processFiles()" class="flex-1 t-py-md from-red-500 to-orange-500 t-text-primary t-rounded-lg t-font-semibold t-hover-shadow">
                         Process
                     </button>
                 </div>
             </div>
 
             <!-- STEP 3: Processing & Result -->
-            <div id="step3" class="hidden">
-                <div id="processingView" class="card rounded-2xl shadow-xl p-12 text-center">
-                    <div class="w-20 h-20 mx-auto mb-6 relative">
-                        <div class="absolute inset-0 border-4 border-red-200 rounded-full"></div>
-                        <div class="absolute inset-0 border-4 border-red-500 rounded-full border-t-transparent animate-spin"></div>
+            <div id="step3" class="t-hidden">
+                <div id="processingView" class="t-rounded-xl t-shadow-lg p-12 t-text-center">
+                    <div class="w-20 h-20 t-mb-lg relative">
+                        <div class="absolute inset-0 border-4 border-red-200 t-rounded-full"></div>
+                        <div class="absolute inset-0 border-4 border-red-500 t-rounded-full border-t-transparent animate-spin"></div>
                         <svg class="w-8 h-8 text-red-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Processing...</h3>
-                    <p class="text-gray-500">Please wait while we process your files</p>
+                    <h3 class="t-text-xl t-font-semibold t-mb-sm">Processing...</h3>
+                    <p>Please wait while we process your files</p>
                 </div>
 
-                <div id="resultView" class="hidden card rounded-2xl shadow-xl p-8 text-center">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                <div id="resultView" class="t-hidden t-rounded-xl t-shadow-lg t-p-xl t-text-center">
+                    <div class="w-20 h-20 t-mb-lg bg-green-100 t-rounded-full t-flex t-items-center t-justify-center">
                         <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                     </div>
                     
-                    <h3 class="text-2xl font-bold mb-2">Conversion Complete!</h3>
-                    <p class="text-gray-500 mb-6">Your image has been successfully converted.</p>
+                    <h3 class="t-text-2xl t-font-bold t-mb-sm">Conversion Complete!</h3>
+                    <p class="t-mb-lg">Your image has been successfully converted.</p>
                     
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 mb-6 max-w-sm mx-auto">
-                        <div class="flex items-center justify-between text-sm">
-                            <span class="text-gray-500">Original:</span>
+                    <div class="t-rounded-lg t-p-md t-mb-lg max-w-sm">
+                        <div class="t-flex t-items-center t-justify-between t-text-sm">
+                            <span>Original:</span>
                             <span id="originalSize">--</span>
                         </div>
-                        <div class="flex items-center justify-between text-sm mt-2">
-                            <span class="text-gray-500">New size:</span>
-                            <span id="newSize" class="text-green-500 font-semibold">--</span>
+                        <div class="t-flex t-items-center t-justify-between t-text-sm t-mt-sm">
+                            <span>New size:</span>
+                            <span id="newSize" class="text-green-500 t-font-semibold">--</span>
                         </div>
                     </div>
                     
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a id="downloadLink" href="#" class="px-8 py-3 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl font-semibold hover:shadow-lg flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="t-flex t-flex-col sm:flex-row t-gap-md t-justify-center">
+                        <a id="downloadLink" href="#" class="px-8 t-py-sm from-red-500 to-orange-500 t-text-primary t-rounded-lg t-font-semibold t-hover-shadow t-flex t-items-center t-justify-center t-gap-sm">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                             </svg>
                             Download
                         </a>
-                        <button onclick="startOver()" class="px-8 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <button onclick="startOver()" class="px-8 t-py-sm t-rounded-lg t-font-medium">
                             Start Over
                         </button>
                     </div>
@@ -480,11 +476,11 @@ function initPDFTool(toolType) {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                     </svg>
                     <div class="flex-1 min-w-0">
-                        <p class="font-medium truncate">${file.name}</p>
-                        <p class="text-sm text-gray-500">${(file.size/1024/1024).toFixed(2)} MB</p>
+                        <p class="t-font-medium truncate">${file.name}</p>
+                        <p class="t-text-sm">${(file.size/1024/1024).toFixed(2)} MB</p>
                     </div>
-                    <button onclick="removeFile(${index})" class="p-2 text-gray-400 hover:text-red-500">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button onclick="removeFile(${index})" class="t-p-xs t-text-muted-light">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
