@@ -267,6 +267,18 @@ body {
   background: var(--surface);
 }
 
+.t-surface-2 {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.t-surface-3 {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.t-surface-4 {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .t-surface-transparent {
   background: rgba(12, 14, 26, 0.5);
 }
@@ -470,11 +482,17 @@ select:focus {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Responsive Typography
+   Responsive Typography & Flex
    ═══════════════════════════════════════════════════════════════ */
 @media (min-width: 768px) {
   .t-text-md-5xl { font-size: 3rem; }
+  .t-flex-md { display: flex; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Focus Utilities
+   ═══════════════════════════════════════════════════════════════ */
+.t-focus-none:focus { outline: none; }
 
 /* ═══════════════════════════════════════════════════════════════
    RTL Support (Arabic)

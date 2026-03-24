@@ -265,7 +265,7 @@ function initPDFTool(toolType) {
 <body>
     <!-- Header -->
     <header class="t-card t-shadow-sm t-site-header">
-        <div class="t-container t-container t-px-md">
+        <div class="t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/de/" class="t-text-2xl t-font-bold">
                     205-Tools
@@ -284,7 +284,7 @@ function initPDFTool(toolType) {
 
     <!-- Hero -->
     <section class="t-text-primary t-py-lg">
-        <div class="t-container-md t-container t-px-md t-text-center">
+        <div class="t-container-md t-text-center">
             <span class="t-inline-block t-px-md t-py-xs t-rounded-full t-text-sm t-mb-sm">📄 PDF</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-sm">PDF to WebP Converter</h1>
             <p class="t-text-lg t-container-xs t-container">Converts PDF pages to WebP format using browser canvas rendering.</p>
@@ -293,7 +293,7 @@ function initPDFTool(toolType) {
 
     <!-- Step Indicator -->
     <section class="t-py-lg t-card t-border-b">
-        <div class="t-container-sm t-container t-px-md">
+        <div class="t-container-sm">
             <div class="t-flex t-items-center t-justify-center">
                 <div>
                     <div class="active" id="step1-indicator">1</div>
@@ -314,8 +314,8 @@ function initPDFTool(toolType) {
     </section>
 
     <!-- Main Interface -->
-    <section>
-        <div class="t-container-md t-container t-px-md">
+    <section class="t-py-lg">
+        <div class="t-container-md">
             
             <!-- STEP 1: Upload Files -->
             <div id="step1" class="t-card t-rounded-xl t-shadow-lg t-p-xl">
@@ -333,11 +333,11 @@ function initPDFTool(toolType) {
                     <input type="file" class="t-hidden" id="fileInput" accept=".pdf" >
                     
                     <div class="t-mt-lg t-flex t-justify-center t-gap-md">
-                        <button class="t-flex t-items-center t-gap-sm t-px-md t-py-xs t-card t-border t-rounded t-text-sm">
+                        <button class="t-flex t-items-center t-gap-sm t-px-md t-py-xs t-border t-rounded t-text-sm">
                             <svg viewBox="0 0 24 24" fill="#4285f4"><path d="M12 10.5v6.5h1.5v-6.5h2.25L12 6 8.25 10.5H10.5zM7.5 15v4.5h9V15H18v4.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 016 19.5V15h1.5z"/></svg>
                             Google Drive
                         </button>
-                        <button class="t-flex t-items-center t-gap-sm t-px-md t-py-xs t-card t-border t-rounded t-text-sm">
+                        <button class="t-flex t-items-center t-gap-sm t-px-md t-py-xs t-border t-rounded t-text-sm">
                             <svg viewBox="0 0 24 24" fill="#0061ff"><path d="M6 2l6 4-6 4-6-4 6-4zm12 0l6 4-6 4-6-4 6-4zM0 14l6 4 6-4-6-4-6 4zm18-4l6 4-6 4-6-4 6-4zM6 16.5l6 4 6-4v2l-6 4-6-4v-2z"/></svg>
                             Dropbox
                         </button>

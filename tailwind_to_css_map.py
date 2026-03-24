@@ -271,14 +271,20 @@ TAILWIND_TO_CSS = {
     "bg-emerald-100": "t-state-success",
     "bg-yellow-50": "t-state-warning-light",
     "bg-indigo-50": "t-state-info-light",
+    # Gray surfaces
+    "bg-gray-50": "t-surface-2",
+    "bg-gray-100": "t-surface-3",
+    "bg-gray-200": "t-surface-4",
     
     # Border States
     "border-red-200": "t-state-error",
     "border-red-500": "t-border-error",
     
-    # Responsive Grid
-    "md:grid-cols-1": "",
-    "lg:grid-cols-3": "t-grid-lg-3",
+    # Responsive Flex
+    "md:flex": "t-flex-md",
+    
+    # Focus
+    "focus:outline-none": "t-focus-none",
 }
 
 # Classes to remove (not needed in dark-only theme)
@@ -347,9 +353,29 @@ def convert_classes(class_string, unmatched_counter):
     converted = 0
     removed = 0
     
+    # Check if we have specialized container (t-container-sm, t-container-md, etc.)
+    has_specialized_container = any(c in classes for c in ['t-container-sm', 't-container-md', 't-container-lg', 't-container-xs'])
+    
+    # Check if this is a generate button that needs 'btn' class
+    is_generate_button = False
+    if 't-w-full' in classes and 't-py-md' in classes and 't-text-primary' in classes and 't-rounded-lg' in classes:
+        is_generate_button = True
+    
     for cls in classes:
         # Skip classes that should be removed
         if cls in CLASSES_TO_REMOVE:
+            removed += 1
+            continue
+        
+        # If we have specialized container, skip generic t-container and t-px-md
+        if has_specialized_container and cls in ['t-container', 't-px-md', 't-px-lg', 't-px-xl', 't-px-sm']:
+            removed += 1
+            continue
+        
+        # If this is a generate button, replace the long class list with 'btn'
+        if is_generate_button and cls in ['t-w-full', 't-py-md', 't-text-primary', 't-rounded-lg', 
+                                           't-font-semibold', 't-text-lg', 't-hover-shadow', 
+                                           't-transition', 't-mb-xl']:
             removed += 1
             continue
         
@@ -373,6 +399,10 @@ def convert_classes(class_string, unmatched_counter):
         if cls in TAILWIND_TO_CSS:
             mapped = TAILWIND_TO_CSS[cls]
             if mapped:
+                # If this is a generate button, add 'btn' class
+                if is_generate_button and not any('btn' in c for c in new_classes):
+                    new_classes.append('btn')
+                    converted += 1
                 new_classes.append(mapped)
                 converted += 1
             else:
@@ -386,6 +416,20 @@ def convert_classes(class_string, unmatched_counter):
             else:
                 # Keep custom classes
                 new_classes.append(cls)
+    
+    # Add 'btn' class for generate buttons if not already added
+    if is_generate_button and 'btn' not in new_classes:
+        new_classes.insert(0, 'btn')
+        converted += 1
+    
+    # Remove duplicates from new_classes while preserving order
+    seen = set()
+    deduped_classes = []
+    for c in new_classes:
+        if c not in seen:
+            seen.add(c)
+            deduped_classes.append(c)
+    new_classes = deduped_classes
     
     return " ".join(new_classes) if new_classes else "", converted, removed
 
