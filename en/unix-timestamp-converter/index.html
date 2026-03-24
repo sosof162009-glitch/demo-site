@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unix Timestamp Converter - 205-Tools</title>
     <meta name="description" content="Converts Unix timestamps to human-readable dates and vice versa.">
-    <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>function useNow() { document.getElementById('timestamp').value = Math.floor(Date.now()/1000); }
     function convert() {
       const ts = parseInt(document.getElementById('timestamp').value) * 1000;
@@ -56,19 +56,19 @@
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-8">Related Tools</h2>
             <div class="grid md:grid-cols-2 gap-4">
-            <a href="/en/time-zone-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+            <a href="/en/time-zone-converter/" class="tool-card flex items-center space-x-3 p-4 card rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">🌍</span>
                 <span class="font-medium">Time Zone Converter</span>
             </a>
-            <a href="/en/date-difference-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+            <a href="/en/date-difference-calculator/" class="tool-card flex items-center space-x-3 p-4 card rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">📅</span>
                 <span class="font-medium">Date Difference Calculator</span>
             </a>
-            <a href="/en/age-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+            <a href="/en/age-calculator/" class="tool-card flex items-center space-x-3 p-4 card rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">🎂</span>
                 <span class="font-medium">Age Calculator</span>
             </a>
-            <a href="/en/days-until-date/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+            <a href="/en/days-until-date/" class="tool-card flex items-center space-x-3 p-4 card rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">📆</span>
                 <span class="font-medium">Days Until Date Counter</span>
             </a></div>

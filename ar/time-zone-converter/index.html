@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time Zone Converter - 205-أدوات</title>
     <meta name="description" content="Converts times between any two world time zones with DST support.">
-    <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>function showTimes() {
       const input = document.getElementById('localTime').value;
       if (!input) return;
@@ -22,7 +22,7 @@
       let html = '';
       cities.forEach(c => {
         const time = d.toLocaleTimeString('en-US', {timeZone: c.z, hour: '2-digit', minute: '2-digit'});
-        html += '<div class="flex justify-between p-2 bg-white dark:bg-gray-800 rounded"><span>' + c.n + '</span><span class="font-bold">' + time + '</span></div>';
+        html += '<div class="flex justify-between p-2 card rounded"><span>' + c.n + '</span><span class="font-bold">' + time + '</span></div>';
       });
       document.getElementById('result').innerHTML = html;
       document.getElementById('result').classList.remove('hidden');
@@ -70,19 +70,19 @@
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-8">أدوات ذات صلة</h2>
             <div class="grid md:grid-cols-2 gap-4">
-            <a href="/ar/unix-timestamp-converter/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+            <a href="/ar/unix-timestamp-converter/" class="tool-card flex items-center space-x-3 p-4 card rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">⏰</span>
                 <span class="font-medium">Unix Timestamp Converter</span>
             </a>
-            <a href="/ar/date-difference-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+            <a href="/ar/date-difference-calculator/" class="tool-card flex items-center space-x-3 p-4 card rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">📅</span>
                 <span class="font-medium">Date Difference Calculator</span>
             </a>
-            <a href="/ar/age-calculator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+            <a href="/ar/age-calculator/" class="tool-card flex items-center space-x-3 p-4 card rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">🎂</span>
                 <span class="font-medium">Age Calculator</span>
             </a>
-            <a href="/ar/days-until-date/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
+            <a href="/ar/days-until-date/" class="tool-card flex items-center space-x-3 p-4 card rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
                 <span class="text-2xl">📆</span>
                 <span class="font-medium">Days Until Date Counter</span>
             </a></div>
