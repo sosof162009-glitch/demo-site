@@ -1,0 +1,47 @@
+{
+  "date": "2026-03-24T03:43:23.063Z",
+  "url": "https://tools-205-3g00akhbk-sas-projects-611869a5.vercel.app",
+  "summary": {
+    "total": 1060,
+    "working": 969,
+    "fake": 91,
+    "broken": 0
+  },
+  "byLanguage": [
+    {
+      "lang": "en",
+      "total": 240,
+      "working": 233,
+      "fake": 7,
+      "broken": 0
+    },
+    {
+      "lang": "ar",
+      "total": 205,
+      "working": 184,
+      "fake": 21,
+      "broken": 0
+    },
+    {
+      "lang": "fr",
+      "total": 205,
+      "working": 184,
+      "fake": 21,
+      "broken": 0
+    },
+    {
+      "lang": "es",
+      "total": 205,
+      "working": 184,
+      "fake": 21,
+      "broken": 0
+    },
+    {
+      "lang": "de",
+      "total": 205,
+      "working": 184,
+      "fake": 21,
+      "broken": 0
+    }
+  ]
+}
