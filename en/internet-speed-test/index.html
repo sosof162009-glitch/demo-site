@@ -147,22 +147,34 @@
             speedValue.textContent = '...';
             
             try {
-                // Use a test image to measure download speed
-                const imageUrl = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
-                const startTime = performance.now();
+                // Create test data - generate 1MB of random data
+                const testDataSize = 1024 * 1024; // 1MB
+                const testData = new Uint8Array(testDataSize);
+                for (let i = 0; i < testDataSize; i++) {
+                    testData[i] = Math.floor(Math.random() * 256);
+                }
                 
-                const response = await fetch(imageUrl + '?t=' + Date.now(), { cache: 'no-store' });
-                const blob = await response.blob();
+                // Create blob URL
+                const blob = new Blob([testData]);
+                const url = URL.createObjectURL(blob);
+                
+                // Test download speed
+                const startTime = performance.now();
+                const response = await fetch(url, { cache: 'no-store' });
+                await response.blob();
                 const endTime = performance.now();
                 
+                URL.revokeObjectURL(url);
+                
                 const duration = (endTime - startTime) / 1000; // seconds
-                const bitsLoaded = blob.size * 8;
+                const bitsLoaded = testDataSize * 8;
                 const speedBps = bitsLoaded / duration;
                 const speedMbps = (speedBps / 1024 / 1024).toFixed(2);
                 
                 speedValue.textContent = speedMbps;
                 btn.textContent = 'Test Again';
             } catch (err) {
+                console.error(err);
                 speedValue.textContent = 'Error';
                 btn.textContent = 'Try Again';
                 alert('Speed test failed. Please check your connection and try again.');
