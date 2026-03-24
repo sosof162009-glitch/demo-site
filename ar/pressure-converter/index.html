@@ -217,13 +217,13 @@ function initCalculator(type) {
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
 </head>
 <body>
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/ar/" class="t-flex t-items-center t-space-x-sm">
                     <span class="t-text-2xl t-font-bold">205-أدوات</span>
                 </a>
-                <div class="t-hidden md:flex t-items-center t-space-x-lg">
+                <div class="t-hidden t-items-center t-space-x-lg">
                     <a href="/ar/" class="t-text-muted">الرئيسية</a>
                 </div>
                 
@@ -231,31 +231,31 @@ function initCalculator(type) {
         </div>
     </header>
 
-    <section class="t-text-primary py-16">
+    <section class="t-text-primary t-py-2xl">
         <div class="t-container-sm t-container t-px-md t-text-center">
-            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">🌡️ الوحدات</span>
+            <span class="t-inline-block t-px-sm t-py-xs t-rounded-full t-text-sm t-mb-md">🌡️ الوحدات</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">Pressure Converter</h1>
             <p class="t-text-xl">مجاني • سريع • آمن</p>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-sm t-container t-px-md">
-            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
+            <div class="t-card t-rounded-xl t-shadow-lg t-p-xl">
                 <div class="t-text-center t-mb-xl">
                     <div class="t-text-6xl t-mb-md">🌡️</div>
                     <p class="t-text-muted">Converts between PSI, bar, Pascal, atm, mmHg, kPa.</p>
                 </div>
                 
                 <!-- Converter Inputs -->
-                <div class="t-grid md:grid-cols-3 t-gap-md items-end t-mb-xl">
+                <div class="t-grid t-grid-md-3 t-gap-md t-items-end t-mb-xl">
                     <div>
                         <label class="t-block t-text-sm t-font-medium t-mb-sm">القيمة</label>
-                        <input type="number" id="value" class="t-w-full p-3 t-rounded border" placeholder="1">
+                        <input type="number" id="value" class="t-w-full t-p-sm t-rounded t-border" placeholder="1">
                     </div>
                     <div>
                         <label class="t-block t-text-sm t-font-medium t-mb-sm">من</label>
-                        <select id="from" class="t-w-full p-3 t-rounded border">
+                        <select id="from" class="t-w-full t-p-sm t-rounded t-border">
                             <option>Meters</option>
                             <option>Kilometers</option>
                             <option>Centimeters</option>
@@ -263,7 +263,7 @@ function initCalculator(type) {
                     </div>
                     <div>
                         <label class="t-block t-text-sm t-font-medium t-mb-sm">إلى</label>
-                        <select id="to" class="t-w-full p-3 t-rounded border">
+                        <select id="to" class="t-w-full t-p-sm t-rounded t-border">
                             <option>Feet</option>
                             <option>Inches</option>
                             <option>Yards</option>
@@ -277,9 +277,9 @@ function initCalculator(type) {
                 </button>
 
                 <!-- Result -->
-                <div id="resultBox" class="t-hidden bg-green-50 t-rounded-lg t-p-lg t-text-center">
+                <div id="resultBox" class="t-hidden t-state-success-light t-rounded-lg t-p-lg t-text-center">
                     <p class="t-text-muted t-mb-sm">النتيجة</p>
-                    <p class="t-text-3xl t-font-bold text-green-600" id="resultValue">-</p>
+                    <p class="t-text-3xl t-font-bold t-text-success" id="resultValue">-</p>
                 </div>
 
     <script>
@@ -293,10 +293,10 @@ function initCalculator(type) {
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-md t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">كيفية الاستخدام</h2>
-            <div class="t-grid md:grid-cols-3 t-gap-lg">
+            <div class="t-grid t-grid-md-3 t-gap-lg">
                 <div class="t-text-center">
                     <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">1</div>
                     <h3 class="t-font-semibold t-mb-sm">اختر ملفك</h3>
@@ -316,10 +316,10 @@ function initCalculator(type) {
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">لماذا تستخدم أدواتنا</h2>
-            <div class="t-grid t-grid-md-4 gap-6">
+            <div class="t-grid t-grid-md-4 t-gap-lg">
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">🔒</div><h3 class="t-font-semibold t-mb-sm">آمن</h3></div>
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">⚡</div><h3 class="t-font-semibold t-mb-sm">سريع</h3></div>
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">🆓</div><h3 class="t-font-semibold t-mb-sm">مجاني</h3></div>
@@ -328,30 +328,30 @@ function initCalculator(type) {
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">أدوات ذات صلة</h2>
             <div class="t-grid t-grid-md-2 t-gap-md">
-            <a href="/ar/length-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/ar/length-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">📏</span>
                 <span class="t-font-medium">Length Converter</span>
             </a>
-            <a href="/ar/weight-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/ar/weight-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">⚖️</span>
                 <span class="t-font-medium">Weight Converter</span>
             </a>
-            <a href="/ar/temperature-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/ar/temperature-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">🌡️</span>
                 <span class="t-font-medium">Temperature Converter</span>
             </a>
-            <a href="/ar/area-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/ar/area-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">📐</span>
                 <span class="t-font-medium">Area Converter</span>
             </a></div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 t-text-primary t-py-lg">
+    <footer class="t-surface t-text-primary">
         <div class="t-container t-container t-px-md t-text-center">
             <p class="t-text-muted-light">© 2025 205-أدوات - مجاني</p>
         </div>

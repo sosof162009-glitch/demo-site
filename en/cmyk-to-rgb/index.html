@@ -154,11 +154,11 @@ function initGenerator(type, options) {
         
         const container = document.getElementById('historyList');
         container.innerHTML = history.map(h => `
-            <div class="t-flex t-items-center t-justify-between p-3 card t-rounded border">
-                <span class="t-font-mono t-text-sm truncate flex-1">${h.value}</span>
+            <div class="t-flex t-items-center t-justify-between t-p-sm t-card t-rounded t-border">
+                <span class="t-font-mono t-text-sm t-truncate t-flex-1">${h.value}</span>
                 <div class="t-flex t-items-center t-gap-sm">
                     <span class="t-text-xs t-text-muted-light">${h.time}</span>
-                    <button onclick="navigator.clipboard.writeText('${h.value}')" class="p-1 t-text-muted-light">
+                    <button onclick="navigator.clipboard.writeText('${h.value}')" class="t-p-xs t-text-muted-light">
                         📋
                     </button>
                 </div>
@@ -172,7 +172,7 @@ function initGenerator(type, options) {
         const toast = document.createElement('div');
         toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-xl shadow-2xl flex items-center gap-2 z-50';
         toast.innerHTML = `
-            <svg class="text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="t-text-success-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
             </svg>
             ${message}
@@ -205,13 +205,13 @@ function initGenerator(type, options) {
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
 </head>
 <body>
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/en/" class="t-flex t-items-center t-space-x-sm">
                     <span class="t-text-2xl t-font-bold">205-Tools</span>
                 </a>
-                <div class="t-hidden md:flex t-items-center t-space-x-lg">
+                <div class="t-hidden t-items-center t-space-x-lg">
                     <a href="/en/" class="t-text-muted">Home</a>
                 </div>
                 
@@ -219,17 +219,17 @@ function initGenerator(type, options) {
         </div>
     </header>
 
-    <section class="t-text-primary py-16">
+    <section class="t-text-primary t-py-2xl">
         <div class="t-container-sm t-container t-px-md t-text-center">
-            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">🖨️ Colors</span>
+            <span class="t-inline-block t-px-sm t-py-xs t-rounded-full t-text-sm t-mb-md">🖨️ Colors</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">CMYK to RGB Converter</h1>
             <p class="t-text-xl">Convert CMYK print colors to RGB screen colors</p>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-sm t-container t-px-md">
-            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
+            <div class="t-card t-rounded-xl t-shadow-lg t-p-xl">
                 <!-- CMYK Inputs -->
                 <div class="t-rounded-lg t-p-lg t-mb-xl">
                     <h3 class="t-text-lg t-font-semibold t-mb-md">CMYK Values (0-100%)</h3>
@@ -237,45 +237,45 @@ function initGenerator(type, options) {
                     <!-- Cyan -->
                     <div class="t-mb-md">
                         <div class="t-flex t-items-center t-gap-md">
-                            <label class="w-20 t-font-medium text-cyan-600">Cyan</label>
-                            <input type="range" id="cSlider" min="0" max="100" value="56" class="flex-1 h-2 t-rounded">
-                            <input type="number" id="cInput" min="0" max="100" value="56" class="w-20 t-p-xs t-rounded border t-font-mono t-text-center">
-                            <span class="w-8">%</span>
+                            <label class="t-font-medium">Cyan</label>
+                            <input type="range" id="cSlider" min="0" max="100" value="56" class="t-flex-1 t-rounded">
+                            <input type="number" id="cInput" min="0" max="100" value="56" class="t-p-xs t-rounded t-border t-font-mono t-text-center">
+                            <span>%</span>
                         </div>
-                        <div class="cmyk-bar t-mt-sm bg-cyan-500" id="cBar" style="width: 56%;"></div>
+                        <div class="t-mt-sm" id="cBar" style="width: 56%;"></div>
                     </div>
                     
                     <!-- Magenta -->
                     <div class="t-mb-md">
                         <div class="t-flex t-items-center t-gap-md">
-                            <label class="w-20 t-font-medium text-fuchsia-600">Magenta</label>
-                            <input type="range" id="mSlider" min="0" max="100" value="55" class="flex-1 h-2 t-rounded">
-                            <input type="number" id="mInput" min="0" max="100" value="55" class="w-20 t-p-xs t-rounded border t-font-mono t-text-center">
-                            <span class="w-8">%</span>
+                            <label class="t-font-medium">Magenta</label>
+                            <input type="range" id="mSlider" min="0" max="100" value="55" class="t-flex-1 t-rounded">
+                            <input type="number" id="mInput" min="0" max="100" value="55" class="t-p-xs t-rounded t-border t-font-mono t-text-center">
+                            <span>%</span>
                         </div>
-                        <div class="cmyk-bar t-mt-sm bg-fuchsia-500" id="mBar" style="width: 55%;"></div>
+                        <div class="t-mt-sm" id="mBar" style="width: 55%;"></div>
                     </div>
                     
                     <!-- Yellow -->
                     <div class="t-mb-md">
                         <div class="t-flex t-items-center t-gap-md">
-                            <label class="w-20 t-font-medium text-yellow-600">Yellow</label>
-                            <input type="range" id="ySlider" min="0" max="100" value="0" class="flex-1 h-2 t-rounded">
-                            <input type="number" id="yInput" min="0" max="100" value="0" class="w-20 t-p-xs t-rounded border t-font-mono t-text-center">
-                            <span class="w-8">%</span>
+                            <label class="t-font-medium">Yellow</label>
+                            <input type="range" id="ySlider" min="0" max="100" value="0" class="t-flex-1 t-rounded">
+                            <input type="number" id="yInput" min="0" max="100" value="0" class="t-p-xs t-rounded t-border t-font-mono t-text-center">
+                            <span>%</span>
                         </div>
-                        <div class="cmyk-bar t-mt-sm bg-yellow-500" id="yBar" style="width: 0%;"></div>
+                        <div class="t-mt-sm" id="yBar" style="width: 0%;"></div>
                     </div>
                     
                     <!-- Black -->
                     <div class="t-mb-md">
                         <div class="t-flex t-items-center t-gap-md">
-                            <label class="w-20 t-font-medium text-gray-800">Black</label>
-                            <input type="range" id="kSlider" min="0" max="100" value="5" class="flex-1 h-2 t-rounded">
-                            <input type="number" id="kInput" min="0" max="100" value="5" class="w-20 t-p-xs t-rounded border t-font-mono t-text-center">
-                            <span class="w-8">%</span>
+                            <label class="t-font-medium">Black</label>
+                            <input type="range" id="kSlider" min="0" max="100" value="5" class="t-flex-1 t-rounded">
+                            <input type="number" id="kInput" min="0" max="100" value="5" class="t-p-xs t-rounded t-border t-font-mono t-text-center">
+                            <span>%</span>
                         </div>
-                        <div class="cmyk-bar t-mt-sm bg-gray-800" id="kBar" style="width: 5%;"></div>
+                        <div class="t-mt-sm" id="kBar" style="width: 5%;"></div>
                     </div>
                 </div>
 
@@ -283,29 +283,29 @@ function initGenerator(type, options) {
                 <div class="t-rounded-lg t-p-lg t-mb-xl">
                     <h3 class="t-text-lg t-font-semibold t-mb-md">RGB Values</h3>
                     
-                    <div class="t-grid md:grid-cols-3 t-gap-md t-mb-md">
-                        <div class="t-rounded t-p-md t-text-center">
-                            <label class="t-block t-text-sm text-red-500 t-mb-xs">Red</label>
-                            <input type="text" id="rValue" readonly class="t-w-full t-text-center t-font-mono t-text-2xl t-font-bold bg-transparent">
+                    <div class="t-grid t-grid-md-3 t-gap-md t-mb-md">
+                        <div class="t-card t-rounded t-p-md t-text-center">
+                            <label class="t-block t-text-sm t-text-error t-mb-xs">Red</label>
+                            <input type="text" id="rValue" readonly class="t-w-full t-text-center t-font-mono t-text-2xl t-font-bold t-bg-transparent">
                         </div>
-                        <div class="t-rounded t-p-md t-text-center">
-                            <label class="t-block t-text-sm text-green-500 t-mb-xs">Green</label>
-                            <input type="text" id="gValue" readonly class="t-w-full t-text-center t-font-mono t-text-2xl t-font-bold bg-transparent">
+                        <div class="t-card t-rounded t-p-md t-text-center">
+                            <label class="t-block t-text-sm t-text-success t-mb-xs">Green</label>
+                            <input type="text" id="gValue" readonly class="t-w-full t-text-center t-font-mono t-text-2xl t-font-bold t-bg-transparent">
                         </div>
-                        <div class="t-rounded t-p-md t-text-center">
-                            <label class="t-block t-text-sm text-blue-500 t-mb-xs">Blue</label>
-                            <input type="text" id="bValue" readonly class="t-w-full t-text-center t-font-mono t-text-2xl t-font-bold bg-transparent">
+                        <div class="t-card t-rounded t-p-md t-text-center">
+                            <label class="t-block t-text-sm t-text-accent t-mb-xs">Blue</label>
+                            <input type="text" id="bValue" readonly class="t-w-full t-text-center t-font-mono t-text-2xl t-font-bold t-bg-transparent">
                         </div>
                     </div>
                     
                     <div class="t-flex t-gap-sm">
-                        <input type="text" id="rgbOutput" readonly class="flex-1 p-3 t-rounded border t-font-mono">
-                        <button onclick="copyToClipboard('rgbOutput')" class="copy-btn t-px-md py-2 bg-indigo-500 t-text-primary t-rounded">Copy RGB</button>
+                        <input type="text" id="rgbOutput" readonly class="t-flex-1 t-p-sm t-rounded t-border t-font-mono">
+                        <button onclick="copyToClipboard('rgbOutput')" class="t-px-md t-py-xs t-text-primary t-rounded">Copy RGB</button>
                     </div>
                     
                     <div class="t-flex t-gap-sm t-mt-sm">
-                        <input type="text" id="hexOutput" readonly class="flex-1 p-3 t-rounded border t-font-mono">
-                        <button onclick="copyToClipboard('hexOutput')" class="copy-btn t-px-md py-2 bg-purple-500 t-text-primary t-rounded">Copy HEX</button>
+                        <input type="text" id="hexOutput" readonly class="t-flex-1 t-p-sm t-rounded t-border t-font-mono">
+                        <button onclick="copyToClipboard('hexOutput')" class="t-px-md t-py-xs t-text-primary t-rounded">Copy HEX</button>
                     </div>
                 </div>
 
@@ -313,14 +313,14 @@ function initGenerator(type, options) {
                 <div class="t-rounded-lg t-p-lg t-text-center">
                     <p class="t-text-sm t-mb-md">Live Preview</p>
                     
-                    <div class="t-flex t-justify-center t-gap-md flex-wrap">
-                        <div id="preview" class="w-32 h-32 t-rounded-lg t-shadow t-transition duration-300" style="background-color: rgb(99, 102, 241);"></div>
+                    <div class="t-flex t-justify-center t-gap-md t-flex-wrap">
+                        <div id="preview" class="t-rounded-lg t-shadow t-transition" style="background-color: rgb(99, 102, 241);"></div>
                         
-                        <div class="w-32 h-32 t-rounded-lg t-shadow t-flex t-flex-col t-items-center t-justify-center t-p-xs">
-                            <div class="t-text-xs t-font-bold text-cyan-600">C: <span id="cDisplay">56</span>%</div>
-                            <div class="t-text-xs t-font-bold text-fuchsia-600">M: <span id="mDisplay">55</span>%</div>
-                            <div class="t-text-xs t-font-bold text-yellow-600">Y: <span id="yDisplay">0</span>%</div>
-                            <div class="t-text-xs t-font-bold text-gray-800">K: <span id="kDisplay">5</span>%</div>
+                        <div class="t-rounded-lg t-shadow t-card t-flex t-flex-col t-items-center t-justify-center t-p-xs">
+                            <div class="t-text-xs t-font-bold">C: <span id="cDisplay">56</span>%</div>
+                            <div class="t-text-xs t-font-bold">M: <span id="mDisplay">55</span>%</div>
+                            <div class="t-text-xs t-font-bold">Y: <span id="yDisplay">0</span>%</div>
+                            <div class="t-text-xs t-font-bold">K: <span id="kDisplay">5</span>%</div>
                         </div>
                     </div>
                     
@@ -330,10 +330,10 @@ function initGenerator(type, options) {
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-md t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">How to Use</h2>
-            <div class="t-grid md:grid-cols-3 t-gap-lg">
+            <div class="t-grid t-grid-md-3 t-gap-lg">
                 <div class="t-text-center">
                     <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">1</div>
                     <h3 class="t-font-semibold t-mb-sm">Enter CMYK</h3>
@@ -353,23 +353,23 @@ function initGenerator(type, options) {
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">Related Tools</h2>
             <div class="t-grid t-grid-md-2 t-gap-md">
-                <a href="/en/rgb-to-cmyk/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+                <a href="/en/rgb-to-cmyk/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                     <span class="t-text-2xl">🖨️</span>
                     <span class="t-font-medium">RGB to CMYK Converter</span>
                 </a>
-                <a href="/en/hex-to-rgb/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+                <a href="/en/hex-to-rgb/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                     <span class="t-text-2xl">🎨</span>
                     <span class="t-font-medium">HEX to RGB Converter</span>
                 </a>
-                <a href="/en/rgb-to-hex/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+                <a href="/en/rgb-to-hex/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                     <span class="t-text-2xl">🎨</span>
                     <span class="t-font-medium">RGB to HEX Converter</span>
                 </a>
-                <a href="/en/hex-to-hsl/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+                <a href="/en/hex-to-hsl/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                     <span class="t-text-2xl">🌈</span>
                     <span class="t-font-medium">HEX to HSL Converter</span>
                 </a>
@@ -377,7 +377,7 @@ function initGenerator(type, options) {
         </div>
     </section>
 
-    <footer class="bg-gray-900 t-text-primary t-py-lg">
+    <footer class="t-surface t-text-primary">
         <div class="t-container t-container t-px-md t-text-center">
             <p class="t-text-muted-light">© 2025 205-Tools - Free</p>
         </div>

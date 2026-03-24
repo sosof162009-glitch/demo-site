@@ -16,7 +16,7 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
 </head>
 <body>
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/en/" class="t-text-2xl t-font-bold">205-Tools</a>
@@ -25,47 +25,47 @@
         </div>
     </header>
 
-    <section class="t-text-primary py-16">
+    <section class="t-text-primary t-py-2xl">
         <div class="t-container-sm t-container t-px-md t-text-center">
-            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">⚙️ Web</span>
+            <span class="t-inline-block t-px-sm t-py-xs t-rounded-full t-text-sm t-mb-md">⚙️ Web</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">Htaccess Generator</h1>
             <p class="t-text-xl">Generate Apache .htaccess rules</p>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-sm t-container t-px-md">
-            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
+            <div class="t-card t-rounded-xl t-shadow-lg t-p-xl">
                 <h3 class="t-font-semibold t-mb-md">Select Options</h3>
                 
-                <div class="space-y-4 t-mb-xl">
+                <div class="t-space-y-md t-mb-xl">
                     <div class="t-flex t-items-center">
-                        <input type="checkbox" id="rewriteEngine" checked class="mr-3">
+                        <input type="checkbox" id="rewriteEngine" checked class="t-mr-sm">
                         <label>Enable RewriteEngine</label>
                     </div>
                     
                     <div class="t-flex t-items-center">
-                        <input type="checkbox" id="wwwRedirect" class="mr-3">
+                        <input type="checkbox" id="wwwRedirect" class="t-mr-sm">
                         <label>Redirect www to non-www (or vice versa)</label>
                     </div>
                     
                     <div class="t-flex t-items-center">
-                        <input type="checkbox" id="httpsRedirect" class="mr-3">
+                        <input type="checkbox" id="httpsRedirect" class="t-mr-sm">
                         <label>Force HTTPS</label>
                     </div>
                     
                     <div class="t-flex t-items-center">
-                        <input type="checkbox" id="gzip" checked class="mr-3">
+                        <input type="checkbox" id="gzip" checked class="t-mr-sm">
                         <label>Enable Gzip Compression</label>
                     </div>
                     
                     <div class="t-flex t-items-center">
-                        <input type="checkbox" id="browserCache" checked class="mr-3">
+                        <input type="checkbox" id="browserCache" checked class="t-mr-sm">
                         <label>Enable Browser Caching</label>
                     </div>
                     
                     <div class="t-flex t-items-center">
-                        <input type="checkbox" id="disableIndexes" checked class="mr-3">
+                        <input type="checkbox" id="disableIndexes" checked class="t-mr-sm">
                         <label>Disable Directory Indexing</label>
                     </div>
                 </div>
@@ -76,12 +76,12 @@
 
                 <div class="t-rounded t-p-lg t-mb-xl">
                     <label class="t-block t-text-sm t-font-medium t-mb-sm">Generated .htaccess</label>
-                    <textarea id="output" rows="20" readonly class="t-w-full p-3 t-rounded border t-font-mono t-text-xs"></textarea>
+                    <textarea id="output" rows="20" readonly class="t-w-full t-p-sm t-rounded t-border t-font-mono t-text-xs"></textarea>
                 </div>
 
                 <div class="t-flex t-gap-md">
-                    <button onclick="copyResult()" class="flex-1 t-py-sm bg-indigo-500 t-text-primary t-rounded-lg t-font-medium t-transition">Copy</button>
-                    <button onclick="downloadFile()" class="flex-1 t-py-sm bg-green-500 t-text-primary t-rounded-lg t-font-medium t-transition">Download .htaccess</button>
+                    <button onclick="copyResult()" class="t-flex-1 t-py-sm t-text-primary t-rounded-lg t-font-medium t-transition">Copy</button>
+                    <button onclick="downloadFile()" class="t-flex-1 t-py-sm t-text-primary t-rounded-lg t-font-medium t-transition">Download .htaccess</button>
                 </div>
             </div>
         </div>

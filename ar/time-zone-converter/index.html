@@ -22,7 +22,7 @@
       let html = '';
       cities.forEach(c => {
         const time = d.toLocaleTimeString('en-US', {timeZone: c.z, hour: '2-digit', minute: '2-digit'});
-        html += '<div class="t-flex t-justify-between t-p-xs card t-rounded-sm"><span>' + c.n + '</span><span class="t-font-bold">' + time + '</span></div>';
+        html += '<div class="t-flex t-justify-between t-p-xs t-card t-rounded-sm"><span>' + c.n + '</span><span class="t-font-bold">' + time + '</span></div>';
       });
       document.getElementById('result').innerHTML = html;
       document.getElementById('result').classList.remove('hidden');
@@ -31,10 +31,10 @@
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-md t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">كيفية الاستخدام</h2>
-            <div class="t-grid md:grid-cols-3 t-gap-lg">
+            <div class="t-grid t-grid-md-3 t-gap-lg">
                 <div class="t-text-center">
                     <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">1</div>
                     <h3 class="t-font-semibold t-mb-sm">اختر ملفك</h3>
@@ -54,10 +54,10 @@
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">لماذا تستخدم أدواتنا</h2>
-            <div class="t-grid t-grid-md-4 gap-6">
+            <div class="t-grid t-grid-md-4 t-gap-lg">
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">🔒</div><h3 class="t-font-semibold t-mb-sm">آمن</h3></div>
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">⚡</div><h3 class="t-font-semibold t-mb-sm">سريع</h3></div>
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">🆓</div><h3 class="t-font-semibold t-mb-sm">مجاني</h3></div>
@@ -66,30 +66,30 @@
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">أدوات ذات صلة</h2>
             <div class="t-grid t-grid-md-2 t-gap-md">
-            <a href="/ar/unix-timestamp-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/ar/unix-timestamp-converter/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">⏰</span>
                 <span class="t-font-medium">Unix Timestamp Converter</span>
             </a>
-            <a href="/ar/date-difference-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/ar/date-difference-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">📅</span>
                 <span class="t-font-medium">Date Difference Calculator</span>
             </a>
-            <a href="/ar/age-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/ar/age-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">🎂</span>
                 <span class="t-font-medium">Age Calculator</span>
             </a>
-            <a href="/ar/days-until-date/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/ar/days-until-date/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">📆</span>
                 <span class="t-font-medium">Days Until Date Counter</span>
             </a></div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 t-text-primary t-py-lg">
+    <footer class="t-surface t-text-primary">
         <div class="t-container t-container t-px-md t-text-center">
             <p class="t-text-muted-light">© 2025 205-أدوات - مجاني</p>
         </div>

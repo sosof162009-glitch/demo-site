@@ -538,6 +538,144 @@ select:focus {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   Additional Spacing
+   ═══════════════════════════════════════════════════════════════ */
+.t-p-sm { padding: var(--space-sm); }
+.t-p-2xl { padding: var(--space-2xl); }
+.t-px-sm { padding-left: var(--space-sm); padding-right: var(--space-sm); }
+.t-px-lg { padding-left: var(--space-lg); padding-right: var(--space-lg); }
+.t-px-xl { padding-left: var(--space-xl); padding-right: var(--space-xl); }
+.t-py-2xl { padding-top: var(--space-2xl); padding-bottom: var(--space-2xl); }
+.t-mt-lg { margin-top: var(--space-lg); }
+.t-mt-xl { margin-top: var(--space-xl); }
+.t-mr-sm { margin-right: var(--space-sm); }
+.t-space-y-sm > * + * { margin-top: var(--space-sm); }
+.t-space-y-md > * + * { margin-top: var(--space-md); }
+.t-space-y-lg > * + * { margin-top: var(--space-lg); }
+
+/* ═══════════════════════════════════════════════════════════════
+   Additional Flexbox
+   ═══════════════════════════════════════════════════════════════ */
+.t-flex-1 { flex: 1; }
+.t-flex-wrap { flex-wrap: wrap; }
+.t-flex-shrink-0 { flex-shrink: 0; }
+.t-items-end { align-items: flex-end; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Additional Grid
+   ═══════════════════════════════════════════════════════════════ */
+.t-grid-7 { grid-template-columns: repeat(7, 1fr); }
+.t-col-span-1 { grid-column: span 1; }
+.t-col-span-2 { grid-column: span 2; }
+
+@media (min-width: 768px) {
+  .t-grid-md-3 { grid-template-columns: repeat(3, 1fr); }
+  .t-flex-sm-row { flex-direction: row; }
+}
+
+@media (min-width: 1024px) {
+  .t-grid-lg-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Additional Colors
+   ═══════════════════════════════════════════════════════════════ */
+.t-text-error { color: var(--error); }
+.t-text-success { color: var(--success); }
+.t-text-warning { color: var(--warning); }
+.t-text-success-light { color: rgba(34, 197, 94, 0.8); }
+.t-border-error { border-color: var(--error); }
+
+.t-state-purple { background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.3); }
+.t-state-pink { background: rgba(236, 72, 153, 0.12); border-color: rgba(236, 72, 153, 0.3); }
+.t-state-success-light { background: rgba(34, 197, 94, 0.06); }
+.t-state-warning-light { background: rgba(245, 158, 11, 0.06); }
+.t-state-info-light { background: rgba(79, 142, 247, 0.06); }
+.t-state-purple-light { background: rgba(168, 85, 247, 0.06); }
+
+/* ═══════════════════════════════════════════════════════════════
+   Utilities
+   ═══════════════════════════════════════════════════════════════ */
+.t-cursor-pointer { cursor: pointer; }
+.t-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.t-break-all { word-break: break-all; }
+.t-uppercase { text-transform: uppercase; }
+.t-capitalize { text-transform: capitalize; }
+.t-leading-relaxed { line-height: 1.75; }
+.t-resize-none { resize: none; }
+.t-border-none { border: none; }
+.t-border-b { border-bottom: 1px solid var(--border); }
+.t-border-t { border-top: 1px solid var(--border); }
+.t-border-2 { border-width: 2px; }
+.t-border-4 { border-width: 4px; }
+.t-border-dashed { border-style: dashed; }
+.t-opacity-50 { opacity: 0.5; }
+.t-overflow-x-auto { overflow-x: auto; }
+.t-min-w-0 { min-width: 0; }
+.t-bg-transparent { background: transparent; }
+.t-shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); }
+.t-shadow-inner { box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3); }
+
+/* ═══════════════════════════════════════════════════════════════
+   Position
+   ═══════════════════════════════════════════════════════════════ */
+.t-relative { position: relative; }
+.t-absolute { position: absolute; }
+.t-fixed { position: fixed; }
+.t-inset-0 { inset: 0; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Spinner Animation
+   ═══════════════════════════════════════════════════════════════ */
+.t-animate-spin { animation: spin 1s linear infinite; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Upload Zone
+   ═══════════════════════════════════════════════════════════════ */
+.t-upload-zone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.t-upload-zone:hover,
+.t-upload-zone.drag-over {
+  border-color: var(--accent);
+  background: rgba(79, 142, 247, 0.04);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Container XS
+   ═══════════════════════════════════════════════════════════════ */
+.t-container-xs {
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Stat Card Component
+   ═══════════════════════════════════════════════════════════════ */
+.t-stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    Print Styles
    ═══════════════════════════════════════════════════════════════ */
 @media print {

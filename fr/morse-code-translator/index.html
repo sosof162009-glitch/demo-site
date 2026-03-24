@@ -213,10 +213,10 @@ function initTextAnalyzer() {
 </head>
 <body>
     <!-- Header -->
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
-                <a href="/fr/" class="t-text-2xl t-font-bold from-emerald-500 to-cyan-500">
+                <a href="/fr/" class="t-text-2xl t-font-bold">
                     205-Tools
                 </a>
                 <div class="t-flex t-items-center t-gap-md">
@@ -232,31 +232,31 @@ function initTextAnalyzer() {
     </header>
 
     <!-- Hero -->
-    <section class="from-emerald-500 via-teal-500 to-cyan-500 t-text-primary py-10">
+    <section class="t-text-primary t-py-lg">
         <div class="t-container-md t-container t-px-md t-text-center">
             <span class="t-inline-block t-px-md t-py-xs t-rounded-full t-text-sm t-mb-sm">📝 Text</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-sm">Morse Code Translator</h1>
-            <p class="t-text-lg max-w-2xl t-container">Translates text to Morse code and Morse code back to text.</p>
+            <p class="t-text-lg t-container-xs t-container">Translates text to Morse code and Morse code back to text.</p>
         </div>
     </section>
 
     <!-- Main Interface -->
-    <section class="t-py-lg">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             
             <!-- Editor Area -->
-            <div class="t-grid lg:grid-cols-3 gap-6">
+            <div class="t-grid t-grid-lg-3 t-gap-lg">
                 
                 <!-- Main Editor -->
-                <div class="lg:col-span-2">
-                    <div class="editor-container">
-                        <div class="t-flex t-items-center t-justify-between t-px-md t-py-sm border-b">
+                <div class="t-col-span-2">
+                    <div>
+                        <div class="t-flex t-items-center t-justify-between t-px-md t-py-sm t-border-b">
                             <span class="t-text-sm t-font-medium">Enter your text</span>
                             <div class="t-flex t-gap-sm">
-                                <button onclick="pasteText()" class="t-text-sm px-3 t-py-xs t-rounded-sm t-transition-colors">
+                                <button onclick="pasteText()" class="t-text-sm t-px-sm t-py-xs t-rounded-sm t-transition-colors">
                                     📋 Paste
                                 </button>
-                                <button onclick="clearText()" class="t-text-sm px-3 t-py-xs bg-red-100 text-red-600 t-rounded-sm t-transition-colors">
+                                <button onclick="clearText()" class="t-text-sm t-px-sm t-py-xs t-state-error t-text-error t-rounded-sm t-transition-colors">
                                     🗑️ Clear
                                 </button>
                             </div>
@@ -265,13 +265,13 @@ function initTextAnalyzer() {
                         <textarea 
                             id="textInput" 
                             placeholder="Type or paste your text here..."
-                            class="t-w-full h-80 t-p-md bg-transparent border-none resize-none t-text-base leading-relaxed"
+                            class="t-w-full t-p-md t-bg-transparent t-border-none t-resize-none t-text-base t-leading-relaxed"
                         ></textarea>
                         
-                        <div class="t-flex t-items-center t-justify-between t-px-md t-py-sm border-t t-text-sm">
+                        <div class="t-flex t-items-center t-justify-between t-px-md t-py-sm t-border-t t-text-sm">
                             <span id="lastUpdated">Ready</span>
-                            <button onclick="copyResult()" id="copyBtn" class="t-flex t-items-center gap-1 px-3 t-py-xs bg-emerald-100 t-rounded-sm t-transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button onclick="copyResult()" id="copyBtn" class="t-flex t-items-center t-gap-xs t-px-sm t-py-xs t-state-success t-rounded-sm t-transition-colors">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                                 </svg>
                                 Copy
@@ -280,24 +280,24 @@ function initTextAnalyzer() {
                     </div>
 
                     <!-- Quick Actions -->
-                    <div class="t-mt-md t-flex flex-wrap gap-3">
+                    <div class="t-mt-md t-flex t-flex-wrap t-gap-md">
                         
                     </div>
                 </div>
 
                 <!-- Stats Panel -->
-                <div class="lg:col-span-1">
-                    <div class="card t-rounded-xl t-shadow-lg t-p-lg t-site-header top-24">
+                <div class="t-col-span-1">
+                    <div class="t-card t-rounded-xl t-shadow-lg t-p-lg t-site-header">
                         <h3 class="t-text-lg t-font-semibold t-mb-md t-flex t-items-center t-gap-sm">
-                            <svg class="text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="t-text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                             </svg>
                             Statistics
                         </h3>
                         
-                        <div class="space-y-3">
+                        <div class="t-space-y-md">
                             <!-- Word Count -->
-                            <div class="stat-card t-p-md t-rounded-lg">
+                            <div class="t-stat-card t-p-md t-rounded-lg">
                                 <div class="t-flex t-items-center t-justify-between">
                                     <span class="t-text-sm t-text-muted">Words</span>
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -308,7 +308,7 @@ function initTextAnalyzer() {
                             </div>
 
                             <!-- Character Count -->
-                            <div class="stat-card t-p-md t-rounded-lg">
+                            <div class="t-stat-card t-p-md t-rounded-lg">
                                 <div class="t-flex t-items-center t-justify-between">
                                     <span class="t-text-sm t-text-muted">Characters</span>
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,7 +319,7 @@ function initTextAnalyzer() {
                             </div>
 
                             <!-- Characters (no spaces) -->
-                            <div class="stat-card t-p-md t-rounded-lg">
+                            <div class="t-stat-card t-p-md t-rounded-lg">
                                 <div class="t-flex t-items-center t-justify-between">
                                     <span class="t-text-sm t-text-muted">Without spaces</span>
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -330,7 +330,7 @@ function initTextAnalyzer() {
                             </div>
 
                             <!-- Sentences -->
-                            <div class="stat-card t-p-md t-rounded-lg">
+                            <div class="t-stat-card t-p-md t-rounded-lg">
                                 <div class="t-flex t-items-center t-justify-between">
                                     <span class="t-text-sm t-text-muted">Sentences</span>
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -341,7 +341,7 @@ function initTextAnalyzer() {
                             </div>
 
                             <!-- Paragraphs -->
-                            <div class="stat-card t-p-md t-rounded-lg">
+                            <div class="t-stat-card t-p-md t-rounded-lg">
                                 <div class="t-flex t-items-center t-justify-between">
                                     <span class="t-text-sm t-text-muted">Paragraphs</span>
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -352,18 +352,18 @@ function initTextAnalyzer() {
                             </div>
 
                             <!-- Reading Time -->
-                            <div class="stat-card warning t-p-md t-rounded-lg">
+                            <div class="t-stat-card warning t-p-md t-rounded-lg">
                                 <div class="t-flex t-items-center t-justify-between">
                                     <span class="t-text-sm t-text-muted">Reading time</span>
-                                    <svg class="text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="t-text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                 </div>
-                                <p class="t-text-3xl t-font-bold text-amber-600 t-mt-xs" id="readingTime">0s</p>
+                                <p class="t-text-3xl t-font-bold t-text-warning t-mt-xs" id="readingTime">0s</p>
                             </div>
 
                             <!-- Speaking Time -->
-                            <div class="stat-card t-p-md t-rounded-lg">
+                            <div class="t-stat-card t-p-md t-rounded-lg">
                                 <div class="t-flex t-items-center t-justify-between">
                                     <span class="t-text-sm t-text-muted">Speaking time</span>
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -382,8 +382,8 @@ function initTextAnalyzer() {
     </section>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 t-py-sm bg-gray-900 t-text-primary t-rounded-lg shadow-2xl t-hidden t-items-center t-gap-sm">
-        <svg class="text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div id="toast" class="t-fixed t-px-lg t-py-sm t-surface t-text-primary t-rounded-lg t-shadow-2xl t-hidden t-items-center t-gap-sm">
+        <svg class="t-text-success-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
         </svg>
         <span id="toastMessage">Copied!</span>

@@ -215,13 +215,13 @@ function initCalculator(type) {
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
 </head>
 <body>
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/en/" class="t-flex t-items-center t-space-x-sm">
                     <span class="t-text-2xl t-font-bold">205-Tools</span>
                 </a>
-                <div class="t-hidden md:flex t-items-center t-space-x-lg">
+                <div class="t-hidden t-items-center t-space-x-lg">
                     <a href="/en/" class="t-text-muted">Home</a>
                 </div>
                 
@@ -229,26 +229,26 @@ function initCalculator(type) {
         </div>
     </header>
 
-    <section class="t-text-primary py-16">
+    <section class="t-text-primary t-py-2xl">
         <div class="t-container-sm t-container t-px-md t-text-center">
-            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">🔢 Math</span>
+            <span class="t-inline-block t-px-sm t-py-xs t-rounded-full t-text-sm t-mb-md">🔢 Math</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">Hex to Decimal</h1>
             <p class="t-text-xl">Free • Fast • Secure</p>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-sm t-container t-px-md">
-            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
+            <div class="t-card t-rounded-xl t-shadow-lg t-p-xl">
                 <div class="t-text-center t-mb-xl">
                     <div class="t-text-6xl t-mb-md">🔢</div>
                     <p class="t-text-muted">Converts hexadecimal (base 16) numbers to decimal with step-by-step explanation.</p>
                 </div>
                 
-                <div class="t-grid md:grid-cols-1 gap-6 t-mb-xl">
+                <div class="t-grid t-gap-lg t-mb-xl">
                     <div class="t-rounded t-p-md">
                         <label class="t-block t-text-sm t-font-medium t-mb-sm">Hexadecimal Number</label>
-                        <input type="text" id="hexInput" class="t-w-full p-3 t-rounded border t-font-mono uppercase" placeholder="e.g. 2A or FF">
+                        <input type="text" id="hexInput" class="t-w-full t-p-sm t-rounded t-border t-font-mono t-uppercase" placeholder="e.g. 2A or FF">
                         <p class="t-text-xs t-mt-xs">Enter hex digits (0-9, A-F)</p>
                     </div>
                 </div>
@@ -257,31 +257,31 @@ function initCalculator(type) {
                     Convert to Decimal
                 </button>
 
-                <div id="result" class="t-hidden mt-8">
-                    <div class="t-p-lg bg-green-50 t-rounded-lg t-text-center t-mb-lg">
+                <div id="result" class="t-hidden t-mt-xl">
+                    <div class="t-p-lg t-state-success-light t-rounded-lg t-text-center t-mb-lg">
                         <p class="t-text-muted t-mb-sm">Decimal Value</p>
-                        <p class="t-text-3xl t-font-bold text-green-600" id="resultValue">-</p>
-                        <button onclick="copyResult()" class="t-mt-md t-px-md py-2 bg-indigo-500 t-text-primary t-rounded t-text-sm">Copy Result</button>
+                        <p class="t-text-3xl t-font-bold t-text-success" id="resultValue">-</p>
+                        <button onclick="copyResult()" class="t-mt-md t-px-md t-py-xs t-text-primary t-rounded t-text-sm">Copy Result</button>
                     </div>
                     
                     <div class="t-rounded t-p-md">
                         <h3 class="t-font-semibold t-mb-sm">Conversion Breakdown</h3>
-                        <div id="breakdown" class="t-text-sm space-y-1 t-font-mono"></div>
+                        <div id="breakdown" class="t-text-sm t-font-mono"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">Related Tools</h2>
             <div class="t-grid t-grid-md-2 t-gap-md">
-                <a href="/en/decimal-to-hex/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+                <a href="/en/decimal-to-hex/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                     <span class="t-text-2xl">🔢</span>
                     <span class="t-font-medium">Decimal to Hex</span>
                 </a>
-                <a href="/en/binary-to-decimal/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+                <a href="/en/binary-to-decimal/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                     <span class="t-text-2xl">🔢</span>
                     <span class="t-font-medium">Binary to Decimal</span>
                 </a>
@@ -289,7 +289,7 @@ function initCalculator(type) {
         </div>
     </section>
 
-    <footer class="bg-gray-900 t-text-primary t-py-lg">
+    <footer class="t-surface t-text-primary">
         <div class="t-container t-container t-px-md t-text-center">
             <p class="t-text-muted-light">© 2025 205-Tools - Free</p>
         </div>

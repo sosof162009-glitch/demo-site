@@ -100,7 +100,7 @@ function initImageConverter(inputFormat, outputFormat) {
 
         const btn = document.querySelector('button[onclick="processImage()"]');
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<svg class="animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
+        btn.innerHTML = '<svg class="t-animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
         btn.disabled = true;
 
         setTimeout(() => {
@@ -238,10 +238,10 @@ function initImageConverter(inputFormat, outputFormat) {
 </head>
 <body>
     <!-- Header -->
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
-                <a href="/ar/" class="t-text-2xl t-font-bold from-blue-500">
+                <a href="/ar/" class="t-text-2xl t-font-bold">
                     205-Tools
                 </a>
                 <div class="t-flex t-items-center t-gap-md">
@@ -257,31 +257,31 @@ function initImageConverter(inputFormat, outputFormat) {
     </header>
 
     <!-- Hero -->
-    <section class="from-blue-600 via-purple-600 t-text-primary t-py-xl">
+    <section class="t-text-primary">
         <div class="t-container-md t-container t-px-md t-text-center">
-            <span class="t-inline-block t-px-md t-py-xs t-rounded-full t-text-sm t-mb-md backdrop-blur-sm">
+            <span class="t-inline-block t-px-md t-py-xs t-rounded-full t-text-sm t-mb-md">
                 🎬 الصور
             </span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">GIF to PNG Converter</h1>
-            <p class="t-text-xl max-w-2xl t-container">Converts GIF images to PNG format with transparency support.</p>
+            <p class="t-text-xl t-container-xs t-container">Converts GIF images to PNG format with transparency support.</p>
         </div>
     </section>
 
     <!-- Main Tool Interface -->
-    <section class="t-py-lg">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             
             <!-- Step 1: Upload -->
-            <div id="uploadStep" class="card t-rounded-xl t-shadow-lg t-p-xl t-mb-lg">
-                <div class="upload-zone t-rounded-xl p-12 t-text-center cursor-pointer" id="dropZone">
-                    <div class="w-20 h-20 t-container t-mb-lg bg-blue-100 t-rounded-xl t-flex t-items-center t-justify-center">
-                        <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div id="uploadStep" class="t-card t-rounded-xl t-shadow-lg t-p-xl t-mb-lg">
+                <div class="t-upload-zone t-rounded-xl t-p-2xl t-text-center t-cursor-pointer" id="dropZone">
+                    <div class="t-container t-mb-lg t-state-info t-rounded-xl t-flex t-items-center t-justify-center">
+                        <svg class="t-text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
                     <h3 class="t-text-xl t-font-semibold t-mb-sm">ارفع صورتك</h3>
                     <p class="t-mb-md">اسحب وأفلت صورتك هنا</p>
-                    <button class="px-6 t-py-sm bg-blue-500 t-text-primary t-rounded-lg t-font-medium t-transition-colors">
+                    <button class="t-px-lg t-py-sm t-text-primary t-rounded-lg t-font-medium t-transition-colors">
                         استعراض الملفات
                     </button>
                     <input type="file" class="t-hidden" id="fileInput" accept=".gif,image/gif">
@@ -291,15 +291,15 @@ function initImageConverter(inputFormat, outputFormat) {
             <!-- Step 2: Preview & Controls -->
             <div id="previewStep" class="t-hidden">
                 <!-- Preview Area -->
-                <div class="card t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                <div class="t-card t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
                     <div class="t-flex t-items-center t-justify-between t-mb-md">
                         <h3 class="t-text-lg t-font-semibold">معاينة</h3>
-                        <button onclick="resetTool()" class="t-text-sm text-red-500">
+                        <button onclick="resetTool()" class="t-text-sm t-text-error">
                             إزالة
                         </button>
                     </div>
-                    <div class="preview-container t-p-md">
-                        <img id="imagePreview" class="image-preview t-container" src="" alt="Preview">
+                    <div class="t-p-md">
+                        <img id="imagePreview" class="t-container" src="" alt="Preview">
                     </div>
                     <div class="t-mt-md t-flex t-items-center t-justify-between t-text-sm">
                         <span id="fileInfo">filename.jpg • 2.5 MB</span>
@@ -308,17 +308,17 @@ function initImageConverter(inputFormat, outputFormat) {
                 </div>
 
                 <!-- Controls -->
-                <div class="card t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
+                <div class="t-card t-rounded-xl t-shadow-lg t-p-lg t-mb-lg">
                     <h3 class="t-text-lg t-font-semibold t-mb-md">إعدادات التحويل</h3>
                     
                     <!-- Output Format -->
                     <div class="t-mb-lg">
                         <label class="t-block t-text-sm t-font-medium t-mb-sm">صيغة الإخراج</label>
-                        <div class="t-flex flex-wrap t-gap-sm" id="formatButtons">
+                        <div class="t-flex t-flex-wrap t-gap-sm" id="formatButtons">
                             
-    <button class="format-btn t-px-md py-2 border-2 t-rounded t-font-medium t-transition" data-format="png">PNG</button>
-    <button class="format-btn t-px-md py-2 border-2 t-rounded t-font-medium t-transition" data-format="jpg">JPG</button>
-    <button class="format-btn t-px-md py-2 border-2 t-rounded t-font-medium t-transition" data-format="webp">WebP</button>
+    <button class="t-px-md t-py-xs t-border-2 t-rounded t-font-medium t-transition" data-format="png">PNG</button>
+    <button class="t-px-md t-py-xs t-border-2 t-rounded t-font-medium t-transition" data-format="jpg">JPG</button>
+    <button class="t-px-md t-py-xs t-border-2 t-rounded t-font-medium t-transition" data-format="webp">WebP</button>
   
                         </div>
                     </div>
@@ -327,9 +327,9 @@ function initImageConverter(inputFormat, outputFormat) {
                     <div class="t-mb-lg">
                         <div class="t-flex t-items-center t-justify-between t-mb-sm">
                             <label class="t-text-sm t-font-medium">الجودة</label>
-                            <span id="qualityValue" class="t-text-sm text-blue-500 t-font-semibold">90%</span>
+                            <span id="qualityValue" class="t-text-sm t-text-accent t-font-semibold">90%</span>
                         </div>
-                        <input type="range" min="1" max="100" value="90" class="control-slider" id="qualitySlider">
+                        <input type="range" min="1" max="100" value="90" id="qualitySlider">
                         <div class="t-flex t-justify-between t-text-xs t-text-muted-light t-mt-xs">
                             <span>منخفضة</span>
                             <span>عالية</span>
@@ -340,8 +340,8 @@ function initImageConverter(inputFormat, outputFormat) {
                     <div class="t-grid t-grid-md-2 t-gap-md">
                         
     <div>
-      <label class="t-flex t-items-center t-gap-sm cursor-pointer">
-        <input type="checkbox" id="maintainRatio" checked class="text-blue-500 t-rounded-sm">
+      <label class="t-flex t-items-center t-gap-sm t-cursor-pointer">
+        <input type="checkbox" id="maintainRatio" checked class="t-text-accent t-rounded-sm">
         <span>الحفاظ على نسبة العرض للارتفاع</span>
       </label>
     </div>
@@ -350,7 +350,7 @@ function initImageConverter(inputFormat, outputFormat) {
                 </div>
 
                 <!-- Action Button -->
-                <button onclick="processImage()" class="t-w-full t-py-md from-blue-500 t-text-primary t-rounded-lg t-font-semibold t-text-lg t-hover-shadow t-transition t-flex t-items-center t-justify-center t-gap-sm">
+                <button onclick="processImage()" class="t-w-full t-py-md t-text-primary t-rounded-lg t-font-semibold t-text-lg t-hover-shadow t-transition t-flex t-items-center t-justify-center t-gap-sm">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                     </svg>
@@ -360,23 +360,23 @@ function initImageConverter(inputFormat, outputFormat) {
 
             <!-- Step 3: Result -->
             <div id="resultStep" class="t-hidden">
-                <div class="card t-rounded-xl t-shadow-lg t-p-xl t-text-center">
-                    <div class="t-container t-mb-md bg-green-100 t-rounded-full t-flex t-items-center t-justify-center">
-                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="t-card t-rounded-xl t-shadow-lg t-p-xl t-text-center">
+                    <div class="t-container t-mb-md t-state-success t-rounded-full t-flex t-items-center t-justify-center">
+                        <svg class="t-text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                     </div>
                     <h3 class="t-text-2xl t-font-bold t-mb-sm">اكتمل التحويل!</h3>
                     <p class="t-mb-lg">تم تحويل صورتك بنجاح.</p>
                     
-                    <div class="t-flex t-flex-col sm:flex-row t-gap-md t-justify-center">
-                        <a id="downloadLink" href="#" class="px-8 t-py-sm bg-green-500 t-text-primary t-rounded-lg t-font-semibold t-transition-colors t-flex t-items-center t-justify-center t-gap-sm">
+                    <div class="t-flex t-flex-col t-flex-sm-row t-gap-md t-justify-center">
+                        <a id="downloadLink" href="#" class="t-px-xl t-py-sm t-text-primary t-rounded-lg t-font-semibold t-transition-colors t-flex t-items-center t-justify-center t-gap-sm">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                             </svg>
                             تحميل
                         </a>
-                        <button onclick="resetTool()" class="px-8 t-py-sm t-rounded-lg t-font-medium t-transition-colors">
+                        <button onclick="resetTool()" class="t-px-xl t-py-sm t-rounded-lg t-font-medium t-transition-colors">
                             تحويل أخرى
                         </button>
                     </div>
@@ -387,22 +387,22 @@ function initImageConverter(inputFormat, outputFormat) {
     </section>
 
     <!-- How to Use -->
-    <section class="t-py-lg">
+    <section>
         <div class="t-container-sm t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">كيفية الاستخدام</h2>
-            <div class="t-grid md:grid-cols-3 gap-6">
+            <div class="t-grid t-grid-md-3 t-gap-lg">
                 <div class="t-text-center">
-                    <div class="w-12 h-12 t-container t-mb-md bg-blue-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">1</div>
+                    <div class="t-container t-mb-md t-state-info t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">1</div>
                     <h3 class="t-font-semibold t-mb-sm">الرفع</h3>
                     <p class="t-text-sm">اختر ملف الصورة</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="w-12 h-12 t-container t-mb-md bg-purple-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">2</div>
+                    <div class="t-container t-mb-md t-state-purple t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">2</div>
                     <h3 class="t-font-semibold t-mb-sm">التعديل</h3>
                     <p class="t-text-sm">ضبط الجودة وصيغة الإخراج</p>
                 </div>
                 <div class="t-text-center">
-                    <div class="w-12 h-12 t-container t-mb-md bg-pink-100 t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">3</div>
+                    <div class="t-container t-mb-md t-state-pink t-rounded-lg t-flex t-items-center t-justify-center t-text-xl">3</div>
                     <h3 class="t-font-semibold t-mb-sm">التحميل</h3>
                     <p class="t-text-sm">احصل على الصورة المحولة</p>
                 </div>
@@ -482,7 +482,7 @@ function initImageConverter(inputFormat, outputFormat) {
             // Show processing state
             const btn = document.querySelector('button[onclick="processImage()"]');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<svg class="animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري المعالجة...';
+            btn.innerHTML = '<svg class="t-animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري المعالجة...';
             btn.disabled = true;
 
             // Simulate processing (replace with actual logic)

@@ -17,7 +17,7 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
 </head>
 <body>
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/en/" class="t-text-2xl t-font-bold">205-Tools</a>
@@ -26,44 +26,44 @@
         </div>
     </header>
 
-    <section class="t-text-primary py-16">
+    <section class="t-text-primary t-py-2xl">
         <div class="t-container-sm t-container t-px-md t-text-center">
-            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">📊 Data</span>
+            <span class="t-inline-block t-px-sm t-py-xs t-rounded-full t-text-sm t-mb-md">📊 Data</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">Pie Chart Maker</h1>
             <p class="t-text-xl">Create pie charts</p>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-sm t-container t-px-md">
-            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
+            <div class="t-card t-rounded-xl t-shadow-lg t-p-xl">
                 <div class="t-grid t-grid-md-2 t-gap-lg">
                     <div>
                         <h3 class="t-font-semibold t-mb-md">Chart Data</h3>
                         
                         <div class="t-mb-md">
                             <label class="t-block t-text-sm t-font-medium t-mb-sm">Chart Title</label>
-                            <input type="text" id="chartTitle" value="My Pie Chart" class="t-w-full p-3 t-rounded border">
+                            <input type="text" id="chartTitle" value="My Pie Chart" class="t-w-full t-p-sm t-rounded t-border">
                         </div>
 
                         <div id="dataRows">
                             <div class="t-flex t-gap-sm t-mb-sm">
-                                <input type="text" placeholder="Label" class="data-label flex-1 t-p-xs t-rounded border">
-                                <input type="number" placeholder="Value" class="data-value w-24 t-p-xs t-rounded border">
+                                <input type="text" placeholder="Label" class="t-flex-1 t-p-xs t-rounded t-border">
+                                <input type="number" placeholder="Value" class="t-p-xs t-rounded t-border">
                             </div>
                             <div class="t-flex t-gap-sm t-mb-sm">
-                                <input type="text" placeholder="Label" class="data-label flex-1 t-p-xs t-rounded border">
-                                <input type="number" placeholder="Value" class="data-value w-24 t-p-xs t-rounded border">
+                                <input type="text" placeholder="Label" class="t-flex-1 t-p-xs t-rounded t-border">
+                                <input type="number" placeholder="Value" class="t-p-xs t-rounded t-border">
                             </div>
                             <div class="t-flex t-gap-sm t-mb-sm">
-                                <input type="text" placeholder="Label" class="data-label flex-1 t-p-xs t-rounded border">
-                                <input type="number" placeholder="Value" class="data-value w-24 t-p-xs t-rounded border">
+                                <input type="text" placeholder="Label" class="t-flex-1 t-p-xs t-rounded t-border">
+                                <input type="number" placeholder="Value" class="t-p-xs t-rounded t-border">
                             </div>
                         </div>
 
-                        <button onclick="addRow()" class="t-mt-sm t-px-md py-2 t-rounded">+ Add Slice</button>
+                        <button onclick="addRow()" class="t-mt-sm t-px-md t-py-xs t-rounded">+ Add Slice</button>
 
-                        <button onclick="createChart()" class="t-w-full mt-6 t-py-md t-text-primary t-rounded-lg t-font-semibold t-text-lg t-hover-shadow t-transition">
+                        <button onclick="createChart()" class="t-w-full t-mt-lg t-py-md t-text-primary t-rounded-lg t-font-semibold t-text-lg t-hover-shadow t-transition">
                             Create Chart
                         </button>
                     </div>
@@ -107,9 +107,9 @@
             const div = document.createElement('div');
             div.className = 'flex gap-2 mb-2';
             div.innerHTML = `
-                <input type="text" placeholder="Label" class="data-label flex-1 t-p-xs t-rounded border">
-                <input type="number" placeholder="Value" class="data-value w-24 t-p-xs t-rounded border">
-                <button onclick="this.parentElement.remove()" class="px-3 py-2 bg-red-500 t-text-primary t-rounded">×</button>
+                <input type="text" placeholder="Label" class="t-flex-1 t-p-xs t-rounded t-border">
+                <input type="number" placeholder="Value" class="t-p-xs t-rounded t-border">
+                <button onclick="this.parentElement.remove()" class="t-px-sm t-py-xs t-text-primary t-rounded">×</button>
             `;
             document.getElementById('dataRows').appendChild(div);
         }

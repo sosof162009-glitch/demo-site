@@ -59,10 +59,10 @@ function initWhatsAppGenerator() {
         
         const link = `https://wa.me/${phone}${message ? '?text=' + message : ''}`;
         resultDiv.innerHTML = `
-            <div class="t-p-md bg-green-50 t-rounded">
+            <div class="t-p-md t-state-success-light t-rounded">
                 <p class="t-font-medium t-mb-sm">Your WhatsApp Link:</p>
-                <a href="${link}" target="_blank" class="text-green-600 break-all">${link}</a>
-                <button onclick="navigator.clipboard.writeText('${link}')" class="t-mt-sm t-px-md py-2 bg-green-500 t-text-primary t-rounded-sm">Copy Link</button>
+                <a href="${link}" target="_blank" class="t-text-success t-break-all">${link}</a>
+                <button onclick="navigator.clipboard.writeText('${link}')" class="t-mt-sm t-px-md t-py-xs t-text-primary t-rounded-sm">Copy Link</button>
             </div>
         `;
     };
@@ -207,12 +207,12 @@ function initScreenResolution() {
     function updateResolution() {
         display.innerHTML = `
             <div class="t-grid t-grid-2 t-gap-md">
-                <div class="t-p-md bg-blue-50 t-rounded-sm">Screen Width: ${window.screen.width}px</div>
-                <div class="t-p-md bg-blue-50 t-rounded-sm">Screen Height: ${window.screen.height}px</div>
-                <div class="t-p-md bg-green-50 t-rounded-sm">Window Width: ${window.innerWidth}px</div>
-                <div class="t-p-md bg-green-50 t-rounded-sm">Window Height: ${window.innerHeight}px</div>
-                <div class="t-p-md bg-purple-50 t-rounded-sm">Pixel Ratio: ${window.devicePixelRatio}</div>
-                <div class="t-p-md bg-purple-50 t-rounded-sm">Color Depth: ${window.screen.colorDepth}-bit</div>
+                <div class="t-p-md t-state-info-light t-rounded-sm">Screen Width: ${window.screen.width}px</div>
+                <div class="t-p-md t-state-info-light t-rounded-sm">Screen Height: ${window.screen.height}px</div>
+                <div class="t-p-md t-state-success-light t-rounded-sm">Window Width: ${window.innerWidth}px</div>
+                <div class="t-p-md t-state-success-light t-rounded-sm">Window Height: ${window.innerHeight}px</div>
+                <div class="t-p-md t-state-purple-light t-rounded-sm">Pixel Ratio: ${window.devicePixelRatio}</div>
+                <div class="t-p-md t-state-purple-light t-rounded-sm">Color Depth: ${window.screen.colorDepth}-bit</div>
             </div>
         `;
     }
@@ -236,10 +236,10 @@ function initBrowserInfo() {
         'Touch Support': 'ontouchstart' in window ? 'Yes' : 'No'
     };
     
-    let html = '<div class="space-y-2">';
+    let html = '<div class="t-space-y-sm">';
     for (const [key, value] of Object.entries(info)) {
         html += `
-            <div class="t-flex t-justify-between p-3 t-rounded-sm">
+            <div class="t-flex t-justify-between t-p-sm t-rounded-sm">
                 <span class="t-font-medium">${key}:</span>
                 <span>${value}</span>
             </div>
@@ -273,13 +273,13 @@ function initSpeedTest() {
             const speedMbps = (speedBps / 1024 / 1024).toFixed(2);
             
             result.innerHTML = `
-                <div class="t-p-md bg-green-50 t-rounded-sm t-text-center">
-                    <p class="t-text-2xl t-font-bold text-green-600">${speedMbps} Mbps</p>
+                <div class="t-p-md t-state-success-light t-rounded-sm t-text-center">
+                    <p class="t-text-2xl t-font-bold t-text-success">${speedMbps} Mbps</p>
                     <p class="t-text-sm t-text-muted">Download Speed</p>
                 </div>
             `;
         } catch (err) {
-            result.innerHTML = '<p class="text-red-500">Test failed. Please try again.</p>';
+            result.innerHTML = '<p class="t-text-error">Test failed. Please try again.</p>';
         }
         
         btn.disabled = false;
@@ -308,13 +308,13 @@ function initSpeedTest() {
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
 </head>
 <body>
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/de/" class="t-flex t-items-center t-space-x-sm">
                     <span class="t-text-2xl t-font-bold">205-Tools</span>
                 </a>
-                <div class="t-hidden md:flex t-items-center t-space-x-lg">
+                <div class="t-hidden t-items-center t-space-x-lg">
                     <a href="/de/" class="t-text-muted">Startseite</a>
                 </div>
                 
@@ -322,17 +322,17 @@ function initSpeedTest() {
         </div>
     </header>
 
-    <section class="t-text-primary py-16">
+    <section class="t-text-primary t-py-2xl">
         <div class="t-container-sm t-container t-px-md t-text-center">
-            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">⚡ Spezial</span>
+            <span class="t-inline-block t-px-sm t-py-xs t-rounded-full t-text-sm t-mb-md">⚡ Spezial</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">Internet Speed Test</h1>
             <p class="t-text-xl">Kostenlos • Schnell • Sicher</p>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-sm t-container t-px-md">
-            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
+            <div class="t-card t-rounded-xl t-shadow-lg t-p-xl">
                 <div class="t-text-center t-mb-xl">
                     <div class="t-text-6xl t-mb-md">⚡</div>
                     <p class="t-text-muted">Tests download and upload internet connection speed in browser.</p>
@@ -341,7 +341,7 @@ function initSpeedTest() {
                 <!-- Text Input -->
                 <div class="t-mb-lg">
                     <label class="t-block t-text-sm t-font-medium t-mb-sm">Eingabetext</label>
-                    <textarea id="input" rows="6" class="t-w-full t-p-md t-rounded border t-font-mono t-text-sm" placeholder="Text hier eingeben..."></textarea>
+                    <textarea id="input" rows="6" class="t-w-full t-p-md t-rounded t-border t-font-mono t-text-sm" placeholder="Text hier eingeben..."></textarea>
                 </div>
 
                 <!-- Action Button -->
@@ -352,10 +352,10 @@ function initSpeedTest() {
                 <!-- Output -->
                 <div class="t-mb-md">
                     <label class="t-block t-text-sm t-font-medium t-mb-sm">Ausgabetext</label>
-                    <textarea id="output" rows="6" class="t-w-full t-p-md t-rounded border t-font-mono t-text-sm" readonly></textarea>
+                    <textarea id="output" rows="6" class="t-w-full t-p-md t-rounded t-border t-font-mono t-text-sm" readonly></textarea>
                 </div>
 
-                <button onclick="copyOutput()" class="px-6 t-py-sm t-rounded t-font-medium t-transition">
+                <button onclick="copyOutput()" class="t-px-lg t-py-sm t-rounded t-font-medium t-transition">
                     Kopieren
                 </button>
 
@@ -382,10 +382,10 @@ function initSpeedTest() {
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-md t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">Bedienungsanleitung</h2>
-            <div class="t-grid md:grid-cols-3 t-gap-lg">
+            <div class="t-grid t-grid-md-3 t-gap-lg">
                 <div class="t-text-center">
                     <div class="t-rounded-full t-flex t-items-center t-justify-center t-text-2xl t-container t-mb-md">1</div>
                     <h3 class="t-font-semibold t-mb-sm">Wählen Sie Ihre Datei</h3>
@@ -405,10 +405,10 @@ function initSpeedTest() {
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-2xl">Warum unsere Tools</h2>
-            <div class="t-grid t-grid-md-4 gap-6">
+            <div class="t-grid t-grid-md-4 t-gap-lg">
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">🔒</div><h3 class="t-font-semibold t-mb-sm">Sicher</h3></div>
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">⚡</div><h3 class="t-font-semibold t-mb-sm">Schnell</h3></div>
                 <div class="t-text-center t-p-lg"><div class="t-text-3xl t-mb-sm">🆓</div><h3 class="t-font-semibold t-mb-sm">Kostenlos</h3></div>
@@ -417,30 +417,30 @@ function initSpeedTest() {
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">Verwandte Tools</h2>
             <div class="t-grid t-grid-md-2 t-gap-md">
-            <a href="/de/whatsapp-link-generator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/de/whatsapp-link-generator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">💬</span>
                 <span class="t-font-medium">WhatsApp Link Generator</span>
             </a>
-            <a href="/de/emoji-to-unicode/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/de/emoji-to-unicode/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">😀</span>
                 <span class="t-font-medium">Emoji to Unicode</span>
             </a>
-            <a href="/de/unicode-to-emoji/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/de/unicode-to-emoji/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">😀</span>
                 <span class="t-font-medium">Unicode to Emoji</span>
             </a>
-            <a href="/de/text-to-binary/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+            <a href="/de/text-to-binary/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                 <span class="t-text-2xl">0️⃣</span>
                 <span class="t-font-medium">Text to Binary</span>
             </a></div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 t-text-primary t-py-lg">
+    <footer class="t-surface t-text-primary">
         <div class="t-container t-container t-px-md t-text-center">
             <p class="t-text-muted-light">© 2025 205-Tools - Kostenlos</p>
         </div>

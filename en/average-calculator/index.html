@@ -215,13 +215,13 @@ function initCalculator(type) {
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
 </head>
 <body>
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/en/" class="t-flex t-items-center t-space-x-sm">
                     <span class="t-text-2xl t-font-bold">205-Tools</span>
                 </a>
-                <div class="t-hidden md:flex t-items-center t-space-x-lg">
+                <div class="t-hidden t-items-center t-space-x-lg">
                     <a href="/en/" class="t-text-muted">Home</a>
                 </div>
                 
@@ -229,17 +229,17 @@ function initCalculator(type) {
         </div>
     </header>
 
-    <section class="t-text-primary py-16">
+    <section class="t-text-primary t-py-2xl">
         <div class="t-container-sm t-container t-px-md t-text-center">
-            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">🔢 Math</span>
+            <span class="t-inline-block t-px-sm t-py-xs t-rounded-full t-text-sm t-mb-md">🔢 Math</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">Average Calculator</h1>
             <p class="t-text-xl">Free • Fast • Secure</p>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-sm t-container t-px-md">
-            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
+            <div class="t-card t-rounded-xl t-shadow-lg t-p-xl">
                 <div class="t-text-center t-mb-xl">
                     <div class="t-text-6xl t-mb-md">📐</div>
                     <p class="t-text-muted">Calculate mean, median, mode, range, and standard deviation for a set of numbers.</p>
@@ -247,76 +247,76 @@ function initCalculator(type) {
 
                 <div class="t-mb-lg">
                     <label class="t-block t-text-sm t-font-medium t-mb-sm">Enter Numbers (comma, space, or newline separated)</label>
-                    <textarea id="numbersInput" rows="4" class="t-w-full t-p-md t-rounded border t-font-mono t-text-lg" placeholder="e.g. 5, 10, 15, 20, 25 or&#10;5 10 15 20 25 or&#10;5&#10;10&#10;15"></textarea>
+                    <textarea id="numbersInput" rows="4" class="t-w-full t-p-md t-rounded t-border t-font-mono t-text-lg" placeholder="e.g. 5, 10, 15, 20, 25 or&#10;5 10 15 20 25 or&#10;5&#10;10&#10;15"></textarea>
                 </div>
 
                 <div class="t-flex t-gap-md t-mb-lg">
-                    <button onclick="calculate()" class="flex-1 t-py-md t-text-primary t-rounded-lg t-font-semibold t-text-lg t-hover-shadow t-transition" id="actionBtn">
+                    <button onclick="calculate()" class="t-flex-1 t-py-md t-text-primary t-rounded-lg t-font-semibold t-text-lg t-hover-shadow t-transition" id="actionBtn">
                         Calculate Statistics
                     </button>
-                    <button onclick="clearAll()" class="px-6 t-py-md t-rounded-lg">
+                    <button onclick="clearAll()" class="t-px-lg t-py-md t-rounded-lg">
                         Clear
                     </button>
                 </div>
 
                 <div id="result" class="t-hidden">
-                    <div class="t-grid t-grid-2 md:grid-cols-3 t-gap-md t-mb-lg">
-                        <div class="t-p-md bg-indigo-50 t-rounded-lg t-text-center">
-                            <p class="t-text-xs uppercase">Count</p>
-                            <p class="t-text-2xl t-font-bold text-indigo-600" id="statCount">-</p>
+                    <div class="t-grid t-grid-2 t-grid-md-3 t-gap-md t-mb-lg">
+                        <div class="t-p-md t-state-info-light t-rounded-lg t-text-center">
+                            <p class="t-text-xs t-uppercase">Count</p>
+                            <p class="t-text-2xl t-font-bold t-text-accent" id="statCount">-</p>
                         </div>
-                        <div class="t-p-md bg-blue-50 t-rounded-lg t-text-center">
-                            <p class="t-text-xs uppercase">Sum</p>
-                            <p class="t-text-2xl t-font-bold text-blue-600" id="statSum">-</p>
+                        <div class="t-p-md t-state-info-light t-rounded-lg t-text-center">
+                            <p class="t-text-xs t-uppercase">Sum</p>
+                            <p class="t-text-2xl t-font-bold t-text-accent" id="statSum">-</p>
                         </div>
-                        <div class="t-p-md bg-green-50 t-rounded-lg t-text-center">
-                            <p class="t-text-xs uppercase">Mean (Average)</p>
-                            <p class="t-text-2xl t-font-bold text-green-600" id="statMean">-</p>
+                        <div class="t-p-md t-state-success-light t-rounded-lg t-text-center">
+                            <p class="t-text-xs t-uppercase">Mean (Average)</p>
+                            <p class="t-text-2xl t-font-bold t-text-success" id="statMean">-</p>
                         </div>
-                        <div class="t-p-md bg-yellow-50 t-rounded-lg t-text-center">
-                            <p class="t-text-xs uppercase">Median</p>
-                            <p class="t-text-2xl t-font-bold text-yellow-600" id="statMedian">-</p>
+                        <div class="t-p-md t-state-warning-light t-rounded-lg t-text-center">
+                            <p class="t-text-xs t-uppercase">Median</p>
+                            <p class="t-text-2xl t-font-bold" id="statMedian">-</p>
                         </div>
-                        <div class="t-p-md bg-purple-50 t-rounded-lg t-text-center">
-                            <p class="t-text-xs uppercase">Mode</p>
-                            <p class="t-text-2xl t-font-bold text-purple-600" id="statMode">-</p>
+                        <div class="t-p-md t-state-purple-light t-rounded-lg t-text-center">
+                            <p class="t-text-xs t-uppercase">Mode</p>
+                            <p class="t-text-2xl t-font-bold t-text-accent" id="statMode">-</p>
                         </div>
-                        <div class="t-p-md bg-pink-50 t-rounded-lg t-text-center">
-                            <p class="t-text-xs uppercase">Range</p>
-                            <p class="t-text-2xl t-font-bold text-pink-600" id="statRange">-</p>
+                        <div class="t-p-md t-rounded-lg t-text-center">
+                            <p class="t-text-xs t-uppercase">Range</p>
+                            <p class="t-text-2xl t-font-bold" id="statRange">-</p>
                         </div>
-                        <div class="t-p-md bg-orange-50 t-rounded-lg t-text-center">
-                            <p class="t-text-xs uppercase">Min</p>
-                            <p class="t-text-2xl t-font-bold text-orange-600" id="statMin">-</p>
+                        <div class="t-p-md t-rounded-lg t-text-center">
+                            <p class="t-text-xs t-uppercase">Min</p>
+                            <p class="t-text-2xl t-font-bold" id="statMin">-</p>
                         </div>
-                        <div class="t-p-md bg-teal-50 t-rounded-lg t-text-center">
-                            <p class="t-text-xs uppercase">Max</p>
-                            <p class="t-text-2xl t-font-bold text-teal-600" id="statMax">-</p>
+                        <div class="t-p-md t-rounded-lg t-text-center">
+                            <p class="t-text-xs t-uppercase">Max</p>
+                            <p class="t-text-2xl t-font-bold" id="statMax">-</p>
                         </div>
-                        <div class="t-p-md bg-cyan-50 t-rounded-lg t-text-center">
-                            <p class="t-text-xs uppercase">Std Deviation</p>
-                            <p class="t-text-2xl t-font-bold text-cyan-600" id="statStdDev">-</p>
+                        <div class="t-p-md t-rounded-lg t-text-center">
+                            <p class="t-text-xs t-uppercase">Std Deviation</p>
+                            <p class="t-text-2xl t-font-bold" id="statStdDev">-</p>
                         </div>
                     </div>
 
                     <div class="t-rounded t-p-md">
                         <h3 class="t-font-semibold t-mb-sm">Sorted Numbers</h3>
-                        <p id="sortedNumbers" class="t-font-mono t-text-sm break-all"></p>
+                        <p id="sortedNumbers" class="t-font-mono t-text-sm t-break-all"></p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-lg t-container t-px-md">
             <h2 class="t-text-2xl t-font-bold t-text-center t-mb-xl">Related Tools</h2>
             <div class="t-grid t-grid-md-2 t-gap-md">
-                <a href="/en/scientific-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+                <a href="/en/scientific-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                     <span class="t-text-2xl">🔬</span>
                     <span class="t-font-medium">Scientific Calculator</span>
                 </a>
-                <a href="/en/percentage-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md card t-rounded-lg border t-hover-accent t-transition">
+                <a href="/en/percentage-calculator/" class="t-tool-card t-flex t-items-center t-space-x-md t-p-md t-card t-rounded-lg t-border t-hover-accent t-transition">
                     <span class="t-text-2xl">📊</span>
                     <span class="t-font-medium">Percentage Calculator</span>
                 </a>
@@ -324,7 +324,7 @@ function initCalculator(type) {
         </div>
     </section>
 
-    <footer class="bg-gray-900 t-text-primary t-py-lg">
+    <footer class="t-surface t-text-primary">
         <div class="t-container t-container t-px-md t-text-center">
             <p class="t-text-muted-light">© 2025 205-Tools - Free</p>
         </div>

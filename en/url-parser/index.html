@@ -16,7 +16,7 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, all tools on 205-Tools are completely free to use with no registration required."}},{"@type":"Question","name":"Is my data secure?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. Your data never leaves your device or is sent to any server."}},{"@type":"Question","name":"Can I use these tools offline?","acceptedAnswer":{"@type":"Answer","text":"Yes, once the page loads, most tools work without an internet connection."}},{"@type":"Question","name":"Do you store any of my data?","acceptedAnswer":{"@type":"Answer","text":"No, we don't store any data. Everything is processed locally in your browser."}},{"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers including Chrome, Firefox, Safari, and Edge are fully supported."}},{"@type":"Question","name":"Are there any file size limits?","acceptedAnswer":{"@type":"Answer","text":"Limits depend on your browser's memory. Most tools handle files up to 100MB."}},{"@type":"Question","name":"Can I share a link to my results?","acceptedAnswer":{"@type":"Answer","text":"Results are not stored on our servers, but you can copy and share the output manually."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"You can report bugs through our contact page or GitHub repository."}}]}</script>
 </head>
 <body>
-    <header class="card t-shadow-sm t-site-header">
+    <header class="t-card t-shadow-sm t-site-header">
         <div class="t-container t-container t-px-md">
             <div class="t-flex t-items-center t-justify-between">
                 <a href="/en/" class="t-text-2xl t-font-bold">205-Tools</a>
@@ -25,24 +25,24 @@
         </div>
     </header>
 
-    <section class="t-text-primary py-16">
+    <section class="t-text-primary t-py-2xl">
         <div class="t-container-sm t-container t-px-md t-text-center">
-            <span class="t-inline-block px-3 t-py-xs t-rounded-full t-text-sm t-mb-md">🔧 Developer</span>
+            <span class="t-inline-block t-px-sm t-py-xs t-rounded-full t-text-sm t-mb-md">🔧 Developer</span>
             <h1 class="t-text-4xl t-text-md-5xl t-font-bold t-mb-md">URL Parser</h1>
             <p class="t-text-xl">Parse and analyze URL components</p>
         </div>
     </section>
 
-    <section class="t-py-xl">
+    <section>
         <div class="t-container-sm t-container t-px-md">
-            <div class="card t-rounded-xl t-shadow-lg t-p-xl">
+            <div class="t-card t-rounded-xl t-shadow-lg t-p-xl">
                 <div class="t-flex t-gap-md t-mb-xl">
-                    <input type="url" id="url" placeholder="https://example.com/path?key=value#hash" class="flex-1 t-p-md t-rounded-lg border">
+                    <input type="url" id="url" placeholder="https://example.com/path?key=value#hash" class="t-flex-1 t-p-md t-rounded-lg t-border">
                     
-                    <button onclick="parse()" class="px-8 t-py-md t-text-primary t-rounded-lg t-font-semibold t-hover-shadow t-transition">Parse</button>
+                    <button onclick="parse()" class="t-px-xl t-py-md t-text-primary t-rounded-lg t-font-semibold t-hover-shadow t-transition">Parse</button>
                 </div>
 
-                <div id="result" class="t-hidden space-y-4">
+                <div id="result" class="t-hidden t-space-y-md">
                     <div class="t-grid t-grid-md-2 t-gap-md">
                         <div class="t-rounded t-p-md">
                             <p class="t-text-sm">Protocol</p>
@@ -77,7 +77,7 @@
 
                     <div id="paramsSection" class="t-rounded t-p-md t-hidden">
                         <p class="t-text-sm t-mb-sm">Query Parameters</p>
-                        <div id="params" class="space-y-2"></div>
+                        <div id="params" class="t-space-y-sm"></div>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     for (const [key, value] of params) {
                         paramsDiv.innerHTML += `
                             <div class="t-flex t-gap-sm">
-                                <span class="t-font-mono text-indigo-500">${key}</span>
+                                <span class="t-font-mono">${key}</span>
                                 <span class="t-text-muted-light">=</span>
                                 <span class="t-font-mono">${value}</span>
                             </div>

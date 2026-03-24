@@ -80,27 +80,40 @@ TAILWIND_TO_CSS = {
     "mt-1": "t-mt-xs",
     "mt-2": "t-mt-sm",
     "mt-4": "t-mt-md",
+    "mt-6": "t-mt-lg",
+    "mt-8": "t-mt-xl",
     
     # Spacing - Margin X
     "mr-2": "t-mr-sm",
     "ml-2": "t-ml-sm",
+    "mr-3": "t-mr-sm",
     
     # Spacing - Margin Y
     "my-4": "t-my-md",
     
     # Spacing - Padding
+    "p-1": "t-p-xs",
     "p-2": "t-p-xs",
+    "p-3": "t-p-sm",
     "p-4": "t-p-md",
     "p-6": "t-p-lg",
     "p-8": "t-p-xl",
+    "p-12": "t-p-2xl",
     
     # Spacing - Padding X/Y
+    "px-3": "t-px-sm",
     "px-4": "t-px-md",
+    "px-6": "t-px-lg",
+    "px-8": "t-px-xl",
     "py-1": "t-py-xs",
+    "py-2": "t-py-xs",
     "py-3": "t-py-sm",
     "py-4": "t-py-md",
+    "py-6": "t-py-lg",
     "py-8": "t-py-lg",
+    "py-10": "t-py-lg",
     "py-12": "t-py-xl",
+    "py-16": "t-py-2xl",
     
     # Flexbox
     "flex": "t-flex",
@@ -110,12 +123,19 @@ TAILWIND_TO_CSS = {
     "justify-between": "t-justify-between",
     "gap-2": "t-gap-sm",
     "gap-4": "t-gap-md",
+    "gap-6": "t-gap-lg",
     "gap-8": "t-gap-lg",
+    "gap-1": "t-gap-xs",
+    "gap-3": "t-gap-md",
     
-    # Space X (child selectors)
+    # Space X/Y (child selectors)
     "space-x-2": "t-space-x-sm",
     "space-x-3": "t-space-x-md",
     "space-x-8": "t-space-x-lg",
+    "space-y-2": "t-space-y-sm",
+    "space-y-3": "t-space-y-md",
+    "space-y-4": "t-space-y-md",
+    "space-y-6": "t-space-y-lg",
     
     # Grid
     "grid": "t-grid",
@@ -123,30 +143,48 @@ TAILWIND_TO_CSS = {
     "grid-cols-3": "t-grid-3",
     "grid-cols-4": "t-grid-4",
     "grid-cols-6": "t-grid-6",
+    "grid-cols-7": "t-grid-7",
     
     # Responsive Grid
     "md:grid-cols-2": "t-grid-md-2",
+    "md:grid-cols-3": "t-grid-md-3",
     "md:grid-cols-4": "t-grid-md-4",
     "md:grid-cols-6": "t-grid-md-6",
+    "lg:grid-cols-3": "t-grid-lg-3",
     "lg:grid-cols-6": "t-grid-lg-6",
     
+    # Grid Columns
+    "lg:col-span-1": "t-col-span-1",
+    "lg:col-span-2": "t-col-span-2",
+    
     # Cards
+    "card": "t-card",
     "bg-white": "t-card",
     "dark:bg-gray-800": "t-card",
     "dark:bg-gray-700": "t-card-hover",
     "dark:bg-gray-900": "t-page-wrapper",
+    "bg-gray-900": "t-surface",
     
     # Borders & Radius
+    "border": "t-border",
     "rounded": "t-rounded-sm",
     "rounded-lg": "t-rounded",
     "rounded-xl": "t-rounded-lg",
     "rounded-2xl": "t-rounded-xl",
     "rounded-full": "t-rounded-full",
+    "border-2": "t-border-2",
+    "border-4": "t-border-4",
+    "border-b": "t-border-b",
+    "border-t": "t-border-t",
+    "border-none": "t-border-none",
+    "border-dashed": "t-border-dashed",
     
     # Shadows
     "shadow-sm": "t-shadow-sm",
     "shadow-lg": "t-shadow",
     "shadow-xl": "t-shadow-lg",
+    "shadow-2xl": "t-shadow-2xl",
+    "shadow-inner": "t-shadow-inner",
     
     # Transitions
     "transition-all": "t-transition",
@@ -157,18 +195,103 @@ TAILWIND_TO_CSS = {
     
     # Tool Card
     "tool-card": "t-tool-card",
+    "stat-card": "t-stat-card",
+    "upload-zone": "t-upload-zone",
     
     # Responsive Typography
     "md:text-5xl": "t-text-md-5xl",
+    
+    # Responsive Flex
+    "sm:flex-row": "t-flex-sm-row",
+    
+    # Flex utilities
+    "flex-wrap": "t-flex-wrap",
+    "flex-1": "t-flex-1",
+    "flex-shrink-0": "t-flex-shrink-0",
+    "items-end": "t-items-end",
+    
+    # Text utilities
+    "truncate": "t-truncate",
+    "break-all": "t-break-all",
+    "uppercase": "t-uppercase",
+    "capitalize": "t-capitalize",
+    "leading-relaxed": "t-leading-relaxed",
+    
+    # Form utilities
+    "resize-none": "t-resize-none",
+    "cursor-pointer": "t-cursor-pointer",
+    
+    # Opacity
+    "opacity-50": "t-opacity-50",
+    
+    # Overflow
+    "overflow-x-auto": "t-overflow-x-auto",
+    
+    # Min width
+    "min-w-0": "t-min-w-0",
+    
+    # Background
+    "bg-transparent": "t-bg-transparent",
+    
+    # Position
+    "relative": "t-relative",
+    "absolute": "t-absolute",
+    "fixed": "t-fixed",
+    "inset-0": "t-inset-0",
+    
+    # Animation
+    "animate-spin": "t-animate-spin",
+    
+    # Container XS
+    "max-w-2xl": "t-container-xs",
+    "max-w-sm": "t-container-xs",
+    
+    # Text Colors (Semantic)
+    "text-red-500": "t-text-error",
+    "text-red-600": "t-text-error",
+    "text-green-500": "t-text-success",
+    "text-green-400": "t-text-success-light",
+    "text-green-600": "t-text-success",
+    "text-blue-500": "t-text-accent",
+    "text-amber-600": "t-text-warning",
+    "text-emerald-500": "t-text-success",
+    "text-indigo-600": "t-text-accent",
+    "text-purple-600": "t-text-accent",
+    "text-blue-600": "t-text-accent",
+    
+    # Background States
+    "bg-red-100": "t-state-error",
+    "bg-green-100": "t-state-success",
+    "bg-green-50": "t-state-success-light",
+    "bg-blue-100": "t-state-info",
+    "bg-blue-50": "t-state-info-light",
+    "bg-purple-100": "t-state-purple",
+    "bg-purple-50": "t-state-purple-light",
+    "bg-pink-100": "t-state-pink",
+    "bg-emerald-100": "t-state-success",
+    "bg-yellow-50": "t-state-warning-light",
+    "bg-indigo-50": "t-state-info-light",
+    
+    # Border States
+    "border-red-200": "t-state-error",
+    "border-red-500": "t-border-error",
+    
+    # Responsive Grid
+    "md:grid-cols-1": "",
+    "lg:grid-cols-3": "t-grid-lg-3",
 }
 
 # Classes to remove (not needed in dark-only theme)
 CLASSES_TO_REMOVE = [
-    "bg-white", "bg-gray-50", "bg-gray-100", "bg-gray-200",
-    "dark:bg-gray-800/50", "bg-white/20", "text-white/90",
+    # Gradients
     "bg-gradient-to-r", "bg-gradient-to-br", "from-indigo-500",
     "to-purple-600", "via-purple-500", "to-pink-500",
     "bg-clip-text", "text-transparent", "from-white/20",
+    "from-blue-500", "from-red-500", "from-emerald-500",
+    "to-orange-500", "to-cyan-500", "to-amber-500",
+    "via-teal-500", "via-orange-500", "via-purple-600",
+    "from-blue-600",
+    # Dark mode variants
     "bg-gray-700", "dark:bg-gray-600", "dark:bg-gray-700", "dark:bg-gray-800",
     "text-gray-900", "dark:text-gray-100", "dark:text-gray-300",
     "dark:text-gray-400", "dark:text-white", "text-gray-500",
@@ -178,18 +301,43 @@ CLASSES_TO_REMOVE = [
     "hover:bg-gray-300", "dark:hover:bg-gray-600",
     "bg-indigo-100", "dark:bg-indigo-900",
     "text-emerald-600", "dark:text-emerald-400",
-    "h-16", "min-h-screen", "h-5", "w-5", "w-16",
-    "transform", "translate-y-0", "duration-200", "ease-in-out",
-    "bg-gray-50", "bg-gray-100",
-    # Dark mode colors with opacity
+    "dark:bg-gray-800/50", "bg-white/20", "text-white/90",
+    # Dark mode with opacity
     "dark:bg-blue-900/30", "dark:bg-red-900/30", "dark:bg-green-900/30",
     "dark:bg-purple-900/30", "dark:bg-pink-900/30", "dark:hover:bg-red-900/50",
-    "dark:text-amber-400", "dark:text-red-400",
+    "dark:bg-emerald-900/30", "dark:hover:bg-emerald-900/50",
+    "dark:bg-blue-900/20", "dark:bg-green-900/20",
+    "dark:bg-purple-900/20", "dark:bg-yellow-900/20",
+    "dark:bg-indigo-900/20", "dark:hover:bg-indigo-900/30",
+    "dark:text-amber-400", "dark:text-red-400", "dark:text-green-400",
+    "dark:text-indigo-400", "dark:text-yellow-400", "dark:text-purple-400",
     # Old hover colors
     "hover:border-blue-500", "hover:bg-gray-200", "hover:text-red-600",
     "hover:text-red-500", "hover:bg-red-200", "hover:bg-green-600",
     "hover:bg-blue-600", "hover:text-blue-500", "hover:shadow-blue-500/25",
     "hover:border-red-400", "hover:text-pink-500",
+    "hover:bg-red-600", "hover:bg-indigo-600",
+    "hover:bg-emerald-200", "hover:text-emerald-500",
+    "hover:bg-indigo-100", "hover:bg-indigo-500",
+    # Width/Height fixed sizes
+    "h-16", "min-h-screen", "h-5", "w-5", "w-16",
+    "h-2", "h-4", "h-8", "h-10", "h-12", "h-20", "h-24", "h-32", "h-80",
+    "w-2", "w-4", "w-8", "w-10", "w-12", "w-20", "w-24", "w-32",
+    "w-8", "w-10", "w-20",
+    # Positioning helpers
+    "left-1/2", "top-1/2", "top-24", "bottom-8",
+    "-translate-x-1/2", "-translate-y-1/2",
+    # Colors
+    "bg-blue-500", "bg-red-500", "bg-green-500", "bg-purple-500", "bg-pink-500", "bg-indigo-500",
+    # Effects
+    "opacity-25", "opacity-75", "backdrop-blur-sm",
+    "border-t-transparent", "border-white",
+    # Animation helpers
+    "transform", "translate-y-0", "duration-200", "ease-in-out",
+    # Invalid classes
+    "op", "||",
+    # Responsive padding/margin that we don't need
+    "sm:px-6", "lg:px-8", "py-12", "py-8",
 ]
 
 def convert_classes(class_string, unmatched_counter):
@@ -207,14 +355,18 @@ def convert_classes(class_string, unmatched_counter):
         
         # Check for responsive prefixes
         if cls.startswith(('md:', 'lg:', 'sm:', 'xl:')):
-            base_cls = cls
-            if base_cls in TAILWIND_TO_CSS:
-                mapped = TAILWIND_TO_CSS[base_cls]
+            if cls in TAILWIND_TO_CSS:
+                mapped = TAILWIND_TO_CSS[cls]
                 if mapped:
                     new_classes.append(mapped)
                     converted += 1
                 else:
                     removed += 1
+                continue
+            else:
+                # Unmatched responsive class
+                removed += 1
+                unmatched_counter[cls] += 1
                 continue
         
         # Map the class
@@ -226,12 +378,14 @@ def convert_classes(class_string, unmatched_counter):
             else:
                 removed += 1
         else:
-            # Keep custom classes (not Tailwind)
-            if not cls.startswith(('hover:', 'focus:', 'active:', 'dark:')):
-                new_classes.append(cls)
-            else:
+            # Check if it's a Tailwind class (has hyphens and lowercase)
+            if '-' in cls and cls.islower() and not cls.startswith(('t-', 'js-')):
+                # Likely a Tailwind class we missed
                 removed += 1
                 unmatched_counter[cls] += 1
+            else:
+                # Keep custom classes
+                new_classes.append(cls)
     
     return " ".join(new_classes) if new_classes else "", converted, removed
 
