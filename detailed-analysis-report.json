@@ -1,0 +1,778 @@
+{
+  "date": "2026-03-24T03:33:09.442Z",
+  "summary": {
+    "total": 75,
+    "working": 71,
+    "issues": 4
+  },
+  "results": {
+    "en": [
+      {
+        "tool": "jpg-to-png",
+        "status": "working",
+        "issues": [],
+        "found": 8,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "png-to-jpg",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "merge-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "split-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "word-counter",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "case-converter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "json-formatter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "bmi-calculator",
+        "status": "working",
+        "issues": [],
+        "found": 7,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "percentage-calculator",
+        "status": "working",
+        "issues": [],
+        "found": 4,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "password-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "color-picker",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "whatsapp-link-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "emoji-to-unicode",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "number-to-words",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "text-to-binary",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      }
+    ],
+    "ar": [
+      {
+        "tool": "jpg-to-png",
+        "status": "working",
+        "issues": [],
+        "found": 8,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "png-to-jpg",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "merge-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "split-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "word-counter",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "case-converter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "json-formatter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "bmi-calculator",
+        "status": "working",
+        "issues": [],
+        "found": 7,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "percentage-calculator",
+        "status": "issues",
+        "issues": [
+          "Missing: type=\"number\""
+        ],
+        "found": 3,
+        "score": 75,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "password-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "color-picker",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "whatsapp-link-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "emoji-to-unicode",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "number-to-words",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "text-to-binary",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      }
+    ],
+    "fr": [
+      {
+        "tool": "jpg-to-png",
+        "status": "working",
+        "issues": [],
+        "found": 8,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "png-to-jpg",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "merge-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "split-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "word-counter",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "case-converter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "json-formatter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "bmi-calculator",
+        "status": "working",
+        "issues": [],
+        "found": 7,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "percentage-calculator",
+        "status": "issues",
+        "issues": [
+          "Missing: type=\"number\""
+        ],
+        "found": 3,
+        "score": 75,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "password-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "color-picker",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "whatsapp-link-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "emoji-to-unicode",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "number-to-words",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "text-to-binary",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      }
+    ],
+    "es": [
+      {
+        "tool": "jpg-to-png",
+        "status": "working",
+        "issues": [],
+        "found": 8,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "png-to-jpg",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "merge-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "split-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "word-counter",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "case-converter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "json-formatter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "bmi-calculator",
+        "status": "working",
+        "issues": [],
+        "found": 7,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "percentage-calculator",
+        "status": "issues",
+        "issues": [
+          "Missing: type=\"number\""
+        ],
+        "found": 3,
+        "score": 75,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "password-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "color-picker",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "whatsapp-link-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "emoji-to-unicode",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "number-to-words",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "text-to-binary",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      }
+    ],
+    "de": [
+      {
+        "tool": "jpg-to-png",
+        "status": "working",
+        "issues": [],
+        "found": 8,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "png-to-jpg",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "merge-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "split-pdf",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "word-counter",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "case-converter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "json-formatter",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "bmi-calculator",
+        "status": "working",
+        "issues": [],
+        "found": 7,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "percentage-calculator",
+        "status": "issues",
+        "issues": [
+          "Missing: type=\"number\""
+        ],
+        "found": 3,
+        "score": 75,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "password-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "color-picker",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "whatsapp-link-generator",
+        "status": "working",
+        "issues": [],
+        "found": 6,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "emoji-to-unicode",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "number-to-words",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      },
+      {
+        "tool": "text-to-binary",
+        "status": "working",
+        "issues": [],
+        "found": 5,
+        "score": 100,
+        "hasScript": true,
+        "hasFunction": true,
+        "hasEvent": true
+      }
+    ]
+  }
+}
