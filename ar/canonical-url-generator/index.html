@@ -3,131 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canonical URL Generator - 205-أدوات</title>
-    <meta name="description" content="Generates canonical link tag for duplicate content control.">
+    <title>مولد الرابط الأساسي - 205-Tools</title>
+    <meta name="description" content="مولد الرابط الأساسي">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-    // Text Analyzer Logic
-function initTextAnalyzer() {
-    const textInput = document.getElementById('textInput');
-    
-    textInput.addEventListener('input', analyzeText);
-    
-    function analyzeText() {
-        const text = textInput.value;
-        
-        // Word count
-        const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-        animateNumber('wordCount', words);
-        
-        // Character count
-        animateNumber('charCount', text.length);
-        
-        // Characters without spaces
-        animateNumber('charCountNoSpaces', text.replace(/\s/g, '').length);
-        
-        // Sentences
-        const sentences = text.trim() === '' ? 0 : text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
-        animateNumber('sentenceCount', sentences);
-        
-        // Paragraphs
-        const paragraphs = text.trim() === '' ? 0 : text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
-        animateNumber('paragraphCount', paragraphs || (text.trim() ? 1 : 0));
-        
-        // Reading time (avg 200 wpm)
-        const readingMinutes = words / 200;
-        document.getElementById('readingTime').textContent = formatTime(readingMinutes);
-        
-        // Speaking time (avg 130 wpm)
-        const speakingMinutes = words / 130;
-        document.getElementById('speakingTime').textContent = formatTime(speakingMinutes);
-        
-        // Update timestamp
-        const now = new Date();
-        document.getElementById('lastUpdated').textContent = 'Updated ' + now.toLocaleTimeString();
-    }
-    
-    function animateNumber(id, target) {
-        const element = document.getElementById(id);
-        element.textContent = target;
-        element.style.transform = 'scale(1.2)';
-        setTimeout(() => element.style.transform = 'scale(1)', 150);
-    }
-    
-    function formatTime(minutes) {
-        if (minutes < 1) return Math.round(minutes * 60) + 's';
-        if (minutes < 60) return Math.round(minutes) + 'm';
-        const hours = Math.floor(minutes / 60);
-        const mins = Math.round(minutes % 60);
-        return hours + 'h ' + mins + 'm';
-    }
-    
-    window.pasteText = async function() {
-        try {
-            const text = await navigator.clipboard.readText();
-            textInput.value = text;
-            analyzeText();
-            showToast('Text pasted!');
-        } catch (err) {
-            showToast('Could not paste from clipboard');
-        }
-    };
-    
-    window.clearText = function() {
-        textInput.value = '';
-        analyzeText();
-        showToast('Text cleared!');
-    };
-    
-    window.copyResult = async function() {
-        try {
-            await navigator.clipboard.writeText(textInput.value);
-            showToast('Copied to clipboard!');
-        } catch (err) {
-            textInput.select();
-            document.execCommand('copy');
-            showToast('Copied to clipboard!');
-        }
-    };
-    
-    function showToast(message) {
-        const toast = document.getElementById('toast');
-        document.getElementById('toastMessage').textContent = message;
-        toast.classList.remove('hidden');
-        toast.classList.add('flex');
-        setTimeout(() => {
-            toast.classList.add('hidden');
-            toast.classList.remove('flex');
-        }, 2000);
-    }
-    
-    // Initialize
-    analyzeText();
-}
-
-    
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      initTextAnalyzer();
-    });
-  </script>
-    <style>
-        .drop-zone { border: 2px dashed #6366f1; transition: all 0.3s; }
-        .drop-zone:hover, .drop-zone.dragover { border-color: #4f46e5; background: rgba(99, 102, 241, 0.05); }
-        .tool-card { transition: all 0.2s; }
-        .tool-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2); }
-    </style>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="/ar/" class="flex items-center space-x-2">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-أدوات</span>
-                </a>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/ar/" class="text-gray-600 dark:text-gray-300 hover:text-indigo-500">الرئيسية</a>
-                </div>
+                <a href="/ar/" class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">205-Tools</a>
                 <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">🌙</button>
             </div>
         </div>
@@ -135,120 +22,48 @@ function initTextAnalyzer() {
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔗 SEO</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Canonical URL Generator</h1>
-            <p class="text-xl text-white/90">مجاني • سريع • آمن</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">مولد الرابط الأساسي</h1>
+            <p class="text-xl text-white/90">SEO Tool</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">                
-                <!-- Input -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">المدخل</label>
-                    <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="أدخل النص هنا..."></textarea>
+                    <label class="block text-sm font-medium mb-2">الرابط</label>
+                    <input type="url" id="urlInput" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="https://example.com/page">
                 </div>
 
-                <!-- Action Button -->
-                <button onclick="processText()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
+                <button onclick="generate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
                     إنشاء
                 </button>
 
-                <!-- Output -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">المخرج</label>
-                    <textarea id="output" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800"></textarea>
+                    <label class="block text-sm font-medium mb-2">وسم الأساسي</label>
+                    <textarea id="result" rows="3" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
                 </div>
 
-                <button onclick="copyOutput()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                <button onclick="copyResult()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
                     نسخ
                 </button>
+            </div>
+        </div>
+    </section>
 
     <script>
-        function processText() {
-            const input = document.getElementById('input').value;
-            const btn = document.getElementById('actionBtn');
-            btn.textContent = 'جاري...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                const result = <input type="url" id="urlInput" placeholder="URL">
-                document.getElementById('output').value = <link rel="canonical" href="${input}" />;
-                btn.textContent = 'إنشاء';
-                btn.disabled = false;
-            }, 100);
+        function generate() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) return;
+            const tag = <link rel="canonical" href="${url}" />;
+            document.getElementById('result').value = tag;
         }
         
-        function copyOutput() {
-            const output = document.getElementById('output');
-            output.select();
+        function copyResult() {
+            const result = document.getElementById('result');
+            result.select();
             document.execCommand('copy');
         }
-    </script></section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">كيفية الاستخدام</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">1</div>
-                    <h3 class="font-semibold mb-2">اختر ملفك</h3>
-                    <p class="text-gray-600 dark:text-gray-400">أدخل البيانات المطلوبة</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">2</div>
-                    <h3 class="font-semibold mb-2">انتظر المعالجة</h3>
-                    <p class="text-gray-600 dark:text-gray-400">معالجة...</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">3</div>
-                    <h3 class="font-semibold mb-2">احصل على النتيجة</h3>
-                    <p class="text-gray-600 dark:text-gray-400">احصل على النتيجة فوراً</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-12">لماذا تستخدم أدواتنا</h2>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center p-6"><div class="text-3xl mb-3">🔒</div><h3 class="font-semibold mb-2">آمن</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">⚡</div><h3 class="font-semibold mb-2">سريع</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">🆓</div><h3 class="font-semibold mb-2">مجاني</h3></div>
-                <div class="text-center p-6"><div class="text-3xl mb-3">✨</div><h3 class="font-semibold mb-2">الجودة</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center mb-8">أدوات ذات صلة</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-            <a href="/ar/meta-tags-generator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🏷️</span>
-                <span class="font-medium">Meta Tags Generator</span>
-            </a>
-            <a href="/ar/robots-txt-generator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🤖</span>
-                <span class="font-medium">Robots.txt Generator</span>
-            </a>
-            <a href="/ar/sitemap-xml-generator/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🗺️</span>
-                <span class="font-medium">Sitemap XML Generator</span>
-            </a>
-            <a href="/ar/utm-link-builder/" class="tool-card flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 hover:border-primary transition-all">
-                <span class="text-2xl">🔗</span>
-                <span class="font-medium">UTM Link Builder</span>
-            </a></div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400">© 2025 205-أدوات - مجاني</p>
-        </div>
-    </footer>
+    </script>
 </body>
 </html>
