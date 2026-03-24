@@ -215,72 +215,52 @@ function initCodeEditor(language) {
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="text-center mb-8">
-                    <div class="text-6xl mb-4">🔢</div>
-                    <p class="text-gray-600 dark:text-gray-400">Encodes special characters to HTML entities.</p>
-                </div>
-                
-                <!-- Code Input -->
+            $1                
+                <!-- Input -->
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Text to Encode</label>
-                    <textarea id="input" rows="8" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter text with special characters to encode..."></textarea>
+                    <label class="block text-sm font-medium mb-2">Input</label>
+                    <textarea id="input" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter text here..."></textarea>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="flex gap-4 mb-6">
-                    <button onclick="encodeEntities()" class="flex-1 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all" id="formatBtn">
-                        Encode
-                    </button>
-                    <button onclick="copyResult()" id="copyBtn" class="flex-1 py-4 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
-                        Copy
-                    </button>
-                    <button onclick="clearCode()" class="px-6 py-4 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl font-medium hover:bg-red-200 dark:hover:bg-red-900/50 transition-all">
-                        Clear
-                    </button>
-                </div>
+                <!-- Action Button -->
+                <button onclick="processText()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
+                    Process
+                </button>
 
                 <!-- Output -->
                 <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Encoded HTML Entities</label>
-                    <textarea id="output" rows="8" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
+                    <label class="block text-sm font-medium mb-2">Output</label>
+                    <textarea id="output" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800"></textarea>
                 </div>
 
-    <script>
-        function encodeEntities() {
-            const input = document.getElementById('input').value;
-            try {
-                const textarea = document.createElement('textarea');
-                textarea.textContent = input;
-                document.getElementById('output').value = textarea.innerHTML;
-            } catch(e) {
-                document.getElementById('output').value = 'Error: ' + e.message;
-            }
-        }
+                <button onclick="copyOutput()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                    Copy
+                </button>
 
-        function copyResult() {
+    <script>
+        function processText() {
+            const input = document.getElementById('input').value;
+            const btn = document.getElementById('actionBtn');
+            btn.textContent = 'Processing...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                const result = input.replace(/[&<>'"]/g, c => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', 
+                    '"': '&quot;', "'": '&#39;'
+                })[c]);
+                document.getElementById('output').value = result;
+                btn.textContent = 'Process';
+                btn.disabled = false;
+            }, 100);
+        }
+        
+        function copyOutput() {
             const output = document.getElementById('output');
             output.select();
             document.execCommand('copy');
-            const btn = document.getElementById('copyBtn');
-            const originalText = btn.textContent;
-            btn.textContent = 'Copied!';
-            setTimeout(() => btn.textContent = originalText, 2000);
         }
-        
-        function clearCode() {
-            document.getElementById('input').value = '';
-            document.getElementById('output').value = '';
-        }
-
-        // Auto-encode on input
-        document.getElementById('input').addEventListener('input', encodeEntities);
-    </script>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
+    </script>$2 dark:bg-gray-800/50">
         <div class="max-w-5xl mx-auto px-4">
             <h2 class="text-2xl font-bold text-center mb-12">How to Use</h2>
             <div class="grid md:grid-cols-3 gap-8">

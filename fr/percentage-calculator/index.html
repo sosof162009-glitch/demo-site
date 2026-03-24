@@ -234,127 +234,48 @@ function initCalculator(type) {
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="text-center mb-8">
-                    <div class="text-6xl mb-4">%️</div>
-                    <p class="text-gray-600 dark:text-gray-400">Calculates percentages, percentage increases, decreases and differences.</p>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">                
+                <!-- Inputs -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Valeur</label>
+                    <input id="valueInput" type="number" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-lg" placeholder="25">
                 </div>
-                
-                <!-- Calculator Inputs -->
-                
-                <div class="space-y-6 mb-8">
-                    
-                    <!-- What is X% of Y -->
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                        <h3 class="font-semibold mb-4 text-lg">Quel est X% de Y</h3>
-                        <div class="flex flex-wrap items-center gap-3">
-                            <input type="number" id="percent1" placeholder="%" class="w-24 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 calc-input">
-                            <span>% de</span>
-                            <input type="number" id="value1" placeholder="0" class="w-32 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 calc-input">
-                            <button onclick="calc1()" class="px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition">Calculer</button>
-                        </div>
-                        <div id="res1" class="mt-4 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg hidden">
-                            <span class="text-2xl font-bold text-indigo-600" id="res1val"></span>
-                        </div>
-                    </div>
-                    
-                    <!-- X is what percent of Y -->
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                        <h3 class="font-semibold mb-4 text-lg">X Est quel pourcentage de Y</h3>
-                        <div class="flex flex-wrap items-center gap-3">
-                            <input type="number" id="val2" placeholder="X" class="w-24 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 calc-input">
-                            <span>Est quel pourcentage</span>
-                            <input type="number" id="val3" placeholder="Y" class="w-24 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 calc-input">
-                            <button onclick="calc2()" class="px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition">Calculer</button>
-                        </div>
-                        <div id="res2" class="mt-4 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg hidden">
-                            <span class="text-2xl font-bold text-indigo-600" id="res2val"></span>
-                            <span class="text-lg">%</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Percentage Change -->
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                        <h3 class="font-semibold mb-4 text-lg">Augmentation/Réduction</h3>
-                        <div class="flex flex-wrap items-center gap-3">
-                            <input type="number" id="fromVal" placeholder="De" class="w-28 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 calc-input">
-                            <span>→</span>
-                            <input type="number" id="toVal" placeholder="À" class="w-28 p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 calc-input">
-                            <button onclick="calc3()" class="px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition">Calculer</button>
-                        </div>
-                        <div id="res3" class="mt-4 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg hidden">
-                            <span class="text-2xl font-bold text-indigo-600" id="res3val"></span>
-                            <span>%</span>
-                            <span id="changeDir" class="ml-2 font-semibold"></span>
-                        </div>
-                    </div>
-
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Total</label>
+                    <input id="totalInput" type="number" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-lg" placeholder="100">
                 </div>
 
-    <script>
-        function calc1() {
-            const p = parseFloat(document.getElementById('percent1').value);
-            const v = parseFloat(document.getElementById('value1').value);
-            const r = document.getElementById('res1');
-            const rv = document.getElementById('res1val');
-            if (!isNaN(p) && !isNaN(v)) {
-                rv.textContent = ((p/100) * v).toFixed(2);
-                r.classList.remove('hidden');
-            }
-        }
-        function calc2() {
-            const p = parseFloat(document.getElementById('val2').value);
-            const w = parseFloat(document.getElementById('val3').value);
-            const r = document.getElementById('res2');
-            const rv = document.getElementById('res2val');
-            if (!isNaN(p) && !isNaN(w) && w !== 0) {
-                rv.textContent = ((p/w) * 100).toFixed(2);
-                r.classList.remove('hidden');
-            }
-        }
-        function calc3() {
-            const f = parseFloat(document.getElementById('fromVal').value);
-            const t = parseFloat(document.getElementById('toVal').value);
-            const r = document.getElementById('res3');
-            const rv = document.getElementById('res3val');
-            const cd = document.getElementById('changeDir');
-            if (!isNaN(f) && !isNaN(t) && f !== 0) {
-                const ch = ((t-f)/f) * 100;
-                rv.textContent = Math.abs(ch).toFixed(2);
-                cd.textContent = ch >= 0 ? '↑' : '↓';
-                cd.className = ch >= 0 ? 'ml-2 font-semibold text-green-600' : 'ml-2 font-semibold text-red-600';
-                r.classList.remove('hidden');
-            }
-        }
-    </script>
-                <button onclick="calculate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all" id="actionBtn">
+                <!-- Calculate Button -->
+                <button onclick="calculate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="calcBtn">
                     Calculer
                 </button>
 
                 <!-- Result -->
-                <div id="result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 rounded-xl text-center">
-                    <p class="text-gray-600 dark:text-gray-400 mb-2">Résultat</p>
-                    <p class="text-3xl font-bold text-green-600 dark:text-green-400" id="resultValue">-</p>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Résultat</label>
+                    <div id="resultValue" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-lg bg-gray-50 dark:bg-gray-800 text-center text-2xl font-bold text-indigo-600">--</div>
                 </div>
 
     <script>
         function calculate() {
-            const btn = document.getElementById('actionBtn');
-            const result = document.getElementById('result');
-            const resultValue = document.getElementById('resultValue');
-            btn.textContent = 'Traitement...';
-            btn.disabled = true;
+            const value = document.getElementById('valueInput').value;
+            const total = document.getElementById('totalInput').value;
+            const resultEl = document.getElementById('resultValue');
             
-            setTimeout(() => {
-                resultValue.textContent = '42'; result.classList.remove('hidden');
-                btn.textContent = 'Calculer';
-                btn.disabled = false;
-            }, 800);
+            if (!value || !total || isNaN(value) || isNaN(total) || total == 0) {
+                resultEl.textContent = 'Invalid';
+                return;
+            }
+            
+            const percentage = ((parseFloat(value) / parseFloat(total)) * 100).toFixed(2);
+            resultEl.textContent = percentage + '%';
         }
-    </script>
-            </div>
-        </div>
-    </section>
+        
+        // Auto-calculate on Enter
+        document.getElementById('totalInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') calculate();
+        });
+    </script></section>
 
     <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
         <div class="max-w-5xl mx-auto px-4">

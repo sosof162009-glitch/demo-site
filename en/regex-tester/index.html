@@ -4,185 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regex Tester - 205-Tools</title>
-    <meta name="description" content="Test regular expressions">
+    <meta name="description" content="Regex Tester - Free online tool">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-    // Code Editor Logic
-function initCodeEditor(language) {
-    const codeEditor = document.getElementById('codeEditor');
-    const statusBadge = document.getElementById('statusBadge');
-    const charCount = document.getElementById('charCount');
-    
-    codeEditor.addEventListener('input', () => {
-        const len = codeEditor.value.length;
-        charCount.textContent = len + ' chars';
-        
-        if (len > 0) {
-            updateStatus('typing', 'Typing...');
-        } else {
-            updateStatus('ready', 'Ready');
-        }
-    });
-    
-    function updateStatus(type, message) {
-        const colors = {
-            ready: 'bg-gray-400',
-            typing: 'bg-yellow-400',
-            success: 'bg-green-400',
-            error: 'bg-red-400'
-        };
-        
-        statusBadge.innerHTML = `
-            <span class="w-2 h-2 rounded-full ${colors[type] || colors.ready}"></span>
-            ${message}
-        `;
-        statusBadge.className = 'status-badge ' + (type === 'success' ? 'success' : type === 'error' ? 'error' : '');
-    }
-    
-    window.formatCode = function() {
-        try {
-            const code = codeEditor.value;
-            if (!code.trim()) {
-                showToast('Please enter some code');
-                return;
-            }
-            
-            if (language === 'json') {
-                const parsed = JSON.parse(code);
-                codeEditor.value = JSON.stringify(parsed, null, 2);
-            } else if (language === 'html') {
-                codeEditor.value = formatHTML(code);
-            } else if (language === 'css') {
-                codeEditor.value = formatCSS(code);
-            } else if (language === 'js') {
-                codeEditor.value = formatJS(code);
-            } else if (language === 'sql') {
-                codeEditor.value = formatSQL(code);
-            } else {
-                codeEditor.value = code; // No formatter available
-            }
-            
-            updateStatus('success', 'Formatted!');
-            showToast('Code formatted successfully!');
-        } catch (err) {
-            updateStatus('error', 'Invalid ' + language.toUpperCase());
-            showToast('Error: ' + err.message);
-        }
-    };
-    
-    window.minifyCode = function() {
-        try {
-            const code = codeEditor.value;
-            if (!code.trim()) {
-                showToast('Please enter some code');
-                return;
-            }
-            
-            if (language === 'json') {
-                const parsed = JSON.parse(code);
-                codeEditor.value = JSON.stringify(parsed);
-            } else if (language === 'html' || language === 'css' || language === 'js') {
-                codeEditor.value = code
-                    .replace(/\/\*[\s\S]*?\*\//g, '')
-                    .replace(/\/\/.*$/gm, '')
-                    .replace(/\s+/g, ' ')
-                    .trim();
-            } else {
-                codeEditor.value = code.replace(/\s+/g, ' ').trim();
-            }
-            
-            updateStatus('success', 'Minified!');
-            showToast('Code minified successfully!');
-        } catch (err) {
-            updateStatus('error', 'Error');
-            showToast('Error: ' + err.message);
-        }
-    };
-    
-    window.validateCode = function() {
-        try {
-            const code = codeEditor.value;
-            if (!code.trim()) {
-                showToast('Please enter some code');
-                return;
-            }
-            
-            if (language === 'json') {
-                JSON.parse(code);
-                updateStatus('success', 'Valid JSON!');
-                showToast('Valid JSON!');
-            } else {
-                updateStatus('success', 'Validated!');
-                showToast('Code looks good!');
-            }
-        } catch (err) {
-            updateStatus('error', 'Invalid ' + language.toUpperCase());
-            showToast('Invalid: ' + err.message);
-        }
-    };
-    
-    window.clearCode = function() {
-        codeEditor.value = '';
-        charCount.textContent = '0 chars';
-        updateStatus('ready', 'Ready');
-        showToast('Editor cleared!');
-    };
-    
-    window.copyResult = async function() {
-        try {
-            await navigator.clipboard.writeText(codeEditor.value);
-            showToast('Copied to clipboard!');
-        } catch (err) {
-            codeEditor.select();
-            document.execCommand('copy');
-            showToast('Copied to clipboard!');
-        }
-    };
-    
-    function showToast(message) {
-        const toast = document.getElementById('toast');
-        document.getElementById('toastMessage').textContent = message;
-        toast.classList.remove('hidden');
-        toast.classList.add('flex');
-        setTimeout(() => {
-            toast.classList.add('hidden');
-            toast.classList.remove('flex');
-        }, 2000);
-    }
-    
-    function formatHTML(html) {
-        // Simple HTML formatter
-        return html.replace(/\u003e\s*\u003c/g, '>\n\u003c');
-    }
-    
-    function formatCSS(css) {
-        // Simple CSS formatter
-        return css.replace(/;/g, ';\n').replace(/{/g, '{\n').replace(/}/g, '\n}');
-    }
-    
-    function formatJS(js) {
-        // Simple JS formatter
-        return js.replace(/;/g, ';\n').replace(/{/g, '{\n').replace(/}/g, '\n}');
-    }
-    
-    function formatSQL(sql) {
-        // Simple SQL formatter
-        const keywords = ['SELECT', 'FROM', 'WHERE', 'INSERT', 'UPDATE', 'DELETE', 'JOIN', 'LEFT', 'RIGHT', 'INNER', 'OUTER', 'ON', 'GROUP', 'ORDER', 'BY', 'HAVING', 'LIMIT', 'AND', 'OR'];
-        let formatted = sql;
-        keywords.forEach(kw => {
-            const regex = new RegExp('\\b' + kw + '\\b', 'gi');
-            formatted = formatted.replace(regex, '\n' + kw);
-        });
-        return formatted.trim();
-    }
-}
-
-    
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      initCodeEditor('text');
-    });
-  </script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
+    </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
@@ -196,136 +22,53 @@ function initCodeEditor(language) {
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔧 Developer</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Regex Tester</h1>
-            <p class="text-xl text-white/90">Test regular expressions online</p>
+            <p class="text-xl text-white/90">Free online tool</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <h3 class="font-semibold mb-4">Quick Presets</h3>
-                
-                <div class="flex flex-wrap gap-2 mb-8">
-                    <button onclick="setPattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/30">Email</button>
-                    
-                    <button onclick="setPattern('https?://[^\\s]+')" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/30">URL</button>
-                    
-                    <button onclick="setPattern('\\d{3}-\\d{3}-\\d{4}')" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/30">Phone (US)</button>
-                    
-                    <button onclick="setPattern('^[0-9]{5}(-[0-9]{4})?$')" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/30">ZIP Code</button>
-                    
-                    <button onclick="setPattern('^\\d{4}-\\d{2}-\\d{2}$')" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/30">Date (YYYY-MM-DD)</button>
-                    
-                    <button onclick="setPattern('\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b')" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/30">IP Address</button>
-                </div>
-
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Regular Expression</label>
-                    <div class="flex gap-2">
-                        <span class="py-3 px-4 bg-gray-100 dark:bg-gray-700 rounded-l-lg">/</span>
-                        <input type="text" id="pattern" placeholder="[a-z]+" class="flex-1 p-3 border-y dark:border-gray-600 dark:bg-gray-600">
-                        <span class="py-3 px-4 bg-gray-100 dark:bg-gray-700">/</span>
-                        <input type="text" id="flags" placeholder="gi" value="g" class="w-20 p-3 border-y border-r rounded-r-lg dark:border-gray-600 dark:bg-gray-600">
-                    </div>
+                    <label class="block text-sm font-medium mb-2">Input</label>
+                    <textarea id="inputText" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter your text here..."></textarea>
                 </div>
 
-                <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Test String</label>
-                    <textarea id="testString" rows="6" placeholder="Enter text to test against the regex..." class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-600"></textarea>
-                </div>
-
-                <button onclick="testRegex()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
+                <button onclick="process()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
                     Test Regex
                 </button>
 
-                <div id="result" class="hidden">
-                    <div id="matchBox" class="rounded-xl p-6 mb-6">
-                        <p id="matchText" class="text-xl font-semibold"></p>
-                    </div>
-
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-                        <label class="block text-sm font-medium mb-2">Matches</label>
-                        <div id="matches" class="space-y-2"></div>
-                    </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Result</label>
+                    <textarea id="result" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
                 </div>
+
+                <button onclick="copyResult()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                    Copy
+                </button>
             </div>
         </div>
     </section>
 
     <script>
-        function setPattern(pattern) {
-            document.getElementById('pattern').value = pattern;
+        function process() {
+            const input = document.getElementById('inputText').value;
+            const btn = document.getElementById('actionBtn');
+            btn.textContent = 'Processing...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                try{const lines=input.split('\n');const pattern=lines[0]||'.*';const text=lines.slice(1).join('\n');const regex=new RegExp(pattern,'g');const matches=text.match(regex);document.getElementById('result').value=matches?'Found '+matches.length+' matches:\n'+matches.join('\n'):'No matches found';}catch(e){document.getElementById('result').value='Error: '+e.message;}
+                btn.textContent = 'Test Regex';
+                btn.disabled = false;
+            }, 100);
         }
-
-        function testRegex() {
-            const pattern = document.getElementById('pattern').value;
-            const flags = document.getElementById('flags').value || 'g';
-            const testString = document.getElementById('testString').value;
-
-            if (!pattern || !testString) {
-                alert('Please enter both pattern and test string');
-                return;
-            }
-
-            try {
-                const regex = new RegExp(pattern, flags);
-                const matches = [];
-                let match;
-
-                if (flags.includes('g')) {
-                    while ((match = regex.exec(testString)) !== null) {
-                        matches.push({
-                            text: match[0],
-                            index: match.index,
-                            groups: match.slice(1)
-                        });
-                        if (match.index === regex.lastIndex) regex.lastIndex++;
-                    }
-                } else {
-                    match = regex.exec(testString);
-                    if (match) {
-                        matches.push({
-                            text: match[0],
-                            index: match.index,
-                            groups: match.slice(1)
-                        });
-                    }
-                }
-
-                const matchBox = document.getElementById('matchBox');
-                const matchText = document.getElementById('matchText');
-                const matchesDiv = document.getElementById('matches');
-
-                if (matches.length > 0) {
-                    matchBox.className = 'rounded-xl p-6 mb-6 bg-green-100 dark:bg-green-900/30';
-                    matchText.textContent = `✓ Found ${matches.length} match${matches.length !== 1 ? 'es' : ''}`;
-                    matchText.className = 'text-xl font-semibold text-green-700 dark:text-green-400';
-
-                    matchesDiv.innerHTML = matches.map((m, i) => `
-                        <div class="p-3 bg-white dark:bg-gray-600 rounded-lg">
-                            <p><span class="text-gray-500">#${i + 1}:</span> "${escapeHtml(m.text)}" <span class="text-gray-500">at index ${m.index}</span></p>
-                            ${m.groups.length > 0 ? `<p class="text-sm text-gray-500 mt-1">Groups: ${m.groups.map(g => `"${escapeHtml(g || '')}"`).join(', ')}</p>` : ''}
-                        </div>
-                    `).join('');
-                } else {
-                    matchBox.className = 'rounded-xl p-6 mb-6 bg-red-100 dark:bg-red-900/30';
-                    matchText.textContent = '✗ No matches found';
-                    matchText.className = 'text-xl font-semibold text-red-700 dark:text-red-400';
-                    matchesDiv.innerHTML = '';
-                }
-
-                document.getElementById('result').classList.remove('hidden');
-            } catch (e) {
-                alert('Invalid regex: ' + e.message);
-            }
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        
+        function copyResult() {
+            const result = document.getElementById('result');
+            result.select();
+            document.execCommand('copy');
         }
     </script>
 </body>

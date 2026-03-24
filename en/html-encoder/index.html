@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Encoder/Decoder - 205-Tools</title>
-    <meta name="description" content="Encode and decode HTML entities">
+    <title>HTML Encoder - 205-Tools</title>
+    <meta name="description" content="HTML Encoder - Free online tool">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
@@ -22,77 +22,53 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">💻 Developers</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">HTML Encoder/Decoder</h1>
-            <p class="text-xl text-white/90">Encode and decode HTML entities</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">HTML Encoder</h1>
+            <p class="text-xl text-white/90">Free online tool</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="flex gap-4 mb-8">
-                    <button onclick="setMode('encode')" id="btnEncode" class="flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium">Encode</button>
-                    <button onclick="setMode('decode')" id="btnDecode" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium">Decode</button>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Input</label>
+                    <textarea id="inputText" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter your text here..."></textarea>
                 </div>
 
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
-                    <label class="block text-sm font-medium mb-2"><span id="inputLabel">Text to Encode</span></label>
-                    <textarea id="input" rows="8" placeholder="Enter text..." class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono"></textarea>
-                </div>
-
-                <button onclick="processHTML()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
-                    Process
+                <button onclick="process()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
+                    Encode
                 </button>
 
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
+                <div class="mb-4">
                     <label class="block text-sm font-medium mb-2">Result</label>
-                    <textarea id="output" rows="8" readonly class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600 font-mono text-sm"></textarea>
+                    <textarea id="result" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
                 </div>
 
-                <div class="flex gap-4">
-                    <button onclick="copyResult()" class="flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium hover:bg-indigo-600 transition-all">Copy</button>
-                    <button onclick="clearAll()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">Clear</button>
-                </div>
+                <button onclick="copyResult()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                    Copy
+                </button>
             </div>
         </div>
     </section>
 
     <script>
-        let mode = 'encode';
-
-        function setMode(m) {
-            mode = m;
-            document.getElementById('btnEncode').className = m === 'encode' ? 'flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium' : 'flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium';
-            document.getElementById('btnDecode').className = m === 'decode' ? 'flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium' : 'flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium';
-            document.getElementById('inputLabel').textContent = m === 'encode' ? 'Text to Encode' : 'HTML to Decode';
-        }
-
-        function processHTML() {
-            const input = document.getElementById('input').value;
+        function process() {
+            const input = document.getElementById('inputText').value;
+            const btn = document.getElementById('actionBtn');
+            btn.textContent = 'Processing...';
+            btn.disabled = true;
             
-            if (mode === 'encode') {
-                const textarea = document.createElement('textarea');
-                textarea.textContent = input;
-                document.getElementById('output').value = textarea.innerHTML;
-            } else {
-                const textarea = document.createElement('textarea');
-                textarea.innerHTML = input;
-                document.getElementById('output').value = textarea.textContent;
-            }
+            setTimeout(() => {
+                document.getElementById('result').value=input.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+                btn.textContent = 'Encode';
+                btn.disabled = false;
+            }, 100);
         }
-
+        
         function copyResult() {
-            const output = document.getElementById('output');
-            if (!output.value) return;
-            output.select();
+            const result = document.getElementById('result');
+            result.select();
             document.execCommand('copy');
-            alert('Copied!');
-        }
-
-        function clearAll() {
-            document.getElementById('input').value = '';
-            document.getElementById('output').value = '';
         }
     </script>
 </body>

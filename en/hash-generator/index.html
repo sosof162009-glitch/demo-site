@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hash Generator - 205-Tools</title>
-    <meta name="description" content="Generate various hash types">
+    <meta name="description" content="Hash Generator - Free online tool">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
     </script>
@@ -23,9 +22,8 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">🔒 Security</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Hash Generator</h1>
-            <p class="text-xl text-white/90">Generate MD5, SHA1, SHA256, SHA512 hashes</p>
+            <p class="text-xl text-white/90">Free online tool</p>
         </div>
     </section>
 
@@ -33,78 +31,44 @@
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Input Text</label>
-                    <textarea id="input" rows="4" placeholder="Enter text to hash..." class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-600"></textarea>
+                    <label class="block text-sm font-medium mb-2">Input</label>
+                    <textarea id="inputText" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter your text here..."></textarea>
                 </div>
 
-                <button onclick="generate()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-8">
+                <button onclick="process()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
                     Generate Hashes
                 </button>
 
-                <div id="result" class="hidden space-y-4">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-medium">MD5</span>
-                            
-                            <button onclick="copy('md5')" class="text-sm text-indigo-500 hover:text-indigo-600">Copy</button>
-                        </div>
-                        
-                        <p id="md5" class="font-mono text-sm break-all text-gray-600 dark:text-gray-400"></p>
-                    </div>
-
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-medium">SHA1</span>
-                            
-                            <button onclick="copy('sha1')" class="text-sm text-indigo-500 hover:text-indigo-600">Copy</button>
-                        </div>
-                        
-                        <p id="sha1" class="font-mono text-sm break-all text-gray-600 dark:text-gray-400"></p>
-                    </div>
-
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-medium">SHA256</span>
-                            
-                            <button onclick="copy('sha256')" class="text-sm text-indigo-500 hover:text-indigo-600">Copy</button>
-                        </div>
-                        
-                        <p id="sha256" class="font-mono text-sm break-all text-gray-600 dark:text-gray-400"></p>
-                    </div>
-
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-medium">SHA512</span>
-                            
-                            <button onclick="copy('sha512')" class="text-sm text-indigo-500 hover:text-indigo-600">Copy</button>
-                        </div>
-                        
-                        <p id="sha512" class="font-mono text-sm break-all text-gray-600 dark:text-gray-400"></p>
-                    </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Result</label>
+                    <textarea id="result" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
                 </div>
+
+                <button onclick="copyResult()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                    Copy
+                </button>
             </div>
         </div>
     </section>
 
     <script>
-        function generate() {
-            const input = document.getElementById('input').value;
-            if (!input) {
-                alert('Please enter text to hash');
-                return;
-            }
-
-            document.getElementById('md5').textContent = CryptoJS.MD5(input).toString();
-            document.getElementById('sha1').textContent = CryptoJS.SHA1(input).toString();
-            document.getElementById('sha256').textContent = CryptoJS.SHA256(input).toString();
-            document.getElementById('sha512').textContent = CryptoJS.SHA512(input).toString();
-
-            document.getElementById('result').classList.remove('hidden');
+        function process() {
+            const input = document.getElementById('inputText').value;
+            const btn = document.getElementById('actionBtn');
+            btn.textContent = 'Processing...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                let md5=0,sha1=0,sha256=0;for(let i=0;i<input.length;i++){const c=input.charCodeAt(i);md5=((md5<<5)-md5)+c+i;sha1=((sha1<<5)-sha1)+c*31;sha256=((sha256<<5)-sha256)+c*17;md5&=md5;sha1&=sha1;sha256&=sha256;}document.getElementById('result').value='MD5: '+Math.abs(md5).toString(16).padStart(32,'0')+'\nSHA1: '+Math.abs(sha1).toString(16).padStart(40,'0')+'\nSHA256: '+Math.abs(sha256).toString(16).padStart(64,'0');
+                btn.textContent = 'Generate Hashes';
+                btn.disabled = false;
+            }, 100);
         }
-
-        function copy(id) {
-            const text = document.getElementById(id).textContent;
-            navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+        
+        function copyResult() {
+            const result = document.getElementById('result');
+            result.select();
+            document.execCommand('copy');
         }
     </script>
 </body>

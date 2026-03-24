@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Reverser - 205-Tools</title>
-    <meta name="description" content="Reverse text or words">
+    <meta name="description" content="Text Reverser - Free online tool">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#6366f1' } } } };
@@ -22,80 +22,53 @@
 
     <section class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white py-16">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-4">📝 Text</span>
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Text Reverser</h1>
-            <p class="text-xl text-white/90">Reverse text or words</p>
+            <p class="text-xl text-white/90">Free online tool</p>
         </div>
     </section>
 
     <section class="py-12">
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
-                    <label class="block text-sm font-medium mb-2">Input Text</label>
-                    <textarea id="input" rows="6" placeholder="Enter text..." class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600"></textarea>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Input</label>
+                    <textarea id="inputText" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm" placeholder="Enter your text here..."></textarea>
                 </div>
 
-                <div class="flex gap-4 mb-8">
-                    <button onclick="reverseText()" class="flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium">Reverse Characters</button>
-                    <button onclick="reverseWords()" class="flex-1 py-3 bg-purple-500 text-white rounded-xl font-medium">Reverse Words</button>
-                    <button onclick="flipText()" class="flex-1 py-3 bg-pink-500 text-white rounded-xl font-medium">Flip Text (↯)</button>
-                </div>
+                <button onclick="process()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transition-all mb-6" id="actionBtn">
+                    Reverse
+                </button>
 
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
+                <div class="mb-4">
                     <label class="block text-sm font-medium mb-2">Result</label>
-                    <textarea id="output" rows="6" readonly class="w-full p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-600"></textarea>
+                    <textarea id="result" rows="6" class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-gray-700 font-mono text-sm bg-gray-50 dark:bg-gray-800" readonly></textarea>
                 </div>
 
-                <div class="flex gap-4">
-                    <button onclick="copyResult()" class="flex-1 py-3 bg-indigo-500 text-white rounded-xl font-medium hover:bg-indigo-600 transition-all">Copy</button>
-                    <button onclick="clearAll()" class="flex-1 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">Clear</button>
-                </div>
+                <button onclick="copyResult()" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                    Copy
+                </button>
             </div>
         </div>
     </section>
 
     <script>
-        function reverseText() {
-            const input = document.getElementById('input').value;
-            document.getElementById('output').value = input.split('').reverse().join('');
-        }
-
-        function reverseWords() {
-            const input = document.getElementById('input').value;
-            document.getElementById('output').value = input.split(/\s+/).reverse().join(' ');
-        }
-
-        function flipText() {
-            const flipMap = {
-                'a': 'ɐ', 'b': 'q', 'c': 'ɔ', 'd': 'p', 'e': 'ǝ', 'f': 'ɟ', 'g': 'ƃ', 'h': 'ɥ',
-                'i': 'ᴉ', 'j': 'ɾ', 'k': 'ʞ', 'l': 'l', 'm': 'ɯ', 'n': 'u', 'o': 'o', 'p': 'd',
-                'q': 'b', 'r': 'ɹ', 's': 's', 't': 'ʇ', 'u': 'n', 'v': 'ʌ', 'w': 'ʍ', 'x': 'x',
-                'y': 'ʎ', 'z': 'z', 'A': '∀', 'B': 'q', 'C': 'Ɔ', 'D': 'p', 'E': 'Ǝ', 'F': 'Ⅎ',
-                'G': 'פ', 'H': 'H', 'I': 'I', 'J': 'ſ', 'K': 'ʞ', 'L': '˥', 'M': 'W', 'N': 'N',
-                'O': 'O', 'P': 'd', 'Q': 'b', 'R': 'ɹ', 'S': 'S', 'T': '┴', 'U': '∩', 'V': 'Λ',
-                'W': 'M', 'X': 'X', 'Y': '⅄', 'Z': 'Z', '1': 'Ɩ', '2': 'ᄅ', '3': 'Ɛ', '4': 'h',
-                '5': 'S', '6': '9', '7': 'L', '8': '8', '9': '6', '0': '0', '.': '˙', ',': "'",
-                "'": ',', '?': '¿', '!': '¡', '(': ')', ')': '(', '[': ']', ']': '[', '{': '}',
-                '}': '{', '<': '>', '>': '<', '&': '⅋', '_': '‾'
-            };
+        function process() {
+            const input = document.getElementById('inputText').value;
+            const btn = document.getElementById('actionBtn');
+            btn.textContent = 'Processing...';
+            btn.disabled = true;
             
-            const input = document.getElementById('input').value;
-            const flipped = input.split('').map(c => flipMap[c] || c).reverse().join('');
-            document.getElementById('output').value = flipped;
+            setTimeout(() => {
+                document.getElementById('result').value=input.split('').reverse().join('');
+                btn.textContent = 'Reverse';
+                btn.disabled = false;
+            }, 100);
         }
-
+        
         function copyResult() {
-            const output = document.getElementById('output');
-            if (!output.value) return;
-            output.select();
+            const result = document.getElementById('result');
+            result.select();
             document.execCommand('copy');
-            alert('Copied!');
-        }
-
-        function clearAll() {
-            document.getElementById('input').value = '';
-            document.getElementById('output').value = '';
         }
     </script>
 </body>
