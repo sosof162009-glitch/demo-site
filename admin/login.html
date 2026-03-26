@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - 205-Tools</title>
+    <meta name="description" content="Admin Dashboard Login">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/styles.css">
+    
+    <link rel="canonical" href="https://DOMAIN_PLACEHOLDER/admin/login/">
+    
+    <style>
+        .admin-login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg);
+            background: linear-gradient(135deg, var(--bg) 0%, var(--surface) 100%);
+        }
+        
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .login-logo {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .login-logo h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .login-logo p {
+            color: var(--muted);
+            margin-top: var(--space-xs);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: var(--space-sm);
+            color: var(--text);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .form-group input::placeholder {
+            color: var(--muted);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: var(--space-md);
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--border);
+        }
+        
+        .login-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--error);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius);
+            margin-bottom: var(--space-lg);
+            font-size: 0.875rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .back-link {
+            position: absolute;
+            top: var(--space-lg);
+            left: var(--space-lg);
+        }
+        
+        .back-link a {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+        
+        .back-link a:hover {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <div class="back-link">
+        <a href="/en/">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Back to Tools
+        </a>
+    </div>
+    
+    <div class="admin-login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <h1>🔧 205-Tools</h1>
+                <p>Admin Dashboard</p>
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                Invalid username or password
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        placeholder="Enter your username"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    Sign In
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <a href="#" onclick="alert('Contact admin to reset password')">Forgot password?</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple login simulation (in production, this should call an API)
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Demo credentials (in production, use proper authentication)
+        const DEMO_USERNAME = 'admin';
+        const DEMO_PASSWORD = 'admin123';
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Reset error
+            errorMessage.classList.remove('show');
+            
+            // Validate
+            if (!username || !password) {
+                errorMessage.textContent = 'Please enter both username and password';
+                errorMessage.classList.add('show');
+                return;
+            }
+            
+            // Show loading
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Signing in...';
+            
+            // Simulate API call
+            setTimeout(() => {
+                if (username === DEMO_USERNAME && password === DEMO_PASSWORD) {
+                    // Store login state (in production, use secure tokens)
+                    localStorage.setItem('admin_logged_in', 'true');
+                    localStorage.setItem('admin_username', username);
+                    
+                    // Redirect to dashboard
+                    window.location.href = '/admin/dashboard/';
+                } else {
+                    errorMessage.textContent = 'Invalid username or password';
+                    errorMessage.classList.add('show');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                }
+            }, 800);
+        });
+        
+        // Check if already logged in
+        if (localStorage.getItem('admin_logged_in') === 'true') {
+            window.location.href = '/admin/dashboard/';
+        }
+    </script>
+</body>
+</html>
