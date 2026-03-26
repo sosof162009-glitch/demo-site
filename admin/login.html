@@ -74,9 +74,9 @@
     </div>
     
     <script>
-        // Admin Credentials
+        // Admin Credentials (SHA-256 hashed password)
         const ADMIN_EMAIL = 'admin@yoursite.com';
-        const ADMIN_PASSWORD = 'Admin@2025';
+        const ADMIN_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
         
         // Security Settings
         const MAX_ATTEMPTS = 5;
@@ -88,6 +88,15 @@
         const errorMessage = document.getElementById('errorMessage');
         const lockoutMessage = document.getElementById('lockoutMessage');
         const lockoutTimer = document.getElementById('lockoutTimer');
+        
+        // Hash password using SHA-256
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
         
         // Check if already logged in
         if (sessionStorage.getItem('adminAuth') === 'true') {
@@ -158,7 +167,7 @@
         }
         
         // Handle form submission
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Check lockout first
@@ -191,9 +200,14 @@
             loginBtn.disabled = true;
             loginBtn.classList.add('loading');
             
-            // Simulate API delay for security
-            setTimeout(() => {
-                if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+            try {
+                // Hash the entered password and compare
+                const passwordHash = await hashPassword(password);
+                
+                // Simulate API delay for security
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                if (email === ADMIN_EMAIL && passwordHash === ADMIN_HASH) {
                     // Successful login
                     localStorage.removeItem('adminFailedAttempts');
                     localStorage.removeItem('adminLockoutEnd');
@@ -216,7 +230,13 @@
                     loginBtn.classList.remove('loading');
                     handleFailedAttempt();
                 }
-            }, 800);
+            } catch (error) {
+                console.error('Login error:', error);
+                errorMessage.textContent = 'An error occurred. Please try again.';
+                errorMessage.classList.add('show');
+                loginBtn.disabled = false;
+                loginBtn.classList.remove('loading');
+            }
         });
         
         // Check lockout on page load
