@@ -3,168 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Admin Login - 205-Tools</title>
-    <meta name="description" content="Admin Dashboard Login">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/styles.css">
-    
-    <link rel="canonical" href="https://DOMAIN_PLACEHOLDER/admin/login/">
-    
-    <style>
-        .admin-login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-lg);
-            background: linear-gradient(135deg, var(--bg) 0%, var(--surface) 100%);
-        }
-        
-        .login-card {
-            width: 100%;
-            max-width: 420px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
-            padding: var(--space-2xl);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .login-logo {
-            text-align: center;
-            margin-bottom: var(--space-xl);
-        }
-        
-        .login-logo h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .login-logo p {
-            color: var(--muted);
-            margin-top: var(--space-xs);
-        }
-        
-        .form-group {
-            margin-bottom: var(--space-lg);
-        }
-        
-        .form-group label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: var(--space-sm);
-            color: var(--text);
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: var(--space-sm) var(--space-md);
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            color: var(--text);
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        
-        .form-group input::placeholder {
-            color: var(--muted);
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: var(--space-md);
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: white;
-            border: none;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-        
-        .login-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .login-footer {
-            text-align: center;
-            margin-top: var(--space-lg);
-            padding-top: var(--space-lg);
-            border-top: 1px solid var(--border);
-        }
-        
-        .login-footer a {
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.875rem;
-        }
-        
-        .login-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: var(--error);
-            padding: var(--space-sm) var(--space-md);
-            border-radius: var(--radius);
-            margin-bottom: var(--space-lg);
-            font-size: 0.875rem;
-            display: none;
-        }
-        
-        .error-message.show {
-            display: block;
-        }
-        
-        .back-link {
-            position: absolute;
-            top: var(--space-lg);
-            left: var(--space-lg);
-        }
-        
-        .back-link a {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s;
-        }
-        
-        .back-link a:hover {
-            color: var(--text);
-        }
-    </style>
+    <link rel="stylesheet" href="/admin/assets/admin.css">
 </head>
 <body>
     <div class="back-link">
         <a href="/en/">
-            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
             Back to Tools
@@ -178,20 +28,25 @@
                 <p>Admin Dashboard</p>
             </div>
             
+            <div id="lockoutMessage" class="lockout-message">
+                <div>Too many failed attempts</div>
+                <div class="lockout-timer" id="lockoutTimer">15:00</div>
+            </div>
+            
             <div id="errorMessage" class="error-message">
-                Invalid username or password
+                Invalid email or password
             </div>
             
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="email">Email Address</label>
                     <input 
-                        type="text" 
-                        id="username" 
-                        name="username" 
-                        placeholder="Enter your username"
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="admin@yoursite.com"
                         required
-                        autocomplete="username"
+                        autocomplete="email"
                     >
                 </div>
                 
@@ -213,63 +68,167 @@
             </form>
             
             <div class="login-footer">
-                <a href="#" onclick="alert('Contact admin to reset password')">Forgot password?</a>
+                <a href="#" onclick="event.preventDefault(); alert('Contact your administrator to reset password')">Forgot password?</a>
             </div>
         </div>
     </div>
     
     <script>
-        // Simple login simulation (in production, this should call an API)
+        // Admin Credentials
+        const ADMIN_EMAIL = 'admin@yoursite.com';
+        const ADMIN_PASSWORD = 'Admin@2025';
+        
+        // Security Settings
+        const MAX_ATTEMPTS = 5;
+        const LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+        
+        // DOM Elements
         const loginForm = document.getElementById('loginForm');
         const loginBtn = document.getElementById('loginBtn');
         const errorMessage = document.getElementById('errorMessage');
+        const lockoutMessage = document.getElementById('lockoutMessage');
+        const lockoutTimer = document.getElementById('lockoutTimer');
         
-        // Demo credentials (in production, use proper authentication)
-        const DEMO_USERNAME = 'admin';
-        const DEMO_PASSWORD = 'admin123';
+        // Check if already logged in
+        if (sessionStorage.getItem('adminAuth') === 'true') {
+            window.location.href = '/admin/dashboard.html';
+        }
         
+        // Check for existing lockout
+        function checkLockout() {
+            const lockoutEnd = localStorage.getItem('adminLockoutEnd');
+            if (lockoutEnd) {
+                const now = Date.now();
+                if (now < parseInt(lockoutEnd)) {
+                    showLockout(parseInt(lockoutEnd) - now);
+                    return true;
+                } else {
+                    // Lockout expired
+                    localStorage.removeItem('adminLockoutEnd');
+                    localStorage.removeItem('adminFailedAttempts');
+                }
+            }
+            return false;
+        }
+        
+        // Show lockout message with countdown
+        function showLockout(remainingMs) {
+            lockoutMessage.classList.add('show');
+            loginForm.style.display = 'none';
+            
+            function updateTimer() {
+                const remaining = parseInt(localStorage.getItem('adminLockoutEnd')) - Date.now();
+                if (remaining <= 0) {
+                    lockoutMessage.classList.remove('show');
+                    loginForm.style.display = 'block';
+                    localStorage.removeItem('adminLockoutEnd');
+                    localStorage.removeItem('adminFailedAttempts');
+                    return;
+                }
+                
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                lockoutTimer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                setTimeout(updateTimer, 1000);
+            }
+            
+            updateTimer();
+        }
+        
+        // Handle failed attempt
+        function handleFailedAttempt() {
+            let attempts = parseInt(localStorage.getItem('adminFailedAttempts') || '0');
+            attempts++;
+            localStorage.setItem('adminFailedAttempts', attempts.toString());
+            
+            if (attempts >= MAX_ATTEMPTS) {
+                const lockoutEnd = Date.now() + LOCKOUT_DURATION;
+                localStorage.setItem('adminLockoutEnd', lockoutEnd.toString());
+                showLockout(LOCKOUT_DURATION);
+                return true;
+            }
+            
+            // Show remaining attempts
+            const remaining = MAX_ATTEMPTS - attempts;
+            errorMessage.textContent = `Invalid email or password. ${remaining} attempts remaining`;
+            errorMessage.classList.add('show', 'shake');
+            setTimeout(() => errorMessage.classList.remove('shake'), 500);
+            
+            return false;
+        }
+        
+        // Handle form submission
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const username = document.getElementById('username').value.trim();
+            // Check lockout first
+            if (checkLockout()) {
+                return;
+            }
+            
+            const email = document.getElementById('email').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
             
             // Reset error
             errorMessage.classList.remove('show');
             
-            // Validate
-            if (!username || !password) {
-                errorMessage.textContent = 'Please enter both username and password';
+            // Basic validation
+            if (!email || !password) {
+                errorMessage.textContent = 'Please enter both email and password';
                 errorMessage.classList.add('show');
                 return;
             }
             
-            // Show loading
-            loginBtn.disabled = true;
-            loginBtn.textContent = 'Signing in...';
+            // Email format validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorMessage.textContent = 'Please enter a valid email address';
+                errorMessage.classList.add('show');
+                return;
+            }
             
-            // Simulate API call
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtn.classList.add('loading');
+            
+            // Simulate API delay for security
             setTimeout(() => {
-                if (username === DEMO_USERNAME && password === DEMO_PASSWORD) {
-                    // Store login state (in production, use secure tokens)
-                    localStorage.setItem('admin_logged_in', 'true');
-                    localStorage.setItem('admin_username', username);
+                if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                    // Successful login
+                    localStorage.removeItem('adminFailedAttempts');
+                    localStorage.removeItem('adminLockoutEnd');
+                    
+                    // Store session
+                    const sessionData = {
+                        authenticated: true,
+                        email: email,
+                        loginTime: new Date().toISOString(),
+                        expires: Date.now() + (8 * 60 * 60 * 1000) // 8 hours
+                    };
+                    sessionStorage.setItem('adminAuth', 'true');
+                    sessionStorage.setItem('adminSession', JSON.stringify(sessionData));
                     
                     // Redirect to dashboard
-                    window.location.href = '/admin/dashboard/';
+                    window.location.href = '/admin/dashboard.html';
                 } else {
-                    errorMessage.textContent = 'Invalid username or password';
-                    errorMessage.classList.add('show');
+                    // Failed login
                     loginBtn.disabled = false;
-                    loginBtn.textContent = 'Sign In';
+                    loginBtn.classList.remove('loading');
+                    handleFailedAttempt();
                 }
             }, 800);
         });
         
-        // Check if already logged in
-        if (localStorage.getItem('admin_logged_in') === 'true') {
-            window.location.href = '/admin/dashboard/';
-        }
+        // Check lockout on page load
+        checkLockout();
+        
+        // Clear error on input
+        document.getElementById('email').addEventListener('input', () => {
+            errorMessage.classList.remove('show');
+        });
+        document.getElementById('password').addEventListener('input', () => {
+            errorMessage.classList.remove('show');
+        });
     </script>
 </body>
 </html>
