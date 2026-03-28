@@ -10,6 +10,170 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/assets/admin.css">
+    
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .dashboard-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+        
+        .dashboard-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            color: var(--text);
+        }
+        
+        .card-full { grid-column: span 12; }
+        .card-half { grid-column: span 6; }
+        .card-third { grid-column: span 4; }
+        
+        @media (max-width: 1024px) {
+            .card-half, .card-third { grid-column: span 6; }
+        }
+        
+        @media (max-width: 768px) {
+            .card-half, .card-third { grid-column: span 12; }
+        }
+        
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+        
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+            font-size: 0.8125rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        
+        /* Tables */
+        .dashboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .dashboard-table th,
+        .dashboard-table td {
+            padding: var(--space-sm) var(--space-md);
+            text-align: left;
+            font-size: 0.875rem;
+        }
+        
+        .dashboard-table th {
+            color: var(--muted);
+            font-weight: 500;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .dashboard-table td {
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .dashboard-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .trend-up { color: var(--success); }
+        .trend-down { color: var(--error); }
+        
+        /* Country List */
+        .country-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+        
+        .country-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .country-flag {
+            font-size: 1.25rem;
+        }
+        
+        .country-name {
+            flex: 1;
+            font-size: 0.875rem;
+        }
+        
+        .country-percent {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text);
+            min-width: 45px;
+            text-align: right;
+        }
+        
+        .progress-bar {
+            width: 100px;
+            height: 6px;
+            background: var(--surface);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            border-radius: var(--radius-full);
+            transition: width 0.5s ease;
+        }
+        
+        /* Error Status */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .status-resolved {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            color: var(--muted);
+            padding: var(--space-xl);
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="admin-layout">
@@ -93,7 +257,7 @@
             <header class="admin-header">
                 <h1>Dashboard</h1>
                 <div class="user-menu">
-                    <span id="adminEmail">admin@yoursite.com</span>
+                    <span id="adminEmail"></span>
                 </div>
             </header>
             
@@ -107,7 +271,7 @@
                 
                 <div class="stat-card">
                     <h3>Categories</h3>
-                    <div class="stat-value" id="totalCategories">13</div>
+                    <div class="stat-value" id="totalCategories">12</div>
                     <div class="stat-change positive">Active</div>
                 </div>
                 
@@ -119,25 +283,83 @@
                 
                 <div class="stat-card">
                     <h3>Total Pages</h3>
-                    <div class="stat-value" id="totalPages">2,265</div>
+                    <div class="stat-value" id="totalPages">1,025</div>
                     <div class="stat-change">Generated HTML</div>
                 </div>
             </div>
             
-            <!-- Recent Activity -->
-            <div class="form-section">
-                <h3>Recent Activity</h3>
-                <div id="recentActivity">
-                    <p style="color: var(--muted); padding: var(--space-md);">
-                        No recent activity to display. Start by managing your tools or updating SEO settings.
-                    </p>
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Line Chart: Visits Last 30 Days -->
+                <div class="dashboard-card card-half">
+                    <h3>Visits - Last 30 Days</h3>
+                    <div class="chart-container">
+                        <canvas id="visitsChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Donut Chart: Category Distribution -->
+                <div class="dashboard-card card-half">
+                    <h3>Category Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="chart-legend" id="categoryLegend"></div>
+                </div>
+                
+                <!-- Top 10 Most Used Tools -->
+                <div class="dashboard-card card-half">
+                    <h3>Top 10 Most Used Tools</h3>
+                    <div class="table-wrapper">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Tool Name</th>
+                                    <th>Category</th>
+                                    <th>Uses</th>
+                                    <th>Change</th>
+                                </tr>
+                            </thead>
+                            <tbody id="topToolsTable">
+                                <!-- Filled by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Top 5 Countries -->
+                <div class="dashboard-card card-third">
+                    <h3>Top 5 Countries</h3>
+                    <div class="country-list" id="countryList">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+                
+                <!-- Last 5 Errors -->
+                <div class="dashboard-card card-third">
+                    <h3>Last 5 Errors</h3>
+                    <div class="table-wrapper">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Page</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="errorsTable">
+                                <!-- Filled by JS -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             
             <!-- Quick Actions -->
             <div class="form-section">
                 <h3>Quick Actions</h3>
-                <div style="display: flex; gap: var(--space-md); flex-wrap: wrap;">
+                <div class="action-buttons">
                     <a href="/admin/tools.html" class="btn btn-primary">Manage Tools</a>
                     <a href="/admin/seo.html" class="btn btn-secondary">Update SEO</a>
                     <a href="/en/" target="_blank" class="btn btn-secondary">View Site</a>
@@ -173,26 +395,282 @@
             window.location.href = '/admin/login.html';
         }
         
-        // Load stats from localStorage (simulated data)
-        function loadStats() {
-            const stats = JSON.parse(localStorage.getItem('adminStats') || '{}');
+        // ═══════════════════════════════════════════════════════════════
+        // Canvas Charts
+        // ═══════════════════════════════════════════════════════════════
+        
+        // Line Chart - Visits Last 30 Days
+        function drawVisitsChart() {
+            const canvas = document.getElementById('visitsChart');
+            const ctx = canvas.getContext('2d');
+            const parent = canvas.parentElement;
             
-            if (stats.totalTools) {
-                document.getElementById('totalTools').textContent = stats.totalTools;
+            canvas.width = parent.offsetWidth;
+            canvas.height = parent.offsetHeight;
+            
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 40;
+            
+            // Mock data for 30 days
+            const data = [1200, 1350, 1180, 1420, 1560, 1480, 1620, 1750, 1680, 1820, 
+                         1950, 1880, 1720, 1650, 1780, 1920, 2050, 1980, 2120, 2250,
+                         2180, 2320, 2450, 2380, 2520, 2650, 2580, 2420, 2350, 2480];
+            
+            const maxValue = Math.max(...data);
+            const minValue = Math.min(...data);
+            const range = maxValue - minValue;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Get CSS variables
+            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#4f8ef7';
+            const mutedColor = getComputedStyle(document.documentElement).getPropertyValue('--muted').trim() || '#5a607a';
+            
+            // Draw grid lines
+            ctx.strokeStyle = mutedColor + '20';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (height - 2 * padding) * i / 4;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
             }
-            if (stats.totalCategories) {
-                document.getElementById('totalCategories').textContent = stats.totalCategories;
-            }
-            if (stats.totalLanguages) {
-                document.getElementById('totalLanguages').textContent = stats.totalLanguages;
-            }
-            if (stats.totalPages) {
-                document.getElementById('totalPages').textContent = stats.totalPages;
+            
+            // Draw line
+            ctx.beginPath();
+            ctx.strokeStyle = accentColor;
+            ctx.lineWidth = 2;
+            ctx.lineJoin = 'round';
+            
+            data.forEach((value, index) => {
+                const x = padding + (width - 2 * padding) * index / (data.length - 1);
+                const y = height - padding - ((value - minValue) / range) * (height - 2 * padding);
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+            
+            // Draw area under line
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            data.forEach((value, index) => {
+                const x = padding + (width - 2 * padding) * index / (data.length - 1);
+                const y = height - padding - ((value - minValue) / range) * (height - 2 * padding);
+                ctx.lineTo(x, y);
+            });
+            ctx.lineTo(width - padding, height - padding);
+            ctx.closePath();
+            ctx.fillStyle = accentColor + '20';
+            ctx.fill();
+            
+            // Draw points
+            data.forEach((value, index) => {
+                if (index % 5 === 0 || index === data.length - 1) {
+                    const x = padding + (width - 2 * padding) * index / (data.length - 1);
+                    const y = height - padding - ((value - minValue) / range) * (height - 2 * padding);
+                    
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fillStyle = accentColor;
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.arc(x, y, 6, 0, Math.PI * 2);
+                    ctx.strokeStyle = accentColor + '40';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            });
+            
+            // Draw labels
+            ctx.fillStyle = mutedColor;
+            ctx.font = '12px DM Sans';
+            ctx.textAlign = 'center';
+            
+            for (let i = 0; i < 6; i++) {
+                const day = (i * 5) + 1;
+                const x = padding + (width - 2 * padding) * (i * 5) / (data.length - 1);
+                ctx.fillText(`Day ${day}`, x, height - 10);
             }
         }
         
+        // Donut Chart - Category Distribution
+        function drawCategoryChart() {
+            const canvas = document.getElementById('categoryChart');
+            const ctx = canvas.getContext('2d');
+            const parent = canvas.parentElement;
+            
+            canvas.width = parent.offsetWidth;
+            canvas.height = parent.offsetHeight;
+            
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(width, height) / 3;
+            const innerRadius = radius * 0.6;
+            
+            // Category data (12 categories)
+            const categories = [
+                { name: 'Image Conversion', value: 32, color: '#4f8ef7' },
+                { name: 'Image Tools', value: 10, color: '#7b6fff' },
+                { name: 'PDF Tools', value: 18, color: '#a855f7' },
+                { name: 'Text Tools', value: 22, color: '#ec4899' },
+                { name: 'Developer Tools', value: 28, color: '#f43f5e' },
+                { name: 'Color Tools', value: 15, color: '#f97316' },
+                { name: 'Math & Numbers', value: 12, color: '#eab308' },
+                { name: 'Date & Time', value: 10, color: '#22c55e' },
+                { name: 'Unit Converter', value: 16, color: '#14b8a6' },
+                { name: 'SEO & Web', value: 14, color: '#06b6d4' },
+                { name: 'Security', value: 8, color: '#0ea5e9' },
+                { name: 'Data Tools', value: 20, color: '#6366f1' }
+            ];
+            
+            const total = categories.reduce((sum, cat) => sum + cat.value, 0);
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw donut segments
+            let currentAngle = -Math.PI / 2;
+            
+            categories.forEach(cat => {
+                const sliceAngle = (cat.value / total) * Math.PI * 2;
+                
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+                ctx.arc(centerX, centerY, innerRadius, currentAngle + sliceAngle, currentAngle, true);
+                ctx.closePath();
+                ctx.fillStyle = cat.color;
+                ctx.fill();
+                
+                currentAngle += sliceAngle;
+            });
+            
+            // Draw center text
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#dde1f5';
+            ctx.font = 'bold 24px DM Sans';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(total, centerX, centerY - 8);
+            
+            ctx.font = '12px DM Sans';
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--muted').trim() || '#5a607a';
+            ctx.fillText('Tools', centerX, centerY + 12);
+            
+            // Create legend
+            const legendContainer = document.getElementById('categoryLegend');
+            legendContainer.innerHTML = categories.map(cat => `
+                <div class="legend-item">
+                    <div class="legend-color" style="background: ${cat.color}"></div>
+                    <span>${cat.name} (${cat.value})</span>
+                </div>
+            `).join('');
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Data Tables
+        // ═══════════════════════════════════════════════════════════════
+        
+        // Top 10 Most Used Tools
+        function loadTopTools() {
+            const tools = [
+                { name: 'Password Generator', category: 'Security', uses: 12543, change: 12.5 },
+                { name: 'Image Converter', category: 'Image Conversion', uses: 11298, change: 8.3 },
+                { name: 'Word Counter', category: 'Text Tools', uses: 9876, change: -2.1 },
+                { name: 'JSON Formatter', category: 'Developer Tools', uses: 9543, change: 15.7 },
+                { name: 'BMI Calculator', category: 'Math & Numbers', uses: 8234, change: 5.2 },
+                { name: 'PDF Compressor', category: 'PDF Tools', uses: 7891, change: 3.8 },
+                { name: 'Color Picker', category: 'Color Tools', uses: 7654, change: -1.5 },
+                { name: 'QR Code Generator', category: 'Security', uses: 7234, change: 22.4 },
+                { name: 'Unit Converter', category: 'Unit Converter', uses: 6876, change: 4.1 },
+                { name: 'Base64 Encoder', category: 'Developer Tools', uses: 6543, change: 6.9 }
+            ];
+            
+            const tbody = document.getElementById('topToolsTable');
+            tbody.innerHTML = tools.map(tool => `
+                <tr>
+                    <td>${tool.name}</td>
+                    <td>${tool.category}</td>
+                    <td>${tool.uses.toLocaleString()}</td>
+                    <td class="${tool.change >= 0 ? 'trend-up' : 'trend-down'}">
+                        ${tool.change >= 0 ? '↑' : '↓'} ${Math.abs(tool.change)}%
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // Last 5 Errors
+        function loadErrors() {
+            const errors = [
+                { type: '404 Not Found', page: '/en/old-tool/', time: '2 min ago', status: 'pending' },
+                { type: '500 Server Error', page: '/admin/api/tools', time: '15 min ago', status: 'resolved' },
+                { type: 'JS Error', page: '/ar/calculator/', time: '1 hour ago', status: 'resolved' },
+                { type: 'Timeout', page: '/fr/image-converter/', time: '3 hours ago', status: 'pending' },
+                { type: '404 Not Found', page: '/de/removed-tool/', time: '5 hours ago', status: 'resolved' }
+            ];
+            
+            const tbody = document.getElementById('errorsTable');
+            tbody.innerHTML = errors.map(err => `
+                <tr>
+                    <td>${err.type}</td>
+                    <td>${err.page}</td>
+                    <td>${err.time}</td>
+                    <td>
+                        <span class="status-badge status-${err.status}">
+                            ${err.status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // Top 5 Countries
+        function loadCountries() {
+            const countries = [
+                { flag: '🇺🇸', name: 'United States', percent: 35 },
+                { flag: '🇸🇦', name: 'Saudi Arabia', percent: 22 },
+                { flag: '🇪🇬', name: 'Egypt', percent: 15 },
+                { flag: '🇬🇧', name: 'United Kingdom', percent: 12 },
+                { flag: '🇩🇪', name: 'Germany', percent: 8 }
+            ];
+            
+            const container = document.getElementById('countryList');
+            container.innerHTML = countries.map(country => `
+                <div class="country-item">
+                    <span class="country-flag">${country.flag}</span>
+                    <span class="country-name">${country.name}</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${country.percent}%"></div>
+                    </div>
+                    <span class="country-percent">${country.percent}%</span>
+                </div>
+            `).join('');
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
         // Initialize
-        loadStats();
+        // ═══════════════════════════════════════════════════════════════
+        
+        window.addEventListener('load', () => {
+            drawVisitsChart();
+            drawCategoryChart();
+            loadTopTools();
+            loadErrors();
+            loadCountries();
+        });
+        
+        window.addEventListener('resize', () => {
+            drawVisitsChart();
+            drawCategoryChart();
+        });
     </script>
 </body>
 </html>
