@@ -682,7 +682,8 @@ Sitemap: https://205-tools.com/sitemap.xml</textarea>
             'HTML to Markdown', 'CSV to JSON', 'URL Shortener', 'Image Compressor', 'Audio Converter'
         ];
         
-        // Generate mock SEO data
+        // Mock data — 20 sample tools
+        // In production: load all 205 from tools-data.json
         function generateSeoData() {
             return toolNames.map((name, index) => {
                 const hasTitle = Math.random() > 0.2;
