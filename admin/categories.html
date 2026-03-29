@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Categories Management - Admin - 205-Tools</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/admin.css">
+    
+    <style>
+        .categories-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .category-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            cursor: grab;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .category-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .category-card.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+            border: 2px dashed var(--accent);
+        }
+        
+        .category-card.drag-over {
+            border-color: var(--success);
+            transform: scale(1.02);
+        }
+        
+        .category-drag-handle {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            color: var(--muted);
+            cursor: grab;
+            padding: var(--space-xs);
+        }
+        
+        .category-drag-handle:hover {
+            color: var(--text);
+        }
+        
+        .category-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: var(--space-md);
+        }
+        
+        .category-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .category-count {
+            font-size: 0.875rem;
+            color: var(--muted);
+            margin-bottom: var(--space-md);
+        }
+        
+        .category-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border);
+        }
+        
+        .visibility-toggle {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--surface);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 1px solid var(--border);
+        }
+        
+        .toggle-switch.active {
+            background: var(--success);
+            border-color: var(--success);
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+        
+        .edit-btn {
+            padding: 6px 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .edit-btn:hover {
+            background: var(--accent-light);
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: var(--space-lg);
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+        }
+        
+        .modal {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            transition: all 0.2s;
+        }
+        
+        .modal-close:hover {
+            background: var(--surface);
+            color: var(--text);
+        }
+        
+        .modal-body {
+            padding: var(--space-lg);
+        }
+        
+        .modal-footer {
+            padding: var(--space-lg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--space-md);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: var(--space-sm);
+            color: var(--text);
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-size: 0.9375rem;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .icon-preview {
+            width: 48px;
+            height: 48px;
+            background: var(--surface);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-top: var(--space-sm);
+        }
+        
+        .reorder-hint {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.875rem;
+            margin-bottom: var(--space-lg);
+            padding: var(--space-md);
+            background: var(--surface);
+            border-radius: var(--radius);
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>🔧 205-Tools</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="/admin/dashboard.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                    Dashboard
+                </a>
+                <a href="/admin/tools.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Tools
+                </a>
+                <a href="/admin/categories.html" class="nav-item active">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                    Categories
+                </a>
+                <a href="/admin/seo.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    SEO
+                </a>
+                <a href="/admin/languages.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                    Languages
+                </a>
+                <a href="/admin/ads.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Ads
+                </a>
+                <a href="/admin/performance.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    Performance
+                </a>
+                <a href="/admin/notifications.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                    Notifications
+                </a>
+                <a href="/admin/settings.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Settings
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Categories Management</h1>
+                <div class="user-menu">
+                    <span id="adminEmail"></span>
+                    <button class="btn btn-primary" onclick="openAddModal()">+ Add Category</button>
+                </div>
+            </header>
+            
+            <div class="reorder-hint">
+                💡 Drag and drop cards to reorder categories
+            </div>
+            
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Filled by JS -->
+            </div>
+        </main>
+    </div>
+    
+    <!-- Category Modal -->
+    <div class="modal-overlay" id="categoryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Edit Category</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Category Name</label>
+                    <input type="text" class="form-input" id="catName" placeholder="e.g., Image Conversion">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Icon (Emoji)</label>
+                    <input type="text" class="form-input" id="catIcon" placeholder="e.g., 🖼️" maxlength="2">
+                    <div class="icon-preview" id="iconPreview">📁</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="catDescription" placeholder="Brief description of this category..."></textarea>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCategory()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // Security: Check authentication on page load
+        // ═══════════════════════════════════════════════════════════════
+        const session = sessionStorage.getItem('adminAuth');
+        if (session !== 'true') {
+            window.location.href = '/admin/login.html';
+        }
+        
+        // Get admin email from session
+        const sessionData = JSON.parse(sessionStorage.getItem('adminSession') || '{}');
+        if (sessionData.email) {
+            document.getElementById('adminEmail').textContent = sessionData.email;
+        }
+        
+        // Check session expiration
+        if (sessionData.expires && Date.now() > sessionData.expires) {
+            logout();
+        }
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminAuth');
+            sessionStorage.removeItem('adminSession');
+            window.location.href = '/admin/login.html';
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Categories Data
+        // ═══════════════════════════════════════════════════════════════
+        let categories = [
+            { id: 1, name: 'Image Conversion', icon: '🖼️', count: 32, visible: true, description: 'Convert between image formats' },
+            { id: 2, name: 'Image Tools', icon: '🎨', count: 10, visible: true, description: 'Edit and manipulate images' },
+            { id: 3, name: 'PDF Tools', icon: '📄', count: 18, visible: true, description: 'Work with PDF files' },
+            { id: 4, name: 'Text Tools', icon: '📝', count: 22, visible: true, description: 'Text manipulation utilities' },
+            { id: 5, name: 'Developer Tools', icon: '💻', count: 28, visible: true, description: 'Tools for developers' },
+            { id: 6, name: 'Color Tools', icon: '🎨', count: 15, visible: true, description: 'Color utilities and converters' },
+            { id: 7, name: 'Math & Numbers', icon: '🔢', count: 12, visible: true, description: 'Mathematical calculators' },
+            { id: 8, name: 'Date & Time', icon: '📅', count: 10, visible: true, description: 'Date and time utilities' },
+            { id: 9, name: 'Unit Converter', icon: '🔄', count: 16, visible: true, description: 'Convert between units' },
+            { id: 10, name: 'SEO & Web', icon: '🔍', count: 14, visible: true, description: 'SEO and web tools' },
+            { id: 11, name: 'Security', icon: '🔐', count: 8, visible: true, description: 'Security and privacy tools' },
+            { id: 12, name: 'Data Tools', icon: '📊', count: 10, visible: true, description: 'Data processing utilities' }
+        ];
+        
+        let editingCategoryId = null;
+        let draggedItem = null;
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Render Categories
+        // ═══════════════════════════════════════════════════════════════
+        function renderCategories() {
+            const grid = document.getElementById('categoriesGrid');
+            
+            grid.innerHTML = categories.map((cat, index) => `
+                <div class="category-card" 
+                     data-id="${cat.id}" 
+                     draggable="true"
+                     data-index="${index}">
+                    <div class="category-drag-handle">⋮⋮</div>
+                    <div class="category-icon">${cat.icon}</div>
+                    <div class="category-name">${cat.name}</div>
+                    <div class="category-count">${cat.count} tools</div>
+                    
+                    <div class="category-actions">
+                        <div class="visibility-toggle">
+                            <span>${cat.visible ? 'Visible' : 'Hidden'}</span>
+                            <div class="toggle-switch ${cat.visible ? 'active' : ''}" 
+                                 onclick="toggleVisibility(${cat.id})"></div>
+                        </div>
+                        <button class="edit-btn" onclick="openEditModal(${cat.id})">Edit</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add drag and drop listeners
+            setupDragAndDrop();
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Drag and Drop
+        // ═══════════════════════════════════════════════════════════════
+        function setupDragAndDrop() {
+            const cards = document.querySelectorAll('.category-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+                card.addEventListener('dragover', handleDragOver);
+                card.addEventListener('drop', handleDrop);
+                card.addEventListener('dragenter', handleDragEnter);
+                card.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+        
+        function handleDragStart(e) {
+            draggedItem = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+        
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            const cards = document.querySelectorAll('.category-card');
+            cards.forEach(card => card.classList.remove('drag-over'));
+        }
+        
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+        
+        function handleDragEnter(e) {
+            if (this !== draggedItem) {
+                this.classList.add('drag-over');
+            }
+        }
+        
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+        
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            if (draggedItem !== this) {
+                const fromIndex = parseInt(draggedItem.dataset.index);
+                const toIndex = parseInt(this.dataset.index);
+                
+                // Reorder array
+                const item = categories.splice(fromIndex, 1)[0];
+                categories.splice(toIndex, 0, item);
+                
+                // Re-render
+                renderCategories();
+            }
+            
+            return false;
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Category Actions
+        // ═══════════════════════════════════════════════════════════════
+        function toggleVisibility(id) {
+            const cat = categories.find(c => c.id === id);
+            if (cat) {
+                cat.visible = !cat.visible;
+                renderCategories();
+            }
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Modal Functions
+        // ═══════════════════════════════════════════════════════════════
+        function openEditModal(id) {
+            const cat = categories.find(c => c.id === id);
+            if (!cat) return;
+            
+            editingCategoryId = id;
+            document.getElementById('modalTitle').textContent = 'Edit Category';
+            document.getElementById('catName').value = cat.name;
+            document.getElementById('catIcon').value = cat.icon;
+            document.getElementById('catDescription').value = cat.description || '';
+            document.getElementById('iconPreview').textContent = cat.icon || '📁';
+            
+            document.getElementById('categoryModal').classList.add('show');
+        }
+        
+        function openAddModal() {
+            editingCategoryId = null;
+            document.getElementById('modalTitle').textContent = 'Add Category';
+            document.getElementById('catName').value = '';
+            document.getElementById('catIcon').value = '';
+            document.getElementById('catDescription').value = '';
+            document.getElementById('iconPreview').textContent = '📁';
+            
+            document.getElementById('categoryModal').classList.add('show');
+        }
+        
+        function closeModal() {
+            document.getElementById('categoryModal').classList.remove('show');
+            editingCategoryId = null;
+        }
+        
+        function saveCategory() {
+            const name = document.getElementById('catName').value.trim();
+            const icon = document.getElementById('catIcon').value.trim();
+            const description = document.getElementById('catDescription').value.trim();
+            
+            if (!name) {
+                alert('Please enter a category name');
+                return;
+            }
+            
+            if (editingCategoryId) {
+                // Update existing
+                const cat = categories.find(c => c.id === editingCategoryId);
+                if (cat) {
+                    cat.name = name;
+                    cat.icon = icon || '📁';
+                    cat.description = description;
+                }
+            } else {
+                // Add new
+                const newId = Math.max(...categories.map(c => c.id)) + 1;
+                categories.push({
+                    id: newId,
+                    name: name,
+                    icon: icon || '📁',
+                    count: 0,
+                    visible: true,
+                    description: description
+                });
+            }
+            
+            closeModal();
+            renderCategories();
+        }
+        
+        // Icon preview update
+        document.getElementById('catIcon').addEventListener('input', function() {
+            document.getElementById('iconPreview').textContent = this.value || '📁';
+        });
+        
+        // Close modal on overlay click
+        document.getElementById('categoryModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Initialize
+        // ═══════════════════════════════════════════════════════════════
+        renderCategories();
+    </script>
+</body>
+</html>
