@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>SEO Manager - Admin - 205-Tools</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/admin.css">
+    
+    <style>
+        .seo-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .seo-stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .seo-stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .seo-stat-icon.complete { background: rgba(34, 197, 94, 0.1); }
+        .seo-stat-icon.warning { background: rgba(245, 158, 11, 0.1); }
+        .seo-stat-icon.empty { background: rgba(239, 68, 68, 0.1); }
+        
+        .seo-stat-info h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .seo-stat-info p {
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+        
+        .seo-progress {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .seo-progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+        
+        .seo-progress-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .seo-progress-percent {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--surface);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            border-radius: var(--radius-full);
+            transition: width 0.3s;
+        }
+        
+        .seo-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        
+        .seo-search {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .seo-search input {
+            width: 100%;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-size: 0.9375rem;
+        }
+        
+        .seo-search input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .seo-actions {
+            display: flex;
+            gap: var(--space-sm);
+        }
+        
+        .seo-table-container {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        
+        .seo-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .seo-table th,
+        .seo-table td {
+            padding: var(--space-md);
+            text-align: left;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .seo-table th {
+            background: var(--surface);
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .seo-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        .seo-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .meta-counter {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: var(--radius);
+        }
+        
+        .meta-counter.good {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+        
+        .meta-counter.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .meta-counter.bad {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+        
+        .seo-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .seo-status.complete {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+        
+        .seo-status.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .seo-status.empty {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+        
+        .seo-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        
+        .seo-status.complete::before { background: var(--success); }
+        .seo-status.warning::before { background: var(--warning); }
+        .seo-status.empty::before { background: var(--error); }
+        
+        .edit-btn {
+            padding: 6px 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .edit-btn:hover {
+            background: var(--accent-light);
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: var(--space-lg);
+            overflow-y: auto;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+        }
+        
+        .modal {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            transition: all 0.2s;
+        }
+        
+        .modal-close:hover {
+            background: var(--surface);
+            color: var(--text);
+        }
+        
+        .modal-body {
+            padding: var(--space-lg);
+        }
+        
+        .modal-footer {
+            padding: var(--space-lg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--space-md);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .form-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-size: 0.9375rem;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .char-counter {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .char-counter.good { color: var(--success); }
+        .char-counter.warning { color: var(--warning); }
+        .char-counter.bad { color: var(--error); }
+        
+        /* SERP Preview */
+        .serp-preview {
+            background: white;
+            border-radius: var(--radius);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .serp-preview-title {
+            color: #1a0dab;
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .serp-preview-url {
+            color: #006621;
+            font-size: 0.875rem;
+            margin-bottom: 8px;
+        }
+        
+        .serp-preview-desc {
+            color: #545454;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .serp-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--space-sm);
+        }
+        
+        /* XML Preview */
+        .xml-preview {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--space-md);
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.8125rem;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .xml-tag { color: #ff79c6; }
+        .xml-attr { color: #50fa7b; }
+        .xml-value { color: #f1fa8c; }
+        .xml-text { color: var(--text); }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>🔧 205-Tools</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="/admin/dashboard.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                    Dashboard
+                </a>
+                <a href="/admin/tools.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Tools
+                </a>
+                <a href="/admin/categories.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                    Categories
+                </a>
+                <a href="/admin/seo.html" class="nav-item active">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    SEO
+                </a>
+                <a href="/admin/languages.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                    Languages
+                </a>
+                <a href="/admin/ads.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Ads
+                </a>
+                <a href="/admin/performance.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    Performance
+                </a>
+                <a href="/admin/notifications.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                    Notifications
+                </a>
+                <a href="/admin/settings.html" class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Settings
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>SEO Manager</h1>
+                <div class="user-menu">
+                    <span id="adminEmail"></span>
+                </div>
+            </header>
+            
+            <!-- SEO Stats -->
+            <div class="seo-stats">
+                <div class="seo-stat-card">
+                    <div class="seo-stat-icon complete">✅</div>
+                    <div class="seo-stat-info">
+                        <h3 id="completeCount">0</h3>
+                        <p>Complete</p>
+                    </div>
+                </div>
+                <div class="seo-stat-card">
+                    <div class="seo-stat-icon warning">⚠️</div>
+                    <div class="seo-stat-info">
+                        <h3 id="warningCount">0</h3>
+                        <p>Needs Improvement</p>
+                    </div>
+                </div>
+                <div class="seo-stat-card">
+                    <div class="seo-stat-icon empty">❌</div>
+                    <div class="seo-stat-info">
+                        <h3 id="emptyCount">0</h3>
+                        <p>Missing</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="seo-progress">
+                <div class="seo-progress-header">
+                    <h3>SEO Completion</h3>
+                    <span class="seo-progress-percent" id="seoPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <!-- Toolbar -->
+            <div class="seo-toolbar">
+                <div class="seo-search">
+                    <input type="text" id="searchInput" placeholder="Search tools...">
+                </div>
+                <div class="seo-actions">
+                    <button class="btn btn-secondary" onclick="openSitemapModal()">📄 Sitemap</button>
+                    <button class="btn btn-secondary" onclick="openRobotsModal()">🤖 Robots.txt</button>
+                </div>
+            </div>
+            
+            <!-- SEO Table -->
+            <div class="seo-table-container">
+                <table class="seo-table">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Meta Title</th>
+                            <th>Meta Description</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="seoTableBody">
+                        <!-- Filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <!-- SEO Editor Modal -->
+    <div class="modal-overlay" id="seoModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Edit SEO</h2>
+                <button class="modal-close" onclick="closeSeoModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- SERP Preview -->
+                <div class="serp-label">Google Search Preview</div>
+                <div class="serp-preview">
+                    <div class="serp-preview-title" id="serpTitle">Page Title</div>
+                    <div class="serp-preview-url" id="serpUrl">https://205-tools.com/en/tool-name/</div>
+                    <div class="serp-preview-desc" id="serpDesc">Meta description will appear here...</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <span>Meta Title</span>
+                        <span class="char-counter" id="titleCounter">0 / 60</span>
+                    </label>
+                    <input type="text" class="form-input" id="metaTitle" maxlength="80">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <span>Meta Description</span>
+                        <span class="char-counter" id="descCounter">0 / 160</span>
+                    </label>
+                    <textarea class="form-textarea" id="metaDescription" rows="3" maxlength="200"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Canonical URL</label>
+                    <input type="text" class="form-input" id="canonicalUrl">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">H1 Tag</label>
+                    <input type="text" class="form-input" id="h1Tag">
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSeoModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSeo()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sitemap Modal -->
+    <div class="modal-overlay" id="sitemapModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>XML Sitemap</h2>
+                <button class="modal-close" onclick="closeSitemapModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="xml-preview" id="sitemapContent"></div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSitemapModal()">Close</button>
+                <button class="btn btn-primary" onclick="downloadSitemap()">⬇️ Download</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Robots.txt Modal -->
+    <div class="modal-overlay" id="robotsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Robots.txt Editor</h2>
+                <button class="modal-close" onclick="closeRobotsModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <textarea class="form-textarea" id="robotsContent" rows="15">User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://205-tools.com/sitemap.xml</textarea>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeRobotsModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveRobots()">Save & Download</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // Security: Check authentication on page load
+        // ═══════════════════════════════════════════════════════════════
+        const session = sessionStorage.getItem('adminAuth');
+        if (session !== 'true') {
+            window.location.href = '/admin/login.html';
+        }
+        
+        // Get admin email from session
+        const sessionData = JSON.parse(sessionStorage.getItem('adminSession') || '{}');
+        if (sessionData.email) {
+            document.getElementById('adminEmail').textContent = sessionData.email;
+        }
+        
+        // Check session expiration
+        if (sessionData.expires && Date.now() > sessionData.expires) {
+            logout();
+        }
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminAuth');
+            sessionStorage.removeItem('adminSession');
+            window.location.href = '/admin/login.html';
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Mock SEO Data
+        // ═══════════════════════════════════════════════════════════════
+        let seoData = [];
+        const toolNames = [
+            'JPG to PNG', 'PNG to JPG', 'WebP to JPG', 'PDF to Word', 'Word to PDF',
+            'Password Generator', 'JSON Formatter', 'Base64 Encode', 'Color Picker', 'BMI Calculator',
+            'Age Calculator', 'Word Counter', 'QR Code Generator', 'Hash Generator', 'Regex Tester',
+            'HTML to Markdown', 'CSV to JSON', 'URL Shortener', 'Image Compressor', 'Audio Converter'
+        ];
+        
+        // Generate mock SEO data
+        function generateSeoData() {
+            return toolNames.map((name, index) => {
+                const hasTitle = Math.random() > 0.2;
+                const hasDesc = Math.random() > 0.3;
+                const titleLength = hasTitle ? Math.floor(Math.random() * 40) + 30 : 0;
+                const descLength = hasDesc ? Math.floor(Math.random() * 100) + 60 : 0;
+                
+                return {
+                    id: index + 1,
+                    name: name,
+                    slug: name.toLowerCase().replace(/\s+/g, '-'),
+                    metaTitle: hasTitle ? `${name} - Free Online Tool | 205-Tools` : '',
+                    metaDescription: hasDesc ? `Use our free ${name} tool. Fast, secure, and easy to use. No registration required.` : '',
+                    canonicalUrl: `https://205-tools.com/en/${name.toLowerCase().replace(/\s+/g, '-')}/`,
+                    h1: name,
+                    titleLength: titleLength,
+                    descLength: descLength
+                };
+            });
+        }
+        
+        seoData = generateSeoData();
+        let editingToolId = null;
+        let searchTimeout;
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Calculate SEO Status
+        // ═══════════════════════════════════════════════════════════════
+        function getSeoStatus(tool) {
+            if (!tool.metaTitle || !tool.metaDescription) {
+                return 'empty';
+            }
+            if (tool.titleLength > 60 || tool.descLength > 160) {
+                return 'warning';
+            }
+            return 'complete';
+        }
+        
+        function updateStats() {
+            let complete = 0, warning = 0, empty = 0;
+            
+            seoData.forEach(tool => {
+                const status = getSeoStatus(tool);
+                if (status === 'complete') complete++;
+                else if (status === 'warning') warning++;
+                else empty++;
+            });
+            
+            document.getElementById('completeCount').textContent = complete;
+            document.getElementById('warningCount').textContent = warning;
+            document.getElementById('emptyCount').textContent = empty;
+            
+            const percent = Math.round((complete / seoData.length) * 100);
+            document.getElementById('seoPercent').textContent = percent + '%';
+            document.getElementById('progressFill').style.width = percent + '%';
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Render Table
+        // ═══════════════════════════════════════════════════════════════
+        function renderTable(data = seoData) {
+            const tbody = document.getElementById('seoTableBody');
+            
+            tbody.innerHTML = data.map(tool => {
+                const status = getSeoStatus(tool);
+                const titleClass = tool.titleLength === 0 ? 'bad' : 
+                                  tool.titleLength > 60 ? 'warning' : 'good';
+                const descClass = tool.descLength === 0 ? 'bad' : 
+                                 tool.descLength > 160 ? 'warning' : 'good';
+                
+                return `
+                    <tr data-id="${tool.id}">
+                        <td>
+                            <div style="font-weight: 500;">${tool.name}</div>
+                            <div style="font-size: 0.75rem; color: var(--muted);">/${tool.slug}/</div>
+                        </td>
+                        <td>
+                            <span class="meta-counter ${titleClass}">
+                                ${tool.titleLength} chars
+                            </span>
+                        </td>
+                        <td>
+                            <span class="meta-counter ${descClass}">
+                                ${tool.descLength} chars
+                            </span>
+                        </td>
+                        <td>
+                            <span class="seo-status ${status}">
+                                ${status === 'complete' ? 'Complete' : 
+                                  status === 'warning' ? 'Needs Work' : 'Missing'}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="edit-btn" onclick="openSeoModal(${tool.id})">Edit</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Search
+        // ═══════════════════════════════════════════════════════════════
+        document.getElementById('searchInput').addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const search = document.getElementById('searchInput').value.toLowerCase();
+                const filtered = seoData.filter(tool => 
+                    tool.name.toLowerCase().includes(search) ||
+                    tool.slug.toLowerCase().includes(search)
+                );
+                renderTable(filtered);
+            }, 300);
+        });
+        
+        // ═══════════════════════════════════════════════════════════════
+        // SEO Editor Modal
+        // ═══════════════════════════════════════════════════════════════
+        function openSeoModal(id) {
+            const tool = seoData.find(t => t.id === id);
+            if (!tool) return;
+            
+            editingToolId = id;
+            document.getElementById('metaTitle').value = tool.metaTitle;
+            document.getElementById('metaDescription').value = tool.metaDescription;
+            document.getElementById('canonicalUrl').value = tool.canonicalUrl;
+            document.getElementById('h1Tag').value = tool.h1;
+            
+            updateCounters();
+            updateSerpPreview();
+            
+            document.getElementById('seoModal').classList.add('show');
+        }
+        
+        function closeSeoModal() {
+            document.getElementById('seoModal').classList.remove('show');
+            editingToolId = null;
+        }
+        
+        function updateCounters() {
+            const title = document.getElementById('metaTitle').value;
+            const desc = document.getElementById('metaDescription').value;
+            
+            const titleCounter = document.getElementById('titleCounter');
+            titleCounter.textContent = `${title.length} / 60`;
+            titleCounter.className = 'char-counter ' + 
+                (title.length === 0 ? 'bad' : title.length > 60 ? 'warning' : 'good');
+            
+            const descCounter = document.getElementById('descCounter');
+            descCounter.textContent = `${desc.length} / 160`;
+            descCounter.className = 'char-counter ' + 
+                (desc.length === 0 ? 'bad' : desc.length > 160 ? 'warning' : 'good');
+        }
+        
+        function updateSerpPreview() {
+            const title = document.getElementById('metaTitle').value || 'Page Title';
+            const desc = document.getElementById('metaDescription').value || 'Meta description will appear here...';
+            const url = document.getElementById('canonicalUrl').value || 'https://205-tools.com/en/tool-name/';
+            
+            document.getElementById('serpTitle').textContent = title;
+            document.getElementById('serpDesc').textContent = desc;
+            document.getElementById('serpUrl').textContent = url;
+        }
+        
+        // Live updates
+        document.getElementById('metaTitle').addEventListener('input', () => {
+            updateCounters();
+            updateSerpPreview();
+        });
+        
+        document.getElementById('metaDescription').addEventListener('input', () => {
+            updateCounters();
+            updateSerpPreview();
+        });
+        
+        function saveSeo() {
+            if (!editingToolId) return;
+            
+            const tool = seoData.find(t => t.id === editingToolId);
+            if (tool) {
+                tool.metaTitle = document.getElementById('metaTitle').value;
+                tool.metaDescription = document.getElementById('metaDescription').value;
+                tool.canonicalUrl = document.getElementById('canonicalUrl').value;
+                tool.h1 = document.getElementById('h1Tag').value;
+                tool.titleLength = tool.metaTitle.length;
+                tool.descLength = tool.metaDescription.length;
+            }
+            
+            closeSeoModal();
+            updateStats();
+            renderTable();
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Sitemap Modal
+        // ═══════════════════════════════════════════════════════════════
+        function openSitemapModal() {
+            const sitemap = generateSitemapXml();
+            document.getElementById('sitemapContent').innerHTML = highlightXml(sitemap);
+            document.getElementById('sitemapModal').classList.add('show');
+        }
+        
+        function closeSitemapModal() {
+            document.getElementById('sitemapModal').classList.remove('show');
+        }
+        
+        function generateSitemapXml() {
+            const baseUrl = 'https://205-tools.com';
+            const today = new Date().toISOString().split('T')[0];
+            
+            let xml = `\u003c?xml version="1.0" encoding="UTF-8"?\u003e\n`;
+            xml += `\u003curlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\u003e\n`;
+            
+            // Home pages for each language
+            ['en', 'ar', 'fr', 'es', 'de'].forEach(lang => {
+                xml += `  \u003curl\u003e\n`;
+                xml += `    \u003cloc\u003e${baseUrl}/${lang}/\u003c/loc\u003e\n`;
+                xml += `    \u003clastmod\u003e${today}\u003c/lastmod\u003e\n`;
+                xml += `    \u003cpriority\u003e1.0\u003c/priority\u003e\n`;
+                xml += `  \u003c/url\u003e\n`;
+            });
+            
+            // Tool pages
+            seoData.forEach(tool => {
+                ['en', 'ar', 'fr', 'es', 'de'].forEach(lang => {
+                    xml += `  \u003curl\u003e\n`;
+                    xml += `    \u003cloc\u003e${baseUrl}/${lang}/${tool.slug}/\u003c/loc\u003e\n`;
+                    xml += `    \u003clastmod\u003e${today}\u003c/lastmod\u003e\n`;
+                    xml += `    \u003cpriority\u003e0.8\u003c/priority\u003e\n`;
+                    xml += `  \u003c/url\u003e\n`;
+                });
+            });
+            
+            xml += `\u003c/urlset\u003e`;
+            return xml;
+        }
+        
+        function highlightXml(xml) {
+            return xml
+                .replace(/(<\/?)([\w:-]+)/g, '<span class="xml-tag">$1$2</span>')
+                .replace(/([\w:-]+)=/g, '<span class="xml-attr">$1</span>=')
+                .replace(/"([^"]*)"/g, '<span class="xml-value">"$1"</span>');
+        }
+        
+        function downloadSitemap() {
+            const xml = generateSitemapXml();
+            const blob = new Blob([xml], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sitemap.xml';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Robots.txt Modal
+        // ═══════════════════════════════════════════════════════════════
+        function openRobotsModal() {
+            document.getElementById('robotsModal').classList.add('show');
+        }
+        
+        function closeRobotsModal() {
+            document.getElementById('robotsModal').classList.remove('show');
+        }
+        
+        function saveRobots() {
+            const content = document.getElementById('robotsContent').value;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'robots.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+            closeRobotsModal();
+        }
+        
+        // Close modals on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+        
+        // ═══════════════════════════════════════════════════════════════
+        // Initialize
+        // ═══════════════════════════════════════════════════════════════
+        updateStats();
+        renderTable();
+    </script>
+</body>
+</html>
