@@ -557,14 +557,47 @@
         }
         
         // ═══════════════════════════════════════════════════════════════
-        // Languages Data
+        // Toast Notifications
+        // ═══════════════════════════════════════════════════════════════
+        function showToast(msg, type = 'success') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 24px;
+                right: 24px;
+                background: var(--card);
+                border: 1px solid ${type === 'success' ? 'var(--success)' : 'var(--error)'};
+                color: ${type === 'success' ? 'var(--success)' : 'var(--error)'};
+                padding: 12px 20px;
+                border-radius: var(--radius);
+                font-size: 0.875rem;
+                font-weight: 600;
+                z-index: 9999;
+                animation: fadeIn 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            `;
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Add fadeOut animation
+        const toastStyle = document.createElement('style');
+        toastStyle.textContent = `
+            @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+            @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(20px); } }
+        `;
+        document.head.appendChild(toastStyle);
         // ═══════════════════════════════════════════════════════════════
         let languages = [
-            { code: 'en', name: 'English', flag: '🇬🇧', pages: 240, progress: 100, enabled: true },
-            { code: 'ar', name: 'العربية', flag: '🇸🇦', pages: 240, progress: 95, enabled: true },
-            { code: 'fr', name: 'Français', flag: '🇫🇷', pages: 240, progress: 60, enabled: true },
-            { code: 'es', name: 'Español', flag: '🇪🇸', pages: 240, progress: 60, enabled: true },
-            { code: 'de', name: 'Deutsch', flag: '🇩🇪', pages: 240, progress: 60, enabled: true }
+            { code: 'en', name: 'English', flag: '🇬🇧', pages: 205, progress: 100, enabled: true },
+            { code: 'ar', name: 'العربية', flag: '🇸🇦', pages: 205, progress: 95, enabled: true },
+            { code: 'fr', name: 'Français', flag: '🇫🇷', pages: 205, progress: 60, enabled: true },
+            { code: 'es', name: 'Español', flag: '🇪🇸', pages: 205, progress: 60, enabled: true },
+            { code: 'de', name: 'Deutsch', flag: '🇩🇪', pages: 205, progress: 60, enabled: true }
         ];
         
         // Mock translations data
@@ -790,8 +823,8 @@
             renderLanguages();
             closeEditor();
             
-            // Show success (in real app)
-            console.log(`Saved ${completed} translations for ${editingLang}`);
+            // Show success toast
+            showToast('✅ Translations saved successfully');
         }
         
         // Search with debounce
