@@ -4,601 +4,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JPG to PDF Converter - 205-Tools</title>
-    <meta name="description" content="Converts one or multiple JPG images to a PDF file using pdf-lib.js.">
+    <meta name="description" content="Converts JPG images to PDF format using browser Canvas API.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { 
-            darkMode: 'class', 
-            theme: { 
-                extend: { 
-                    colors: { 
-                        primary: '#ef4444',
-                        secondary: '#f97316',
-                        accent: '#f59e0b'
-                    } 
-                } 
-            } 
-        };
-    </script>
-    <style>
-        /* PDF Tools Specific - iLovePDF Style */
-        .pdf-upload-zone {
-            border: 3px dashed #fca5a5;
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-            transition: all 0.3s ease;
-        }
-        .pdf-upload-zone:hover, .pdf-upload-zone.dragover {
-            border-color: #ef4444;
-            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
-            transform: scale(1.01);
-        }
-        .file-item {
-            background: #f9fafb;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            transition: all 0.2s;
-        }
-        .file-item:hover {
-            border-color: #ef4444;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
-        }
-        .file-item.dragging {
-            opacity: 0.5;
-            transform: rotate(2deg);
-        }
-        .page-thumbnail {
-            aspect-ratio: 1/1.414;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #9ca3af;
-        }
-        .step-indicator {
-            display: flex;
-            align-items: center;
-        }
-        .step-number {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .step-number.active {
-            background: #ef4444;
-            color: white;
-        }
-        .step-number.completed {
-            background: #10b981;
-            color: white;
-        }
-        .step-number.pending {
-            background: #e5e7eb;
-            color: #6b7280;
-        }
-        .step-line {
-            width: 60px;
-            height: 2px;
-            background: #e5e7eb;
-            margin: 0 8px;
-        }
-        .step-line.completed {
-            background: #10b981;
-        }
-        .dark .pdf-upload-zone {
-            background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 100%);
-            border-color: #7f1d1d;
-        }
-        .dark .pdf-upload-zone:hover {
-            border-color: #ef4444;
-            background: linear-gradient(135deg, #450a0a 0%, #991b1b 100%);
-        }
-        .dark .file-item {
-            background: #1f2937;
-            border-color: #374151;
-        }
-        .range-option {
-            cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 2px solid #e5e7eb;
-            transition: all 0.2s;
-        }
-        .range-option:hover {
-            border-color: #ef4444;
-        }
-        .range-option.selected {
-            border-color: #ef4444;
-            background: #fef2f2;
-        }
-    </style>
+    <link rel="stylesheet" href="../../assets/styles.css">
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
-    <!-- Header -->
-    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="/es/" class="text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
-                    205-Tools
-                </a>
-                <div class="flex items-center gap-4">
-                    <a href="/es/pdf/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-red-500">
-                        ← PDF
-                    </a>
-                    <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">
-                        <span id="theme-icon">🌙</span>
-                    </button>
-                </div>
-            </div>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+    <header class="bg-white dark:bg-gray-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/en/" class="text-xl font-bold text-blue-600">205-Tools</a>
+            <nav>
+                <a href="/en/images/" class="text-gray-600 dark:text-gray-300 hover:text-blue-600">← Images</a>
+            </nav>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="bg-gradient-to-br from-red-500 via-orange-500 to-amber-500 text-white py-10">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-3">📄 PDF</span>
-            <h1 class="text-4xl md:text-5xl font-bold mb-3">JPG to PDF Converter</h1>
-            <p class="text-lg text-white/90 max-w-2xl mx-auto">Converts one or multiple JPG images to a PDF file using pdf-lib.js.</p>
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <div class="text-center mb-8">
+            <span class="text-blue-600 font-medium">📷 Images</span>
+            <h1 class="text-4xl font-bold mt-2">JPG to PDF Converter</h1>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">Convert your images easily and securely in the browser.</p>
         </div>
-    </section>
 
-    <!-- Step Indicator -->
-    <section class="py-6 bg-white dark:bg-gray-800 border-b dark:border-gray-700">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="flex items-center justify-center">
-                <div class="step-indicator">
-                    <div class="step-number active" id="step1-indicator">1</div>
-                    <span class="ml-2 text-sm font-medium">Select Files</span>
-                </div>
-                <div class="step-line" id="line1-2"></div>
-                <div class="step-indicator">
-                    <div class="step-number pending" id="step2-indicator">2</div>
-                    <span class="ml-2 text-sm font-medium text-gray-400">Options</span>
-                </div>
-                <div class="step-line" id="line2-3"></div>
-                <div class="step-indicator">
-                    <div class="step-number pending" id="step3-indicator">3</div>
-                    <span class="ml-2 text-sm font-medium text-gray-400">Download</span>
-                </div>
+        <!-- Upload Step -->
+        <div id="uploadStep" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+            <div id="dropZone" class="border-3 border-dashed border-blue-300 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-12 text-center cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all">
+                <input type="file" id="fileInput" class="hidden" accept="image/*">
+                <div class="text-6xl mb-4">📷</div>
+                <h3 class="text-xl font-semibold mb-2">Upload your image</h3>
+                <p class="text-gray-500 mb-4">Drag & drop your image here</p>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">Browse Files</button>
             </div>
         </div>
-    </section>
 
-    <!-- Main Interface -->
-    <section class="py-8">
-        <div class="max-w-5xl mx-auto px-4">
-            
-            <!-- STEP 1: Upload Files -->
-            <div id="step1" class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <div class="pdf-upload-zone rounded-2xl p-12 text-center cursor-pointer" id="dropZone">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center">
-                        <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Upload your image</h3>
-                    <p class="text-gray-500 mb-4">Drag & drop your image here</p>
-                    <button class="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-medium">
-                        Browse Files
-                    </button>
-                    <input type="file" class="hidden" id="fileInput" accept=".pdf" >
-                    
-                    <div class="mt-6 flex justify-center gap-4">
-                        <button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-700 border rounded-lg text-sm hover:border-red-400">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#4285f4"><path d="M12 10.5v6.5h1.5v-6.5h2.25L12 6 8.25 10.5H10.5zM7.5 15v4.5h9V15H18v4.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 016 19.5V15h1.5z"/></svg>
-                            Google Drive
-                        </button>
-                        <button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-700 border rounded-lg text-sm hover:border-red-400">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#0061ff"><path d="M6 2l6 4-6 4-6-4 6-4zm12 0l6 4-6 4-6-4 6-4zM0 14l6 4 6-4-6-4-6 4zm18-4l6 4-6 4-6-4 6-4zM6 16.5l6 4 6-4v2l-6 4-6-4v-2z"/></svg>
-                            Dropbox
-                        </button>
-                    </div>
+        <!-- Preview Step -->
+        <div id="previewStep" class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+            <h3 class="text-xl font-semibold mb-4">Preview</h3>
+            <div class="mb-4">
+                <img id="imagePreview" class="max-w-full rounded-lg max-h-96 mx-auto" src="" alt="Preview">
+            </div>
+            <div class="flex justify-between items-center mb-4 text-sm text-gray-600">
+                <span id="fileInfo">filename.jpg • 0 MB</span>
+                <span id="dimensions">0 × 0 px</span>
+            </div>
+            <button onclick="resetTool()" class="text-red-500 hover:text-red-600 text-sm mb-4">✕ Remove</button>
+
+            <!-- Settings -->
+            <div class="border-t dark:border-gray-700 pt-4 mb-4">
+                <h4 class="font-medium mb-2">Quality</h4>
+                <input type="range" id="qualitySlider" min="1" max="100" value="90" class="w-full">
+                <div class="flex justify-between text-sm text-gray-500 mt-1">
+                    <span>Low</span>
+                    <span id="qualityValue" class="text-blue-600 font-semibold">90%</span>
+                    <span>High</span>
                 </div>
             </div>
 
-            <!-- STEP 2: Organize & Options -->
-            <div id="step2" class="hidden">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold">PDF Files (<span id="fileCount">0</span>)</h3>
-                        <button onclick="addMoreFiles()" class="text-red-500 hover:text-red-600 text-sm font-medium">
-                            + Add More
-                        </button>
-                    </div>
-                    
-                    <!-- File List with Drag Sort -->
-                    <div id="fileList" class="space-y-3">
-                        <!-- File items will be inserted here -->
-                    </div>
-                    
-                    <p class="text-sm text-gray-500 mt-4 text-center">💡 Drag files to reorder them</p>
-                </div>
-
-                <!-- Options -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-6">
-                    <h3 class="text-lg font-semibold mb-4">Options</h3>
-                    
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <p class="text-gray-500">No additional options needed</p>
-                    </div>
-                </div>
-
-                <div class="flex gap-4">
-                    <button onclick="goToStep(1)" class="flex-1 py-4 bg-gray-200 dark:bg-gray-700 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600">
-                        Back
-                    </button>
-                    <button onclick="processFiles()" class="flex-1 py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl font-semibold hover:shadow-lg">
-                        Process
-                    </button>
-                </div>
-            </div>
-
-            <!-- STEP 3: Processing & Result -->
-            <div id="step3" class="hidden">
-                <div id="processingView" class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-12 text-center">
-                    <div class="w-20 h-20 mx-auto mb-6 relative">
-                        <div class="absolute inset-0 border-4 border-red-200 rounded-full"></div>
-                        <div class="absolute inset-0 border-4 border-red-500 rounded-full border-t-transparent animate-spin"></div>
-                        <svg class="w-8 h-8 text-red-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Processing...</h3>
-                    <p class="text-gray-500">Please wait while we process your files</p>
-                </div>
-
-                <div id="resultView" class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                        <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                        </svg>
-                    </div>
-                    
-                    <h3 class="text-2xl font-bold mb-2">Conversion Complete!</h3>
-                    <p class="text-gray-500 mb-6">Your image has been successfully converted.</p>
-                    
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 mb-6 max-w-sm mx-auto">
-                        <div class="flex items-center justify-between text-sm">
-                            <span class="text-gray-500">Original:</span>
-                            <span id="originalSize">--</span>
-                        </div>
-                        <div class="flex items-center justify-between text-sm mt-2">
-                            <span class="text-gray-500">New size:</span>
-                            <span id="newSize" class="text-green-500 font-semibold">--</span>
-                        </div>
-                    </div>
-                    
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a id="downloadLink" href="#" class="px-8 py-3 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl font-semibold hover:shadow-lg flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-                            </svg>
-                            Download
-                        </a>
-                        <button onclick="startOver()" class="px-8 py-3 bg-gray-200 dark:bg-gray-700 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-gray-600">
-                            Start Over
-                        </button>
-                    </div>
-                </div>
-            </div>
-
+            <button onclick="processImage()" id="convertBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                Convert
+            </button>
         </div>
-    </section>
+
+        <!-- Result Step -->
+        <div id="resultStep" class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center">
+            <div class="text-5xl mb-4">✅</div>
+            <h3 class="text-xl font-semibold mb-2">Conversion Complete!</h3>
+            <p class="text-gray-600 mb-6">Your image has been successfully converted.</p>
+            <div class="flex gap-4 justify-center">
+                <a id="downloadLink" href="#" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors inline-flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    Download
+                </a>
+                <button onclick="resetTool()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-6 py-3 rounded-xl font-semibold transition-colors">
+                    Convert Another
+                </button>
+            </div>
+        </div>
+    </main>
+
     <script>
-        // Initialize Image Converter
-        document.addEventListener('DOMContentLoaded', () => {
-            initImageConverter('JPG', 'PDF');
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const qualitySlider = document.getElementById('qualitySlider');
+        const qualityValue = document.getElementById('qualityValue');
+        let currentFile = null;
+        let originalImage = null;
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
         });
-    </script>
-
-<script>
-// Image Converter Logic
-function initImageConverter(inputFormat, outputFormat) {
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-    const qualitySlider = document.getElementById('qualitySlider');
-    const qualityValue = document.getElementById('qualityValue');
-    let currentFile = null;
-    let originalImage = null;
-
-    // Event listeners
-    dropZone.addEventListener('click', () => fileInput.click());
-    
-    dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('dragover');
-    });
-    
-    dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('dragover');
-    });
-    
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-        if (e.dataTransfer.files.length) {
-            handleFile(e.dataTransfer.files[0]);
-        }
-    });
-    
-    fileInput.addEventListener('change', (e) => {
-        if (e.target.files.length) {
-            handleFile(e.target.files[0]);
-        }
-    });
-
-    qualitySlider.addEventListener('input', (e) => {
-        qualityValue.textContent = e.target.value + '%';
-    });
-
-    function handleFile(file) {
-        const validTypes = getValidTypes(inputFormat);
-        if (!validTypes.includes(file.type)) {
-            alert('Please select a valid ' + inputFormat + ' image file');
-            return;
-        }
-
-        currentFile = file;
         
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = new Image();
-            img.onload = () => {
-                originalImage = img;
-                document.getElementById('imagePreview').src = e.target.result;
-                document.getElementById('uploadStep').classList.add('hidden');
-                document.getElementById('previewStep').classList.remove('hidden');
-                
-                document.getElementById('fileInfo').textContent = 
-                    file.name + ' • ' + (file.size/1024/1024).toFixed(2) + ' MB';
-                document.getElementById('dimensions').textContent = 
-                    img.width + ' × ' + img.height + ' px';
-            };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) handleFile(e.target.files[0]);
+        });
 
-    function getValidTypes(format) {
-        const typeMap = {
-            'JPG': ['image/jpeg', 'image/jpg'],
-            'JPEG': ['image/jpeg', 'image/jpg'],
-            'PNG': ['image/png'],
-            'WEBP': ['image/webp'],
-            'GIF': ['image/gif'],
-            'BMP': ['image/bmp'],
-            'SVG': ['image/svg+xml'],
-            'ICO': ['image/x-icon', 'image/vnd.microsoft.icon'],
-            'TIFF': ['image/tiff', 'image/tif'],
-            'AVIF': ['image/avif'],
-            'HEIC': ['image/heic', 'image/heif'],
-            'IMG': ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/bmp']
-        };
-        return typeMap[format.toUpperCase()] || ['image/*'];
-    }
+        qualitySlider.addEventListener('input', (e) => {
+            qualityValue.textContent = e.target.value + '%';
+        });
 
-    window.processImage = function() {
-        if (!originalImage) return;
-
-        const btn = document.querySelector('button[onclick="processImage()"]');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
-        btn.disabled = true;
-
-        setTimeout(() => {
-            try {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                canvas.width = originalImage.width;
-                canvas.height = originalImage.height;
-                
-                if (outputFormat.toLowerCase() === 'jpg' || outputFormat.toLowerCase() === 'jpeg') {
-                    ctx.fillStyle = '#FFFFFF';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                }
-                
-                ctx.drawImage(originalImage, 0, 0);
-                
-                const quality = qualitySlider.value / 100;
-                const mimeType = 'image/' + outputFormat.toLowerCase().replace('jpg', 'jpeg');
-                
-                canvas.toBlob((blob) => {
-                    const url = URL.createObjectURL(blob);
-                    const downloadLink = document.getElementById('downloadLink');
-                    downloadLink.href = url;
-                    downloadLink.download = currentFile.name.replace(/\.[^/.]+$/, '') + '.' + outputFormat.toLowerCase();
-                    
-                    document.getElementById('previewStep').classList.add('hidden');
-                    document.getElementById('resultStep').classList.remove('hidden');
-                    
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }, mimeType, quality);
-            } catch (err) {
-                alert('Error processing image: ' + err.message);
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select a valid image file');
+                return;
             }
-        }, 100);
-    };
-
-    window.resetTool = function() {
-        currentFile = null;
-        originalImage = null;
-        document.getElementById('fileInput').value = '';
-        document.getElementById('uploadStep').classList.remove('hidden');
-        document.getElementById('previewStep').classList.add('hidden');
-        document.getElementById('resultStep').classList.add('hidden');
-        document.getElementById('imagePreview').src = '';
-    };
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    initImageConverter('JPG', 'PDF');
-});
-</script>
-
-<script>
-function initImageConverter(inputFormat, outputFormat) {
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-    const qualitySlider = document.getElementById('qualitySlider');
-    const qualityValue = document.getElementById('qualityValue');
-    let currentFile = null;
-    let originalImage = null;
-
-    dropZone.addEventListener('click', () => fileInput.click());
-    
-    dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('dragover');
-    });
-    
-    dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('dragover');
-    });
-    
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-        if (e.dataTransfer.files.length) {
-            handleFile(e.dataTransfer.files[0]);
-        }
-    });
-    
-    fileInput.addEventListener('change', (e) => {
-        if (e.target.files.length) {
-            handleFile(e.target.files[0]);
-        }
-    });
-
-    qualitySlider.addEventListener('input', (e) => {
-        qualityValue.textContent = e.target.value + '%';
-    });
-
-    function handleFile(file) {
-        const validTypes = getValidTypes(inputFormat);
-        if (!validTypes.includes(file.type)) {
-            alert('Please select a valid ' + inputFormat + ' image file');
-            return;
-        }
-
-        currentFile = file;
-        
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = new Image();
-            img.onload = () => {
-                originalImage = img;
-                document.getElementById('imagePreview').src = e.target.result;
-                document.getElementById('uploadStep').classList.add('hidden');
-                document.getElementById('previewStep').classList.remove('hidden');
-                
-                document.getElementById('fileInfo').textContent = 
-                    file.name + ' • ' + (file.size/1024/1024).toFixed(2) + ' MB';
-                document.getElementById('dimensions').textContent = 
-                    img.width + ' × ' + img.height + ' px';
+            currentFile = file;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    originalImage = img;
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('uploadStep').classList.add('hidden');
+                    document.getElementById('previewStep').classList.remove('hidden');
+                    document.getElementById('fileInfo').textContent = file.name + ' • ' + (file.size/1024/1024).toFixed(2) + ' MB';
+                    document.getElementById('dimensions').textContent = img.width + ' × ' + img.height + ' px';
+                };
+                img.src = e.target.result;
             };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
+            reader.readAsDataURL(file);
+        }
 
-    function getValidTypes(format) {
-        const typeMap = {
-            'JPG': ['image/jpeg', 'image/jpg'],
-            'JPEG': ['image/jpeg', 'image/jpg'],
-            'PNG': ['image/png'],
-            'WEBP': ['image/webp'],
-            'GIF': ['image/gif'],
-            'BMP': ['image/bmp'],
-            'SVG': ['image/svg+xml'],
-            'ICO': ['image/x-icon', 'image/vnd.microsoft.icon'],
-            'TIFF': ['image/tiff', 'image/tif'],
-            'AVIF': ['image/avif'],
-            'HEIC': ['image/heic', 'image/heif'],
-            'IMG': ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/bmp']
-        };
-        return typeMap[format.toUpperCase()] || ['image/*'];
-    }
-
-    window.processImage = function() {
-        if (!originalImage) return;
-
-        const btn = document.querySelector('button[onclick="processImage()"]');
-        const originalText = btn ? btn.innerHTML : 'Convert';
-        if (btn) {
+        window.processImage = function() {
+            if (!originalImage) return;
+            
+            const btn = document.getElementById('convertBtn');
             btn.innerHTML = 'Processing...';
             btn.disabled = true;
-        }
 
-        setTimeout(() => {
-            try {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                canvas.width = originalImage.width;
-                canvas.height = originalImage.height;
-                
-                if (outputFormat.toLowerCase() === 'jpg' || outputFormat.toLowerCase() === 'jpeg') {
-                    ctx.fillStyle = '#FFFFFF';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                }
-                
-                ctx.drawImage(originalImage, 0, 0);
-                
-                const quality = qualitySlider.value / 100;
-                const mimeType = 'image/' + outputFormat.toLowerCase().replace('jpg', 'jpeg');
-                
-                canvas.toBlob((blob) => {
-                    const url = URL.createObjectURL(blob);
-                    const downloadLink = document.getElementById('downloadLink');
-                    if (downloadLink) {
-                        downloadLink.href = url;
-                        downloadLink.download = currentFile.name.replace(/\.[^/.]+$/, '') + '.' + outputFormat.toLowerCase();
+            setTimeout(() => {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    canvas.width = originalImage.width;
+                    canvas.height = originalImage.height;
+                    
+                    if ('PDF'.toLowerCase() === 'jpg' || 'PDF'.toLowerCase() === 'jpeg') {
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
                     }
                     
-                    document.getElementById('previewStep').classList.add('hidden');
-                    document.getElementById('resultStep').classList.remove('hidden');
+                    ctx.drawImage(originalImage, 0, 0);
                     
-                    if (btn) {
-                        btn.innerHTML = originalText;
+                    const quality = qualitySlider.value / 100;
+                    const mimeType = 'image/' + 'PDF'.toLowerCase().replace('jpg', 'jpeg');
+                    
+                    canvas.toBlob((blob) => {
+                        const url = URL.createObjectURL(blob);
+                        document.getElementById('downloadLink').href = url;
+                        document.getElementById('downloadLink').download = currentFile.name.replace(/\.[^/.]+$/, '') + '.pdf';
+                        
+                        document.getElementById('previewStep').classList.add('hidden');
+                        document.getElementById('resultStep').classList.remove('hidden');
+                        
+                        btn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Convert';
                         btn.disabled = false;
-                    }
-                }, mimeType, quality);
-            } catch (err) {
-                alert('Error processing image: ' + err.message);
-                if (btn) {
-                    btn.innerHTML = originalText;
+                    }, mimeType, quality);
+                } catch (err) {
+                    alert('Error: ' + err.message);
+                    btn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Convert';
                     btn.disabled = false;
                 }
-            }
-        }, 100);
-    };
+            }, 500);
+        };
 
-    window.resetTool = function() {
-        currentFile = null;
-        originalImage = null;
-        document.getElementById('fileInput').value = '';
-        document.getElementById('uploadStep').classList.remove('hidden');
-        document.getElementById('previewStep').classList.add('hidden');
-        document.getElementById('resultStep').classList.add('hidden');
-        document.getElementById('imagePreview').src = '';
-    };
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    initImageConverter('JPG', 'PDF');
-});
-</script>
+        window.resetTool = function() {
+            currentFile = null;
+            originalImage = null;
+            fileInput.value = '';
+            document.getElementById('uploadStep').classList.remove('hidden');
+            document.getElementById('previewStep').classList.add('hidden');
+            document.getElementById('resultStep').classList.add('hidden');
+            document.getElementById('imagePreview').src = '';
+            document.getElementById('convertBtn').innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Convert';
+            document.getElementById('convertBtn').disabled = false;
+        };
+    </script>
 </body>
 </html>
