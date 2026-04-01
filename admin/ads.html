@@ -381,6 +381,10 @@
         .global-toggle span {
             font-weight: 500;
         }
+        
+        /* Slot Status Classes */
+        .slot-active { color: var(--success); }
+        .slot-disabled { color: var(--muted); }
     </style>
 </head>
 <body>
@@ -678,10 +682,8 @@
                     </td>
                     <td><span class="slot-type">${slot.type}</span></td>
                     <td>${slot.size}</td>
-                    <td>
-                        <span style="color: ${slot.enabled ? 'var(--success)' : 'var(--muted)'};">
-                            ${slot.enabled ? '✅ Active' : '⏸️ Disabled'}
-                        </span>
+                    <td class="${slot.enabled ? 'slot-active' : 'slot-disabled'}">
+                        ${slot.enabled ? '✅ Active' : '⏸️ Disabled'}
                     </td>
                     <td>
                         <div class="toggle-switch ${slot.enabled ? 'active' : ''}" 
