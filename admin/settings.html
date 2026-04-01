@@ -119,7 +119,7 @@
                     </div>
                     
                     <div class="form-row">
-                        <div class="form-group"><label>Primary Color</label><input type="color" id="primaryColor" value="#6366f1"></div>
+                        <div class="form-group"><label>Primary Color</label><input type="color" id="primaryColor" value="#4f8ef7"></div>
                         <div class="form-group">
                             <label>Default Language</label>
                             <select id="defaultLang"><option value="en" selected>English</option><option value="ar">العربية</option><option value="fr">Français</option><option value="es">Español</option><option value="de">Deutsch</option></select>
@@ -259,6 +259,7 @@
         </main>
     </div>
     
+    <script src="/admin/assets/admin.js"></script>
     <script>
         const session = sessionStorage.getItem('adminAuth');
         if (session !== 'true') { window.location.href = '/admin/login.html'; }
@@ -269,12 +270,6 @@
         
         function logout() { sessionStorage.removeItem('adminAuth'); sessionStorage.removeItem('adminSession'); window.location.href = '/admin/login.html'; }
         
-        function showToast(msg, type = 'success') {
-            const toast = document.createElement('div');
-            toast.style.cssText = `position: fixed; bottom: 24px; right: 24px; background: var(--card); border: 1px solid ${type === 'success' ? 'var(--success)' : 'var(--error)'}; color: ${type === 'success' ? 'var(--success)' : 'var(--error)'}; padding: 12px 20px; border-radius: var(--radius); font-size: 0.875rem; font-weight: 600; z-index: 9999; animation: fadeIn 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
-            toast.textContent = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => { toast.style.animation = 'fadeOut 0.3s ease'; setTimeout(() => toast.remove(), 300); }, 3000);
         }
         
         function showTab(tabName) {

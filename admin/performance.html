@@ -437,59 +437,18 @@
         </main>
     </div>
     
+    <script src="/admin/assets/admin.js"></script>
     <script>
         // ═══════════════════════════════════════════════════════════════
-        // Security: Check authentication on page load
-        // ═══════════════════════════════════════════════════════════════
-        const session = sessionStorage.getItem('adminAuth');
-        if (session !== 'true') {
-            window.location.href = '/admin/login.html';
         }
         
-        // Get admin email from session
-        const sessionData = JSON.parse(sessionStorage.getItem('adminSession') || '{}');
-        if (sessionData.email) {
-            document.getElementById('adminEmail').textContent = sessionData.email;
         }
         
-        // Check session expiration
-        if (sessionData.expires && Date.now() > sessionData.expires) {
-            logout();
-        }
-        
-        // Logout function
-        function logout() {
-            sessionStorage.removeItem('adminAuth');
-            sessionStorage.removeItem('adminSession');
-            window.location.href = '/admin/login.html';
         }
         
         // ═══════════════════════════════════════════════════════════════
         // Toast Notifications
         // ═══════════════════════════════════════════════════════════════
-        function showToast(msg, type = 'success') {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                bottom: 24px;
-                right: 24px;
-                background: var(--card);
-                border: 1px solid ${type === 'success' ? 'var(--success)' : 'var(--error)'};
-                color: ${type === 'success' ? 'var(--success)' : 'var(--error)'};
-                padding: 12px 20px;
-                border-radius: var(--radius);
-                font-size: 0.875rem;
-                font-weight: 600;
-                z-index: 9999;
-                animation: fadeIn 0.3s ease;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            `;
-            toast.textContent = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'fadeOut 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
         }
         
         // ═══════════════════════════════════════════════════════════════
