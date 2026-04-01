@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Working Days Calculator - 205-Herramientas</title>
-    <meta name="description" content="Calculates working days between two dates excluding weekends and holidays.">
-    
-    <script>function calculate() {
-      const s = new Date(document.getElementById('start').value);
-      const e = new Date(document.getElementById('end').value);
-      if (isNaN(s) || isNaN(e)) return;
-      let count = 0;
-      for (let d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
-        if (d.getDay() !== 0 && d.getDay() !== 6) count++;
-      }
+
       document.getElementById('days').textContent = count;
       document.getElementById('result').classList.remove('hidden');
     }</script>

@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compound Interest Calc - 205-Herramientas</title>
-    <meta name="description" content="Calculates compound interest with principal, rate, time, and frequency inputs.">
-    
-    <script>
-      function calculate() {
-        const P = parseFloat(document.getElementById('principal').value);
-        const r = parseFloat(document.getElementById('rate').value) / 100;
-        const t = parseFloat(document.getElementById('years').value);
-        if (!P || !r || !t) return;
-        const amount = P * Math.pow(1 + r, t);
-        document.getElementById('finalAmount').textContent = amount.toFixed(2);
-        document.getElementById('totalInterest').textContent = (amount - P).toFixed(2);
-        document.getElementById('resultBox').classList.remove('hidden');
-      }</script>
+</script>
             </div>
         </div>
     </section>

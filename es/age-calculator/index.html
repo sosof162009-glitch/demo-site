@@ -1,21 +1,4 @@
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Age Calculator - 205-Herramientas</title>
-    <meta name="description" content="Calculates exact age in years, months, and days from birthdate.">
-    
-    <script>
-      function calculate() {
-        const birth = new Date(document.getElementById('birthDate').value);
-        if (isNaN(birth.getTime())) return;
-        const today = new Date();
-        let years = today.getFullYear() - birth.getFullYear();
-        let months = today.getMonth() - birth.getMonth();
-        let days = today.getDate() - birth.getDate();
-        if (days < 0) { months--; days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); }
-        if (months < 0) { years--; months += 12; }
+
         document.getElementById('years').textContent = years;
         document.getElementById('months').textContent = months;
         document.getElementById('days').textContent = days;

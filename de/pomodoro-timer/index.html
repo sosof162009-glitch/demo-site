@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html lang="de" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomodoro Timer - 205-Tools</title>
-    <meta name="description" content="Browser-based Pomodoro productivity timer with work/break cycles and notifications.">
-    
-    <script>let interval, isWork = true;
-    function start() {
-      clearInterval(interval);
-      const work = parseInt(document.getElementById('work').value) || 25;
-      const brk = parseInt(document.getElementById('break').value) || 5;
-      document.getElementById('display').classList.remove('hidden');
-      let time = work * 60;
-      function tick() {
-        const m = Math.floor(time / 60), s = time % 60;
-        document.getElementById('timer').textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-        document.getElementById('status').textContent = isWork ? 'Work' : 'Break';
-        if (time > 0) { time--; } else { isWork = !isWork; time = (isWork ? work : brk) * 60; }
+ else { isWork = !isWork; time = (isWork ? work : brk) * 60; }
       }
       tick();
       interval = setInterval(tick, 1000);

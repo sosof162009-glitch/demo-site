@@ -1,21 +1,4 @@
-<!DOCTYPE html>
-<html lang="de" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Average Calculator - 205-Tools</title>
-    <meta name="description" content="Calculates mean, median, mode, and range from a set of numbers.">
-    
-    <script>
-      function calculate() {
-        const nums = document.getElementById('numbers').value.split(/[,,\n]+/).map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
-        if (nums.length === 0) return;
-        const sum = nums.reduce((a, b) => a + b, 0);
-        document.getElementById('sumVal').textContent = sum.toFixed(2);
-        document.getElementById('countVal').textContent = nums.length;
-        document.getElementById('avgVal').textContent = (sum / nums.length).toFixed(2);
-        document.getElementById('resultBox').classList.remove('hidden');
-      }</script>
+</script>
             </div>
         </div>
     </section>

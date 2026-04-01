@@ -1,25 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scientific Calculator - 205-Outils</title>
-    <meta name="description" content="Full browser-based scientific calculator with trig, log, and algebra functions.">
-    
-    <script>
-      let expr = '';
-      function addOp(op) { expr += op; document.getElementById('expr').value = expr; }
-      function clearExpr() { expr = ''; document.getElementById('expr').value = ''; document.getElementById('resultBox').classList.add('hidden'); }
-      function backspace() { expr = expr.slice(0, -1); document.getElementById('expr').value = expr; }
-      function calculate() {
-        try {
-          let e = expr.replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(')
-                      .replace(/log\(/g, 'Math.log10(').replace(/sqrt\(/g, 'Math.sqrt(').replace(/\^/g, '**')
-                      .replace(/PI/g, 'Math.PI').replace(/E/g, 'Math.E');
-          const res = eval(e);
-          document.getElementById('resultValue').textContent = res;
-          document.getElementById('resultBox').classList.remove('hidden');
-        } catch { document.getElementById('resultValue').textContent = 'Error'; document.getElementById('resultBox').classList.remove('hidden'); }
+ catch { document.getElementById('resultValue').textContent = 'Error'; document.getElementById('resultBox').classList.remove('hidden'); }
       }</script>
             </div>
         </div>

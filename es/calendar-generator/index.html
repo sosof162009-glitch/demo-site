@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar Generator - 205-Herramientas</title>
-    <meta name="description" content="Generates a printable monthly calendar for any year and month.">
-    
-    <script>function generate() {
-      const y = parseInt(document.getElementById('year').value);
-      const m = parseInt(document.getElementById('month').value);
-      const first = new Date(y, m, 1);
-      const last = new Date(y, m + 1, 0);
-      let html = '<div class="t-grid t-grid-7 t-gap-xs t-text-center t-text-sm">';
-      ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => html += '<div class="t-font-bold t-p-xs">'+d+'</div>');
-      for (let i = 0; i < first.getDay(); i++) html += '<div></div>';
-      for (let d = 1; d <= last.getDate(); d++) {
-        const isToday = new Date().toDateString() === new Date(y, m, d).toDateString();
-        html += '<div class="t-p-xs '+(isToday?'bg-indigo-500 t-text-primary rounded':'')+'">'+d+'</div>';
-      }
+
       html += '</div>';
       document.getElementById('calendar').innerHTML = html;
       document.getElementById('calendar').classList.remove('hidden');
