@@ -1,28 +1,25 @@
 {
   "version": 2,
   "public": true,
-  "builds": [
+  "github": {
+    "enabled": true,
+    "silent": true
+  },
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "framework": null,
+  "rewrites": [
     {
-      "src": "**/*.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/admin",
-      "dest": "/admin/index.html"
+      "source": "/admin/:path*",
+      "destination": "/admin/:path*"
     },
     {
-      "src": "/admin/(.*)",
-      "dest": "/admin/$1"
+      "source": "/admin",
+      "destination": "/admin/index.html"
     },
     {
-      "src": "/(en|ar|fr|es|de)/(.*)",
-      "dest": "/$1/$2"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/:lang(en|ar|fr|es|de)/:path*",
+      "destination": "/:lang/:path*"
     }
   ]
 }
