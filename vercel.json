@@ -1,25 +1,4 @@
 {
   "version": 2,
-  "public": true,
-  "github": {
-    "enabled": true,
-    "silent": true
-  },
-  "buildCommand": null,
-  "outputDirectory": ".",
-  "framework": null,
-  "rewrites": [
-    {
-      "source": "/admin/:path*",
-      "destination": "/admin/:path*"
-    },
-    {
-      "source": "/admin",
-      "destination": "/admin/index.html"
-    },
-    {
-      "source": "/:lang(en|ar|fr|es|de)/:path*",
-      "destination": "/:lang/:path*"
-    }
-  ]
+  "public": true
 }
