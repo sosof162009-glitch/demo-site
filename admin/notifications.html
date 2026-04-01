@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Notifications - Admin - 205-Tools</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/assets/admin.css">
+    
+    <style>
+        .notifications-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-lg); }
+        .notifications-header h2 { font-size: 1.125rem; font-weight: 600; }
+        .mark-all-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 0.875rem; cursor: pointer; transition: all 0.2s; }
+        .mark-all-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .notifications-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); margin-bottom: var(--space-xl); overflow: hidden; }
+        .notification-item { display: flex; align-items: flex-start; gap: var(--space-md); padding: var(--space-lg); border-bottom: 1px solid var(--border); transition: background 0.2s; }
+        .notification-item:last-child { border-bottom: none; }
+        .notification-item:hover { background: rgba(255, 255, 255, 0.02); }
+        .notification-item.unread { background: rgba(99, 102, 241, 0.05); }
+        .notification-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+        .notification-icon.error { background: rgba(239, 68, 68, 0.1); }
+        .notification-icon.warning { background: rgba(234, 179, 8, 0.1); }
+        .notification-icon.info { background: rgba(59, 130, 246, 0.1); }
+        .notification-icon.success { background: rgba(34, 197, 94, 0.1); }
+        .notification-content { flex: 1; }
+        .notification-title { font-weight: 600; font-size: 0.9375rem; margin-bottom: 4px; display: flex; align-items: center; gap: var(--space-sm); }
+        .unread-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+        .notification-desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 4px; }
+        .notification-time { font-size: 0.75rem; color: var(--muted); }
+        .notification-actions { display: flex; gap: var(--space-sm); }
+        .notif-btn { padding: 6px 12px; background: transparent; border: 1px solid var(--border); border-radius: var(--radius); color: var(--muted); font-size: 0.75rem; cursor: pointer; transition: all 0.2s; }
+        .notif-btn:hover { background: var(--surface); color: var(--text); }
+        .notif-btn.delete:hover { background: rgba(239, 68, 68, 0.1); border-color: var(--error); color: var(--error); }
+        .settings-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-lg); margin-bottom: var(--space-xl); }
+        .settings-card h2 { font-size: 1.125rem; font-weight: 600; margin-bottom: var(--space-lg); }
+        .settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-lg); }
+        .setting-item { display: flex; justify-content: space-between; align-items: center; padding: var(--space-md); background: var(--surface); border-radius: var(--radius); }
+        .setting-label { font-size: 0.9375rem; }
+        .setting-label small { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+        .toggle-switch { position: relative; width: 44px; height: 24px; background: var(--surface); border-radius: var(--radius-full); cursor: pointer; transition: background 0.2s; border: 1px solid var(--border); }
+        .toggle-switch.active { background: var(--success); border-color: var(--success); }
+        .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: white; border-radius: 50%; transition: transform 0.2s; }
+        .toggle-switch.active::after { transform: translateX(20px); }
+        .email-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-lg); }
+        .email-card h2 { font-size: 1.125rem; font-weight: 600; margin-bottom: var(--space-lg); }
+        .form-group { margin-bottom: var(--space-lg); }
+        .form-group label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-sm); }
+        .form-group input, .form-group select { width: 100%; max-width: 400px; padding: var(--space-sm) var(--space-md); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-size: 0.9375rem; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+        .test-btn { padding: 10px 20px; background: var(--accent); color: white; border: none; border-radius: var(--radius); font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+        .test-btn:hover { background: var(--accent-light); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(20px); } }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header"><h2>🔧 205-Tools</h2></div>
+            <nav class="sidebar-nav">
+                <a href="/admin/dashboard.html" class="nav-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>Dashboard</a>
+                <a href="/admin/tools.html" class="nav-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Tools</a>
+                <a href="/admin/categories.html" class="nav-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>Categories</a>
+                <a href="/admin/seo.html" class="nav-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>SEO</a>
+                <a href="/admin/languages.html" class="nav-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>Languages</a>
+                <a href="/admin/ads.html" class="nav-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Ads</a>
+                <a href="/admin/performance.html" class="nav-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>Performance</a>
+                <a href="/admin/notifications.html" class="nav-item active"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>Notifications</a>
+                <a href="/admin/settings.html" class="nav-item"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Settings</a>
+            </nav>
+            <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>Logout</button></div>
+        </aside>
+        
+        <main class="admin-main">
+            <header class="admin-header"><h1>Notifications</h1><div class="user-menu"><span id="adminEmail"></span></div></header>
+            
+            <div class="notifications-header">
+                <h2>Recent Notifications <span id="unreadCount" style="color: var(--muted); font-weight: normal;"></span></h2>
+                <button class="mark-all-btn" onclick="markAllAsRead()">✓ Mark All as Read</button>
+            </div>
+            
+            <div class="notifications-card" id="notificationsList"><!-- Filled by JS --></div>
+            
+            <div class="settings-card">
+                <h2>Notification Settings</h2>
+                <div class="settings-grid" id="settingsGrid"><!-- Filled by JS --></div>
+            </div>
+            
+            <div class="email-card">
+                <h2>Email Settings</h2>
+                <div class="form-group">
+                    <label for="emailField">Notification Email</label>
+                    <input type="email" id="emailField" value="admin@205-tools.com" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="reportFreq">Report Frequency</label>
+                    <select id="reportFreq"><option value="daily">Daily</option><option value="weekly" selected>Weekly</option><option value="monthly">Monthly</option></select>
+                </div>
+                <button class="test-btn" onclick="sendTestReport()">📧 Send Test Report</button>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        const session = sessionStorage.getItem('adminAuth');
+        if (session !== 'true') { window.location.href = '/admin/login.html'; }
+        
+        const sessionData = JSON.parse(sessionStorage.getItem('adminSession') || '{}');
+        if (sessionData.email) { document.getElementById('adminEmail').textContent = sessionData.email; }
+        if (sessionData.expires && Date.now() > sessionData.expires) { logout(); }
+        
+        function logout() { sessionStorage.removeItem('adminAuth'); sessionStorage.removeItem('adminSession'); window.location.href = '/admin/login.html'; }
+        
+        function showToast(msg, type = 'success') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `position: fixed; bottom: 24px; right: 24px; background: var(--card); border: 1px solid ${type === 'success' ? 'var(--success)' : 'var(--error)'}; color: ${type === 'success' ? 'var(--success)' : 'var(--error)'}; padding: 12px 20px; border-radius: var(--radius); font-size: 0.875rem; font-weight: 600; z-index: 9999; animation: fadeIn 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.3);`;
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.animation = 'fadeOut 0.3s ease'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+        
+        let notifications = [
+            { id: 1, type: 'error', icon: '❌', title: 'Tool Error', desc: 'PDF Compressor failed to load on mobile devices', time: '5 minutes ago', read: false },
+            { id: 2, type: 'warning', icon: '⚠️', title: 'Site Slowdown', desc: 'Average load time increased to 2.3s', time: '1 hour ago', read: false },
+            { id: 3, type: 'info', icon: 'ℹ️', title: 'New Visitor Milestone', desc: 'You\'ve reached 50,000 monthly visitors!', time: '3 hours ago', read: true },
+            { id: 4, type: 'success', icon: '✅', title: 'Tool Added', desc: 'SVG to PNG Converter added successfully', time: '5 hours ago', read: true },
+            { id: 5, type: 'warning', icon: '⚠️', title: 'Ranking Drop', desc: 'Image Converter dropped 3 positions in Google', time: 'Yesterday', read: false },
+            { id: 6, type: 'info', icon: '📊', title: 'Weekly Report', desc: 'Your weekly analytics report is ready', time: 'Yesterday', read: true },
+            { id: 7, type: 'success', icon: '🎉', title: 'Revenue Target', desc: 'You\'ve reached your monthly revenue target!', time: '2 days ago', read: true },
+            { id: 8, type: 'error', icon: '🔴', title: 'Server Error', desc: '500 error detected on /en/base64-encoder', time: '3 days ago', read: true },
+            { id: 9, type: 'info', icon: '🔄', title: 'Site Updated', desc: 'New tools added: BMI Calculator, Word Counter', time: '4 days ago', read: true },
+            { id: 10, type: 'success', icon: '🚀', title: 'Performance Boost', desc: 'LCP improved by 15% after optimization', time: '5 days ago', read: true }
+        ];
+        
+        let notificationSettings = { toolError: true, siteSlowdown: true, rankingDrop: true, weeklyReport: true, visitorTarget: true, siteUpdate: false };
+        
+        const settingLabels = {
+            toolError: { label: 'Tool Errors', desc: 'Get notified when tools fail' },
+            siteSlowdown: { label: 'Site Slowdown', desc: 'Alert when load time increases' },
+            rankingDrop: { label: 'Ranking Drops', desc: 'SEO ranking changes alerts' },
+            weeklyReport: { label: 'Weekly Reports', desc: 'Receive weekly analytics' },
+            visitorTarget: { label: 'Visitor Milestones', desc: 'Goal achievement notifications' },
+            siteUpdate: { label: 'Site Updates', desc: 'New tools and features' }
+        };
+        
+        function renderNotifications() {
+            const container = document.getElementById('notificationsList');
+            const unreadCount = notifications.filter(n => !n.read).length;
+            document.getElementById('unreadCount').textContent = unreadCount > 0 ? `(${unreadCount} unread)` : '';
+            container.innerHTML = notifications.map(notif => `
+                <div class="notification-item ${notif.read ? '' : 'unread'}" data-id="${notif.id}">
+                    <div class="notification-icon ${notif.type}">${notif.icon}</div>
+                    <div class="notification-content">
+                        <div class="notification-title">${notif.title}${notif.read ? '' : '<span class="unread-dot"></span>'}</div>
+                        <div class="notification-desc">${notif.desc}</div>
+                        <div class="notification-time">${notif.time}</div>
+                    </div>
+                    <div class="notification-actions">
+                        ${notif.read ? '' : `<button class="notif-btn" onclick="markAsRead(${notif.id})">Mark Read</button>`}
+                        <button class="notif-btn delete" onclick="deleteNotification(${notif.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function markAsRead(id) { const notif = notifications.find(n => n.id === id); if (notif) { notif.read = true; renderNotifications(); showToast('✅ Marked as read'); } }
+        function markAllAsRead() { notifications.forEach(n => n.read = true); renderNotifications(); showToast('✅ All notifications marked as read'); }
+        function deleteNotification(id) { notifications = notifications.filter(n => n.id !== id); renderNotifications(); showToast('🗑️ Notification deleted'); }
+        
+        function renderSettings() {
+            const grid = document.getElementById('settingsGrid');
+            grid.innerHTML = Object.entries(notificationSettings).map(([key, enabled]) => `
+                <div class="setting-item">
+                    <div class="setting-label">${settingLabels[key].label}<small>${settingLabels[key].desc}</small></div>
+                    <div class="toggle-switch ${enabled ? 'active' : ''}" onclick="toggleSetting('${key}')"></div>
+                </div>
+            `).join('');
+        }
+        
+        function toggleSetting(key) { notificationSettings[key] = !notificationSettings[key]; renderSettings(); showToast(`${notificationSettings[key] ? '✅' : '⏸️'} ${settingLabels[key].label} ${notificationSettings[key] ? 'enabled' : 'disabled'}`); }
+        
+        function sendTestReport() { setTimeout(() => showToast('✅ Test report sent to ' + document.getElementById('emailField').value), 500); }
+        
+        renderNotifications();
+        renderSettings();
+    </script>
+</body>
+</html>
