@@ -1,15 +1,395 @@
-, 2000);
-    }
-    
-    // Initialize
-    analyzeText();
-}
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter - 205-Tools</title>
+    <meta name="description" content="Counts words, characters, sentences, and paragraphs in real-time.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { 
+            darkMode: 'class', 
+            theme: { 
+                extend: { 
+                    colors: { 
+                        primary: '#10b981',
+                        secondary: '#06b6d4',
+                        accent: '#8b5cf6'
+                    } 
+                } 
+            } 
+        };
+    </script>
+    <style>
+        /* Text Tools - Real-time Analysis Style */
+        .editor-container {
+            background: #fafafa;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        .editor-container:focus-within {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        .dark .editor-container {
+            background: #1f2937;
+            border-color: #374151;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 1px solid #a7f3d0;
+            transition: all 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+        }
+        .dark .stat-card {
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+            border-color: #059669;
+        }
+        .stat-card.warning {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-color: #fcd34d;
+        }
+        .dark .stat-card.warning {
+            background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+            border-color: #d97706;
+        }
+        .stat-card.danger {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-color: #fca5a5;
+        }
+        .dark .stat-card.danger {
+            background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 100%);
+            border-color: #ef4444;
+        }
+        .action-btn {
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .action-btn:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+        .action-btn:active:after {
+            width: 200px;
+            height: 200px;
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.3s;
+        }
+        .char-highlight {
+            background: #fef3c7;
+            padding: 2px 0;
+            border-radius: 2px;
+        }
+        .dark .char-highlight {
+            background: #78350f;
+        }
+        .copy-toast {
+            animation: slideUp 0.3s ease, fadeOut 0.3s ease 1.7s;
+        }
+        @keyframes slideUp {
+            from { transform: translate(-50%, 20px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/de/" class="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
+                    205-Tools
+                </a>
+                <div class="flex items-center gap-4">
+                    <a href="/de/text/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-500">
+                        ← Text
+                    </a>
+                    <button onclick="document.documentElement.classList.toggle('dark')" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700">
+                        <span id="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      initTextAnalyzer();
-    });
-  </script>
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 text-white py-10">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm mb-3">📝 Text</span>
+            <h1 class="text-4xl md:text-5xl font-bold mb-3">Word Counter</h1>
+            <p class="text-lg text-white/90 max-w-2xl mx-auto">Counts words, characters, sentences, and paragraphs in real-time.</p>
+        </div>
+    </section>
+
+    <!-- Main Interface -->
+    <section class="py-8">
+        <div class="max-w-6xl mx-auto px-4">
+            
+            <!-- Editor Area -->
+            <div class="grid lg:grid-cols-3 gap-6">
+                
+                <!-- Main Editor -->
+                <div class="lg:col-span-2">
+                    <div class="editor-container">
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-600">
+                            <span class="text-sm font-medium text-gray-500">Enter your text</span>
+                            <div class="flex gap-2">
+                                <button onclick="pasteText()" class="text-sm px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    📋 Paste
+                                </button>
+                                <button onclick="clearText()" class="text-sm px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors">
+                                    🗑️ Clear
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <textarea 
+                            id="textInput" 
+                            placeholder="Type or paste your text here..."
+                            class="w-full h-80 p-4 bg-transparent border-none resize-none focus:outline-none text-base leading-relaxed"
+                        ></textarea>
+                        
+                        <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-600 text-sm text-gray-500">
+                            <span id="lastUpdated">Ready</span>
+                            <button onclick="copyResult()" id="copyBtn" class="flex items-center gap-1 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        
+                    </div>
+                </div>
+
+                <!-- Stats Panel -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 sticky top-24">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            Statistics
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <!-- Word Count -->
+                            <div class="stat-card p-4 rounded-xl">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600 dark:text-gray-300">Words</span>
+                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="wordCount">0</p>
+                            </div>
+
+                            <!-- Character Count -->
+                            <div class="stat-card p-4 rounded-xl">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600 dark:text-gray-300">Characters</span>
+                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="charCount">0</p>
+                            </div>
+
+                            <!-- Characters (no spaces) -->
+                            <div class="stat-card p-4 rounded-xl">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600 dark:text-gray-300">Without spaces</span>
+                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="charCountNoSpaces">0</p>
+                            </div>
+
+                            <!-- Sentences -->
+                            <div class="stat-card p-4 rounded-xl">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600 dark:text-gray-300">Sentences</span>
+                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="sentenceCount">0</p>
+                            </div>
+
+                            <!-- Paragraphs -->
+                            <div class="stat-card p-4 rounded-xl">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600 dark:text-gray-300">Paragraphs</span>
+                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="paragraphCount">0</p>
+                            </div>
+
+                            <!-- Reading Time -->
+                            <div class="stat-card warning p-4 rounded-xl">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600 dark:text-gray-300">Reading time</span>
+                                    <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-1" id="readingTime">0s</p>
+                            </div>
+
+                            <!-- Speaking Time -->
+                            <div class="stat-card p-4 rounded-xl">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600 dark:text-gray-300">Speaking time</span>
+                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="speakingTime">0s</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-xl shadow-2xl hidden items-center gap-2 z-50">
+        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <span id="toastMessage">Copied!</span>
+    </div>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        
+        // Real-time analysis
+        textInput.addEventListener('input', analyzeText);
+        
+        function analyzeText() {
+            const text = textInput.value;
+            
+            // Word count
+            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            animateNumber('wordCount', words);
+            
+            // Character count
+            animateNumber('charCount', text.length);
+            
+            // Characters without spaces
+            animateNumber('charCountNoSpaces', text.replace(/\s/g, '').length);
+            
+            // Sentences
+            const sentences = text.trim() === '' ? 0 : text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+            animateNumber('sentenceCount', sentences);
+            
+            // Paragraphs
+            const paragraphs = text.trim() === '' ? 0 : text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
+            animateNumber('paragraphCount', paragraphs || (text.trim() ? 1 : 0));
+            
+            // Reading time (avg 200 wpm)
+            const readingMinutes = words / 200;
+            document.getElementById('readingTime').textContent = formatTime(readingMinutes);
+            
+            // Speaking time (avg 130 wpm)
+            const speakingMinutes = words / 130;
+            document.getElementById('speakingTime').textContent = formatTime(speakingMinutes);
+            
+            // Update timestamp
+            document.getElementById('lastUpdated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+        }
+        
+        function animateNumber(id, target) {
+            const element = document.getElementById(id);
+            const current = parseInt(element.textContent) || 0;
+            if (current === target) return;
+            
+            element.textContent = target;
+            element.style.transform = 'scale(1.2)';
+            setTimeout(() => element.style.transform = 'scale(1)', 150);
+        }
+        
+        function formatTime(minutes) {
+            if (minutes < 1) return Math.round(minutes * 60) + 's';
+            if (minutes < 60) return Math.round(minutes) + 'm';
+            const hours = Math.floor(minutes / 60);
+            const mins = Math.round(minutes % 60);
+            return hours + 'h ' + mins + 'm';
+        }
+        
+        async function pasteText() {
+            try {
+                const text = await navigator.clipboard.readText();
+                textInput.value = text;
+                analyzeText();
+                showToast('Text pasted!');
+            } catch (err) {
+                showToast('Could not paste');
+            }
+        }
+        
+        function clearText() {
+            textInput.value = '';
+            analyzeText();
+            showToast('Text cleared!');
+        }
+        
+        async function copyResult() {
+            try {
+                await navigator.clipboard.writeText(textInput.value);
+                showToast('Copied to clipboard!');
+            } catch (err) {
+                textInput.select();
+                document.execCommand('copy');
+                showToast('Copied to clipboard!');
+            }
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('hidden');
+            toast.classList.add('flex', 'copy-toast');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex', 'copy-toast');
+            }, 2000);
+        }
+        
+        // Initialize
+        analyzeText();
+    </script>
 </body>
 </html>
