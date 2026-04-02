@@ -31,11 +31,6 @@
                 <p>Admin Dashboard</p>
             </div>
             
-            <div id="lockoutMessage" class="lockout-message" style="display: none;">
-                <div>Too many failed attempts</div>
-                <div class="lockout-timer" id="lockoutTimer">15:00</div>
-            </div>
-            
             <div id="errorMessage" class="error-message" style="display: none;">
                 Invalid email or password
             </div>
@@ -77,16 +72,23 @@
     </div>
     
     <script>
-        // Clear any existing lockout on page load (TEMP FIX)
-        localStorage.removeItem('adminLockoutEnd');
-        localStorage.removeItem('adminFailedAttempts');
+        console.log('=== LOGIN DEBUG MODE ===');
         
         // Supabase Configuration
         const SUPABASE_URL = 'https://jgmpltmdncyrnuufe.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU';
         
+        console.log('Supabase URL:', SUPABASE_URL);
+        console.log('Supabase Key exists:', SUPABASE_KEY ? 'YES' : 'NO');
+        
         // Initialize Supabase
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        let supabase;
+        try {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            console.log('✅ Supabase client created successfully');
+        } catch (e) {
+            console.error('❌ Failed to create Supabase client:', e);
+        }
         
         // DOM Elements
         const loginForm = document.getElementById('loginForm');
@@ -95,28 +97,38 @@
         
         // Check if already logged in
         async function checkSession() {
+            console.log('Checking existing session...');
             try {
-                const { data: { session } } = await supabase.auth.getSession();
+                const { data: { session }, error } = await supabase.auth.getSession();
+                console.log('Session check result:', { session: !!session, error });
                 if (session) {
+                    console.log('✅ Active session found, redirecting...');
                     window.location.href = '/admin/dashboard.html';
+                } else {
+                    console.log('ℹ️ No active session');
                 }
             } catch (e) {
-                console.log('No active session');
+                console.error('❌ Error checking session:', e);
             }
         }
         
         // Handle form submission
         loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            console.log('=== LOGIN ATTEMPT ===');
             
             const email = document.getElementById('email').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
+            
+            console.log('Email:', email);
+            console.log('Password length:', password.length);
             
             // Reset error
             errorMessage.style.display = 'none';
             
             // Basic validation
             if (!email || !password) {
+                console.log('❌ Validation failed: missing email or password');
                 errorMessage.textContent = 'Please enter both email and password';
                 errorMessage.style.display = 'block';
                 return;
@@ -127,17 +139,25 @@
             loginBtn.textContent = 'Signing in...';
             
             try {
+                console.log('Sending signInWithPassword request...');
+                
                 // Authenticate with Supabase
                 const { data, error } = await supabase.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
                 
+                console.log('Supabase response:', { data, error });
+                
                 if (error) {
+                    console.error('❌ Supabase error:', error);
                     throw error;
                 }
                 
                 if (data.user && data.session) {
+                    console.log('✅ Login successful! User:', data.user.email);
+                    console.log('✅ Session:', data.session ? 'Valid' : 'Invalid');
+                    
                     // Store session info
                     const sessionData = {
                         authenticated: true,
@@ -150,28 +170,36 @@
                     sessionStorage.setItem('adminSession', JSON.stringify(sessionData));
                     
                     // Redirect to dashboard
+                    console.log('Redirecting to dashboard...');
                     window.location.href = '/admin/dashboard.html';
                 } else {
-                    throw new Error('Login failed');
+                    console.error('❌ Login failed: no user or session in response');
+                    throw new Error('Login failed - no session');
                 }
             } catch (error) {
-                console.error('Login error:', error);
+                console.error('=== LOGIN ERROR ===');
+                console.error('Error name:', error.name);
+                console.error('Error message:', error.message);
+                console.error('Error details:', error);
                 
                 // Reset button state
                 loginBtn.disabled = false;
                 loginBtn.textContent = 'Sign In';
                 
                 // Show error
-                if (error.message.includes('Invalid login credentials')) {
+                if (error.message && error.message.includes('Invalid login credentials')) {
                     errorMessage.textContent = 'Invalid email or password';
+                } else if (error.message) {
+                    errorMessage.textContent = error.message;
                 } else {
-                    errorMessage.textContent = error.message || 'An error occurred. Please try again.';
+                    errorMessage.textContent = 'An error occurred. Please try again.';
                 }
                 errorMessage.style.display = 'block';
             }
         });
         
         // Initialize on page load
+        console.log('Initializing...');
         checkSession();
         
         // Clear error on input
@@ -181,6 +209,8 @@
         document.getElementById('password').addEventListener('input', () => {
             errorMessage.style.display = 'none';
         });
+        
+        console.log('=== INIT COMPLETE ===');
     </script>
 </body>
 </html>
