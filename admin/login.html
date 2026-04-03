@@ -7,31 +7,38 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 10px; }
+        body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 8px; font-size: 14px; }
         #debug { background: #1c1f35; padding: 10px; border-radius: 8px; font-size: 10px; font-family: monospace; 
-                 margin-bottom: 8px; border: 2px solid #4f8ef7; max-height: 280px; overflow-y: auto; white-space: pre-wrap; }
-        .box { max-width: 360px; margin: 0 auto; background: #141629; padding: 15px; border-radius: 12px; }
-        h1 { text-align: center; color: #4f8ef7; font-size: 16px; margin-bottom: 10px; }
+                 margin-bottom: 8px; border: 2px solid #4f8ef7; max-height: 320px; overflow-y: auto; white-space: pre-wrap; }
+        .box { max-width: 340px; margin: 0 auto; background: #141629; padding: 15px; border-radius: 12px; }
+        h1 { text-align: center; color: #4f8ef7; font-size: 15px; margin-bottom: 10px; }
         input { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #2a2d4a; border-radius: 8px; 
-                background: #1c1f35; color: #fff; font-size: 15px; }
+                background: #1c1f35; color: #fff; font-size: 14px; }
         .btn { width: 100%; padding: 14px; margin-top: 10px; background: linear-gradient(135deg, #4f8ef7, #6366f1); 
-               color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; }
-        .btn:active { opacity: 0.8; }
+               color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; }
+        .btn2 { width: 100%; padding: 10px; margin-top: 8px; background: #2a2d4a; 
+               color: #fff; border: none; border-radius: 8px; font-size: 12px; }
         .err { background: rgba(239,68,68,0.15); color: #ef4444; padding: 10px; border-radius: 6px; 
-               margin: 8px 0; display: none; font-size: 13px; }
+               margin: 8px 0; display: none; font-size: 12px; }
+        .warn { background: rgba(234,179,8,0.15); color: #eab308; padding: 10px; border-radius: 6px; 
+               margin: 8px 0; display: none; font-size: 12px; }
     </style>
 </head>
 <body>
-    <div id="debug">⏳...</div>
+    <div id="debug">⏳ جاري التحميل...</div>
     
     <div class="box">
         <h1>🔧 تسجيل دخول Admin</h1>
-        <div id="err" class="err"></div>
         
-        <input type="email" id="em" placeholder="Email" value="">
-        <input type="password" id="pw" placeholder="Password" value="">
+        <div id="err" class="err"></div>
+        <div id="warn" class="warn"></div>
+        
+        <input type="email" id="em" placeholder="Email">
+        <input type="password" id="pw" placeholder="Password">
         
         <button class="btn" onclick="doLogin()">تسجيل الدخول</button>
+        
+        <button class="btn2" onclick="testConnection()">🔍 فحص الاتصال</button>
     </div>
 
     <script>
@@ -45,31 +52,57 @@
         
         L('✅ JS Loaded');
         
-        // Supabase config
         var SUPABASE_URL = 'https://jgmpltmdncyrnuufe.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU';
         
-        L('URL: ' + SUPABASE_URL.substring(0, 30) + '...');
+        L('URL: ' + SUPABASE_URL);
         
-        var S = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // TEST FETCH directly
+        async function testConnection() {
+            L('\n═══════ TEST CONNECTION ═══════');
+            
+            try {
+                L('Testing fetch to Supabase...');
+                var response = await fetch(SUPABASE_URL + '/auth/v1/settings', {
+                    method: 'GET',
+                    headers: { 'apikey': SUPABASE_KEY }
+                });
+                L('Fetch status: ' + response.status);
+                L('Fetch OK: ' + response.ok);
+                var data = await response.text();
+                L('Response: ' + data.substring(0, 100));
+            } catch(e) {
+                L('❌ FETCH ERROR: ' + e.name);
+                L('Message: ' + e.message);
+                L('Type: ' + e.constructor.name);
+            }
+        }
+        
+        var S = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+            auth: { persistSession: true, detectSessionInUrl: false }
+        });
         L('✅ Supabase Client Created');
         
-        // Check session on load
+        // Check if online
+        L('Online status: ' + (navigator.onLine ? 'YES' : 'NO'));
+        
+        // Check session
         S.auth.getSession().then(function(r) {
-            L('Session check: ' + (r.data.session ? 'YES' : 'NO'));
+            L('Session: ' + (r.data.session ? 'YES' : 'NO'));
         }).catch(function(e) {
             L('Session error: ' + e.message);
         });
         
-        L('✅ Ready - Click login');
+        L('✅ Ready');
         
-        // LOGIN FUNCTION
+        // LOGIN
         window.doLogin = async function() {
-            L('\n═══════ LOGIN CLICKED ═══════');
+            L('\n═══════ LOGIN ═══════');
             
             var email = document.getElementById('em').value.trim();
             var pass = document.getElementById('pw').value;
             var errDiv = document.getElementById('err');
+            var warnDiv = document.getElementById('warn');
             
             L('Email: ' + email);
             
@@ -80,94 +113,86 @@
             }
             
             errDiv.style.display = 'none';
+            warnDiv.style.display = 'none';
+            
+            // Check online
+            if (!navigator.onLine) {
+                warnDiv.innerText = '⚠️ أنت غير متصل بالإنترنت!';
+                warnDiv.style.display = 'block';
+                L('❌ Browser reports OFFLINE');
+                return;
+            }
             
             try {
-                L('🔐 Calling signInWithPassword...');
+                L('Calling signInWithPassword...');
+                L('Time: ' + new Date().toISOString());
                 
-                var result = await S.auth.signInWithPassword({
-                    email: email,
-                    password: pass
-                });
+                var result = await S.auth.signInWithPassword({ email: email, password: pass });
                 
-                L('Result received:');
-                L('  error object: ' + (result.error ? 'EXISTS' : 'null'));
-                L('  error msg: ' + (result.error ? result.error.message : 'none'));
-                L('  error name: ' + (result.error ? result.error.name : 'none'));
-                L('  error status: ' + (result.error ? (result.error.status || 'N/A') : 'N/A'));
-                L('  data.user: ' + (result.data.user ? 'EXISTS' : 'null'));
+                L('Result:');
+                L('  error: ' + (result.error ? result.error.name + ' - ' + result.error.message : 'null'));
+                L('  error.code: ' + (result.error ? (result.error.code || 'N/A') : 'N/A'));
+                L('  user: ' + (result.data.user ? 'YES' : 'NO'));
                 
                 if (result.error) {
-                    L('❌ AUTH ERROR: ' + result.error.message);
+                    L('❌ Auth failed');
                     errDiv.innerText = '❌ ' + result.error.message;
                     errDiv.style.display = 'block';
                     return;
                 }
                 
                 if (!result.data.user) {
-                    L('❌ NO USER in data');
+                    L('❌ No user returned');
                     errDiv.innerText = '❌ خطأ غير متوقع';
                     errDiv.style.display = 'block';
                     return;
                 }
                 
-                L('✅ Auth success! UserID: ' + result.data.user.id.substring(0, 8) + '...');
+                L('✅ Auth OK! ID: ' + result.data.user.id.substring(0, 8));
                 
                 // Check admin
-                L('\n🔍 Querying admin_users...');
+                L('\nChecking admin...');
+                var adminRes = await S.from('admin_users').select('*').eq('user_id', result.data.user.id);
                 
-                var adminRes = await S.from('admin_users')
-                    .select('*')
-                    .eq('user_id', result.data.user.id);
-                
-                L('Admin query result:');
-                L('  data: ' + (adminRes.data ? ('array[' + adminRes.data.length + ']') : 'null'));
-                L('  error: ' + (adminRes.error ? adminRes.error.message : 'null'));
-                
-                if (adminRes.error) {
-                    L('❌ DB ERROR: ' + adminRes.error.message);
-                    errDiv.innerText = '❌ خطأ قاعدة البيانات';
-                    errDiv.style.display = 'block';
-                    return;
-                }
+                L('Admin result: rows=' + (adminRes.data ? adminRes.data.length : 'null') + 
+                  ' error=' + (adminRes.error ? adminRes.error.message : 'null'));
                 
                 if (!adminRes.data || adminRes.data.length === 0) {
-                    L('❌ NOT FOUND in admin_users');
+                    L('❌ Not admin');
                     await S.auth.signOut();
-                    errDiv.innerText = '❌ ليس لديك صلاحية Admin';
+                    errDiv.innerText = '❌ ليس Admin';
                     errDiv.style.display = 'block';
                     return;
                 }
                 
-                // Find active
-                var active = null;
-                for (var i = 0; i < adminRes.data.length; i++) {
-                    if (adminRes.data[i].is_active === true) active = adminRes.data[i];
-                }
-                
+                var active = adminRes.data.find(function(r) { return r.is_active === true; });
                 if (!active) {
-                    L('❌ FOUND but NOT ACTIVE');
+                    L('❌ Not active');
                     await S.auth.signOut();
-                    errDiv.innerText = '❌ الحساب غير مفعل';
+                    errDiv.innerText = '❌ غير مفعل';
                     errDiv.style.display = 'block';
                     return;
                 }
                 
-                L('✅ ADMIN CONFIRMED!');
-                L('  Role: ' + active.role);
-                
+                L('✅ Admin OK! Role=' + active.role);
                 sessionStorage.setItem('adminAuth', 'true');
-                L('\n➡️ Redirecting to dashboard...');
+                L('Redirecting...');
                 window.location.href = '/admin/dashboard.html';
                 
             } catch(e) {
                 L('\n❌❌❌ EXCEPTION ❌❌❌');
-                L('Type: ' + (e.constructor ? e.constructor.name : typeof e));
+                L('Name: ' + e.name);
                 L('Message: ' + e.message);
-                L('Stack: ' + (e.stack ? e.stack.substring(0, 200) : 'N/A'));
+                L('Code: ' + (e.code || 'N/A'));
+                L('Status: ' + (e.status || 'N/A'));
+                if (e.stack) L('Stack: ' + e.stack.substring(0, 150));
                 errDiv.innerText = '❌ خطأ: ' + e.message;
                 errDiv.style.display = 'block';
             }
         };
+        
+        // Expose test function
+        window.testConnection = testConnection;
     </script>
 </body>
 </html>
