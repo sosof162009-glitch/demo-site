@@ -7,245 +7,150 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background: #0a0c1b; 
-            color: #fff; 
-            font-family: system-ui, -apple-system, sans-serif;
-            padding: 10px;
-            min-height: 100vh;
-        }
-        #debug { 
-            background: #1c1f35; 
-            padding: 15px; 
-            border-radius: 8px; 
-            font-size: 12px; 
-            font-family: monospace;
-            margin-bottom: 15px;
-            border: 2px solid #4f8ef7;
-            max-height: 250px;
-            overflow-y: auto;
-            user-select: all;
-            -webkit-user-select: all;
-        }
-        #debug:focus { outline: 2px solid #22c55e; }
-        .copy-btn {
-            background: #22c55e;
-            color: #000;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            width: 100%;
-        }
-        .login-box {
-            max-width: 400px;
-            margin: 0 auto;
-            background: #141629;
-            padding: 25px;
-            border-radius: 16px;
-        }
-        h1 { text-align: center; margin-bottom: 15px; color: #4f8ef7; font-size: 20px; }
-        input {
-            width: 100%;
-            padding: 15px;
-            margin: 8px 0;
-            border: 1px solid #2a2d4a;
-            border-radius: 8px;
-            background: #1c1f35;
-            color: #fff;
-            font-size: 16px;
-        }
-        button.login {
-            width: 100%;
-            padding: 15px;
-            margin-top: 15px;
-            background: linear-gradient(135deg, #4f8ef7, #6366f1);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-        }
-        button:disabled { opacity: 0.5; }
-        .error {
-            background: rgba(239,68,68,0.1);
-            color: #ef4444;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 10px 0;
-            display: none;
-        }
-        .success {
-            background: rgba(34,197,94,0.1);
-            color: #22c55e;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 10px 0;
-            display: none;
-        }
-        .note {
-            color: #888;
-            font-size: 12px;
-            text-align: center;
-            margin-top: 10px;
-        }
+        body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 10px; }
+        #debug { background: #1c1f35; padding: 12px; border-radius: 8px; font-size: 11px; font-family: monospace; 
+                 margin-bottom: 10px; border: 2px solid #4f8ef7; max-height: 200px; overflow-y: auto; }
+        .box { max-width: 380px; margin: 0 auto; background: #141629; padding: 20px; border-radius: 12px; }
+        h1 { text-align: center; color: #4f8ef7; font-size: 18px; margin-bottom: 15px; }
+        input { width: 100%; padding: 14px; margin: 6px 0; border: 1px solid #2a2d4a; border-radius: 8px; 
+                background: #1c1f35; color: #fff; font-size: 16px; }
+        .btn { width: 100%; padding: 16px; margin-top: 12px; background: linear-gradient(135deg, #4f8ef7, #6366f1); 
+               color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold;
+               -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        .btn:active { opacity: 0.8; transform: scale(0.98); }
+        .err { background: rgba(239,68,68,0.1); color: #ef4444; padding: 10px; border-radius: 6px; margin: 8px 0; display: none; }
     </style>
 </head>
 <body>
-    <button class="copy-btn" onclick="copyLogs()">📋 نسخ السجلات</button>
-    <div id="debug" tabindex="0">🔍 جاري التحميل... انقر هنا للتحديد</div>
+    <div id="debug">⏳...</div>
     
-    <div class="login-box">
-        <h1>🔧 تسجيل دخول Admin</h1>
+    <div class="box">
+        <h1>🔧 تسجيل دخول</h1>
+        <div id="err" class="err"></div>
         
-        <div id="errorBox" class="error"></div>
-        <div id="successBox" class="success">✅ تم النسخ!</div>
+        <input type="email" id="em" placeholder="Email">
+        <input type="password" id="pw" placeholder="Password">
+        <!-- زر مباشر مع onclick -->
+        <button class="btn" onclick="doLogin(); return false;">تسجيل الدخول</button>
         
-        <input type="email" id="email" placeholder="البريد الإلكتروني">
-        <input type="password" id="password" placeholder="كلمة المرور">
-        
-        <button class="login" id="loginBtn">تسجيل الدخول</button>
-        
-        <p class="note">انقر على المربع الأزرق فوق ثم انسخ</p>
+        <p style="color:#666; font-size:11px; text-align:center; margin-top:10px;">
+            إذا الزر لا يعمل، جرب انقر مطول ثم ارفع
+        </p>
     </div>
 
     <script>
-        let allLogs = [];
-        
-        function log(msg, isError) {
-            const debug = document.getElementById('debug');
-            const time = new Date().toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'});
-            const line = '[' + time + '] ' + msg;
-            allLogs.push(line);
-            debug.innerHTML = allLogs.join('\n');
-            debug.scrollTop = debug.scrollHeight;
+        // سجلات
+        var logs = [];
+        function L(msg) {
+            var t = new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+            var line = '[' + t + '] ' + msg;
+            logs.push(line);
+            document.getElementById('debug').innerText = logs.join('\n');
             console.log(line);
         }
         
-        function copyLogs() {
-            const text = allLogs.join('\n');
-            navigator.clipboard.writeText(text).then(function() {
-                const success = document.getElementById('successBox');
-                success.style.display = 'block';
-                setTimeout(function() { success.style.display = 'none'; }, 2000);
-            }).catch(function() {
-                // fallback
-                const debug = document.getElementById('debug');
-                debug.select();
-                document.execCommand('copy');
-            });
-        }
+        L('✅ JS loaded');
         
-        // بدء التسجيل
-        log('✅ JavaScript يعمل');
-        
-        // التحقق من Supabase
-        if (typeof window.supabase === 'undefined') {
-            log('❌ Supabase غير محمل!', true);
-        } else {
-            log('✅ Supabase موجود');
-        }
-        
-        // تهيئة
-        const supabase = window.supabase.createClient(
+        // Supabase
+        var S = window.supabase.createClient(
             'https://jgmpltmdncyrnuufe.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU'
         );
-        log('✅ تم الاتصال');
+        L('✅ Supabase OK');
         
-        // الزر
-        document.getElementById('loginBtn').addEventListener('click', async function() {
-            log('\n══════════ تسجيل الدخول ══════════');
+        // دالة تسجيل الدخول - GLOBAL
+        window.doLogin = async function() {
+            L('\n═══ CLICKED ═══');
             
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const btn = document.getElementById('loginBtn');
-            const errorBox = document.getElementById('errorBox');
+            var email = document.getElementById('em').value.trim();
+            var pass = document.getElementById('pw').value;
+            var btn = document.querySelector('.btn');
+            var err = document.getElementById('err');
             
-            log('Email: ' + email);
+            L('Email: ' + email);
             
-            if (!email || !password) {
-                errorBox.textContent = '❌ أكمل الحقول';
-                errorBox.style.display = 'block';
-                log('❌ حقول فارغة');
+            if (!email || !pass) {
+                err.innerText = '❌ أكمل الحقول';
+                err.style.display = 'block';
+                L('❌ Empty fields');
                 return;
             }
             
-            errorBox.style.display = 'none';
+            err.style.display = 'none';
+            btn.innerText = '...جاري';
             btn.disabled = true;
-            btn.textContent = 'جاري...';
             
             try {
-                log('🔐 إرسال...');
+                L('🔐 Sending...');
                 
-                const result = await supabase.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
+                var res = await S.auth.signInWithPassword({ email: email, password: pass });
                 
-                log('النتيجة:');
-                log('  error: ' + (result.error ? result.error.message : 'لا'));
-                log('  user: ' + (result.data.user ? 'نعم' : 'لا'));
+                L('Auth result:');
+                L('  error: ' + (res.error ? res.error.message : 'none'));
+                L('  user: ' + (res.data.user ? 'YES' : 'NO'));
                 
-                if (result.error) throw result.error;
+                if (res.error) throw res.error;
                 
-                log('✅ دخول ناجح!');
-                log('User ID: ' + result.data.user.id);
+                L('✅ Login OK!');
+                L('UserID: ' + res.data.user.id);
                 
-                // فحص Admin
-                log('\n🔍 فحص Admin...');
-                const admin = await supabase
-                    .from('admin_users')
-                    .select('*')
-                    .eq('user_id', result.data.user.id);
+                // Check admin
+                L('\n🔍 Check admin...');
+                var admin = await S.from('admin_users').select('*').eq('user_id', res.data.user.id);
                 
-                log('الاستعلام:');
-                log('  سجلات: ' + (admin.data ? admin.data.length : 0));
-                log('  خطأ: ' + (admin.error ? admin.error.message : 'لا'));
+                L('Admin query:');
+                L('  rows: ' + (admin.data ? admin.data.length : 0));
+                L('  error: ' + (admin.error ? admin.error.message : 'none'));
                 
                 if (!admin.data || admin.data.length === 0) {
-                    log('❌ ليس Admin');
-                    await supabase.auth.signOut();
-                    errorBox.textContent = '❌ ليس Admin';
-                    errorBox.style.display = 'block';
+                    L('❌ NOT ADMIN');
+                    await S.auth.signOut();
+                    err.innerText = '❌ ليس Admin';
+                    err.style.display = 'block';
+                    btn.innerText = 'تسجيل الدخول';
                     btn.disabled = false;
-                    btn.textContent = 'تسجيل الدخول';
                     return;
                 }
                 
-                const active = admin.data.find(function(r) { return r.is_active === true; });
+                var active = null;
+                for (var i = 0; i < admin.data.length; i++) {
+                    if (admin.data[i].is_active === true) active = admin.data[i];
+                }
+                
                 if (!active) {
-                    log('❌ غير مفعل');
-                    await supabase.auth.signOut();
-                    errorBox.textContent = '❌ غير مفعل';
-                    errorBox.style.display = 'block';
+                    L('❌ NOT ACTIVE');
+                    await S.auth.signOut();
+                    err.innerText = '❌ غير مفعل';
+                    err.style.display = 'block';
+                    btn.innerText = 'تسجيل الدخول';
                     btn.disabled = false;
                     return;
                 }
                 
-                log('✅ Admin مفعل: ' + active.role);
+                L('✅ ADMIN: ' + active.role);
                 sessionStorage.setItem('adminAuth', 'true');
+                L('➡️ Redirecting...');
                 window.location.href = '/admin/dashboard.html';
                 
-            } catch(err) {
-                log('❌ خطأ: ' + err.message);
-                errorBox.textContent = '❌ ' + err.message;
-                errorBox.style.display = 'block';
+            } catch(e) {
+                L('❌ ERROR: ' + e.message);
+                err.innerText = '❌ ' + e.message;
+                err.style.display = 'block';
+                btn.innerText = 'تسجيل الدخول';
                 btn.disabled = false;
-                btn.textContent = 'تسجيل الدخول';
+            }
+        };
+        
+        // تحقق من جلسة موجودة
+        S.auth.getSession().then(function(r) {
+            if (r.data.session) {
+                L('✅ Session: ' + r.data.session.user.email);
+            } else {
+                L('ℹ️ No session');
             }
         });
         
-        // جلسة موجودة؟
-        supabase.auth.getSession().then(function(r) {
-            if (r.data.session) {
-                log('✅ جلسة: ' + r.data.session.user.email);
-            } else {
-                log('ℹ️ لا جلسة');
-            }
-        });
+        L('✅ Ready');
     </script>
 </body>
 </html>
