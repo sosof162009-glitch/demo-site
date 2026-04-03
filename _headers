@@ -1,3 +1,10 @@
+/admin/*
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://jgmpltmdncyrnuufe.supabase.co https://*.supabase.co; img-src 'self' data: blob:;
+  Access-Control-Allow-Origin: *
+
 /*
   Cache-Control: no-cache, no-store, must-revalidate
   Pragma: no-cache
