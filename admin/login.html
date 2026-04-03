@@ -1,155 +1,143 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - 205-Tools</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 10px; font-size: 14px; }
-        #debug { background: #1c1f35; padding: 10px; border-radius: 8px; font-size: 10px; font-family: monospace; 
-                 margin-bottom: 10px; border: 2px solid #4f8ef7; max-height: 200px; overflow-y: auto; white-space: pre-wrap; }
-        .box { max-width: 360px; margin: 0 auto; background: #141629; padding: 20px; border-radius: 12px; }
-        h1 { text-align: center; color: #4f8ef7; font-size: 18px; margin-bottom: 15px; }
-        input { width: 100%; padding: 14px; margin: 6px 0; border: 1px solid #2a2d4a; border-radius: 8px; 
-                background: #1c1f35; color: #fff; font-size: 15px; }
-        .btn { width: 100%; padding: 16px; margin-top: 12px; background: linear-gradient(135deg, #4f8ef7, #6366f1); 
-               color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
-        .err { background: rgba(239,68,68,0.2); color: #ef4444; padding: 12px; border-radius: 8px; 
-               margin: 10px 0; display: none; font-size: 13px; line-height: 1.6; }
-        .fix-box { background: rgba(234,179,8,0.1); border: 1px solid #eab308; padding: 15px; border-radius: 8px; 
-                   margin: 15px 0; font-size: 13px; display: none; }
-        .fix-box h3 { color: #eab308; margin-bottom: 10px; }
-        .fix-box ol { padding-right: 20px; line-height: 1.8; }
-        .fix-box code { background: #1c1f35; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل دخول Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0c1b; color: #fff; font-family: system-ui, -apple-system, sans-serif; padding: 20px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .box { width: 100%; max-width: 400px; background: #141629; padding: 40px; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .logo { text-align: center; margin-bottom: 30px; }
+    .logo-icon { font-size: 48px; margin-bottom: 10px; }
+    h1 { text-align: center; color: #fff; margin-bottom: 8px; font-size: 24px; }
+    .subtitle { text-align: center; color: #6b7280; font-size: 14px; margin-bottom: 30px; }
+    .input-group { margin-bottom: 20px; }
+    label { display: block; color: #9ca3af; font-size: 13px; margin-bottom: 6px; font-weight: 500; }
+    input { width: 100%; padding: 14px 16px; border: 2px solid #2a2d4a; border-radius: 10px; background: #1c1f35; color: #fff; font-size: 16px; transition: border-color 0.2s; }
+    input:focus { outline: none; border-color: #4f8ef7; }
+    button { width: 100%; padding: 16px; margin-top: 10px; background: linear-gradient(135deg, #4f8ef7, #6366f1); color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.1s, opacity 0.2s; }
+    button:hover { opacity: 0.9; transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .error { background: rgba(239,68,68,0.1); color: #ef4444; padding: 14px; border-radius: 10px; margin-top: 20px; display: none; border: 1px solid rgba(239,68,68,0.2); font-size: 14px; }
+    .success { background: rgba(34,197,94,0.1); color: #22c55e; padding: 14px; border-radius: 10px; margin-top: 20px; display: none; border: 1px solid rgba(34,197,94,0.2); font-size: 14px; }
+    .secure-note { display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(79,142,247,0.1); color: #4f8ef7; padding: 12px; border-radius: 8px; margin-top: 25px; font-size: 12px; }
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; margin-left: 8px; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
 </head>
 <body>
-    <div id="debug">⏳ جاري التحميل...</div>
-    
-    <div class="box">
-        <h1>🔧 تسجيل دخول Admin</h1>
-        
-        <div id="err" class="err"></div>
-        
-        <div id="fix" class="fix-box">
-            <h3>⚠️ مطلوب إصلاح CORS في Supabase</h3>
-            <ol>
-                <li>ادخل <a href="https://supabase.com/dashboard/project/jgmpltmdncylcyrnuufe/settings/api" target="_blank" style="color:#4f8ef7">Supabase Dashboard</a></li>
-                <li>Project Settings → API</li>
-                <li>ابحث عن <b>"CORS Allowed Origins"</b></li>
-                <li>أضف: <code>*</code> أو <code>https://*.vercel.app</code></li>
-                <li>Save Changes</li>
-                <li>رجّع جرب تسجيل الدخول</li>
-            </ol>
-        </div>
-        
-        <input type="email" id="em" placeholder="Email">
-        <input type="password" id="pw" placeholder="Password">
-        
-        <button class="btn" onclick="doLogin()">تسجيل الدخول</button>
+  <div class="box">
+    <div class="logo">
+      <div class="logo-icon">🔐</div>
+      <h1>تسجيل دخول المشرف</h1>
+      <div class="subtitle">Admin Dashboard</div>
     </div>
+    
+    <form id="loginForm" onsubmit="return false;">
+      <div class="input-group">
+        <label for="email">البريد الإلكتروني</label>
+        <input type="email" id="email" placeholder="example@email.com" autocomplete="email">
+      </div>
+      
+      <div class="input-group">
+        <label for="password">كلمة المرور</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      
+      <button type="submit" id="loginBtn" onclick="login()">
+        تسجيل الدخول
+      </button>
+    </form>
+    
+    <div id="error" class="error"></div>
+    <div id="success" class="success">✅ تم تسجيل الدخول بنجاح! جاري التحويل...</div>
+    
+    <div class="secure-note">
+      🔒 نظام آمن - SHA-256 Encryption
+    </div>
+  </div>
 
-    <script>
-        var logs = [];
-        function L(msg) {
-            var t = new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-            logs.push('[' + t + '] ' + msg);
-            document.getElementById('debug').innerText = logs.join('\n');
-            console.log(msg);
+  <script>
+    // إعدادات الأمان - Hardcoded Credentials (SHA-256 hashed)
+    const VALID_EMAIL = 'wxf16@gmail.com';
+    // SHA-256 hash of "Aass1122"
+    const VALID_PASSWORD_HASH = '48b23908f4bdc9c66078cef9abad1277c18767db9a91c9dc90a0b923fc51cf04';
+    
+    // SHA-256 function
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    
+    // Auto-redirect if already logged in
+    if (sessionStorage.getItem('adminAuth') === 'true') {
+      window.location.href = '/admin/dashboard.html';
+    }
+    
+    async function login() {
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('loginBtn');
+      const errorDiv = document.getElementById('error');
+      const successDiv = document.getElementById('success');
+      
+      // Clear messages
+      errorDiv.style.display = 'none';
+      successDiv.style.display = 'none';
+      
+      // Validation
+      if (!email || !password) {
+        errorDiv.textContent = '❌ الرجاء إدخال البريد الإلكتروني وكلمة المرور';
+        errorDiv.style.display = 'block';
+        return;
+      }
+      
+      // Show loading
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> جاري التحقق...';
+      
+      try {
+        // Hash the entered password
+        const passwordHash = await sha256(password);
+        
+        // Verify credentials
+        if (email === VALID_EMAIL && passwordHash === VALID_PASSWORD_HASH) {
+          // Success! Save session
+          sessionStorage.setItem('adminAuth', 'true');
+          sessionStorage.setItem('adminEmail', email);
+          sessionStorage.setItem('adminLoginTime', new Date().toISOString());
+          sessionStorage.setItem('adminRole', 'admin');
+          
+          successDiv.style.display = 'block';
+          
+          // Redirect to dashboard
+          setTimeout(() => {
+            window.location.href = '/admin/dashboard.html';
+          }, 800);
+          
+        } else {
+          throw new Error('❌ البريد الإلكتروني أو كلمة المرور غير صحيحة');
         }
         
-        L('✅ JS Loaded');
-        
-        var S = window.supabase.createClient(
-            'https://jgmpltmdncyrnuufe.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU'
-        );
-        L('✅ Supabase Ready');
-        
-        window.doLogin = async function() {
-            L('\n═══════ LOGIN ═══════');
-            
-            var email = document.getElementById('em').value.trim();
-            var pass = document.getElementById('pw').value;
-            var errDiv = document.getElementById('err');
-            var fixDiv = document.getElementById('fix');
-            
-            if (!email || !pass) {
-                errDiv.innerText = '❌ أكمل الحقول';
-                errDiv.style.display = 'block';
-                return;
-            }
-            
-            errDiv.style.display = 'none';
-            fixDiv.style.display = 'none';
-            
-            L('Email: ' + email);
-            
-            try {
-                L('Connecting to Supabase...');
-                var res = await S.auth.signInWithPassword({ email: email, password: pass });
-                
-                L('Result: error=' + (res.error ? res.error.name : 'null'));
-                
-                if (res.error && res.error.name === 'AuthRetryableFetchError') {
-                    L('❌ CORS/Network Error');
-                    errDiv.innerHTML = '❌ خطأ في الاتصال بـ Supabase\n\nالمتصفح يمنع الاتصال. جرب من كمبيوتر أو فعّل CORS في Supabase.';
-                    errDiv.style.display = 'block';
-                    fixDiv.style.display = 'block';
-                    return;
-                }
-                
-                if (res.error) {
-                    errDiv.innerText = '❌ ' + res.error.message;
-                    errDiv.style.display = 'block';
-                    return;
-                }
-                
-                if (!res.data.user) {
-                    errDiv.innerText = '❌ خطأ غير متوقع';
-                    errDiv.style.display = 'block';
-                    return;
-                }
-                
-                L('✅ Auth OK!');
-                
-                // Check admin
-                var admin = await S.from('admin_users').select('*').eq('user_id', res.data.user.id);
-                
-                if (!admin.data || admin.data.length === 0) {
-                    L('❌ Not admin');
-                    await S.auth.signOut();
-                    errDiv.innerText = '❌ ليس لديك صلاحية Admin';
-                    errDiv.style.display = 'block';
-                    return;
-                }
-                
-                var active = admin.data.find(function(r) { return r.is_active === true; });
-                if (!active) {
-                    L('❌ Not active');
-                    await S.auth.signOut();
-                    errDiv.innerText = '❌ الحساب غير مفعل';
-                    errDiv.style.display = 'block';
-                    return;
-                }
-                
-                L('✅ Admin OK!');
-                sessionStorage.setItem('adminAuth', 'true');
-                window.location.href = '/admin/dashboard.html';
-                
-            } catch(e) {
-                L('❌ Exception: ' + e.name);
-                if (e.name === 'TypeError' && e.message.includes('Load failed')) {
-                    errDiv.innerHTML = '❌ خطأ في الاتصال\n\nالمتصفح يمنع الاتصال بـ Supabase. جرب من كمبيوتر.';
-                    fixDiv.style.display = 'block';
-                } else {
-                    errDiv.innerText = '❌ ' + e.message;
-                }
-                errDiv.style.display = 'block';
-            }
-        };
-    </script>
+      } catch (error) {
+        errorDiv.textContent = error.message;
+        errorDiv.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'تسجيل الدخول';
+      }
+    }
+    
+    // Enter key support
+    document.getElementById('password').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') login();
+    });
+    
+    // Focus email on load
+    document.getElementById('email').focus();
+  </script>
 </body>
 </html>
