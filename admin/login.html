@@ -3,39 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Admin Login - 205-Tools</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 8px; font-size: 13px; }
+        body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 10px; font-size: 14px; }
         #debug { background: #1c1f35; padding: 10px; border-radius: 8px; font-size: 10px; font-family: monospace; 
-                 margin-bottom: 8px; border: 2px solid #4f8ef7; max-height: 350px; overflow-y: auto; white-space: pre-wrap; }
-        .box { max-width: 340px; margin: 0 auto; background: #141629; padding: 15px; border-radius: 12px; }
-        h1 { text-align: center; color: #4f8ef7; font-size: 15px; margin-bottom: 10px; }
-        input { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #2a2d4a; border-radius: 8px; 
-                background: #1c1f35; color: #fff; font-size: 14px; }
-        .btn { width: 100%; padding: 14px; margin-top: 8px; background: linear-gradient(135deg, #4f8ef7, #6366f1); 
-               color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; }
-        .btn2 { width: 100%; padding: 10px; margin-top: 6px; background: #2a2d4a; 
-               color: #fff; border: none; border-radius: 8px; font-size: 12px; }
-        .err { background: rgba(239,68,68,0.15); color: #ef4444; padding: 10px; border-radius: 6px; 
-               margin: 8px 0; display: none; font-size: 12px; }
+                 margin-bottom: 10px; border: 2px solid #4f8ef7; max-height: 200px; overflow-y: auto; white-space: pre-wrap; }
+        .box { max-width: 360px; margin: 0 auto; background: #141629; padding: 20px; border-radius: 12px; }
+        h1 { text-align: center; color: #4f8ef7; font-size: 18px; margin-bottom: 15px; }
+        input { width: 100%; padding: 14px; margin: 6px 0; border: 1px solid #2a2d4a; border-radius: 8px; 
+                background: #1c1f35; color: #fff; font-size: 15px; }
+        .btn { width: 100%; padding: 16px; margin-top: 12px; background: linear-gradient(135deg, #4f8ef7, #6366f1); 
+               color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
+        .err { background: rgba(239,68,68,0.2); color: #ef4444; padding: 12px; border-radius: 8px; 
+               margin: 10px 0; display: none; font-size: 13px; line-height: 1.6; }
+        .fix-box { background: rgba(234,179,8,0.1); border: 1px solid #eab308; padding: 15px; border-radius: 8px; 
+                   margin: 15px 0; font-size: 13px; display: none; }
+        .fix-box h3 { color: #eab308; margin-bottom: 10px; }
+        .fix-box ol { padding-right: 20px; line-height: 1.8; }
+        .fix-box code { background: #1c1f35; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
     </style>
 </head>
 <body>
-    <div id="debug">⏳...</div>
+    <div id="debug">⏳ جاري التحميل...</div>
     
     <div class="box">
         <h1>🔧 تسجيل دخول Admin</h1>
+        
         <div id="err" class="err"></div>
+        
+        <div id="fix" class="fix-box">
+            <h3>⚠️ مطلوب إصلاح CORS في Supabase</h3>
+            <ol>
+                <li>ادخل <a href="https://supabase.com/dashboard/project/jgmpltmdncylcyrnuufe/settings/api" target="_blank" style="color:#4f8ef7">Supabase Dashboard</a></li>
+                <li>Project Settings → API</li>
+                <li>ابحث عن <b>"CORS Allowed Origins"</b></li>
+                <li>أضف: <code>*</code> أو <code>https://*.vercel.app</code></li>
+                <li>Save Changes</li>
+                <li>رجّع جرب تسجيل الدخول</li>
+            </ol>
+        </div>
         
         <input type="email" id="em" placeholder="Email">
         <input type="password" id="pw" placeholder="Password">
         
         <button class="btn" onclick="doLogin()">تسجيل الدخول</button>
-        
-        <button class="btn2" onclick="testSimple()">🧪 اختبار بسيط</button>
-        <button class="btn2" onclick="testXHR()">📡 اختبار XHR</button>
     </div>
 
     <script>
@@ -49,120 +62,76 @@
         
         L('✅ JS Loaded');
         
-        // Test with XHR instead of fetch
-        window.testXHR = function() {
-            L('\n═══════ XHR TEST ═══════');
-            
-            var xhr = new XMLHttpRequest();
-            var url = 'https://jgmpltmdncyrnuufe.supabase.co/auth/v1/settings';
-            
-            L('Opening XHR to: ' + url);
-            
-            xhr.onreadystatechange = function() {
-                L('State: ' + xhr.readyState);
-                if (xhr.readyState === 4) {
-                    L('Status: ' + xhr.status);
-                    L('Response: ' + xhr.responseText.substring(0, 100));
-                }
-            };
-            
-            xhr.onerror = function() {
-                L('❌ XHR ERROR');
-            };
-            
-            xhr.ontimeout = function() {
-                L('❌ XHR TIMEOUT');
-            };
-            
-            try {
-                xhr.open('GET', url, true);
-                xhr.setRequestHeader('apikey', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU');
-                xhr.send();
-                L('XHR sent...');
-            } catch(e) {
-                L('❌ XHR Exception: ' + e.message);
-            }
-        };
-        
-        // Simple test
-        window.testSimple = async function() {
-            L('\n═══════ SIMPLE TEST ═══════');
-            
-            try {
-                L('Testing fetch with no-cors...');
-                var r = await fetch('https://jgmpltmdncyrnuufe.supabase.co/auth/v1/settings', {
-                    method: 'GET',
-                    mode: 'no-cors',
-                    headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU' }
-                });
-                L('no-cors result: ' + r.type);
-            } catch(e) {
-                L('❌ no-cors failed: ' + e.name);
-            }
-            
-            try {
-                L('Testing fetch with cors...');
-                var r2 = await fetch('https://jgmpltmdncyrnuufe.supabase.co/auth/v1/settings', {
-                    method: 'GET',
-                    headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU' }
-                });
-                L('cors status: ' + r2.status);
-            } catch(e) {
-                L('❌ cors failed: ' + e.name + ' - ' + e.message);
-            }
-        };
-        
-        // Supabase client
         var S = window.supabase.createClient(
             'https://jgmpltmdncyrnuufe.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU'
         );
         L('✅ Supabase Ready');
         
-        // Login
         window.doLogin = async function() {
             L('\n═══════ LOGIN ═══════');
             
             var email = document.getElementById('em').value.trim();
             var pass = document.getElementById('pw').value;
+            var errDiv = document.getElementById('err');
+            var fixDiv = document.getElementById('fix');
             
             if (!email || !pass) {
-                document.getElementById('err').innerText = '❌ أكمل الحقول';
-                document.getElementById('err').style.display = 'block';
+                errDiv.innerText = '❌ أكمل الحقول';
+                errDiv.style.display = 'block';
                 return;
             }
+            
+            errDiv.style.display = 'none';
+            fixDiv.style.display = 'none';
             
             L('Email: ' + email);
             
             try {
-                L('Calling signInWithPassword...');
+                L('Connecting to Supabase...');
                 var res = await S.auth.signInWithPassword({ email: email, password: pass });
                 
-                L('Result:');
-                L('  error: ' + (res.error ? res.error.message : 'null'));
-                L('  user: ' + (res.data.user ? 'YES' : 'NO'));
+                L('Result: error=' + (res.error ? res.error.name : 'null'));
+                
+                if (res.error && res.error.name === 'AuthRetryableFetchError') {
+                    L('❌ CORS/Network Error');
+                    errDiv.innerHTML = '❌ خطأ في الاتصال بـ Supabase\n\nالمتصفح يمنع الاتصال. جرب من كمبيوتر أو فعّل CORS في Supabase.';
+                    errDiv.style.display = 'block';
+                    fixDiv.style.display = 'block';
+                    return;
+                }
                 
                 if (res.error) {
-                    document.getElementById('err').innerText = '❌ ' + res.error.message;
-                    document.getElementById('err').style.display = 'block';
+                    errDiv.innerText = '❌ ' + res.error.message;
+                    errDiv.style.display = 'block';
                     return;
                 }
                 
                 if (!res.data.user) {
-                    L('❌ No user');
+                    errDiv.innerText = '❌ خطأ غير متوقع';
+                    errDiv.style.display = 'block';
                     return;
                 }
                 
-                L('✅ Auth OK! Checking admin...');
-                var admin = await S.from('admin_users').select('*').eq('user_id', res.data.user.id);
+                L('✅ Auth OK!');
                 
-                L('Admin: ' + (admin.data ? admin.data.length : 0) + ' rows');
+                // Check admin
+                var admin = await S.from('admin_users').select('*').eq('user_id', res.data.user.id);
                 
                 if (!admin.data || admin.data.length === 0) {
                     L('❌ Not admin');
                     await S.auth.signOut();
-                    document.getElementById('err').innerText = '❌ ليس Admin';
-                    document.getElementById('err').style.display = 'block';
+                    errDiv.innerText = '❌ ليس لديك صلاحية Admin';
+                    errDiv.style.display = 'block';
+                    return;
+                }
+                
+                var active = admin.data.find(function(r) { return r.is_active === true; });
+                if (!active) {
+                    L('❌ Not active');
+                    await S.auth.signOut();
+                    errDiv.innerText = '❌ الحساب غير مفعل';
+                    errDiv.style.display = 'block';
                     return;
                 }
                 
@@ -171,9 +140,14 @@
                 window.location.href = '/admin/dashboard.html';
                 
             } catch(e) {
-                L('❌ Exception: ' + e.name + ' - ' + e.message);
-                document.getElementById('err').innerText = '❌ ' + e.message;
-                document.getElementById('err').style.display = 'block';
+                L('❌ Exception: ' + e.name);
+                if (e.name === 'TypeError' && e.message.includes('Load failed')) {
+                    errDiv.innerHTML = '❌ خطأ في الاتصال\n\nالمتصفح يمنع الاتصال بـ Supabase. جرب من كمبيوتر.';
+                    fixDiv.style.display = 'block';
+                } else {
+                    errDiv.innerText = '❌ ' + e.message;
+                }
+                errDiv.style.display = 'block';
             }
         };
     </script>
