@@ -31,11 +31,16 @@
                 <p>Admin Dashboard</p>
             </div>
             
-            <div id="errorMessage" class="error-message" style="display: none;">
+            <!-- Debug Info -->
+            <div id="debugInfo" style="background: #1c1f35; padding: 10px; margin-bottom: 15px; border-radius: 8px; font-size: 12px; font-family: monospace; display: none;">
+                <div id="debugText">Initializing...</div>
+            </div>
+            
+            <div id="errorMessage" class="error-message" style="display: none !important;">
                 Invalid email or password
             </div>
             
-            <div id="notAdminMessage" class="error-message" style="display: none; background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: #ef4444;">
+            <div id="notAdminMessage" class="error-message" style="display: none !important; background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: #ef4444;">
                 You don't have admin access. Please contact the administrator.
             </div>
             
@@ -76,12 +81,35 @@
     </div>
     
     <script>
+        // Enable debug mode
+        const DEBUG = true;
+        
+        function log(msg) {
+            console.log(msg);
+            if (DEBUG) {
+                const debugDiv = document.getElementById('debugInfo');
+                const debugText = document.getElementById('debugText');
+                debugDiv.style.display = 'block';
+                debugText.innerHTML += '<br>' + msg;
+            }
+        }
+        
+        log('=== LOGIN PAGE LOADED ===');
+        
         // Supabase Configuration
         const SUPABASE_URL = 'https://jgmpltmdncyrnuufe.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU';
         
+        log('Supabase URL: ' + SUPABASE_URL);
+        
         // Initialize Supabase
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        let supabase;
+        try {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            log('✅ Supabase client created');
+        } catch (e) {
+            log('❌ Supabase error: ' + e.message);
+        }
         
         // DOM Elements
         const loginForm = document.getElementById('loginForm');
@@ -89,12 +117,19 @@
         const errorMessage = document.getElementById('errorMessage');
         const notAdminMessage = document.getElementById('notAdminMessage');
         
-        // Check if already logged in as admin
+        log('DOM elements loaded');
+        
+        // Check session on load
         async function checkAdminSession() {
+            log('Checking admin session...');
             try {
                 const { data: { session } } = await supabase.auth.getSession();
+                log('Session: ' + (session ? 'Found' : 'Not found'));
+                
                 if (session) {
-                    // Check if user is admin
+                    log('User ID: ' + session.user.id);
+                    log('Checking admin_users table...');
+                    
                     const { data: adminData, error: adminError } = await supabase
                         .from('admin_users')
                         .select('*')
@@ -102,53 +137,66 @@
                         .eq('is_active', true)
                         .single();
                     
+                    log('Admin query result: ' + JSON.stringify({adminData, adminError}));
+                    
                     if (adminData && !adminError) {
+                        log('✅ Admin confirmed, redirecting...');
                         window.location.href = '/admin/dashboard.html';
+                    } else {
+                        log('❌ Not an admin: ' + (adminError ? adminError.message : 'No data'));
                     }
                 }
             } catch (e) {
-                console.log('No admin session');
+                log('❌ Session check error: ' + e.message);
             }
         }
         
         // Handle form submission
         loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            log('=== LOGIN ATTEMPT ===');
             
             const email = document.getElementById('email').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
+            
+            log('Email: ' + email);
+            log('Password length: ' + password.length);
             
             // Reset errors
             errorMessage.style.display = 'none';
             notAdminMessage.style.display = 'none';
             
-            // Basic validation
+            // Validation
             if (!email || !password) {
+                log('❌ Validation failed: empty fields');
                 errorMessage.textContent = 'Please enter both email and password';
                 errorMessage.style.display = 'block';
                 return;
             }
             
-            // Show loading state
             loginBtn.disabled = true;
             loginBtn.textContent = 'Signing in...';
             
             try {
-                // Step 1: Authenticate with Supabase
+                log('Calling signInWithPassword...');
                 const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
                 
+                log('Auth result: ' + JSON.stringify({error: authError ? authError.message : null}));
+                
                 if (authError) {
                     throw authError;
                 }
                 
-                if (!authData.user || !authData.session) {
-                    throw new Error('Authentication failed');
+                if (!authData.user) {
+                    throw new Error('No user returned');
                 }
                 
-                // Step 2: Check if user is admin
+                log('✅ Auth success, User ID: ' + authData.user.id);
+                log('Checking admin_users...');
+                
                 const { data: adminData, error: adminError } = await supabase
                     .from('admin_users')
                     .select('*')
@@ -156,8 +204,10 @@
                     .eq('is_active', true)
                     .single();
                 
+                log('Admin check: ' + JSON.stringify({adminData, adminError}));
+                
                 if (adminError || !adminData) {
-                    // User is not an admin - sign them out
+                    log('❌ Not an admin');
                     await supabase.auth.signOut();
                     notAdminMessage.style.display = 'block';
                     loginBtn.disabled = false;
@@ -165,27 +215,14 @@
                     return;
                 }
                 
-                // Step 3: User is admin - store session and redirect
+                log('✅ Admin confirmed!');
                 sessionStorage.setItem('adminAuth', 'true');
-                sessionStorage.setItem('adminSession', JSON.stringify({
-                    authenticated: true,
-                    email: email,
-                    userId: authData.user.id,
-                    role: adminData.role,
-                    loginTime: new Date().toISOString()
-                }));
-                
-                // Redirect to dashboard
                 window.location.href = '/admin/dashboard.html';
                 
             } catch (error) {
-                console.error('Login error:', error);
-                
-                // Reset button state
+                log('❌ Error: ' + error.message);
                 loginBtn.disabled = false;
                 loginBtn.textContent = 'Sign In';
-                
-                // Show error
                 errorMessage.textContent = error.message || 'Invalid email or password';
                 errorMessage.style.display = 'block';
             }
@@ -193,16 +230,6 @@
         
         // Initialize
         checkAdminSession();
-        
-        // Clear error on input
-        document.getElementById('email').addEventListener('input', () => {
-            errorMessage.style.display = 'none';
-            notAdminMessage.style.display = 'none';
-        });
-        document.getElementById('password').addEventListener('input', () => {
-            errorMessage.style.display = 'none';
-            notAdminMessage.style.display = 'none';
-        });
     </script>
 </body>
 </html>
