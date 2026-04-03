@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Local Mode</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 20px; }
+        .box { max-width: 400px; margin: 50px auto; background: #141629; padding: 30px; border-radius: 16px; }
+        h1 { text-align: center; color: #4f8ef7; margin-bottom: 20px; }
+        input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #2a2d4a; border-radius: 8px; 
+                background: #1c1f35; color: #fff; font-size: 16px; }
+        button { width: 100%; padding: 16px; margin-top: 15px; background: linear-gradient(135deg, #4f8ef7, #6366f1); 
+                color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .info { background: rgba(234,179,8,0.1); border: 1px solid #eab308; padding: 15px; border-radius: 8px; 
+                margin-bottom: 20px; font-size: 13px; color: #eab308; }
+        .error { background: rgba(239,68,68,0.1); color: #ef4444; padding: 12px; border-radius: 8px; 
+                margin-top: 15px; display: none; }
+        .success { background: rgba(34,197,94,0.1); color: #22c55e; padding: 12px; border-radius: 8px; 
+                 margin-top: 15px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🔧 تسجيل دخول Admin</h1>
+        
+        <div class="info">
+            ⚠️ <b>وضع محلي (بدون Supabase)</b><br>
+            اسم المستخدم: <b>admin</b><br>
+            كلمة المرور: <b>admin123</b>
+        </div>
+        
+        <input type="text" id="user" placeholder="اسم المستخدم">
+        <input type="password" id="pass" placeholder="كلمة المرور">
+        
+        <button onclick="login()">تسجيل الدخول</button>
+        
+        <div id="error" class="error">❌ بيانات غير صحيحة</div>
+        <div id="success" class="success">✅ تم تسجيل الدخول!</div>
+    </div>
+
+    <script>
+        // بيانات الاعتماد المحلية (للاختبار فقط)
+        var VALID_USER = 'admin';
+        var VALID_PASS = 'admin123';
+        
+        function login() {
+            var user = document.getElementById('user').value.trim();
+            var pass = document.getElementById('pass').value;
+            var errorDiv = document.getElementById('error');
+            var successDiv = document.getElementById('success');
+            
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            if (user === VALID_USER && pass === VALID_PASS) {
+                // حفظ الجلسة
+                sessionStorage.setItem('adminAuth', 'true');
+                sessionStorage.setItem('adminUser', user);
+                sessionStorage.setItem('adminLoginTime', new Date().toISOString());
+                
+                successDiv.style.display = 'block';
+                
+                // تحويل بعد ثانية
+                setTimeout(function() {
+                    window.location.href = '/admin/dashboard.html';
+                }, 1000);
+            } else {
+                errorDiv.style.display = 'block';
+            }
+        }
+        
+        // التحقق من جلسة موجودة
+        if (sessionStorage.getItem('adminAuth') === 'true') {
+            window.location.href = '/admin/dashboard.html';
+        }
+    </script>
+</body>
+</html>
