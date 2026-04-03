@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل دخول Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 20px; }
+    .box { max-width: 400px; margin: 50px auto; background: #141629; padding: 30px; border-radius: 16px; }
+    h1 { text-align: center; color: #4f8ef7; margin-bottom: 10px; }
+    .subtitle { text-align: center; color: #6b7280; font-size: 14px; margin-bottom: 25px; }
+    input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #2a2d4a; border-radius: 8px; 
+            background: #1c1f35; color: #fff; font-size: 16px; }
+    button { width: 100%; padding: 16px; margin-top: 15px; background: linear-gradient(135deg, #4f8ef7, #6366f1); 
+            color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .error { background: rgba(239,68,68,0.1); color: #ef4444; padding: 12px; border-radius: 8px; 
+            margin-top: 15px; display: none; border: 1px solid rgba(239,68,68,0.3); }
+    .success { background: rgba(34,197,94,0.1); color: #22c55e; padding: 12px; border-radius: 8px; 
+             margin-top: 15px; display: none; border: 1px solid rgba(34,197,94,0.3); }
+    .secure-badge { display: flex; align-items: center; justify-content: center; gap: 8px; 
+                   background: rgba(34,197,94,0.1); color: #22c55e; padding: 10px; border-radius: 8px;
+                   margin-bottom: 20px; font-size: 13px; }
+    .secure-badge svg { width: 16px; height: 16px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>🔐 تسجيل دخول Admin</h1>
+    <div class="subtitle">النظام الآمن - Secure Proxy Mode</div>
+    
+    <div class="secure-badge">
+      <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.699-3.182 1.566.836-1.699 3.182 3.954 1.582a1 1 0 010 1.838l-3.954 1.582 1.699 3.182-1.566.836-1.699-3.182L10 14.354V15a1 1 0 01-2 0v-1.323l-3.954-1.582-1.699 3.182-1.566-.836 1.699-3.182L.531 10.464a1 1 0 010-1.838l3.954-1.582L2.786 3.862l1.566-.836 1.699 3.182L10 4.646V3a1 1 0 011-1z"/></svg>
+      🔒 اتصال آمن (Server-Side Proxy)
+    </div>
+    
+    <input type="email" id="email" placeholder="البريد الإلكتروني">
+    <input type="password" id="password" placeholder="كلمة المرور">
+    
+    <button id="loginBtn" onclick="login()">تسجيل الدخول</button>
+    
+    <div id="error" class="error"></div>
+    <div id="success" class="success">✅ جاري التحويل...</div>
+  </div>
+
+  <script>
+    // Auto-redirect if already logged in
+    if (sessionStorage.getItem('adminAuth') === 'true') {
+      window.location.href = '/admin/dashboard.html';
+    }
+    
+    async function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('loginBtn');
+      const errorDiv = document.getElementById('error');
+      const successDiv = document.getElementById('success');
+      
+      // Clear messages
+      errorDiv.style.display = 'none';
+      successDiv.style.display = 'none';
+      
+      if (!email || !password) {
+        errorDiv.textContent = '❌ الرجاء إدخال البريد وكلمة المرور';
+        errorDiv.style.display = 'block';
+        return;
+      }
+      
+      btn.disabled = true;
+      btn.textContent = 'جاري تسجيل الدخول...';
+      
+      try {
+        // Step 1: Login via our secure API proxy
+        const loginRes = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const loginData = await loginRes.json();
+        
+        if (!loginRes.ok || loginData.error) {
+          throw new Error(loginData.error || 'Login failed');
+        }
+        
+        // Step 2: Check admin status
+        const userRes = await fetch('/api/auth/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${loginData.access_token}`
+          }
+        });
+        
+        const userData = await userRes.json();
+        
+        if (!userRes.ok) {
+          throw new Error('Failed to verify admin status');
+        }
+        
+        if (!userData.isAdmin) {
+          throw new Error('❌ هذا المستخدم ليس لديه صلاحيات Admin');
+        }
+        
+        // Success! Save session
+        sessionStorage.setItem('adminAuth', 'true');
+        sessionStorage.setItem('adminUser', JSON.stringify(userData.user));
+        sessionStorage.setItem('adminToken', loginData.access_token);
+        sessionStorage.setItem('adminLoginTime', new Date().toISOString());
+        
+        successDiv.style.display = 'block';
+        
+        setTimeout(() => {
+          window.location.href = '/admin/dashboard.html';
+        }, 1000);
+        
+      } catch (error) {
+        errorDiv.textContent = error.message;
+        errorDiv.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'تسجيل الدخول';
+      }
+    }
+    
+    // Enter key support
+    document.getElementById('password').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') login();
+    });
+  </script>
+</body>
+</html>
