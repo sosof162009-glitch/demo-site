@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فحص شامل Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 10px; font-size: 13px; }
+        #log { background: #1c1f35; padding: 10px; border-radius: 8px; font-size: 10px; font-family: monospace; 
+               margin-bottom: 10px; border: 2px solid #4f8ef7; max-height: 350px; overflow-y: auto; white-space: pre-wrap; }
+        .box { max-width: 380px; margin: 0 auto; background: #141629; padding: 15px; border-radius: 12px; }
+        h1 { text-align: center; color: #4f8ef7; font-size: 16px; margin-bottom: 10px; }
+        button { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .btn1 { background: #22c55e; color: #fff; }
+        .btn2 { background: #4f8ef7; color: #fff; }
+        .btn3 { background: #eab308; color: #000; }
+        .btn4 { background: #ef4444; color: #fff; }
+        .err { background: rgba(239,68,68,0.2); color: #ef4444; padding: 10px; border-radius: 6px; margin: 10px 0; font-size: 12px; }
+        .success { background: rgba(34,197,94,0.2); color: #22c55e; padding: 10px; border-radius: 6px; margin: 10px 0; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div id="log">⏳ جاري التحميل...</div>
+    
+    <div class="box">
+        <h1>🔍 فحص شامل Supabase</h1>
+        
+        <div id="msg"></div>
+        
+        <button class="btn1" onclick="testAuthEndpoint()">🔐 فحص Auth API</button>
+        <button class="btn2" onclick="testRestEndpoint()">🗄️ فحص REST API</button>
+        
+        <button class="btn3" onclick="testWithHeaders()">🔑 فحص مع Headers</button>
+        
+        <button class="btn4" onclick="testPostgREST()">📡 فحص PostgREST</button>
+    </div>
+
+    <script>
+        var logs = [];
+        function L(msg) {
+            var t = new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+            logs.push('[' + t + '] ' + msg);
+            document.getElementById('log').innerText = logs.join('\n');
+            console.log(msg);
+        }
+        
+        var SUPABASE_URL = 'https://jgmpltmdncyrnuufe.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU';
+        
+        L('✅ JS Loaded');
+        L('Project: ' + SUPABASE_URL);
+        
+        function showMsg(html, isError) {
+            var msg = document.getElementById('msg');
+            msg.className = isError ? 'err' : 'success';
+            msg.innerHTML = html;
+            msg.style.display = 'block';
+        }
+        
+        // Test 1: Auth endpoint
+        window.testAuthEndpoint = async function() {
+            L('\n═══════ فحص Auth API ═══════');
+            try {
+                L('URL: ' + SUPABASE_URL + '/auth/v1/settings');
+                var res = await fetch(SUPABASE_URL + '/auth/v1/settings', {
+                    method: 'GET',
+                    headers: { 'apikey': SUPABASE_KEY }
+                });
+                L('Status: ' + res.status);
+                var text = await res.text();
+                L('Response: ' + text.substring(0, 100));
+                if (res.ok) {
+                    showMsg('✅ Auth API يشتغل!', false);
+                } else {
+                    showMsg('❌ Auth API: ' + res.status, true);
+                }
+            } catch(e) {
+                L('❌ خطأ: ' + e.name + ' - ' + e.message);
+                showMsg('❌ Auth API فاشل: ' + e.message, true);
+            }
+        };
+        
+        // Test 2: REST endpoint
+        window.testRestEndpoint = async function() {
+            L('\n═══════ فحص REST API ═══════');
+            try {
+                L('URL: ' + SUPABASE_URL + '/rest/v1/');
+                var res = await fetch(SUPABASE_URL + '/rest/v1/', {
+                    method: 'GET',
+                    headers: { 'apikey': SUPABASE_KEY }
+                });
+                L('Status: ' + res.status);
+                var text = await res.text();
+                L('Response: ' + text.substring(0, 100));
+                if (res.ok) {
+                    showMsg('✅ REST API يشتغل!', false);
+                } else {
+                    showMsg('⚠️ REST API: ' + res.status + '<br>لكن على الأقل وصل!', true);
+                }
+            } catch(e) {
+                L('❌ خطأ: ' + e.name + ' - ' + e.message);
+                showMsg('❌ REST API فاشل!<br>المشكلة: CORS في PostgREST<br><br>الحل:<br>1. اذهب لـ Database → Settings<br>2. ابحث عن "PostgREST" أو "API"<br>3. فعّل "Enable API"<br>4. تأكد من CORS', true);
+            }
+        };
+        
+        // Test 3: With all headers
+        window.testWithHeaders = async function() {
+            L('\n═══════ فحص مع Headers كاملة ═══════');
+            try {
+                L('جرب جلب test مع كل headers...');
+                var res = await fetch(SUPABASE_URL + '/rest/v1/test?limit=1', {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': 'Bearer ' + SUPABASE_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                L('Status: ' + res.status);
+                if (res.ok) {
+                    var json = await res.json();
+                    L('✅ نجاح! Data: ' + JSON.stringify(json).substring(0, 100));
+                    showMsg('✅ الجدول موجود ويشتغل!', false);
+                } else {
+                    var text = await res.text();
+                    L('خطأ: ' + text.substring(0, 200));
+                    showMsg('⚠️ ' + res.status + ': ' + text, true);
+                }
+            } catch(e) {
+                L('❌ خطأ: ' + e.name + ' - ' + e.message);
+                showMsg('❌ فشل الاتصال!<br>المشكلة: الجوال/المتصفح يحجب PostgREST', true);
+            }
+        };
+        
+        // Test 4: Check if PostgREST is enabled
+        window.testPostgREST = async function() {
+            L('\n═══════ فحص حالة PostgREST ═══════');
+            try {
+                // Try to get the OpenAPI spec
+                var res = await fetch(SUPABASE_URL + '/rest/v1/', {
+                    method: 'GET',
+                    headers: { 'apikey': SUPABASE_KEY }
+                });
+                
+                if (res.status === 503) {
+                    L('❌ 503: PostgREST معطل!');
+                    showMsg('❌ PostgREST معطل في Supabase!<br><br>الحل:<br>1. اذهب لـ Database → Settings<br>2. فعّل "Enable Data API"<br>3. أو اضغط Start على PostgREST', true);
+                } else if (res.status === 401) {
+                    L('⚠️ 401: مفتاح API غير صحيح');
+                    showMsg('⚠️ مفتاح API غير صحيح<br>تحقق من anon key', true);
+                } else if (res.ok) {
+                    L('✅ PostgREST يشتغل!');
+                    var data = await res.json();
+                    L('Tables: ' + Object.keys(data.definitions || {}).join(', '));
+                    showMsg('✅ PostgREST يشتغل!<br>الجداول: ' + Object.keys(data.definitions || {}).slice(0, 5).join(', '), false);
+                } else {
+                    L('⚠️ Status: ' + res.status);
+                    var text = await res.text();
+                    L('Response: ' + text.substring(0, 200));
+                }
+            } catch(e) {
+                L('❌ خطأ: ' + e.name);
+                L('Message: ' + e.message);
+                
+                if (e.name === 'TypeError' && e.message.includes('Load failed')) {
+                    showMsg('❌ CORS محظور تماماً!<br><br>جرب الحلول:<br>1. افتح من كمبيوتر/لابتوب<br>2. استخدم VPN<br>3. جرب متصفح مختلف (Chrome)', true);
+                } else {
+                    showMsg('❌ ' + e.message, true);
+                }
+            }
+        };
+        
+        // Initial test
+        L('✅ جاهز - اضغط الأزرار للفحص');
+    </script>
+</body>
+</html>
