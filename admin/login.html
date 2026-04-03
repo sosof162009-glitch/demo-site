@@ -8,149 +8,166 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 10px; }
-        #debug { background: #1c1f35; padding: 12px; border-radius: 8px; font-size: 11px; font-family: monospace; 
-                 margin-bottom: 10px; border: 2px solid #4f8ef7; max-height: 200px; overflow-y: auto; }
-        .box { max-width: 380px; margin: 0 auto; background: #141629; padding: 20px; border-radius: 12px; }
-        h1 { text-align: center; color: #4f8ef7; font-size: 18px; margin-bottom: 15px; }
-        input { width: 100%; padding: 14px; margin: 6px 0; border: 1px solid #2a2d4a; border-radius: 8px; 
-                background: #1c1f35; color: #fff; font-size: 16px; }
-        .btn { width: 100%; padding: 16px; margin-top: 12px; background: linear-gradient(135deg, #4f8ef7, #6366f1); 
-               color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold;
-               -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-        .btn:active { opacity: 0.8; transform: scale(0.98); }
-        .err { background: rgba(239,68,68,0.1); color: #ef4444; padding: 10px; border-radius: 6px; margin: 8px 0; display: none; }
+        #debug { background: #1c1f35; padding: 10px; border-radius: 8px; font-size: 10px; font-family: monospace; 
+                 margin-bottom: 8px; border: 2px solid #4f8ef7; max-height: 280px; overflow-y: auto; white-space: pre-wrap; }
+        .box { max-width: 360px; margin: 0 auto; background: #141629; padding: 15px; border-radius: 12px; }
+        h1 { text-align: center; color: #4f8ef7; font-size: 16px; margin-bottom: 10px; }
+        input { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #2a2d4a; border-radius: 8px; 
+                background: #1c1f35; color: #fff; font-size: 15px; }
+        .btn { width: 100%; padding: 14px; margin-top: 10px; background: linear-gradient(135deg, #4f8ef7, #6366f1); 
+               color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; }
+        .btn:active { opacity: 0.8; }
+        .err { background: rgba(239,68,68,0.15); color: #ef4444; padding: 10px; border-radius: 6px; 
+               margin: 8px 0; display: none; font-size: 13px; }
     </style>
 </head>
 <body>
     <div id="debug">⏳...</div>
     
     <div class="box">
-        <h1>🔧 تسجيل دخول</h1>
+        <h1>🔧 تسجيل دخول Admin</h1>
         <div id="err" class="err"></div>
         
-        <input type="email" id="em" placeholder="Email">
-        <input type="password" id="pw" placeholder="Password">
-        <!-- زر مباشر مع onclick -->
-        <button class="btn" onclick="doLogin(); return false;">تسجيل الدخول</button>
+        <input type="email" id="em" placeholder="Email" value="">
+        <input type="password" id="pw" placeholder="Password" value="">
         
-        <p style="color:#666; font-size:11px; text-align:center; margin-top:10px;">
-            إذا الزر لا يعمل، جرب انقر مطول ثم ارفع
-        </p>
+        <button class="btn" onclick="doLogin()">تسجيل الدخول</button>
     </div>
 
     <script>
-        // سجلات
         var logs = [];
         function L(msg) {
-            var t = new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
-            var line = '[' + t + '] ' + msg;
-            logs.push(line);
+            var t = new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+            logs.push('[' + t + '] ' + msg);
             document.getElementById('debug').innerText = logs.join('\n');
-            console.log(line);
+            console.log(msg);
         }
         
-        L('✅ JS loaded');
+        L('✅ JS Loaded');
         
-        // Supabase
-        var S = window.supabase.createClient(
-            'https://jgmpltmdncyrnuufe.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU'
-        );
-        L('✅ Supabase OK');
+        // Supabase config
+        var SUPABASE_URL = 'https://jgmpltmdncyrnuufe.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU';
         
-        // دالة تسجيل الدخول - GLOBAL
+        L('URL: ' + SUPABASE_URL.substring(0, 30) + '...');
+        
+        var S = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        L('✅ Supabase Client Created');
+        
+        // Check session on load
+        S.auth.getSession().then(function(r) {
+            L('Session check: ' + (r.data.session ? 'YES' : 'NO'));
+        }).catch(function(e) {
+            L('Session error: ' + e.message);
+        });
+        
+        L('✅ Ready - Click login');
+        
+        // LOGIN FUNCTION
         window.doLogin = async function() {
-            L('\n═══ CLICKED ═══');
+            L('\n═══════ LOGIN CLICKED ═══════');
             
             var email = document.getElementById('em').value.trim();
             var pass = document.getElementById('pw').value;
-            var btn = document.querySelector('.btn');
-            var err = document.getElementById('err');
+            var errDiv = document.getElementById('err');
             
             L('Email: ' + email);
             
             if (!email || !pass) {
-                err.innerText = '❌ أكمل الحقول';
-                err.style.display = 'block';
-                L('❌ Empty fields');
+                errDiv.innerText = '❌ أكمل الحقول';
+                errDiv.style.display = 'block';
                 return;
             }
             
-            err.style.display = 'none';
-            btn.innerText = '...جاري';
-            btn.disabled = true;
+            errDiv.style.display = 'none';
             
             try {
-                L('🔐 Sending...');
+                L('🔐 Calling signInWithPassword...');
                 
-                var res = await S.auth.signInWithPassword({ email: email, password: pass });
+                var result = await S.auth.signInWithPassword({
+                    email: email,
+                    password: pass
+                });
                 
-                L('Auth result:');
-                L('  error: ' + (res.error ? res.error.message : 'none'));
-                L('  user: ' + (res.data.user ? 'YES' : 'NO'));
+                L('Result received:');
+                L('  error object: ' + (result.error ? 'EXISTS' : 'null'));
+                L('  error msg: ' + (result.error ? result.error.message : 'none'));
+                L('  error name: ' + (result.error ? result.error.name : 'none'));
+                L('  error status: ' + (result.error ? (result.error.status || 'N/A') : 'N/A'));
+                L('  data.user: ' + (result.data.user ? 'EXISTS' : 'null'));
                 
-                if (res.error) throw res.error;
-                
-                L('✅ Login OK!');
-                L('UserID: ' + res.data.user.id);
-                
-                // Check admin
-                L('\n🔍 Check admin...');
-                var admin = await S.from('admin_users').select('*').eq('user_id', res.data.user.id);
-                
-                L('Admin query:');
-                L('  rows: ' + (admin.data ? admin.data.length : 0));
-                L('  error: ' + (admin.error ? admin.error.message : 'none'));
-                
-                if (!admin.data || admin.data.length === 0) {
-                    L('❌ NOT ADMIN');
-                    await S.auth.signOut();
-                    err.innerText = '❌ ليس Admin';
-                    err.style.display = 'block';
-                    btn.innerText = 'تسجيل الدخول';
-                    btn.disabled = false;
+                if (result.error) {
+                    L('❌ AUTH ERROR: ' + result.error.message);
+                    errDiv.innerText = '❌ ' + result.error.message;
+                    errDiv.style.display = 'block';
                     return;
                 }
                 
+                if (!result.data.user) {
+                    L('❌ NO USER in data');
+                    errDiv.innerText = '❌ خطأ غير متوقع';
+                    errDiv.style.display = 'block';
+                    return;
+                }
+                
+                L('✅ Auth success! UserID: ' + result.data.user.id.substring(0, 8) + '...');
+                
+                // Check admin
+                L('\n🔍 Querying admin_users...');
+                
+                var adminRes = await S.from('admin_users')
+                    .select('*')
+                    .eq('user_id', result.data.user.id);
+                
+                L('Admin query result:');
+                L('  data: ' + (adminRes.data ? ('array[' + adminRes.data.length + ']') : 'null'));
+                L('  error: ' + (adminRes.error ? adminRes.error.message : 'null'));
+                
+                if (adminRes.error) {
+                    L('❌ DB ERROR: ' + adminRes.error.message);
+                    errDiv.innerText = '❌ خطأ قاعدة البيانات';
+                    errDiv.style.display = 'block';
+                    return;
+                }
+                
+                if (!adminRes.data || adminRes.data.length === 0) {
+                    L('❌ NOT FOUND in admin_users');
+                    await S.auth.signOut();
+                    errDiv.innerText = '❌ ليس لديك صلاحية Admin';
+                    errDiv.style.display = 'block';
+                    return;
+                }
+                
+                // Find active
                 var active = null;
-                for (var i = 0; i < admin.data.length; i++) {
-                    if (admin.data[i].is_active === true) active = admin.data[i];
+                for (var i = 0; i < adminRes.data.length; i++) {
+                    if (adminRes.data[i].is_active === true) active = adminRes.data[i];
                 }
                 
                 if (!active) {
-                    L('❌ NOT ACTIVE');
+                    L('❌ FOUND but NOT ACTIVE');
                     await S.auth.signOut();
-                    err.innerText = '❌ غير مفعل';
-                    err.style.display = 'block';
-                    btn.innerText = 'تسجيل الدخول';
-                    btn.disabled = false;
+                    errDiv.innerText = '❌ الحساب غير مفعل';
+                    errDiv.style.display = 'block';
                     return;
                 }
                 
-                L('✅ ADMIN: ' + active.role);
+                L('✅ ADMIN CONFIRMED!');
+                L('  Role: ' + active.role);
+                
                 sessionStorage.setItem('adminAuth', 'true');
-                L('➡️ Redirecting...');
+                L('\n➡️ Redirecting to dashboard...');
                 window.location.href = '/admin/dashboard.html';
                 
             } catch(e) {
-                L('❌ ERROR: ' + e.message);
-                err.innerText = '❌ ' + e.message;
-                err.style.display = 'block';
-                btn.innerText = 'تسجيل الدخول';
-                btn.disabled = false;
+                L('\n❌❌❌ EXCEPTION ❌❌❌');
+                L('Type: ' + (e.constructor ? e.constructor.name : typeof e));
+                L('Message: ' + e.message);
+                L('Stack: ' + (e.stack ? e.stack.substring(0, 200) : 'N/A'));
+                errDiv.innerText = '❌ خطأ: ' + e.message;
+                errDiv.style.display = 'block';
             }
         };
-        
-        // تحقق من جلسة موجودة
-        S.auth.getSession().then(function(r) {
-            if (r.data.session) {
-                L('✅ Session: ' + r.data.session.user.email);
-            } else {
-                L('ℹ️ No session');
-            }
-        });
-        
-        L('✅ Ready');
     </script>
 </body>
 </html>
