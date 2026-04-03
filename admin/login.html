@@ -13,8 +13,32 @@
     
     <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    
+    <style>
+        #debugInfo { 
+            background: #1c1f35; 
+            padding: 15px; 
+            margin: 20px; 
+            border-radius: 8px; 
+            font-size: 12px; 
+            font-family: 'Courier New', monospace;
+            max-height: 300px; 
+            overflow-y: auto; 
+            border: 2px solid #4f8ef7;
+            color: #dde1f5;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        #debugInfo .log-line { margin: 3px 0; }
+        #debugInfo .success { color: #22c55e; }
+        #debugInfo .error { color: #ef4444; }
+        #debugInfo .info { color: #4f8ef7; }
+    </style>
 </head>
 <body>
+    <!-- DEBUG INFO - يظهر في الأعلى مباشرة -->
+    <div id="debugInfo">🔍 DEBUG MODE ACTIVE...</div>
+
     <div class="back-link">
         <a href="/en/">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,11 +55,6 @@
                 <p>Admin Dashboard</p>
             </div>
             
-            <!-- Debug Info -->
-            <div id="debugInfo" style="background: #1c1f35; padding: 10px; margin-bottom: 15px; border-radius: 8px; font-size: 11px; font-family: monospace; max-height: 200px; overflow-y: auto; display: none;">
-                <div id="debugText">Initializing...</div>
-            </div>
-            
             <div id="errorMessage" class="error-message" style="display: none;">
                 Invalid email or password
             </div>
@@ -47,31 +66,15 @@
             <form id="loginForm">
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        placeholder="admin@yoursite.com"
-                        required
-                        autocomplete="email"
-                    >
+                    <input type="email" id="email" name="email" placeholder="admin@yoursite.com" required autocomplete="email">
                 </div>
                 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Enter your password"
-                        required
-                        autocomplete="current-password"
-                    >
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
                 </div>
                 
-                <button type="submit" class="login-btn" id="loginBtn">
-                    Sign In
-                </button>
+                <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
             </form>
             
             <div class="login-footer">
@@ -81,100 +84,100 @@
     </div>
     
     <script>
-        const DEBUG = true;
-        const debugText = document.getElementById('debugText');
         const debugInfo = document.getElementById('debugInfo');
+        let logs = [];
         
-        function log(msg) {
-            console.log(msg);
-            if (DEBUG) {
-                debugInfo.style.display = 'block';
-                debugText.innerHTML += '<br>> ' + msg;
-            }
+        function log(msg, type = 'info') {
+            const time = new Date().toLocaleTimeString();
+            const line = `[${time}] ${msg}`;
+            logs.push(line);
+            console.log(line);
+            
+            const colorClass = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+            debugInfo.innerHTML += `\n<div class="log-line ${colorClass}">${line}</div>`;
+            debugInfo.scrollTop = debugInfo.scrollHeight;
         }
         
-        log('🚀 LOGIN PAGE LOADED');
+        // START LOGGING IMMEDIATELY
+        log('🚀 PAGE LOADED', 'info');
         
         // Supabase Config
         const SUPABASE_URL = 'https://jgmpltmdncyrnuufe.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU';
         
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        log('✅ Supabase initialized');
+        let supabase;
+        try {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            log('✅ Supabase Client Created', 'success');
+        } catch (e) {
+            log('❌ Supabase Error: ' + e.message, 'error');
+        }
         
         const loginForm = document.getElementById('loginForm');
         const loginBtn = document.getElementById('loginBtn');
         const errorMessage = document.getElementById('errorMessage');
         const notAdminMessage = document.getElementById('notAdminMessage');
         
-        // 🔍 STEP-BY-STEP DEBUG FUNCTION
+        // CHECK ADMIN FUNCTION
         async function checkAdminAccess(userId) {
-            log('🔍 STEP 1: Checking admin_users for userId: ' + userId);
+            log('\n📋 CHECKING ADMIN ACCESS', 'info');
+            log('User ID: ' + userId, 'info');
             
-            // Try without .single() first to see all results
-            log('🔍 STEP 2: Querying admin_users (without .single)...');
+            log('Querying admin_users...', 'info');
             const { data: allData, error: allError } = await supabase
                 .from('admin_users')
                 .select('*')
                 .eq('user_id', userId);
             
-            log('🔍 STEP 3: Raw query result:');
-            log('   - allData: ' + JSON.stringify(allData));
-            log('   - allError: ' + JSON.stringify(allError));
-            log('   - allData length: ' + (allData ? allData.length : 'null'));
+            log('Query Result:', 'info');
+            log('  - Data: ' + JSON.stringify(allData), 'info');
+            log('  - Error: ' + JSON.stringify(allError), allError ? 'error' : 'info');
+            log('  - Records found: ' + (allData ? allData.length : 'null'), 'info');
             
             if (allError) {
-                log('❌ QUERY ERROR: ' + allError.message);
-                log('❌ Error code: ' + allError.code);
-                return { isAdmin: false, error: allError };
+                log('❌ QUERY ERROR: ' + allError.message, 'error');
+                return { isAdmin: false, error: allError.message };
             }
             
             if (!allData || allData.length === 0) {
-                log('❌ NO RECORDS: User not found in admin_users table');
-                return { isAdmin: false, error: 'User not in admin_users' };
+                log('❌ USER NOT FOUND in admin_users table', 'error');
+                return { isAdmin: false, error: 'User not found' };
             }
             
-            log('✅ FOUND: ' + allData.length + ' record(s)');
-            
-            // Check if active
             const activeRecord = allData.find(r => r.is_active === true);
             if (!activeRecord) {
-                log('❌ NOT ACTIVE: Found record but is_active=false');
-                return { isAdmin: false, error: 'User exists but not active' };
+                log('❌ USER EXISTS BUT NOT ACTIVE', 'error');
+                return { isAdmin: false, error: 'User not active' };
             }
             
-            log('✅ ACTIVE: User is active admin with role: ' + activeRecord.role);
+            log('✅ ADMIN CONFIRMED - Role: ' + activeRecord.role, 'success');
             return { isAdmin: true, data: activeRecord };
         }
         
-        // Check session on page load
+        // CHECK SESSION ON LOAD
         async function checkSession() {
-            log('🔍 Checking existing session...');
+            log('\n🔍 CHECKING EXISTING SESSION...', 'info');
             const { data: { session } } = await supabase.auth.getSession();
             
             if (!session) {
-                log('ℹ️ No active session');
+                log('ℹ️ No active session', 'info');
                 return;
             }
             
-            log('✅ Session found for: ' + session.user.email);
-            log('   User ID: ' + session.user.id);
-            
+            log('✅ Session found: ' + session.user.email, 'success');
             const result = await checkAdminAccess(session.user.id);
             
             if (result.isAdmin) {
-                log('✅ Admin verified, redirecting...');
+                log('✅ Redirecting to dashboard...', 'success');
                 window.location.href = '/admin/dashboard.html';
             } else {
-                log('❌ Not an admin: ' + result.error);
+                log('❌ Not an admin: ' + result.error, 'error');
             }
         }
         
-        // Handle login
+        // HANDLE LOGIN
         loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            log('');
-            log('══════════ LOGIN ATTEMPT ══════════');
             
             const email = document.getElementById('email').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
@@ -182,8 +185,12 @@
             errorMessage.style.display = 'none';
             notAdminMessage.style.display = 'none';
             
+            log('\n═══════════════════════════════', 'info');
+            log('📝 LOGIN ATTEMPT', 'info');
+            log('Email: ' + email, 'info');
+            
             if (!email || !password) {
-                errorMessage.textContent = 'Please enter both email and password';
+                errorMessage.textContent = 'Please enter both fields';
                 errorMessage.style.display = 'block';
                 return;
             }
@@ -192,28 +199,23 @@
             loginBtn.textContent = 'Signing in...';
             
             try {
-                log('🔐 Step 1: Authenticating with Supabase...');
+                log('Authenticating...', 'info');
                 const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-                    email: email,
-                    password: password
+                    email: email, password: password
                 });
                 
                 if (authError) {
-                    log('❌ Auth failed: ' + authError.message);
+                    log('❌ Auth failed: ' + authError.message, 'error');
                     throw authError;
                 }
                 
-                log('✅ Auth successful!');
-                log('   User ID: ' + authData.user.id);
-                log('   Email: ' + authData.user.email);
+                log('✅ Auth SUCCESS', 'success');
+                log('User ID: ' + authData.user.id, 'info');
                 
-                log('');
-                log('🔍 Step 2: Checking admin status...');
                 const result = await checkAdminAccess(authData.user.id);
                 
                 if (!result.isAdmin) {
-                    log('❌ Step 3: Admin check FAILED');
-                    log('   Reason: ' + result.error);
+                    log('❌ Admin check FAILED: ' + result.error, 'error');
                     await supabase.auth.signOut();
                     notAdminMessage.style.display = 'block';
                     loginBtn.disabled = false;
@@ -221,32 +223,20 @@
                     return;
                 }
                 
-                log('✅ Step 3: Admin check PASSED!');
-                log('   Role: ' + result.data.role);
-                
-                // Store session
+                log('✅ ALL CHECKS PASSED', 'success');
                 sessionStorage.setItem('adminAuth', 'true');
-                sessionStorage.setItem('adminSession', JSON.stringify({
-                    authenticated: true,
-                    email: email,
-                    userId: authData.user.id,
-                    role: result.data.role,
-                    loginTime: new Date().toISOString()
-                }));
-                
-                log('✅ Step 4: Redirecting to dashboard...');
                 window.location.href = '/admin/dashboard.html';
                 
             } catch (error) {
-                log('❌ ERROR: ' + error.message);
+                log('❌ ERROR: ' + error.message, 'error');
                 loginBtn.disabled = false;
                 loginBtn.textContent = 'Sign In';
-                errorMessage.textContent = error.message || 'Invalid email or password';
+                errorMessage.textContent = error.message;
                 errorMessage.style.display = 'block';
             }
         });
         
-        // Check on load
+        // Start
         checkSession();
     </script>
 </body>
