@@ -11,39 +11,53 @@
             background: #0a0c1b; 
             color: #fff; 
             font-family: system-ui, -apple-system, sans-serif;
-            padding: 20px;
+            padding: 10px;
             min-height: 100vh;
         }
         #debug { 
             background: #1c1f35; 
             padding: 15px; 
             border-radius: 8px; 
-            font-size: 13px; 
+            font-size: 12px; 
             font-family: monospace;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border: 2px solid #4f8ef7;
-            max-height: 300px;
+            max-height: 250px;
             overflow-y: auto;
+            user-select: all;
+            -webkit-user-select: all;
+        }
+        #debug:focus { outline: 2px solid #22c55e; }
+        .copy-btn {
+            background: #22c55e;
+            color: #000;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            width: 100%;
         }
         .login-box {
             max-width: 400px;
             margin: 0 auto;
             background: #141629;
-            padding: 30px;
+            padding: 25px;
             border-radius: 16px;
         }
-        h1 { text-align: center; margin-bottom: 20px; color: #4f8ef7; }
+        h1 { text-align: center; margin-bottom: 15px; color: #4f8ef7; font-size: 20px; }
         input {
             width: 100%;
             padding: 15px;
-            margin: 10px 0;
+            margin: 8px 0;
             border: 1px solid #2a2d4a;
             border-radius: 8px;
             background: #1c1f35;
             color: #fff;
             font-size: 16px;
         }
-        button {
+        button.login {
             width: 100%;
             padding: 15px;
             margin-top: 15px;
@@ -53,12 +67,8 @@
             border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
-            cursor: pointer;
         }
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+        button:disabled { opacity: 0.5; }
         .error {
             background: rgba(239,68,68,0.1);
             color: #ef4444;
@@ -67,148 +77,160 @@
             margin: 10px 0;
             display: none;
         }
+        .success {
+            background: rgba(34,197,94,0.1);
+            color: #22c55e;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+        }
+        .note {
+            color: #888;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <div id="debug">🔍 جاري تحميل الصفحة...</div>
+    <button class="copy-btn" onclick="copyLogs()">📋 نسخ السجلات</button>
+    <div id="debug" tabindex="0">🔍 جاري التحميل... انقر هنا للتحديد</div>
     
     <div class="login-box">
         <h1>🔧 تسجيل دخول Admin</h1>
         
         <div id="errorBox" class="error"></div>
+        <div id="successBox" class="success">✅ تم النسخ!</div>
         
-        <input type="email" id="email" placeholder="البريد الإلكتروني" value="">
-        <input type="password" id="password" placeholder="كلمة المرور" value="">
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" placeholder="كلمة المرور">
         
-        <button id="loginBtn">تسجيل الدخول</button>
+        <button class="login" id="loginBtn">تسجيل الدخول</button>
+        
+        <p class="note">انقر على المربع الأزرق فوق ثم انسخ</p>
     </div>
 
     <script>
-        // دالة التسجيل
-        function addLog(msg, isError) {
+        let allLogs = [];
+        
+        function log(msg, isError) {
             const debug = document.getElementById('debug');
-            const time = new Date().toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
-            const color = isError ? '#ef4444' : '#22c55e';
-            debug.innerHTML += '\n[' + time + '] ' + msg;
+            const time = new Date().toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'});
+            const line = '[' + time + '] ' + msg;
+            allLogs.push(line);
+            debug.innerHTML = allLogs.join('\n');
             debug.scrollTop = debug.scrollHeight;
-            console.log(msg);
+            console.log(line);
         }
         
-        addLog('✅ JavaScript يعمل!');
+        function copyLogs() {
+            const text = allLogs.join('\n');
+            navigator.clipboard.writeText(text).then(function() {
+                const success = document.getElementById('successBox');
+                success.style.display = 'block';
+                setTimeout(function() { success.style.display = 'none'; }, 2000);
+            }).catch(function() {
+                // fallback
+                const debug = document.getElementById('debug');
+                debug.select();
+                document.execCommand('copy');
+            });
+        }
+        
+        // بدء التسجيل
+        log('✅ JavaScript يعمل');
         
         // التحقق من Supabase
         if (typeof window.supabase === 'undefined') {
-            addLog('❌ Supabase غير محمل!', true);
+            log('❌ Supabase غير محمل!', true);
         } else {
-            addLog('✅ Supabase متوفر');
+            log('✅ Supabase موجود');
         }
         
         // تهيئة
-        const SUPABASE_URL = 'https://jgmpltmdncyrnuufe.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU';
-        
-        let supabase;
-        try {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-            addLog('✅ تم الاتصال بـ Supabase');
-        } catch(e) {
-            addLog('❌ خطأ في الاتصال: ' + e.message, true);
-        }
+        const supabase = window.supabase.createClient(
+            'https://jgmpltmdncyrnuufe.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU'
+        );
+        log('✅ تم الاتصال');
         
         // الزر
         document.getElementById('loginBtn').addEventListener('click', async function() {
-            addLog('\n══════════ تسجيل الدخول ══════════');
+            log('\n══════════ تسجيل الدخول ══════════');
             
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const btn = document.getElementById('loginBtn');
             const errorBox = document.getElementById('errorBox');
             
-            addLog('Email: ' + email);
+            log('Email: ' + email);
             
             if (!email || !password) {
-                errorBox.textContent = 'أكمل جميع الحقول';
+                errorBox.textContent = '❌ أكمل الحقول';
                 errorBox.style.display = 'block';
-                addLog('❌ الحقول فارغة', true);
+                log('❌ حقول فارغة');
                 return;
             }
             
             errorBox.style.display = 'none';
             btn.disabled = true;
-            btn.textContent = 'جاري التحقق...';
+            btn.textContent = 'جاري...';
             
             try {
-                addLog('🔐 إرسال البيانات...');
+                log('🔐 إرسال...');
                 
                 const result = await supabase.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
                 
-                addLog('نتيجة Auth:');
-                addLog('  - error: ' + (result.error ? result.error.message : 'لا يوجد'));
-                addLog('  - user: ' + (result.data.user ? 'موجود' : 'غير موجود'));
+                log('النتيجة:');
+                log('  error: ' + (result.error ? result.error.message : 'لا'));
+                log('  user: ' + (result.data.user ? 'نعم' : 'لا'));
                 
-                if (result.error) {
-                    throw result.error;
-                }
+                if (result.error) throw result.error;
                 
-                addLog('✅ تسجيل الدخول ناجح!');
-                addLog('  User ID: ' + result.data.user.id);
+                log('✅ دخول ناجح!');
+                log('User ID: ' + result.data.user.id);
                 
-                // التحقق من Admin
-                addLog('\n🔍 التحقق من Admin...');
-                
-                const adminResult = await supabase
+                // فحص Admin
+                log('\n🔍 فحص Admin...');
+                const admin = await supabase
                     .from('admin_users')
                     .select('*')
                     .eq('user_id', result.data.user.id);
                 
-                addLog('نتيجة الاستعلام:');
-                addLog('  - عدد السجلات: ' + (adminResult.data ? adminResult.data.length : 0));
-                addLog('  - خطأ: ' + (adminResult.error ? adminResult.error.message : 'لا يوجد'));
+                log('الاستعلام:');
+                log('  سجلات: ' + (admin.data ? admin.data.length : 0));
+                log('  خطأ: ' + (admin.error ? admin.error.message : 'لا'));
                 
-                if (adminResult.error) {
-                    throw new Error('خطأ في قاعدة البيانات: ' + adminResult.error.message);
-                }
-                
-                if (!adminResult.data || adminResult.data.length === 0) {
-                    addLog('❌ المستخدم غير Admin', true);
+                if (!admin.data || admin.data.length === 0) {
+                    log('❌ ليس Admin');
                     await supabase.auth.signOut();
-                    errorBox.textContent = '❌ ليس لديك صلاحية Admin';
+                    errorBox.textContent = '❌ ليس Admin';
                     errorBox.style.display = 'block';
                     btn.disabled = false;
                     btn.textContent = 'تسجيل الدخول';
                     return;
                 }
                 
-                const activeAdmin = adminResult.data.find(function(r) { return r.is_active === true; });
-                
-                if (!activeAdmin) {
-                    addLog('❌ المستخدم غير مفعل', true);
+                const active = admin.data.find(function(r) { return r.is_active === true; });
+                if (!active) {
+                    log('❌ غير مفعل');
                     await supabase.auth.signOut();
-                    errorBox.textContent = '❌ الحساب غير مفعل';
+                    errorBox.textContent = '❌ غير مفعل';
                     errorBox.style.display = 'block';
                     btn.disabled = false;
-                    btn.textContent = 'تسجيل الدخول';
                     return;
                 }
                 
-                addLog('✅ Admin مفعل! Role: ' + activeAdmin.role);
-                
-                // حفظ
+                log('✅ Admin مفعل: ' + active.role);
                 sessionStorage.setItem('adminAuth', 'true');
-                sessionStorage.setItem('adminData', JSON.stringify({
-                    email: email,
-                    role: activeAdmin.role,
-                    userId: result.data.user.id
-                }));
-                
-                addLog('✅ جاري التحويل...');
                 window.location.href = '/admin/dashboard.html';
                 
             } catch(err) {
-                addLog('❌ خطأ: ' + err.message, true);
+                log('❌ خطأ: ' + err.message);
                 errorBox.textContent = '❌ ' + err.message;
                 errorBox.style.display = 'block';
                 btn.disabled = false;
@@ -216,22 +238,14 @@
             }
         });
         
-        // تحقق من جلسة موجودة
-        async function checkSession() {
-            addLog('\n🔍 التحقق من جلسة موجودة...');
-            try {
-                const { data } = await supabase.auth.getSession();
-                if (data.session) {
-                    addLog('✅ جلسة موجودة: ' + data.session.user.email);
-                } else {
-                    addLog('ℹ️ لا توجد جلسة');
-                }
-            } catch(e) {
-                addLog('⚠️ خطأ في التحقق: ' + e.message, true);
+        // جلسة موجودة؟
+        supabase.auth.getSession().then(function(r) {
+            if (r.data.session) {
+                log('✅ جلسة: ' + r.data.session.user.email);
+            } else {
+                log('ℹ️ لا جلسة');
             }
-        }
-        
-        checkSession();
+        });
     </script>
 </body>
 </html>
