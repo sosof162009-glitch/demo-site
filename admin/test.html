@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0a0c1b; color: #fff; font-family: system-ui, sans-serif; padding: 15px; font-size: 14px; }
+        #log { background: #1c1f35; padding: 12px; border-radius: 8px; font-size: 11px; font-family: monospace; 
+               margin-bottom: 15px; border: 2px solid #4f8ef7; max-height: 400px; overflow-y: auto; white-space: pre-wrap; }
+        .box { max-width: 400px; margin: 0 auto; background: #141629; padding: 20px; border-radius: 12px; }
+        h1 { text-align: center; color: #4f8ef7; font-size: 18px; margin-bottom: 15px; }
+        button { width: 100%; padding: 14px; margin: 8px 0; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .btn1 { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
+        .btn2 { background: linear-gradient(135deg, #4f8ef7, #6366f1); color: #fff; }
+        .btn3 { background: linear-gradient(135deg, #eab308, #ca8a04); color: #000; }
+        .btn4 { background: #2a2d4a; color: #fff; }
+        .success { background: rgba(34,197,94,0.1); color: #22c55e; padding: 10px; border-radius: 6px; margin: 10px 0; display: none; }
+        .error { background: rgba(239,68,68,0.1); color: #ef4444; padding: 10px; border-radius: 6px; margin: 10px 0; display: none; }
+    </style>
+</head>
+<body>
+    <div id="log">⏳ جاري التحميل...</div>
+    
+    <div class="box">
+        <h1>🧪 اختبار Supabase</h1>
+        
+        <div id="success" class="success">✅ تم بنجاح!</div>
+        <div id="error" class="error">❌ فشل!</div>
+        
+        <button class="btn1" onclick="createTable()">🆕 إنشاء جدول test</button>
+        <button class="btn2" onclick="insertData()">💾 إضافة بيانات</button>
+        
+        <button class="btn3" onclick="readData()">📖 قراءة البيانات</button>
+        
+        <button class="btn4" onclick="checkConnection()">🔗 فحص الاتصال</button>
+        
+        <button class="btn4" onclick="clearLog()">🗑️ مسح السجل</button>
+    </div>
+
+    <script>
+        var logs = [];
+        function L(msg, isError) {
+            var t = new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+            var line = '[' + t + '] ' + msg;
+            logs.push(line);
+            document.getElementById('log').innerText = logs.join('\n');
+            document.getElementById('log').scrollTop = document.getElementById('log').scrollHeight;
+            console.log(line);
+        }
+        
+        // Supabase config
+        var SUPABASE_URL = 'https://jgmpltmdncyrnuufe.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnbXBsdG1kbmN5bGN5cm51dWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDUwNjUsImV4cCI6MjA5MDcyMTA2NX0.ejBVAvG0l_04jdIDKb6MfBKt9FndyyRkvgB1m8RCJjU';
+        
+        L('✅ JS Loaded');
+        L('URL: ' + SUPABASE_URL);
+        
+        var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        L('✅ Supabase Client Created');
+        
+        function showSuccess(msg) {
+            document.getElementById('success').innerText = '✅ ' + msg;
+            document.getElementById('success').style.display = 'block';
+            setTimeout(function() { document.getElementById('success').style.display = 'none'; }, 3000);
+        }
+        
+        function showError(msg) {
+            document.getElementById('error').innerText = '❌ ' + msg;
+            document.getElementById('error').style.display = 'block';
+            setTimeout(function() { document.getElementById('error').style.display = 'none'; }, 5000);
+        }
+        
+        window.clearLog = function() {
+            logs = [];
+            document.getElementById('log').innerText = '✅ تم المسح';
+        };
+        
+        window.checkConnection = async function() {
+            L('\n═══════ فحص الاتصال ═══════');
+            try {
+                L('اختبار auth.getSession()...');
+                var { data, error } = await supabase.auth.getSession();
+                if (error) {
+                    L('❌ خطأ: ' + error.message);
+                    showError('فشل الاتصال: ' + error.message);
+                } else {
+                    L('✅ الاتصال ناجح!');
+                    L('Session: ' + (data.session ? 'موجودة' : 'لا توجد'));
+                    showSuccess('الاتصال بـ Supabase ناجح!');
+                }
+            } catch(e) {
+                L('❌ استثناء: ' + e.name + ' - ' + e.message);
+                showError('استثناء: ' + e.message);
+            }
+        };
+        
+        window.createTable = async function() {
+            L('\n═══════ إنشاء جدول test ═══════');
+            try {
+                // نحاول إنشاء الجدول عن طريق إدراج بيانات (إذا الجدول غير موجود سيفشل)
+                L('محاولة إنشاء الجدول...');
+                
+                // نستخدم RPC لتنفيذ SQL مباشرة (إذا كان مفعلاً)
+                var { data, error } = await supabase.rpc('create_test_table');
+                
+                if (error) {
+                    L('⚠️ RPC غير متاح أو الجدول موجود: ' + error.message);
+                    L('محاولة إدراج بيانات...');
+                    
+                    // نحاول إدراج بيانات مباشرة
+                    var insertResult = await supabase.from('test').insert([
+                        { name: 'Test Record', created_at: new Date().toISOString() }
+                    ]);
+                    
+                    if (insertResult.error) {
+                        L('❌ فشل: ' + insertResult.error.message);
+                        L('⚠️ يجب إنشاء الجدول يدوياً في Supabase Dashboard');
+                        L('SQL:');
+                        L('CREATE TABLE test (');
+                        L('  id SERIAL PRIMARY KEY,');
+                        L('  name TEXT,');
+                        L('  created_at TIMESTAMP');
+                        L(');');
+                        showError('الجدول غير موجود');
+                    } else {
+                        L('✅ تم إدراج البيانات!');
+                        showSuccess('تم إنشاء/الكتابة في الجدول!');
+                    }
+                } else {
+                    L('✅ تم إنشاء الجدول!');
+                    showSuccess('تم إنشاء الجدول!');
+                }
+            } catch(e) {
+                L('❌ استثناء: ' + e.name + ' - ' + e.message);
+                showError('استثناء: ' + e.message);
+            }
+        };
+        
+        window.insertData = async function() {
+            L('\n═══════ إضافة بيانات ═══════');
+            try {
+                L('إدراج سجل...');
+                var { data, error } = await supabase.from('test').insert([
+                    { 
+                        name: 'Test ' + Math.random().toString(36).substring(7),
+                        created_at: new Date().toISOString()
+                    }
+                ]);
+                
+                if (error) {
+                    L('❌ خطأ: ' + error.message);
+                    L('Code: ' + error.code);
+                    showError('فشل الإدراج: ' + error.message);
+                } else {
+                    L('✅ تم إدراج البيانات!');
+                    L('Data: ' + JSON.stringify(data));
+                    showSuccess('تم إضافة البيانات!');
+                }
+            } catch(e) {
+                L('❌ استثناء: ' + e.name + ' - ' + e.message);
+                showError('استثناء: ' + e.message);
+            }
+        };
+        
+        window.readData = async function() {
+            L('\n═══════ قراءة البيانات ═══════');
+            try {
+                L('قراءة من جدول test...');
+                var { data, error } = await supabase.from('test').select('*').limit(10);
+                
+                if (error) {
+                    L('❌ خطأ: ' + error.message);
+                    L('Code: ' + error.code);
+                    showError('فشل القراءة: ' + error.message);
+                } else {
+                    L('✅ تم قراءة ' + (data ? data.length : 0) + ' سجل');
+                    if (data && data.length > 0) {
+                        L('البيانات:');
+                        data.forEach(function(row, i) {
+                            L('  ' + (i+1) + '. ' + JSON.stringify(row));
+                        });
+                    } else {
+                        L('الجدول فارغ');
+                    }
+                    showSuccess('تم قراءة ' + (data ? data.length : 0) + ' سجل');
+                }
+            } catch(e) {
+                L('❌ استثناء: ' + e.name + ' - ' + e.message);
+                showError('استثناء: ' + e.message);
+            }
+        };
+        
+        // فحص أولي
+        checkConnection();
+    </script>
+</body>
+</html>
